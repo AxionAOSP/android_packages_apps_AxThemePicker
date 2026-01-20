@@ -12,6 +12,11 @@
     <string name="no">Hayır</string>
     <string name="reset">Sıfırla</string>
     <string name="undo">Geri Al</string>
+    <string name="setting_wallpaper">Duvar kağıdı ayarlanıyor…</string>
+    <string name="wallpaper_applied_successfully">Duvar kağıdı başarıyla uygulandı!</string>
+    <string name="failed_to_apply_wallpaper">Duvar kağıdı uygulanamadı: %s</string>
+    <string name="cropped_percentage">Kırpıldı %%d%%</string>
+    <string name="ok">Tamam</string>
     <string name="yes">Evet</string>
 
     <!-- Common Labels -->
@@ -23,6 +28,9 @@
     <string name="unknown">Bilinmiyor</string>
 
     <!-- Navigation Sections -->
+    <string name="nav_wallpaper">Duvar Kağıdı</string>
+    <string name="nav_style">Stil</string>
+    <string name="nav_lockscreen">Kilit Ekranı</string>
     <string name="colors">Renkler</string>
     <string name="fonts">Yazı Tipleri</string>
     <string name="shortcuts">Kısayollar</string>
@@ -120,6 +128,11 @@
     <string name="hue">Ton</string>
     <string name="pick_from_wallpaper">Duvar Kağıdından Seç</string>
     <string name="selected_color">Seçili Renk</string>
+    <string name="selected_color_label">Seçili Renk:</string>
+    <string name="saturation">Doygunluk</string>
+    <string name="style_font_tip">A, Axion içindir :)</string>
+    <string name="custom_color_picker_desc">Özel renginizi nasıl seçeceğinizi belirleyin:</string>
+    <string name="nav_action">Eylem</string>
     <string name="theme_colors">Tema Renkleri</string>
     <string name="theme_style_title">Tema Stili</string>
     <string name="theme_style_desc">Renklerin tohumdan nasıl oluşturulduğunu tanımlar</string>
@@ -205,6 +218,7 @@
     <string name="unable_to_load_image">Görüntü yüklenemiyor</string>
 
     <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s önizlemesi</string>
     <string name="home_screen_preview">Ana ekran önizlemesi</string>
     <string name="wallpaper_background">Duvar kağıdı arka planı</string>
 </resources>

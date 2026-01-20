@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">Použít</string>
+    <string name="applied">Použito</string>
+    <string name="back">Zpět</string>
+    <string name="cancel">Zrušit</string>
+    <string name="close">Zavřít</string>
+    <string name="confirm">Potvrdit</string>
+    <string name="edit">Upravit</string>
+    <string name="later">Později</string>
+    <string name="no">Ne</string>
+    <string name="reset">Resetovat</string>
+    <string name="undo">Zpět</string>
+    <string name="setting_wallpaper">Nastavování tapety…</string>
+    <string name="wallpaper_applied_successfully">Tapeta byla úspěšně nastavena!</string>
+    <string name="failed_to_apply_wallpaper">Nepodařilo se nastavit tapetu: %s</string>
+    <string name="cropped_percentage">Oříznuto o %d%%</string>
+    <string name="ok">OK</string>
+    <string name="yes">Ano</string>
+
+    <!-- Common Labels -->
+    <string name="info">Info</string>
+    <string name="more">Více</string>
+    <string name="none">Žádný</string>
+    <string name="on">Zapnuto</string>
+    <string name="off">Vypnuto</string>
+    <string name="unknown">Neznámý</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">Tapeta</string>
+    <string name="nav_style">Styl</string>
+    <string name="nav_lockscreen">Zamykací obrazovka</string>
+    <string name="colors">Barvy</string>
+    <string name="fonts">Písma</string>
+    <string name="shortcuts">Zkratky</string>
+    <string name="widgets">Widgety</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">Aktuální tapeta</string>
+    <string name="customize_to_match_your_style">Přizpůsobte si podle svého stylu</string>
+    <string name="discover_new_wallpapers">Objevte nové tapety</string>
+    <string name="explore">Prozkoumat</string>
+    <string name="featured">Doporučené</string>
+    <string name="curated_wallpapers_for_you">Tapety vybrané pro vás</string>
+    <string name="make_it_yours">Udělejte si ji podle sebe</string>
+    <string name="photos">Fotky</string>
+    <string name="walls">Walls</string>
+    <string name="wallpaper">Tapeta</string>
+    <string name="wallpaper_photo">Fotka tapety</string>
+    <string name="your_wallpaper">Vaše tapeta</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">Přizpůsobte si aktivní tapetu</string>
+    <string name="edit_current_wallpaper">Upravit aktuální tapetu</string>
+    <string name="header_collections">Sbírky</string>
+    <string name="header_wallpaper_gallery">Galerie tapet</string>
+    <string name="latest_wallpapers">Nejnovější tapety</string>
+    <string name="live_wallpapers">Živé tapety</string>
+    <string name="more_wallpapers">Další tapety</string>
+    <string name="my_photos">Moje fotky</string>
+    <string name="recently_added_designs">Nedávno přidané vzory</string>
+    <string name="view_all">Zobrazit vše</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d vybraná kategorie</item>
+        <item quantity="few">%d vybrané kategorie</item>
+        <item quantity="many">%d vybraných kategorií</item>
+        <item quantity="other">%d vybrané kategorie</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d tapeta</item>
+        <item quantity="few">%d tapety</item>
+        <item quantity="many">%d tapet</item>
+        <item quantity="other">%d tapety</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">Atmosféra</string>
+    <string name="glass">Sklo</string>
+    <string name="home_screen">Domovská obrazovka</string>
+    <string name="lock_screen_label">Zamykací obrazovka</string>
+    <string name="pinch_to_crop">Sevřením prstů ořízněte</string>
+    <string name="select_at_least_one">Vyberte alespoň jeden</string>
+    <string name="set_wallpaper">Nastavit tapetu</string>
+    <string name="set_wallpaper_on">Nastavit tapetu na</string>
+    <string name="wallpaper_info">Info o tapetě</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects Beta™</string>
+    <string name="effects_beta_notice_desc">Efekty jsou dočasné a nebudou uloženy. Pro jejich odstranění nastavte novou tapetu.</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">Mřížka aplikací</string>
+    <string name="app_grid_title">Mřížka aplikací</string>
+    <string name="home_screen_layout">Rozložení domovské obrazovky</string>
+    <string name="home_screen_layout_title">Rozložení domovské obrazovky</string>
+    <string name="make_your_device_uniquely_yours">Udělejte své zařízení jedinečným</string>
+    <string name="personalize">Personalizovat</string>
+    <string name="pro_tip">Tip</string>
+    <string name="pro_tip_colors_message">Barvy se automaticky vybírají z vaší tapety. Zapněte barvy tapety pro harmonický vzhled.</string>
+    <string name="system_typography">Typografie systému</string>
+    <string name="wallpaper_colors_and_themes">Barvy a motivy tapety</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">O přizpůsobení barev</string>
+    <string name="about_color_customization_desc">
+    Změny barev se aplikují v celém systému pro všechny aplikace, které podporují motivy Material You.
+    \nÚprava těchto barev může ovlivnit vzhled aplikací v celém zařízení.
+    </string>
+    <string name="automatic">Automaticky</string>
+    <string name="brightness">Jas</string>
+    <string name="chroma_boost_title">Chroma Boost</string>
+    <string name="choose_seed_color">Vyberte základní barvu</string>
+    <string name="color_picker">Výběr barvy</string>
+    <string name="colors_title">Barvy</string>
+    <string name="contrast_high">Vysoký</string>
+    <string name="contrast_level_title">Úroveň kontrastu</string>
+    <string name="contrast_low">Nízký</string>
+    <string name="contrast_normal">Normální</string>
+    <string name="custom">Vlastní</string>
+    <string name="custom_seed_color_title">Vlastní základní barva</string>
+    <string name="customize_palette_title">Přizpůsobte si paletu</string>
+    <string name="customize_palette_description">
+        Personalizujte své zařízení barvami, které odpovídají vašemu stylu
+    </string>
+    <string name="fidelity_title">Věrnost</string>
+    <string name="fidelity_desc">Zapnout funkci věrnosti pro barevné tóny</string>
+    <string name="fine_tuning">Jemné ladění</string>
+    <string name="following_wallpaper">Podle tapety</string>
+    <string name="from_wallpaper">Z tapety</string>
+    <string name="hue">Odstín</string>
+    <string name="pick_from_wallpaper">Vybrat z tapety</string>
+    <string name="selected_color">Vybraná barva</string>
+    <string name="selected_color_label">Vybraná barva:</string>
+    <string name="saturation">Sytost</string>
+    <string name="style_font_tip">A jako Axion :)</string>
+    <string name="custom_color_picker_desc">Vyberte způsob výběru vlastní barvy:</string>
+    <string name="nav_action">Akce</string>
+    <string name="theme_colors">Barvy motivu</string>
+    <string name="theme_style_title">Styl motivu</string>
+    <string name="theme_style_desc">Definuje, jak se barvy generují ze základní barvy</string>
+    <string name="use_wallpaper_colors_title">Použít barvy tapety</string>
+    <string name="use_wallpaper_colors_desc">Extrahovat barvy z tapety</string>
+    <string name="using_custom_color">Používá se vlastní barva</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">Aktivní</string>
+    <string name="add_custom_font">Přidat vlastní písmo</string>
+    <string name="add_font">Přidat písmo</string>
+    <string name="change_custom_font">Změnit vlastní písmo</string>
+    <string name="custom_font">Vlastní písmo</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">Náhled písma</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">Strach je nepřítelem inovace.</string>
+    <string name="font_style">Styl písma</string>
+    <string name="font_title">Písma</string>
+    <string name="no_custom_font">Žádné vlastní písmo</string>
+    <string name="reboot_device">Restartovat zařízení</string>
+    <string name="reboot_now">Restartovat nyní</string>
+    <string name="reboot_required_title">Restart vyžadován</string>
+    <string name="reboot_required_message">K aplikaci změn písma je vyžadován restart.\nChcete restartovat nyní?</string>
+    <string name="reboot_required_custom_font_title">Restart vyžadován pro změnu vlastního písma</string>
+    <string name="reboot_required_custom_font_desc">Vynechání restartu po změně vlastního písma může způsobit nekonzistenci uživatelského rozhraní v aplikacích.</string>
+    <string name="reset_custom_font_content_desc">Resetovat vlastní písmo</string>
+    <string name="reset_default_title">Resetovat na výchozí</string>
+    <string name="reset_default_message">Tímto resetujete písmo na výchozí systémové písmo. Jste si jisti?</string>
+    <string name="toast_failed_apply_font">Nepodařilo se použít písmo</string>
+    <string name="toast_invalid_font_file">Neplatný soubor písma</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">Přidat zkratku</string>
+    <string name="add_information_at_a_glance">Přidat informace v rychlosti</string>
+    <string name="camera">Fotoaparát</string>
+    <string name="choose_your_time_format">Vyberte formát času</string>
+    <string name="clock">Hodiny</string>
+    <string name="clock_style">Styl hodin</string>
+    <string name="device_controls">Ovládání zařízení</string>
+    <string name="do_not_disturb">Nerušit</string>
+    <string name="flashlight">Svítilna</string>
+    <string name="left_affordance">Levá zkratka</string>
+    <string name="lockscreen_customize_title">Vzhled zamykací obrazovky</string>
+    <string name="lockscreen_customize_summary">Přizpůsobte si vzhled zamykací obrazovky</string>
+    <string name="lockscreen_title">Zamykací obrazovka</string>
+    <string name="lockscreen_widgets_title">Widgety zamykací obrazovky</string>
+    <string name="lockscreen_widgets_enabled_title">Povolit widgety na zamykací obrazovce</string>
+    <string name="lockscreen_widgets_enabled_summary">Povolit widgety na zamykací obrazovce</string>
+    <string name="mute">Ztlumit</string>
+    <string name="no_space_available">Není volné místo pro další widgety</string>
+    <string name="personalize_your_experience">Personalizujte svůj zážitek</string>
+    <string name="pick_widgets">Vybrat widgety</string>
+    <string name="qr_code_scanner">Skener QR kódů</string>
+    <string name="quick_access_to_your_favorites">Rychlý přístup k oblíbeným</string>
+    <string name="right_affordance">Pravá zkratka</string>
+    <string name="selected_widgets">Vybrané widgety</string>
+    <string name="selected_widgets_empty">Žádné widgety nebyly vybrány</string>
+    <string name="selected_widgets_guide">Dlouhým stisknutím přetáhněte, klepnutím na widget jej odeberte.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Klepnutím na náhled zobrazíte všechny možnosti přizpůsobení</string>
+    <string name="tap_to_customize">Klepnutím přizpůsobte</string>
+    <string name="temperature_prev">27°</string>
+    <string name="video_camera">Videokamera</string>
+    <string name="wallet">Peněženka</string>
+    <string name="weather_prev">Převážně oblačno</string>
+    <string name="widget_bluetooth">Bluetooth</string>
+    <string name="widget_data">Data</string>
+    <string name="widget_hotspot">Hotspot</string>
+    <string name="widget_removed">Widget odebrán</string>
+    <string name="widget_ringer">Vyzvánění</string>
+    <string name="widget_torch">Svítilna</string>
+    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widgets_title">Widgety</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">Resetovat na výchozí</string>
+    <string name="value_percentage">Hodnota: %d%%</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">Nepodařilo se načíst obrázek</string>
+    <string name="no_image_provided">Nebyl poskytnut žádný obrázek</string>
+    <string name="shared_image">Sdílený obrázek</string>
+    <string name="unable_to_load_image">Nelze načíst obrázek</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">Náhled %s</string>
+    <string name="home_screen_preview">Náhled domovské obrazovky</string>
+    <string name="wallpaper_background">Pozadí tapety</string>
+</resources>

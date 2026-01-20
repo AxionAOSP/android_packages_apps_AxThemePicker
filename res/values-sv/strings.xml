@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">Använd</string>
+    <string name="applied">Använd</string>
+    <string name="back">Bakåt</string>
+    <string name="cancel">Avbryt</string>
+    <string name="close">Stäng</string>
+    <string name="confirm">Bekräfta</string>
+    <string name="edit">Redigera</string>
+    <string name="later">Senare</string>
+    <string name="no">Nej</string>
+    <string name="reset">Återställ</string>
+    <string name="undo">Ångra</string>
+    <string name="setting_wallpaper">Ställer in bakgrundsbild…</string>
+    <string name="wallpaper_applied_successfully">Bakgrundsbilden har ställts in!</string>
+    <string name="failed_to_apply_wallpaper">Kunde inte ställa in bakgrundsbild: %s</string>
+    <string name="cropped_percentage">%d%% beskuren</string>
+    <string name="ok">OK</string>
+    <string name="yes">Ja</string>
+
+    <!-- Common Labels -->
+    <string name="info">Info</string>
+    <string name="more">Mer</string>
+    <string name="none">Ingen</string>
+    <string name="on">På</string>
+    <string name="off">Av</string>
+    <string name="unknown">Okänd</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">Bakgrund</string>
+    <string name="nav_style">Stil</string>
+    <string name="nav_lockscreen">Låsskärm</string>
+    <string name="colors">Färger</string>
+    <string name="fonts">Typsnitt</string>
+    <string name="shortcuts">Genvägar</string>
+    <string name="widgets">Widgetar</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">Nuvarande bakgrund</string>
+    <string name="customize_to_match_your_style">Anpassa efter din stil</string>
+    <string name="discover_new_wallpapers">Upptäck nya bakgrundsbilder</string>
+    <string name="explore">Utforska</string>
+    <string name="featured">Utvalt</string>
+    <string name="curated_wallpapers_for_you">Handplockade bakgrundsbilder för dig</string>
+    <string name="make_it_yours">Gör den till din</string>
+    <string name="photos">Foton</string>
+    <string name="walls">Walls</string>
+    <string name="wallpaper">Bakgrundsbild</string>
+    <string name="wallpaper_photo">Bakgrundsbildfoto</string>
+    <string name="your_wallpaper">Din bakgrundsbild</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">Anpassa din aktiva bakgrund</string>
+    <string name="edit_current_wallpaper">Redigera nuvarande bakgrund</string>
+    <string name="header_collections">Samlingar</string>
+    <string name="header_wallpaper_gallery">Bakgrundsgalleri</string>
+    <string name="latest_wallpapers">Senaste bakgrundsbilderna</string>
+    <string name="live_wallpapers">Live-bakgrundsbilder</string>
+    <string name="more_wallpapers">Fler bakgrundsbilder</string>
+    <string name="my_photos">Mina foton</string>
+    <string name="recently_added_designs">Nyligen tillagda designer</string>
+    <string name="view_all">Visa alla</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d utvald kategori</item>
+        <item quantity="other">%d utvalda kategorier</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d bakgrundsbild</item>
+        <item quantity="other">%d bakgrundsbilder</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">Atmosfär</string>
+    <string name="glass">Glas</string>
+    <string name="home_screen">Hemskärm</string>
+    <string name="lock_screen_label">Låsskärm</string>
+    <string name="pinch_to_crop">Nyp för att beskära</string>
+    <string name="select_at_least_one">Välj minst en</string>
+    <string name="set_wallpaper">Ställ in bakgrundsbild</string>
+    <string name="set_wallpaper_on">Ställ in bakgrundsbild på</string>
+    <string name="wallpaper_info">Bakgrundsinfo</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects Beta™</string>
+    <string name="effects_beta_notice_desc">Effekterna är tillfälliga och sparas inte. Använd en ny bakgrundsbild för att ta bort dem.</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">App-rutnät</string>
+    <string name="app_grid_title">App-rutnät</string>
+    <string name="home_screen_layout">Hemskärmslayout</string>
+    <string name="home_screen_layout_title">Hemskärmslayout</string>
+    <string name="make_your_device_uniquely_yours">Gör din enhet unik</string>
+    <string name="personalize">Anpassa</string>
+    <string name="pro_tip">Pro-tips</string>
+    <string name="pro_tip_colors_message">Färger hämtas automatiskt från din bakgrundsbild. Slå på bakgrundsfärger för ett harmoniskt utseende.</string>
+    <string name="system_typography">Systemtypografi</string>
+    <string name="wallpaper_colors_and_themes">Bakgrundsfärger &amp; teman</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">Om färganpassning</string>
+    <string name="about_color_customization_desc">
+    Färgändringar tillämpas i hela systemet för alla appar som stöder Material You-teman.
+    \nAtt justera dessa färger kan påverka hur appar ser ut på hela enheten.
+    </string>
+    <string name="automatic">Automatisk</string>
+    <string name="brightness">Ljusstyrka</string>
+    <string name="chroma_boost_title">Chroma Boost</string>
+    <string name="choose_seed_color">Välj basfärg</string>
+    <string name="color_picker">Färgväljare</string>
+    <string name="colors_title">Färger</string>
+    <string name="contrast_high">Hög</string>
+    <string name="contrast_level_title">Kontrastnivå</string>
+    <string name="contrast_low">Låg</string>
+    <string name="contrast_normal">Normal</string>
+    <string name="custom">Anpassad</string>
+    <string name="custom_seed_color_title">Anpassad basfärg</string>
+    <string name="customize_palette_title">Anpassa din palett</string>
+    <string name="customize_palette_description">
+        Anpassa din enhet med färger som passar din stil
+    </string>
+    <string name="fidelity_title">Fidelity</string>
+    <string name="fidelity_desc">Slå på fidelity-funktionen för färgtoner</string>
+    <string name="fine_tuning">Finjustering</string>
+    <string name="following_wallpaper">Följer bakgrundsbilden</string>
+    <string name="from_wallpaper">Från bakgrundsbild</string>
+    <string name="hue">Nyans</string>
+    <string name="pick_from_wallpaper">Välj från bakgrundsbild</string>
+    <string name="selected_color">Vald färg</string>
+    <string name="selected_color_label">Vald färg:</string>
+    <string name="saturation">Mättnad</string>
+    <string name="style_font_tip">A står för Axion :)</string>
+    <string name="custom_color_picker_desc">Välj hur du vill välja din anpassade färg:</string>
+    <string name="nav_action">Åtgärd</string>
+    <string name="theme_colors">Temafärger</string>
+    <string name="theme_style_title">Temastil</string>
+    <string name="theme_style_desc">Definierar hur färger genereras från basen</string>
+    <string name="use_wallpaper_colors_title">Använd bakgrundsfärger</string>
+    <string name="use_wallpaper_colors_desc">Hämta färger från din bakgrundsbild</string>
+    <string name="using_custom_color">Använder anpassad färg</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">Aktiv</string>
+    <string name="add_custom_font">Lägg till anpassat typsnitt</string>
+    <string name="add_font">Lägg till typsnitt</string>
+    <string name="change_custom_font">Ändra anpassat typsnitt</string>
+    <string name="custom_font">Anpassat typsnitt</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">Förhandsvisning av typsnitt</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">Rädsla är innovationens fiende.</string>
+    <string name="font_style">Typsnittsstil</string>
+    <string name="font_title">Typsnitt</string>
+    <string name="no_custom_font">Inget anpassat typsnitt</string>
+    <string name="reboot_device">Starta om enheten</string>
+    <string name="reboot_now">Starta om nu</string>
+    <string name="reboot_required_title">Omstart krävs</string>
+    <string name="reboot_required_message">Omstart krävs för att tillämpa typsnittsändringar.\nVill du starta om nu?</string>
+    <string name="reboot_required_custom_font_title">Omstart krävs för ändring av anpassat typsnitt</string>
+    <string name="reboot_required_custom_font_desc">Att hoppa över omstart efter att ha ändrat anpassat typsnitt kan leda till inkonsekvenser i användargränssnittet.</string>
+    <string name="reset_custom_font_content_desc">Återställ anpassat typsnitt</string>
+    <string name="reset_default_title">Återställ till standard</string>
+    <string name="reset_default_message">Detta återställer ditt typsnitt till systemets standardtypsnitt. Är du säker?</string>
+    <string name="toast_failed_apply_font">Kunde inte tillämpa typsnitt</string>
+    <string name="toast_invalid_font_file">Ogiltig typsnittsfil</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">Lägg till genväg</string>
+    <string name="add_information_at_a_glance">Lägg till snabbinfo</string>
+    <string name="camera">Kamera</string>
+    <string name="choose_your_time_format">Välj tidsformat</string>
+    <string name="clock">Klocka</string>
+    <string name="clock_style">Klockstil</string>
+    <string name="device_controls">Enhetskontroller</string>
+    <string name="do_not_disturb">Stör ej</string>
+    <string name="flashlight">Ficklampa</string>
+    <string name="left_affordance">Vänster genväg</string>
+    <string name="lockscreen_customize_title">Låsskärmens utseende</string>
+    <string name="lockscreen_customize_summary">Anpassa låsskärmens utseende</string>
+    <string name="lockscreen_title">Låsskärm</string>
+    <string name="lockscreen_widgets_title">Widgetar på låsskärmen</string>
+    <string name="lockscreen_widgets_enabled_title">Aktivera widgetar på låsskärmen</string>
+    <string name="lockscreen_widgets_enabled_summary">Tillåt widgetar på låsskärmen</string>
+    <string name="mute">Ljudlös</string>
+    <string name="no_space_available">Inget utrymme kvar för fler widgetar</string>
+    <string name="personalize_your_experience">Anpassa din upplevelse</string>
+    <string name="pick_widgets">Välj widgetar</string>
+    <string name="qr_code_scanner">QR-kodskanner</string>
+    <string name="quick_access_to_your_favorites">Snabb åtkomst till dina favoriter</string>
+    <string name="right_affordance">Höger genväg</string>
+    <string name="selected_widgets">Valda widgetar</string>
+    <string name="selected_widgets_empty">Inga widgetar valda</string>
+    <string name="selected_widgets_guide">Håll ned för att dra, tryck på en widget för att ta bort den.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Tryck på förhandsvisningen för alla alternativ</string>
+    <string name="tap_to_customize">Tryck för att anpassa</string>
+    <string name="temperature_prev">27°</string>
+    <string name="video_camera">Videokamera</string>
+    <string name="wallet">Plånbok</string>
+    <string name="weather_prev">Mestadels molnigt</string>
+    <string name="widget_bluetooth">Bluetooth</string>
+    <string name="widget_data">Data</string>
+    <string name="widget_hotspot">Hotspot</string>
+    <string name="widget_removed">Widgeten har tagits bort</string>
+    <string name="widget_ringer">Ringsignal</string>
+    <string name="widget_torch">Ficklampa</string>
+    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widgets_title">Widgetar</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">Återställ till standard</string>
+    <string name="value_percentage">Värde: %d%%</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">Kunde inte ladda bilden</string>
+    <string name="no_image_provided">Ingen bild tillhandahållen</string>
+    <string name="shared_image">Delad bild</string>
+    <string name="unable_to_load_image">Kunde inte ladda bilden</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">Förhandsvisning av %s</string>
+    <string name="home_screen_preview">Förhandsvisning av hemskärm</string>
+    <string name="wallpaper_background">Bakgrundsbildsbakgrund</string>
+</resources>

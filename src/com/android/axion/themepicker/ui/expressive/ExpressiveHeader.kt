@@ -79,7 +79,7 @@ fun ExpressiveHeader(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     enabled = enabled
                 ) {
-                    Icon(actionIcon, contentDescription = "Action")
+                    Icon(actionIcon, contentDescription = stringResource(R.string.nav_action))
                 }
             }
 

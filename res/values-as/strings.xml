@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">প্ৰয়োগ কৰক</string>
+    <string name="applied">প্ৰয়োগ কৰা হ’ল</string>
+    <string name="back">পিছলৈ যাওক</string>
+    <string name="cancel">বাতিল কৰক</string>
+    <string name="close">বন্ধ কৰক</string>
+    <string name="confirm">নিশ্চিত কৰক</string>
+    <string name="edit">সম্পাদন কৰক</string>
+    <string name="later">পাছত</string>
+    <string name="no">নহয়</string>
+    <string name="reset">পুনৰ সংহতি কৰক</string>
+    <string name="undo">পূৰ্বাবস্থালৈ নিয়ক</string>
+    <string name="setting_wallpaper">ৱালপেপাৰ ছেট কৰি থকা হৈছে…</string>
+    <string name="wallpaper_applied_successfully">ৱালপেপাৰ সফলতাৰে প্ৰয়োগ কৰা হ’ল!</string>
+    <string name="failed_to_apply_wallpaper">ৱালপেপাৰ প্ৰয়োগ কৰাত ব্যৰ্থ হ’ল: %s</string>
+    <string name="cropped_percentage">%d%% ক্ৰপ কৰা হ’ল</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="yes">হয়</string>
+
+    <!-- Common Labels -->
+    <string name="info">তথ্য</string>
+    <string name="more">অধিক</string>
+    <string name="none">একো নাই</string>
+    <string name="on">অন</string>
+    <string name="off">অফ</string>
+    <string name="unknown">অজ্ঞাত</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">ৱালপেপাৰ</string>
+    <string name="nav_style">শৈলী</string>
+    <string name="nav_lockscreen">লক স্ক্ৰীন</string>
+    <string name="colors">ৰং</string>
+    <string name="fonts">ফণ্ট</string>
+    <string name="shortcuts">চৰ্টকাট</string>
+    <string name="widgets">ৱিজেন</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">বৰ্তমানৰ ৱালপেপাৰ</string>
+    <string name="customize_to_match_your_style">আপোনাৰ শৈলীৰ সৈতে মিলোৱাকৈ কাষ্টমাইজ কৰক</string>
+    <string name="discover_new_wallpapers">নতুন ৱালপেপাৰ আৱিষ্কাৰ কৰক</string>
+    <string name="explore">এক্সপ্ল’ৰ কৰক</string>
+    <string name="featured">বিশেষ</string>
+    <string name="curated_wallpapers_for_you">আপোনাৰ বাবে কিউৰেট কৰা ৱালপেপাৰ</string>
+    <string name="make_it_yours">ইয়াক নিজৰ কৰি লওক</string>
+    <string name="photos">ফটোসমূহ</string>
+    <string name="walls">ৱালসমূহ</string>
+    <string name="wallpaper">ৱালপেপাৰ</string>
+    <string name="wallpaper_photo">ৱালপেপাৰ ফটো</string>
+    <string name="your_wallpaper">আপোনাৰ ৱালপেপাৰ</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">আপোনাৰ সক্ৰিয় ৱালপেপাৰ কাষ্টমাইজ কৰক</string>
+    <string name="edit_current_wallpaper">বৰ্তমানৰ ৱালপেপাৰ সম্পাদন কৰক</string>
+    <string name="header_collections">সংগ্ৰহসমূহ</string>
+    <string name="header_wallpaper_gallery">ৱালপেপাৰ গেলেৰী</string>
+    <string name="latest_wallpapers"> শেহতীয়া ৱালপেপাৰসমূহ</string>
+    <string name="live_wallpapers">লাইভ ৱালপেপাৰসমূহ</string>
+    <string name="more_wallpapers">অধিক ৱালপেপাৰ</string>
+    <string name="my_photos">মোৰ ফটোসমূহ</string>
+    <string name="recently_added_designs">শেহতীয়াকৈ যোগ কৰা ডিজাইনসমূহ</string>
+    <string name="view_all">সকলো চাওক</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%dটা কিউৰেট কৰা শ্ৰেণী</item>
+        <item quantity="other">%dটা কিউৰেট কৰা শ্ৰেণী</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%dখন ৱালপেপাৰ</item>
+        <item quantity="other">%dখন ৱালপেপাৰ</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">এটম’স্ফিয়াৰ</string>
+    <string name="glass">গ্লাছ</string>
+    <string name="home_screen">হোম স্ক্ৰীন</string>
+    <string name="lock_screen_label">লক স্ক্ৰীন</string>
+    <string name="pinch_to_crop">ক্ৰপ কৰিবলৈ পিঞ্চ কৰক</string>
+    <string name="select_at_least_one">অতি কমেও এটা বাছনি কৰক</string>
+    <string name="set_wallpaper">ৱালপেপাৰ ছেট কৰক</string>
+    <string name="set_wallpaper_on">ইয়াত ৱালপেপাৰ ছেট কৰক</string>
+    <string name="wallpaper_info">ৱালপেপাৰ তথ্য</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects Beta™</string>
+    <string name="effects_beta_notice_desc">প্ৰভাৱসমূহ অস্থায়ী আৰু স্থায়ী নহয়। এইবোৰ আঁতৰাবলৈ এখন নতুন ৱালপেপাৰ প্ৰয়োগ কৰক।</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">এপ্ৰিল গ্ৰিড</string>
+    <string name="app_grid_title">এপ্ৰিল গ্ৰিড</string>
+    <string name="home_screen_layout">হোম স্ক্ৰীন লেআউট</string>
+    <string name="home_screen_layout_title">হোম স্ক্ৰীন লেআউট</string>
+    <string name="make_your_device_uniquely_yours">আপোনাৰ ডিভাইচটো অনন্য কৰি তোলক</string>
+    <string name="personalize">ব্যক্তিগতকৰণ কৰক</string>
+    <string name="pro_tip">প্ৰ’ টিপ</string>
+    <string name="pro_tip_colors_message">আপোনাৰ ৱালপেপাৰৰ পৰা স্বয়ংক্ৰিয়ভাৱে ৰং আহৰণ কৰা হয়। এক সুসংগত লুকৰ বাবে ৱালপেপাৰ ৰং সক্ষম কৰক।</string>
+    <string name="system_typography">ছিষ্টেম টাইপ’গ্ৰাফী</string>
+    <string name="wallpaper_colors_and_themes">ৱালপেপাৰ ৰং আৰু থিমসমূহ</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">ৰং কাষ্টমাইজেশ্যনৰ বিষয়ে</string>
+    <string name="about_color_customization_desc">
+    ৰঙৰ পৰিৱৰ্তনসমূহ ছিষ্টেমৰ সকলো এপতে প্ৰয়োগ কৰা হয় যিবোৰে Material You থিমিং সমৰ্থন কৰে।
+    \nএই ৰংবোৰ মিলাই ল’লে আপোনাৰ ডিভাইচৰ এপসমূহৰ চেহেৰাত প্ৰভাৱ পেলাব পাৰে।
+    </string>
+    <string name="automatic">স্বয়ংক্ৰিয়</string>
+    <string name="brightness">উজ্জ্বলতা</string>
+    <string name="chroma_boost_title">ক্ৰ’মা বুষ্ট</string>
+    <string name="choose_seed_color">ছিড ৰং বাছনি কৰক</string>
+    <string name="color_picker">কালাৰ পিকাৰ</string>
+    <string name="colors_title">ৰং</string>
+    <string name="contrast_high">উচ্চ</string>
+    <string name="contrast_level_title">কণ্ট্ৰাষ্ট লেভেল</string>
+    <string name="contrast_low">নিম্ন</string>
+    <string name="contrast_normal">স্বাভাৱিক</string>
+    <string name="custom">কাষ্টম</string>
+    <string name="custom_seed_color_title">কাষ্টম ছিড ৰং</string>
+    <string name="customize_palette_title">আপোনাৰ পেলেট কাষ্টমাইজ কৰক</string>
+    <string name="customize_palette_description">
+        আপোনাৰ শৈলীৰ সৈতে মেলা ৰঙেৰে আপোনাৰ ডিভাইচটো ব্যক্তিগতকৃত কৰক
+    </string>
+    <string name="fidelity_title">ফিডেলিটী</string>
+    <string name="fidelity_desc">ৰঙৰ ট’নৰ বাবে ফিডেলিটী বৈশিষ্ট্য সক্ষম কৰক</string>
+    <string name="fine_tuning">ফাইন টিউনিং</string>
+    <string name="following_wallpaper">ৱালপেপাৰ অনুসৰণ কৰা হৈছে</string>
+    <string name="from_wallpaper">ৱালপেপাৰৰ পৰা</string>
+    <string name="hue">হিউ</string>
+    <string name="pick_from_wallpaper">ৱালপেপাৰৰ পৰা বাছনি কৰক</string>
+    <string name="selected_color">বাছনি কৰা ৰং</string>
+    <string name="selected_color_label">বাছনি কৰা ৰং:</string>
+    <string name="saturation">ছেচুৰেশ্যন</string>
+    <string name="style_font_tip">A মানে Axion :)</string>
+    <string name="custom_color_picker_desc">আপোনাৰ কাষ্টম ৰং কেনেকৈ বাছিব সেয়া ঠিক কৰক:</string>
+    <string name="nav_action">কাৰ্য</string>
+    <string name="theme_colors">থিম ৰং</string>
+    <string name="theme_style_title">থিম শৈলী</string>
+    <string name="theme_style_desc">ছিডৰ পৰা ৰং কেনেকৈ উৎপন্ন হয় সেয়া সংজ্ঞায়িত কৰে</string>
+    <string name="use_wallpaper_colors_title">ৱালপেপাৰ ৰং ব্যৱহাৰ কৰক</string>
+    <string name="use_wallpaper_colors_desc">আপোনাৰ ৱালপেপাৰৰ পৰা ৰং আহৰণ কৰক</string>
+    <string name="using_custom_color">কাষ্টম ৰং ব্যৱহার কৰা হৈছে</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">সক্ৰিয়</string>
+    <string name="add_custom_font">কাষ্টম ফণ্ট যোগ কৰক</string>
+    <string name="add_font">ফণ্ট যোগ কৰক</string>
+    <string name="change_custom_font">কাষ্টম ফণ্ট সলনি কৰক</string>
+    <string name="custom_font">কাষ্টম ফণ্ট</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">ফণ্ট প্ৰিভিউ</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">ভয় উদ্ভাৱনৰ শত্ৰু।</string>
+    <string name="font_style">ফণ্ট শৈলী</string>
+    <string name="font_title">ফণ্ট</string>
+    <string name="no_custom_font">কোনো কাষ্টম ফণ্ট নাই</string>
+    <string name="reboot_device">ডিভাইচ ৰিবুট কৰক</string>
+    <string name="reboot_now">এতিয়াই ৰিবুট কৰক</string>
+    <string name="reboot_required_title">ৰিবুট প্ৰয়োজন</string>
+    <string name="reboot_required_message">ফণ্টৰ পৰিৱৰ্তনসমূহ প্ৰয়োগ কৰিবলৈ ৰিবুট কৰাটো প্ৰয়োজন।\nআপুনি এতিয়াই ৰিবুট কৰিব বিচাৰেনে?</string>
+    <string name="reboot_required_custom_font_title">কাষ্টম ফণ্ট পৰিৱৰ্তনৰ বাবে ৰিবুট প্ৰয়োজন</string>
+    <string name="reboot_required_custom_font_desc">কাষ্টম ফণ্ট সলনি কৰাৰ পাছত ৰিবুট নকৰিলে এপসমূহৰ UI-ত অসঙ্গতি দেখা দিব পাৰে।</string>
+    <string name="reset_custom_font_content_desc">কাষ্টম ফণ্ট ৰিছেট কৰক</string>
+    <string name="reset_default_title">ডিফল্টলৈ ৰিছেট কৰক</string>
+    <string name="reset_default_message">ইয়াৰ ফলত আপোনাৰ ফণ্টটো ডিফল্ট ছিষ্টেম ফণ্টলৈ ৰিছেট হ’ব। আপুনি নিশ্চিতনে?</string>
+    <string name="toast_failed_apply_font">ফণ্ট প্ৰয়োগ কৰাত ব্যৰ্থ হ’ল</string>
+    <string name="toast_invalid_font_file">অবৈধ ফণ্ট ফাইল</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">চৰ্টকাট যোগ কৰক</string>
+    <string name="add_information_at_a_glance">এপলকতে তথ্য যোগ কৰক</string>
+    <string name="camera">কেমেৰা</string>
+    <string name="choose_your_time_format">আপোনাৰ সময়ৰ ফৰ্মেট বাছনি কৰক</string>
+    <string name="clock">ঘড়ী</string>
+    <string name="clock_style">ঘড়ীৰ শৈলী</string>
+    <string name="device_controls">ডিভাইচ নিয়ন্ত্ৰণসমূহ</string>
+    <string name="do_not_disturb">আমনি নকৰিব</string>
+    <string name="flashlight">ফ্লাছলাইট</string>
+    <string name="left_affordance">বাম চৰ্টকাট</string>
+    <string name="lockscreen_customize_title">লক স্ক্ৰীনৰ চেহেৰা</string>
+    <string name="lockscreen_customize_summary">লক স্ক্ৰীনৰ চেহেৰা কাষ্টমাইজ কৰক</string>
+    <string name="lockscreen_title">লক স্ক্ৰীন</string>
+    <string name="lockscreen_widgets_title">লক স্ক্ৰীন ৱিজেন</string>
+    <string name="lockscreen_widgets_enabled_title">লক স্ক্ৰীন ৱিজেন সক্ষম কৰক</string>
+    <string name="lockscreen_widgets_enabled_summary">লক স্ক্ৰীনত ৱিজেনৰ অনুমতি দিয়ক</string>
+    <string name="mute">মিউট কৰক</string>
+    <string name="no_space_available">অধিক ৱিজেনৰ বাবে কোনো ঠাই নাই</string>
+    <string name="personalize_your_experience">আপোনাৰ অভিজ্ঞতা ব্যক্তিগতকৃত কৰক</string>
+    <string name="pick_widgets">ৱিজেন বাছনি কৰক</string>
+    <string name="qr_code_scanner">QR ক’ড স্কেনাৰ</string>
+    <string name="quick_access_to_your_favorites">আপোনাৰ প্ৰিয় বস্তুসমূহলৈ দ্ৰুত প্ৰৱেশ</string>
+    <string name="right_affordance">সোঁ চৰ্টকাট</string>
+    <string name="selected_widgets">বাছনি কৰা ৱিজেন</string>
+    <string name="selected_widgets_empty">কোনো ৱিজেন বাছনি কৰা হোৱা নাই</string>
+    <string name="selected_widgets_guide">টানিবলৈ বহু সময় টিপি ধৰি ৰাখক, আঁতৰাবলৈ ৱিজেনত টিপক।</string>
+    <string name="tap_the_preview_to_see_all_customization_options">সকলো কাষ্টমাইজেশ্যন বিকল্প চাবলৈ প্ৰিভিউত টিপক</string>
+    <string name="tap_to_customize">কাষ্টমাইজ কৰিবলৈ টিপক</string>
+    <string name="temperature_prev">২৭°</string>
+    <string name="video_camera">ভিডিঅ’ কেমেৰা</string>
+    <string name="wallet">ৱালেট</string>
+    <string name="weather_prev">প্ৰায় ডাৱৰীয়া</string>
+    <string name="widget_bluetooth">ব্লুটুথ</string>
+    <string name="widget_data">ডেটা</string>
+    <string name="widget_hotspot">হটস্পট</string>
+    <string name="widget_removed">ৱিজেন আঁতৰোৱা হ’ল</string>
+    <string name="widget_ringer">ৰিঙাৰ</string>
+    <string name="widget_torch">ফ্লাছলাইট</string>
+    <string name="widget_wifi">ৱাই-ফাই</string>
+    <string name="widgets_title">ৱিজেন</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">ডিফল্টলৈ ৰিছেট কৰক</string>
+    <string name="value_percentage">মান: %d%%</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">ছবি ল’ড কৰাত ব্যৰ্থ হ’ল</string>
+    <string name="no_image_provided">কোনো ছবি প্ৰদান কৰা হোৱা নাই</string>
+    <string name="shared_image">শ্বেয়াৰ কৰা ছবি</string>
+    <string name="unable_to_load_image">ছবি ল’ড কৰিব পৰা নগ’ল</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s প্ৰিভিউ</string>
+    <string name="home_screen_preview">হোম স্ক্ৰীন প্ৰিভিউ</string>
+    <string name="wallpaper_background">ৱালপেপাৰ বেকগ্ৰাউণ্ড</string>
+</resources>

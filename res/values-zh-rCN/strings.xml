@@ -12,6 +12,11 @@
     <string name="no">否</string>
     <string name="reset">重置</string>
     <string name="undo">撤销</string>
+    <string name="setting_wallpaper">正在设置壁纸…</string>
+    <string name="wallpaper_applied_successfully">壁纸设置成功！</string>
+    <string name="failed_to_apply_wallpaper">设置壁纸失败：%s</string>
+    <string name="cropped_percentage">已裁剪 %d%%</string>
+    <string name="ok">确定</string>
     <string name="yes">是</string>
 
     <!-- Common Labels -->
@@ -23,6 +28,9 @@
     <string name="unknown">未知</string>
 
     <!-- Navigation Sections -->
+    <string name="nav_wallpaper">壁纸</string>
+    <string name="nav_style">样式</string>
+    <string name="nav_lockscreen">锁屏</string>
     <string name="colors">颜色</string>
     <string name="fonts">字体</string>
     <string name="shortcuts">快捷方式</string>
@@ -119,6 +127,11 @@
     <string name="hue">色调</string>
     <string name="pick_from_wallpaper">从壁纸中选择</string>
     <string name="selected_color">选定的颜色</string>
+    <string name="selected_color_label">选定的颜色：</string>
+    <string name="saturation">饱和度</string>
+    <string name="style_font_tip">A 代表 Axion :)</string>
+    <string name="custom_color_picker_desc">选择如何选取自定义颜色：</string>
+    <string name="nav_action">操作</string>
     <string name="theme_colors">主题颜色</string>
     <string name="theme_style_title">主题风格</string>
     <string name="theme_style_desc">定义如何从种子生成颜色</string>
@@ -204,6 +217,7 @@
     <string name="unable_to_load_image">无法加载图像</string>
 
     <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s 预览</string>
     <string name="home_screen_preview">主屏幕预览</string>
     <string name="wallpaper_background">壁纸背景</string>
 </resources>

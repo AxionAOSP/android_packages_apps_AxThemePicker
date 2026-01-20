@@ -144,7 +144,7 @@ fun WallpaperPreviewScreen(
             onDismissRequest = { showInfoDialog = false },
             confirmButton = {
                 TextButton(onClick = { showInfoDialog = false }) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
             title = { Text(text = stringResource(R.string.wallpaper_info)) },
@@ -168,6 +168,7 @@ fun EditCurrentWallpaperScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val currentWallpaperTitle = stringResource(R.string.current_wallpaper)
     
     val wallBitmap = getCurrentWallpaperBitmap(context, true)
     
@@ -208,7 +209,7 @@ fun EditCurrentWallpaperScreen(
                     wallpaperViewModel.updateSettings(updatedSettings)
                     val wallInfo = WallpaperInfo(
                         id = "wallpaper_home",
-                        title = "current wallpaper",
+                        title = currentWallpaperTitle,
                         drawableRes = -1
                     )
                     mainScreenViewModel.onApplyConfirmed(
@@ -440,7 +441,7 @@ private fun CommonWallpaperPreview(
                     .padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
                 Text(
-                    text = "${(scale * 100).toInt()}%",
+                    text = stringResource(R.string.percentage_format, (scale * 100).toInt()),
                     color = Color.White,
                     style = MaterialTheme.typography.bodySmall
                 )

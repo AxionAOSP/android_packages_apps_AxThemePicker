@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">लागू करा</string>
+    <string name="applied">लागू केले</string>
+    <string name="back">मागे</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="close">बंद करा</string>
+    <string name="confirm">निश्चित करा</string>
+    <string name="edit">संपादन करा</string>
+    <string name="later">नंतर</string>
+    <string name="no">नाही</string>
+    <string name="reset">रीसेट करा</string>
+    <string name="undo">पूर्ववत करा</string>
+    <string name="setting_wallpaper">वॉलपेपर सेट करत आहे…</string>
+    <string name="wallpaper_applied_successfully">वॉलपेपर यशस्वीरित्या लागू झाला!</string>
+    <string name="failed_to_apply_wallpaper">वॉलपेपर लागू करण्यात अयशस्वी: %s</string>
+    <string name="cropped_percentage">%d%% क्रॉप केले</string>
+    <string name="ok">ठोक</string>
+    <string name="yes">हो</string>
+
+    <!-- Common Labels -->
+    <string name="info">माहिती</string>
+    <string name="more">अधिक</string>
+    <string name="none">काहीही नाही</string>
+    <string name="on">चालू</string>
+    <string name="off">बंद</string>
+    <string name="unknown">अज्ञात</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">वॉलपेपर</string>
+    <string name="nav_style">शैली</string>
+    <string name="nav_lockscreen">लॉक स्क्रीन</string>
+    <string name="colors">रंग</string>
+    <string name="fonts">फॉन्ट</string>
+    <string name="shortcuts">शॉर्टकट</string>
+    <string name="widgets">विजेट्स</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">सध्याचा वॉलपेपर</string>
+    <string name="customize_to_match_your_style">तुमच्या शैलीनुसार सानुकूलित करा</string>
+    <string name="discover_new_wallpapers">नवीन वॉलपेपर शोधा</string>
+    <string name="explore">एक्सप्लोर करा</string>
+    <string name="featured">वैशिष्ट्यीकृत</string>
+    <string name="curated_wallpapers_for_you">तुमच्यासाठी निवडलेले वॉलपेपर</string>
+    <string name="make_it_yours">तुमचे स्वतःचे बनवा</string>
+    <string name="photos">फोटो</string>
+    <string name="walls">वॉल</string>
+    <string name="wallpaper">वॉलपेपर</string>
+    <string name="wallpaper_photo">वॉलपेपर फोटो</string>
+    <string name="your_wallpaper">तुमचा वॉलपेपर</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">तुमचा सक्रिय वॉलपेपर सानुकूलित करा</string>
+    <string name="edit_current_wallpaper">सध्याचा वॉलपेपर संपादित करा</string>
+    <string name="header_collections">संग्रह</string>
+    <string name="header_wallpaper_gallery">वॉलपेपर गॅलरी</string>
+    <string name="latest_wallpapers">नवीनतम वॉलपेपर</string>
+    <string name="live_wallpapers">लाइव्ह वॉलपेपर</string>
+    <string name="more_wallpapers">अधिक वॉलपेपर</string>
+    <string name="my_photos">माझे फोटो</string>
+    <string name="recently_added_designs">अलीकडे जोडलेले डिझाइन</string>
+    <string name="view_all">सर्व पहा</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d क्युरेटेड श्रेणी</item>
+        <item quantity="other">%d क्युरेटेड श्रेणी</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d वॉलपेपर</item>
+        <item quantity="other">%d वॉलपेपर</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">वातावरण</string>
+    <string name="glass">काच</string>
+    <string name="home_screen">होम स्क्रीन</string>
+    <string name="lock_screen_label">लॉक स्क्रीन</string>
+    <string name="pinch_to_crop">क्रॉप करण्यासाठी पिंच करा</string>
+    <string name="select_at_least_one">किमान एक निवडा</string>
+    <string name="set_wallpaper">वॉलपेपर सेट करा</string>
+    <string name="set_wallpaper_on">येथे वॉलपेपर सेट करा</string>
+    <string name="wallpaper_info">वॉलपेपर माहिती</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects Beta™</string>
+    <string name="effects_beta_notice_desc">परिणाम तात्पुरते आहेत आणि कायम राहणार नाहीत. ते काढून टाकण्यासाठी नवीन वॉलपेपर लागू करा.</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">अ‍ॅप ग्रिड</string>
+    <string name="app_grid_title">अ‍ॅप ग्रिड</string>
+    <string name="home_screen_layout">होम स्क्रीन मांडणी</string>
+    <string name="home_screen_layout_title">होम स्क्रीन मांडणी</string>
+    <string name="make_your_device_uniquely_yours">तुमचे डिव्हाइस खास तुमचे बनवा</string>
+    <string name="personalize">वैयक्तिकृत करा</string>
+    <string name="pro_tip">प्रो टिप</string>
+    <string name="pro_tip_colors_message">तुमच्या वॉलपेपरमधून रंग आपोआप काढले जातात. सुसंवादी लुकसाठी वॉलपेपर रंग चालू करा.</string>
+    <string name="system_typography">सिस्टम टायपोग्राफी</string>
+    <string name="wallpaper_colors_and_themes">वॉलपेपर रंग आणि थीम्स</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">रंग सानुकूलनाबद्दल</string>
+    <string name="about_color_customization_desc">
+    Material You थीमींगला सपोर्ट करणाऱ्या सर्व अ‍ॅप्ससाठी सिस्टम-व्यापी रंग बदल लागू केले जातात.
+    \nहे रंग समायोजित केल्याने तुमच्या डिव्हाइसवरील अ‍ॅप्सच्या लुकवर परिणाम होऊ शकतो.
+    </string>
+    <string name="automatic">स्वयंचलित</string>
+    <string name="brightness">ब्राइटनेस</string>
+    <string name="chroma_boost_title">क्रोमा बूस्ट</string>
+    <string name="choose_seed_color">सीड रंग निवडा</string>
+    <string name="color_picker">रंग निवडीचे साधन</string>
+    <string name="colors_title">रंग</string>
+    <string name="contrast_high">उच्च</string>
+    <string name="contrast_level_title">कॉन्ट्रास्ट पातळी</string>
+    <string name="contrast_low">कमी</string>
+    <string name="contrast_normal">सामान्य</string>
+    <string name="custom">सानुकूल</string>
+    <string name="custom_seed_color_title">सानुकूल सीड रंग</string>
+    <string name="customize_palette_title">तुमची पॅलेट सानुकूलित करा</string>
+    <string name="customize_palette_description">
+        तुमच्या शैलीशी जुळणाऱ्या रंगांसह तुमचे डिव्हाइस वैयक्तिकृत करा
+    </string>
+    <string name="fidelity">फिडेलिटी</string>
+    <string name="fidelity_desc">रंग टोनसाठी फिडेलिटी वैशिष्ट्य चालू करा</string>
+    <string name="fine_tuning">फाईन ट्यूनिंग</string>
+    <string name="following_wallpaper">वॉलपेपरनुसार</string>
+    <string name="from_wallpaper">वॉलपेपरमधून</string>
+    <string name="hue">ह्यू</string>
+    <string name="pick_from_wallpaper">वॉलपेपरमधून निवडा</string>
+    <string name="selected_color">निवडलेला रंग</string>
+    <string name="selected_color_label">निवडलेला रंग:</string>
+    <string name="saturation">सॅच्युरेशन</string>
+    <string name="style_font_tip">A म्हणजे Axion :)</string>
+    <string name="custom_color_picker_desc">तुमचा सानुकूल रंग कसा निवडायचा ते निवडा:</string>
+    <string name="nav_action">क्रिया</string>
+    <string name="theme_colors">थीम रंग</string>
+    <string name="theme_style_title">थीम शैली</string>
+    <string name="theme_style_desc">सीडमधून रंग कसे तयार होतात ते परिभाषित करते</string>
+    <string name="use_wallpaper_colors_title">वॉलपेपर रंग वापरा</string>
+    <string name="use_wallpaper_colors_desc">तुमच्या वॉलपेपरमधून रंग काढा</string>
+    <string name="using_custom_color">सानुकूल रंग वापरत आहे</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">सक्रिय</string>
+    <string name="add_custom_font">सानुकूल फॉन्ट जोडा</string>
+    <string name="add_font">फॉन्ट जोडा</string>
+    <string name="change_custom_font">सानुकूल फॉन्ट बदला</string>
+    <string name="custom_font">सानुकूल फॉन्ट</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">फॉन्ट पूर्वावलोकन</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">भीती हा नाविन्याचा शत्रू आहे.</string>
+    <string name="font_style">फॉन्ट शैली</string>
+    <string name="font_title">फॉन्ट</string>
+    <string name="no_custom_font">कोणताही सानुकूल फॉन्ट नाही</string>
+    <string name="reboot_device">डिव्हाइस रीबूट करा</string>
+    <string name="reboot_now">आत्ता रीबूट करा</string>
+    <string name="reboot_required_title">रीबूट आवश्यक आहे</string>
+    <string name="reboot_required_message">फॉन्ट बदल लागू करण्यासाठी रीबूट आवश्यक आहे.\nतुम्हाला आत्ता रीबूट करायचे आहे का?</string>
+    <string name="reboot_required_custom_font_title">सानुकूल फॉन्ट बदलासाठी रीबूट आवश्यक आहे</string>
+    <string name="reboot_required_custom_font_desc">सानुकूल फॉन्ट बदलल्यानंतर रीबूट वगळल्यामुळे सर्व अ‍ॅप्समध्ये UI विसंगती येऊ शकतात.</string>
+    <string name="reset_custom_font_content_desc">सानुकूल फॉन्ट रीसेट करा</string>
+    <string name="reset_default_title">डिफॉल्टवर रीसेट करा</string>
+    <string name="reset_default_message">हे तुमचा फॉन्ट सिस्टम डिफॉल्ट फॉन्टवर रीसेट करेल. तुमची खात्री आहे का?</string>
+    <string name="toast_failed_apply_font">फॉन्ट लागू करण्यात अयशस्वी</string>
+    <string name="toast_invalid_font_file">अवैध फॉन्ट फाइल</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">शॉर्टकट जोडा</string>
+    <string name="add_information_at_a_glance">एका दृष्टीक्षेपात माहिती जोडा</string>
+    <string name="camera">कॅमेरा</string>
+    <string name="choose_your_time_format">तुमचे वेळ स्वरूप निवडा</string>
+    <string name="clock">घड्याळ</string>
+    <string name="clock_style">घड्याळ शैली</string>
+    <string name="device_controls">डिव्हाइस नियंत्रणे</string>
+    <string name="do_not_disturb">व्यत्यय आणू नका</string>
+    <string name="flashlight">फ्लॅशलाइट</string>
+    <string name="left_affordance">डावा शॉर्टकट</string>
+    <string name="lockscreen_customize_title">लॉक स्क्रीन स्वरूप</string>
+    <string name="lockscreen_customize_summary">लॉक स्क्रीन स्वरूप सानुकूलित करा</string>
+    <string name="lockscreen_title">लॉक स्क्रीन</string>
+    <string name="lockscreen_widgets_title">लॉक स्क्रीन विजेट्स</string>
+    <string name="lockscreen_widgets_enabled_title">लॉक स्क्रीन विजेट्स सक्षम करा</string>
+    <string name="lockscreen_widgets_enabled_summary">लॉक स्क्रीनवर विजेट्सना अनुमती द्या</string>
+    <string name="mute">म्यूट</string>
+    <string name="no_space_available">अधिक विजेट्ससाठी जागा उपलब्ध नाही</string>
+    <string name="personalize_your_experience">तुमचा अनुभव वैयक्तिकृत करा</string>
+    <string name="pick_widgets">विजेट्स निवडा</string>
+    <string name="qr_code_scanner">QR कोड स्कॅनर</string>
+    <string name="quick_access_to_your_favorites">तुमच्या आवडत्या गोष्टींमध्ये जलद प्रवेश</string>
+    <string name="right_affordance">उजवा शॉर्टकट</string>
+    <string name="selected_widgets">निवडलेले विजेट्स</string>
+    <string name="selected_widgets_empty">कोणतेही विजेट निवडले नाही</string>
+    <string name="selected_widgets_guide">हलवण्यासाठी लांब दाबा, काढण्यासाठी विजेटवर टॅप करा.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">सर्व सानुकूलन पर्याय पाहण्यासाठी पूर्वावलोकनावर टॅप करा</string>
+    <string name="tap_to_customize">सानुकूलित करण्यासाठी टॅप करा</string>
+    <string name="temperature_prev">२७°</string>
+    <string name="video_camera">व्हिडिओ कॅमेरा</string>
+    <string name="wallet">वॉलेट</string>
+    <string name="weather_prev">थोडं ढगाळ</string>
+    <string name="widget_bluetooth">ब्लूटूथ</string>
+    <string name="widget_data">डेटा</string>
+    <string name="widget_hotspot">हॉटस्पॉट</string>
+    <string name="widget_removed">विजेट काढले</string>
+    <string name="widget_ringer">रिंगर</string>
+    <string name="widget_torch">फ्लॅशलाइट</string>
+    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widgets_title">विजेट्स</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">डिफॉल्टवर रीसेट करा</string>
+    <string name="value_percentage">मूल्य: %d%%</string>
+    <string name="percentage_format">%d%%</string>
+    <string name="color_info_format">HEX: #%1$s सॅच्युरेशन: %2$.2f ब्राइटनेस: %3$.2f</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">प्रतिमा लोड करण्यात अयशस्वी</string>
+    <string name="no_image_provided">प्रतिमा प्रदान केलेली नाही</string>
+    <string name="shared_image">सामायिक केलेली प्रतिमा</string>
+    <string name="unable_to_load_image">प्रतिमा लोड करण्यात अक्षम</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s पूर्वावलोकन</string>
+    <string name="home_screen_preview">होम स्क्रीन पूर्वावलोकन</string>
+    <string name="wallpaper_background">वॉलपेपर पार्श्वभूमी</string>
+</resources>

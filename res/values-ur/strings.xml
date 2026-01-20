@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">نافذ کریں</string>
+    <string name="applied">نافذ ہو گیا</string>
+    <string name="back">پیچھے</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="close">بند کریں</string>
+    <string name="confirm">تصدیق کریں</string>
+    <string name="edit">ترمیم کریں</string>
+    <string name="later">بعد میں</string>
+    <string name="no">نہیں</string>
+    <string name="reset">ری سیٹ کریں</string>
+    <string name="undo">واپس کریں</string>
+    <string name="setting_wallpaper">وال پیپر سیٹ کیا جا رہا ہے…</string>
+    <string name="wallpaper_applied_successfully">وال پیپر کامیابی سے نافذ ہو گیا!</string>
+    <string name="failed_to_apply_wallpaper">وال پیپر نافذ کرنے میں ناکامی: %s</string>
+    <string name="cropped_percentage">%d%% کراپ کیا گیا</string>
+    <string name="ok">ٹھیک ہے</string>
+    <string name="yes">جی ہاں</string>
+
+    <!-- Common Labels -->
+    <string name="info">معلومات</string>
+    <string name="more">مزید</string>
+    <string name="none">کوئی نہیں</string>
+    <string name="on">آن</string>
+    <string name="off">آف</string>
+    <string name="unknown">نامعلوم</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">وال پیپر</string>
+    <string name="nav_style">انداز</string>
+    <string name="nav_lockscreen">لاک اسکرین</string>
+    <string name="colors">رنگ</string>
+    <string name="fonts">فونٹس</string>
+    <string name="shortcuts">شارٹ کٹس</string>
+    <string name="widgets">وجیٹس</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">موجودہ وال پیپر</string>
+    <string name="customize_to_match_your_style">اپنے انداز کے مطابق بنائیں</string>
+    <string name="discover_new_wallpapers">نئے وال پیپر تلاش کریں</string>
+    <string name="explore">تلاش کریں</string>
+    <string name="featured">نمایاں</string>
+    <string name="curated_wallpapers_for_you">آپ کے لیے منتخب کردہ وال پیپرز</string>
+    <string name="make_it_yours">اسے اپنا بنائیں</string>
+    <string name="photos">تصاویر</string>
+    <string name="walls">دیواریں</string>
+    <string name="wallpaper">وال پیپر</string>
+    <string name="wallpaper_photo">وال پیپر فوٹو</string>
+    <string name="your_wallpaper">آپ کا وال پیپر</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">اپنے فعال وال پیپر کو اپنی مرضی کے مطابق بنائیں</string>
+    <string name="edit_current_wallpaper">موجودہ وال پیپر میں ترمیم کریں</string>
+    <string name="header_collections">مجموعے</string>
+    <string name="header_wallpaper_gallery">وال پیپر گیلری</string>
+    <string name="latest_wallpapers">تازہ ترین وال پیپرز</string>
+    <string name="live_wallpapers">لائیو وال پیپرز</string>
+    <string name="more_wallpapers">مزید وال پیپرز</string>
+    <string name="my_photos">میری تصاویر</string>
+    <string name="recently_added_designs">حال ہی میں شامل کردہ ڈیزائن</string>
+    <string name="view_all">سب دیکھیں</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d منتخب زمرہ</item>
+        <item quantity="other">%d منتخب زمرے</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d وال پیپر</item>
+        <item quantity="other">%d وال پیپرز</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">ماحول</string>
+    <string name="glass">شیشہ</string>
+    <string name="home_screen">ہوم اسکرین</string>
+    <string name="lock_screen_label">لاک اسکرین</string>
+    <string name="pinch_to_crop">کراپ کرنے کے لیے چٹکی بھریں</string>
+    <string name="select_at_least_one">کم از کم ایک منتخب کریں</string>
+    <string name="set_wallpaper">وال پیپر سیٹ کریں</string>
+    <string name="set_wallpaper_on">وال پیپر سیٹ کریں پر</string>
+    <string name="wallpaper_info">وال پیپر کی معلومات</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects بیٹا™</string>
+    <string name="effects_beta_notice_desc">اثرات عارضی ہیں اور مستقل نہیں رہیں گے۔ انہیں ختم کرنے کے لیے نیا وال پیپر لگائیں۔</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">ایپ گرڈ</string>
+    <string name="app_grid_title">ایپ گرڈ</string>
+    <string name="home_screen_layout">ہوم اسکرین لے آؤٹ</string>
+    <string name="home_screen_layout_title">ہوم اسکرین لے آؤٹ</string>
+    <string name="make_your_device_uniquely_yours">اپنے آلے کو منفرد بنائیں</string>
+    <string name="personalize">ذاتی بنائیں</string>
+    <string name="pro_tip">پرو ٹپ</string>
+    <string name="pro_tip_colors_message">رنگ خود بخود آپ کے وال پیپر سے نکالے جاتے ہیں۔ ہم آہنگ شکل کے لیے وال پیپر کے رنگوں کو فعال کریں۔</string>
+    <string name="system_typography">سسٹم ٹائپوگرافی</string>
+    <string name="wallpaper_colors_and_themes">وال پیپر کے رنگ اور تھیمز</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">رنگوں کی تخصیص کے بارے میں</string>
+    <string name="about_color_customization_desc">
+    رنگوں کی تبدیلیاں ان تمام ایپس پر سسٹم بھر میں لاگو ہوتی ہیں جو Material You تھیمنگ کو سپورٹ کرتی ہیں۔
+    \nان رنگوں کو ایڈجسٹ کرنے سے آپ کے آلے کی ایپس کی ظاہری شکل متاثر ہو سکتی ہے۔
+    </string>
+    <string name="automatic">خودکار</string>
+    <string name="brightness">چمک</string>
+    <string name="chroma_boost_title">کروما بوسٹ</string>
+    <string name="choose_seed_color">بنیادی رنگ منتخب کریں</string>
+    <string name="color_picker">رنگ منتخب کرنے والا</string>
+    <string name="colors_title">رنگ</string>
+    <string name="contrast_high">زیادہ</string>
+    <string name="contrast_level_title">کنٹراسٹ لیول</string>
+    <string name="contrast_low">کم</string>
+    <string name="contrast_normal">نارمل</string>
+    <string name="custom">اپنی مرضی کے مطابق</string>
+    <string name="custom_seed_color_title">اپنی مرضی کا بنیادی رنگ</string>
+    <string name="customize_palette_title">اپنی پیلیٹ کو حسب ضرورت بنائیں</string>
+    <string name="customize_palette_description">
+        اپنے آلے کو ان رنگوں سے ذاتی بنائیں جو آپ کے انداز سے میل کھاتے ہوں
+    </string>
+    <string name="fidelity_title">وفاداری</string>
+    <string name="fidelity_desc">رنگوں کے لیے فیڈلٹی فیچر فعال کریں</string>
+    <string name="fine_tuning">باریک ٹیوننگ</string>
+    <string name="following_wallpaper">وال پیپر کے مطابق</string>
+    <string name="from_wallpaper">وال پیپر سے</string>
+    <string name="hue">رنگت</string>
+    <string name="pick_from_wallpaper">وال پیپر سے چنیں</string>
+    <string name="selected_color">منتخب کردہ رنگ</string>
+    <string name="selected_color_label">منتخب کردہ رنگ:</string>
+    <string name="saturation">سیرابی</string>
+    <string name="style_font_tip">A سے مراد Axion ہے :)</string>
+    <string name="custom_color_picker_desc">اپنا رنگ منتخب کرنے کا طریقہ چنیں:</string>
+    <string name="nav_action">کارروائی</string>
+    <string name="theme_colors">تھیم کے رنگ</string>
+    <string name="theme_style_title">تھیم کا انداز</string>
+    <string name="theme_style_desc">بیان کرتا ہے کہ بنیادی رنگ سے رنگ کیسے بنتے ہیں</string>
+    <string name="use_wallpaper_colors_title">وال پیپر کے رنگ استعمال کریں</string>
+    <string name="use_wallpaper_colors_desc">اپنے وال پیپر سے رنگ نکالیں</string>
+    <string name="using_custom_color">اپنی مرضی کا رنگ استعمال ہو رہا ہے</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">فعال</string>
+    <string name="add_custom_font">اپنی مرضی کا فونٹ شامل کریں</string>
+    <string name="add_font">فونٹ شامل کریں</string>
+    <string name="change_custom_font">اپنی مرضی کا فونٹ تبدیل کریں</string>
+    <string name="custom_font">اپنی مرضی کا فونٹ</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">فونٹ کا پیش نظارہ</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">خوف جدت کا دشمن ہے۔</string>
+    <string name="font_style">فونٹ کا انداز</string>
+    <string name="font_title">فونٹ</string>
+    <string name="no_custom_font">کوئی کسٹم فونٹ نہیں</string>
+    <string name="reboot_device">آلہ ری اسٹارٹ کریں</string>
+    <string name="reboot_now">ابھی ری اسٹارٹ کریں</string>
+    <string name="reboot_required_title">ری اسٹارٹ ضروری ہے</string>
+    <string name="reboot_required_message">فونٹ کی تبدیلیاں نافذ کرنے کے لیے ری اسٹارٹ ضروری ہے۔\nکیا آپ ابھی ری اسٹارٹ کرنا چاہیں گے؟</string>
+    <string name="reboot_required_custom_font_title">کسٹم فونٹ کی تبدیلیوں کے لیے ری اسٹارٹ ضروری ہے</string>
+    <string name="reboot_required_custom_font_desc">کسٹم فونٹ تبدیل کرنے کے بعد ری اسٹارٹ نہ کرنے سے ایپس میں UI کی بے ضابطگیاں ہو سکتی ہیں۔</string>
+    <string name="reset_custom_font_content_desc">کسٹم فونٹ ری سیٹ کریں</string>
+    <string name="reset_default_title">پہلے جیسا کریں</string>
+    <string name="reset_default_message">یہ آپ کے فونٹ کو ڈیفالٹ سسٹم فونٹ پر ری سیٹ کر دے گا۔ کیا آپ کو یقین ہے؟</string>
+    <string name="toast_failed_apply_font">فونٹ نافذ کرنے میں ناکامی</string>
+    <string name="toast_invalid_font_file">غلط فونٹ فائل</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">شارٹ کٹ شامل کریں</string>
+    <string name="add_information_at_a_glance">ایک نظر میں معلومات شامل کریں</string>
+    <string name="camera">کیمرہ</string>
+    <string name="choose_your_time_format">اپنا وقت کا فارمیٹ منتخب کریں</string>
+    <string name="clock">گھڑی</string>
+    <string name="clock_style">گھڑی کا انداز</string>
+    <string name="device_controls">آلے کے کنٹرولز</string>
+    <string name="do_not_disturb">پریشان نہ کریں</string>
+    <string name="flashlight">فلیش لائٹ</string>
+    <string name="left_affordance">بایاں شارٹ کٹ</string>
+    <string name="lockscreen_customize_title">لاک اسکرین کی ظاہری شکل</string>
+    <string name="lockscreen_customize_summary">لاک اسکرین کی ظاہری شکل کو ترتیب دیں</string>
+    <string name="lockscreen_title">لاک اسکرین</string>
+    <string name="lockscreen_widgets_title">لاک اسکرین وجیٹس</string>
+    <string name="lockscreen_widgets_enabled_title">لاک اسکرین وجیٹس فعال کریں</string>
+    <string name="lockscreen_widgets_enabled_summary">لاک اسکرین پر وجیٹس کی اجازت دیں</string>
+    <string name="mute">میوٹ</string>
+    <string name="no_space_available">مزید وجیٹس کے لیے جگہ نہیں ہے</string>
+    <string name="personalize_your_experience">اپنے تجربے کو ذاتی بنائیں</string>
+    <string name="pick_widgets">وجیٹس چنیں</string>
+    <string name="qr_code_scanner">کیو آر کوڈ اسکینر</string>
+    <string name="quick_access_to_your_favorites">اپنے پسندیدہ تک فوری رسائی</string>
+    <string name="right_affordance">دایاں شارٹ کٹ</string>
+    <string name="selected_widgets">منتخب کردہ وجیٹس</string>
+    <string name="selected_widgets_empty">کوئی وجیٹ منتخب نہیں کیا گیا</string>
+    <string name="selected_widgets_guide">کھینچنے اور چھوڑنے کے لیے دیر تک دبائیں، ختم کرنے کے لیے وجیٹ پر ٹیپ کریں۔</string>
+    <string name="tap_the_preview_to_see_all_customization_options">تمام آپشنز دیکھنے کے لیے پیش نظارہ پر ٹیپ کریں</string>
+    <string name="tap_to_customize">ترتیب دینے کے لیے ٹیپ کریں</string>
+    <string name="temperature_prev">27°</string>
+    <string name="video_camera">ویڈیو کیمرہ</string>
+    <string name="wallet">والٹ</string>
+    <string name="weather_prev">زیادہ تر ابر آلود</string>
+    <string name="widget_bluetooth">بلوٹوتھ</string>
+    <string name="widget_data">ڈیٹا</string>
+    <string name="widget_hotspot">ہاٹ اسپاٹ</string>
+    <string name="widget_removed">وجیٹ ختم کر دیا گیا</string>
+    <string name="widget_ringer">رنگر</string>
+    <string name="widget_torch">ٹارچ</string>
+    <string name="widget_wifi">وائی فائی</string>
+    <string name="widgets_title">وجیٹس</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">پہلے جیسا کریں</string>
+    <string name="value_percentage">قیمت: %d%%</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">تصویر لوڈ کرنے میں ناکامی</string>
+    <string name="no_image_provided">کوئی تصویر فراہم نہیں کی گئی</string>
+    <string name="shared_image">مشترکہ تصویر</string>
+    <string name="unable_to_load_image">تصویر لوڈ کرنے سے قاصر</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s کا پیش نظارہ</string>
+    <string name="home_screen_preview">ہوم اسکرین کا پیش نظارہ</string>
+    <string name="wallpaper_background">وال پیپر کا پس منظر</string>
+</resources>

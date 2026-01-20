@@ -105,7 +105,7 @@ fun FontScreen(
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             context,
-                            "Invalid font file",
+                            context.getString(R.string.toast_invalid_font_file),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -697,7 +697,7 @@ private fun ApplyButton(
             )
         } else {
             Text(
-                text = if (fontOptions.getOrNull(selectedIndex)?.isActive == true) "Applied" else "Apply",
+                text = stringResource(if (fontOptions.getOrNull(selectedIndex)?.isActive == true) R.string.applied else R.string.apply),
                 style = MaterialTheme.typography.titleLarge.copy(fontFamily = uiFontFamily),
                 fontWeight = FontWeight.Bold
             )
@@ -783,7 +783,7 @@ private fun FontOptionCard(
     val haptic = LocalHapticFeedback.current
 
     val displayLabel = if (option.label.contains("default", ignoreCase = true) && hasCustomFont) {
-        customFontName.ifEmpty { "Custom" }
+        customFontName.ifEmpty { stringResource(R.string.custom) }
     } else {
         option.label
     }

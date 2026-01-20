@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">Aplică</string>
+    <string name="applied">Aplicat</string>
+    <string name="back">Înapoi</string>
+    <string name="cancel">Anulează</string>
+    <string name="close">Închide</string>
+    <string name="confirm">Confirmă</string>
+    <string name="edit">Editează</string>
+    <string name="later">Mai târziu</string>
+    <string name="no">Nu</string>
+    <string name="reset">Resetează</string>
+    <string name="undo">Anulează acțiunea</string>
+    <string name="setting_wallpaper">Se setează fundalul…</string>
+    <string name="wallpaper_applied_successfully">Fundal aplicat cu succes!</string>
+    <string name="failed_to_apply_wallpaper">Eroare la aplicarea fundalului: %s</string>
+    <string name="cropped_percentage">Decupat %d%%</string>
+    <string name="ok">OK</string>
+    <string name="yes">Da</string>
+
+    <!-- Common Labels -->
+    <string name="info">Info</string>
+    <string name="more">Mai mult</string>
+    <string name="none">Niciunul</string>
+    <string name="on">Pornit</string>
+    <string name="off">Oprit</string>
+    <string name="unknown">Necunoscut</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">Fundal</string>
+    <string name="nav_style">Stil</string>
+    <string name="nav_lockscreen">Ecran de blocare</string>
+    <string name="colors">Culori</string>
+    <string name="fonts">Fonturi</string>
+    <string name="shortcuts">Scurtături</string>
+    <string name="widgets">Widgeturi</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">Fundal actual</string>
+    <string name="customize_to_match_your_style">Personalizează în funcție de stilul tău</string>
+    <string name="discover_new_wallpapers">Descoperă fundaluri noi</string>
+    <string name="explore">Explorează</string>
+    <string name="featured">Recomandate</string>
+    <string name="curated_wallpapers_for_you">Fundaluri selectate pentru tine</string>
+    <string name="make_it_yours">Fă-l al tău</string>
+    <string name="photos">Fotografii</string>
+    <string name="walls">Walls</string>
+    <string name="wallpaper">Fundal</string>
+    <string name="wallpaper_photo">Fotografie fundal</string>
+    <string name="your_wallpaper">Fundalul tău</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">Personalizează fundalul activ</string>
+    <string name="edit_current_wallpaper">Editează fundalul actual</string>
+    <string name="header_collections">Colecții</string>
+    <string name="header_wallpaper_gallery">Galerie fundaluri</string>
+    <string name="latest_wallpapers">Ultimele fundaluri</string>
+    <string name="live_wallpapers">Fundaluri live</string>
+    <string name="more_wallpapers">Mai multe fundaluri</string>
+    <string name="my_photos">Fotografiile mele</string>
+    <string name="recently_added_designs">Designuri adăugate recent</string>
+    <string name="view_all">Vezi tot</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d categorie selectată</item>
+        <item quantity="few">%d categorii selectate</item>
+        <item quantity="other">%d de categorii selectate</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d fundal</item>
+        <item quantity="few">%d fundaluri</item>
+        <item quantity="other">%d de fundaluri</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">Atmosferă</string>
+    <string name="glass">Sticlă</string>
+    <string name="home_screen">Ecran principal</string>
+    <string name="lock_screen_label">Ecran de blocare</string>
+    <string name="pinch_to_crop">Apropie degetele pentru a decupa</string>
+    <string name="select_at_least_one">Selectează cel puțin unul</string>
+    <string name="set_wallpaper">Setează fundalul</string>
+    <string name="set_wallpaper_on">Setează fundalul pe</string>
+    <string name="wallpaper_info">Info fundal</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects Beta™</string>
+    <string name="effects_beta_notice_desc">Efectele sunt temporare și nu vor persista. Aplică un fundal nou pentru a le elimina.</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">Grilă aplicații</string>
+    <string name="app_grid_title">Grilă aplicații</string>
+    <string name="home_screen_layout">Aspect ecran principal</string>
+    <string name="home_screen_layout_title">Aspect ecran principal</string>
+    <string name="make_your_device_uniquely_yours">Fă-ți dispozitivul unic</string>
+    <string name="personalize">Personalizează</string>
+    <string name="pro_tip">Sfat util</string>
+    <string name="pro_tip_colors_message">Culorile sunt extrase automat din fundal. Activează culorile fundalului pentru un aspect armonios.</string>
+    <string name="system_typography">Tipografie sistem</string>
+    <string name="wallpaper_colors_and_themes">Culori și teme fundal</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">Despre personalizarea culorilor</string>
+    <string name="about_color_customization_desc">
+    Modificările de culoare sunt aplicate la nivelul întregului sistem pentru toate aplicațiile care acceptă temele Material You.
+    \nReglarea acestor culori poate afecta aspectul aplicațiilor pe întregul dispozitiv.
+    </string>
+    <string name="automatic">Automat</string>
+    <string name="brightness">Luminozitate</string>
+    <string name="chroma_boost_title">Chroma Boost</string>
+    <string name="choose_seed_color">Alege culoarea de bază</string>
+    <string name="color_picker">Selector culori</string>
+    <string name="colors_title">Culori</string>
+    <string name="contrast_high">Ridicat</string>
+    <string name="contrast_level_title">Nivel contrast</string>
+    <string name="contrast_low">Scăzut</string>
+    <string name="contrast_normal">Normal</string>
+    <string name="custom">Personalizat</string>
+    <string name="custom_seed_color_title">Culoare de bază personalizată</string>
+    <string name="customize_palette_title">Personalizează-ți paleta</string>
+    <string name="customize_palette_description">
+        Personalizează-ți dispozitivul cu culori care se potrivesc stilului tău
+    </string>
+    <string name="fidelity_title">Fidelitate</string>
+    <string name="fidelity_desc">Activează funcția de fidelitate pentru nuanțe de culoare</string>
+    <string name="fine_tuning">Reglaj fin</string>
+    <string name="following_wallpaper">Conform fundalului</string>
+    <string name="from_wallpaper">Din fundal</string>
+    <string name="hue">Nuanță</string>
+    <string name="pick_from_wallpaper">Alege din fundal</string>
+    <string name="selected_color">Culoare selectată</string>
+    <string name="selected_color_label">Culoare selectată:</string>
+    <string name="saturation">Saturație</string>
+    <string name="style_font_tip">A este de la Axion :)</string>
+    <string name="custom_color_picker_desc">Alege cum să selectezi culoarea personalizată:</string>
+    <string name="nav_action">Acțiune</string>
+    <string name="theme_colors">Culori temă</string>
+    <string name="theme_style_title">Stil temă</string>
+    <string name="theme_style_desc">Definește modul în care sunt generate culorile din bază</string>
+    <string name="use_wallpaper_colors_title">Folosește culorile fundalului</string>
+    <string name="use_wallpaper_colors_desc">Extrage culorile din fundal</string>
+    <string name="using_custom_color">Se folosește o culoare personalizată</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">Activ</string>
+    <string name="add_custom_font">Adaugă font personalizat</string>
+    <string name="add_font">Adaugă font</string>
+    <string name="change_custom_font">Schimbă fontul personalizat</string>
+    <string name="custom_font">Font personalizat</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">Previzualizare font</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">Frica este inamicul inovației.</string>
+    <string name="font_style">Stil font</string>
+    <string name="font_title">Fonturi</string>
+    <string name="no_custom_font">Niciun font personalizat</string>
+    <string name="reboot_device">Repornește dispozitivul</string>
+    <string name="reboot_now">Repornește acum</string>
+    <string name="reboot_required_title">Repornire necesară</string>
+    <string name="reboot_required_message">Este necesară o repornire pentru a aplica modificările fontului.\nDorești să repornești acum?</string>
+    <string name="reboot_required_custom_font_title">Repornire necesară pentru schimbarea fontului personalizat</string>
+    <string name="reboot_required_custom_font_desc">Omiterea repornirii după schimbarea fontului personalizat poate cauza inconsistențe ale interfeței în aplicații.</string>
+    <string name="reset_custom_font_content_desc">Resetează fontul personalizat</string>
+    <string name="reset_default_title">Resetează la setările implicite</string>
+    <string name="reset_default_message">Acest lucru va reseta fontul la cel implicit al sistemului. Ești sigur?</string>
+    <string name="toast_failed_apply_font">Eroare la aplicarea fontului</string>
+    <string name="toast_invalid_font_file">Fișier font nevalid</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">Adaugă scurtătură</string>
+    <string name="add_information_at_a_glance">Adaugă informații dintr-o privire</string>
+    <string name="camera">Cameră foto</string>
+    <string name="choose_your_time_format">Alege formatul orei</string>
+    <string name="clock">Ceas</string>
+    <string name="clock_style">Stil ceas</string>
+    <string name="device_controls">Control dispozitive</string>
+    <string name="do_not_disturb">Nu deranjați</string>
+    <string name="flashlight">Lanternă</string>
+    <string name="left_affordance">Scurtătură stânga</string>
+    <string name="lockscreen_customize_title">Aspect ecran de blocare</string>
+    <string name="lockscreen_customize_summary">Personalizează aspectul ecranului de blocare</string>
+    <string name="lockscreen_title">Ecran de blocare</string>
+    <string name="lockscreen_widgets_title">Widgeturi ecran de blocare</string>
+    <string name="lockscreen_widgets_enabled_title">Activează widgeturi pe ecranul de blocare</string>
+    <string name="lockscreen_widgets_enabled_summary">Permite widgeturi pe ecranul de blocare</string>
+    <string name="mute">Fără sunet</string>
+    <string name="no_space_available">Nu mai există spațiu disponibil pentru alte widgeturi</string>
+    <string name="personalize_your_experience">Personalizează-ți experiența</string>
+    <string name="pick_widgets">Alege widgeturi</string>
+    <string name="qr_code_scanner">Scanner cod QR</string>
+    <string name="quick_access_to_your_favorites">Acces rapid la favorite</string>
+    <string name="right_affordance">Scurtătură dreapta</string>
+    <string name="selected_widgets">Widgeturi selectate</string>
+    <string name="selected_widgets_empty">Niciun widget selectat</string>
+    <string name="selected_widgets_guide">Apasă lung pentru a trage, atinge widgetul pentru a-l elimina.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Atinge previzualizarea pentru toate opțiunile</string>
+    <string name="tap_to_customize">Atinge pentru a personaliza</string>
+    <string name="temperature_prev">27°</string>
+    <string name="video_camera">Cameră video</string>
+    <string name="wallet">Portofel</string>
+    <string name="weather_prev">Preponderent noros</string>
+    <string name="widget_bluetooth">Bluetooth</string>
+    <string name="widget_data">Date</string>
+    <string name="widget_hotspot">Hotspot</string>
+    <string name="widget_removed">Widget eliminat</string>
+    <string name="widget_ringer">Sonerie</string>
+    <string name="widget_torch">Lanternă</string>
+    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widgets_title">Widgeturi</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">Resetează la valorile implicite</string>
+    <string name="value_percentage">Valoare: %d%%</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">Eroare la încărcarea imaginii</string>
+    <string name="no_image_provided">Nu a fost furnizată nicio imagine</string>
+    <string name="shared_image">Imagine partajată</string>
+    <string name="unable_to_load_image">Nu se poate încărca imaginea</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">Previzualizare %s</string>
+    <string name="home_screen_preview">Previzualizare ecran principal</string>
+    <string name="wallpaper_background">Fundal fundal</string>
+</resources>

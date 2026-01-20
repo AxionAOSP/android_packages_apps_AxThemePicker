@@ -356,13 +356,13 @@ private fun FontsCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "Aa",
+                    text = stringResource(R.string.font_preview_aa),
                     style = MaterialTheme.typography.displayLarge,
                     fontWeight = FontWeight.Bold,
                     color = colors.primary
                 )
                 Text(
-                    text = "A is for Axion :)",
+                    text = stringResource(R.string.style_font_tip),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant
                 )

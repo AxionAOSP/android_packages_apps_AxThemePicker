@@ -19,30 +19,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.android.axion.themepicker.R
 
 sealed class NavigationDestination(
     val route: String,
-    val label: String,
+    val labelRes: Int,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
 ) {
     object Wallpaper : NavigationDestination(
         route = "wallpaper",
-        label = "Wallpaper",
+        labelRes = R.string.nav_wallpaper,
         selectedIcon = Icons.Filled.Wallpaper,
         unselectedIcon = Icons.Outlined.Wallpaper
     )
     
     object Style : NavigationDestination(
         route = "style",
-        label = "Style",
+        labelRes = R.string.nav_style,
         selectedIcon = Icons.Filled.Palette,
         unselectedIcon = Icons.Outlined.Palette
     )
     
     object Lockscreen : NavigationDestination(
         route = "lockscreen",
-        label = "Lock screen",
+        labelRes = R.string.nav_lockscreen,
         selectedIcon = Icons.Filled.Lock,
         unselectedIcon = Icons.Outlined.Lock
     )

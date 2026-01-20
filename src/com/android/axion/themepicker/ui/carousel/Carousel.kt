@@ -133,7 +133,7 @@ fun WallpaperCarouselCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.MoreHoriz,
-                        contentDescription = "More wallpapers",
+                        contentDescription = stringResource(R.string.more_wallpapers),
                         tint = colors.onSurface
                     )
                 }

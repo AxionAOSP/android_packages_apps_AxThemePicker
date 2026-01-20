@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">பயன்படுத்து</string>
+    <string name="applied">பயன்படுத்தப்பட்டது</string>
+    <string name="back">பின்செல்</string>
+    <string name="cancel">ரத்துசெய்</string>
+    <string name="close">மூடு</string>
+    <string name="confirm">உறுதிசெய்</string>
+    <string name="edit">திருத்து</string>
+    <string name="later">பிறகு</string>
+    <string name="no">இல்லை</string>
+    <string name="reset">மீட்டமை</string>
+    <string name="undo">பின்செய்</string>
+    <string name="setting_wallpaper">வால்பேப்பர் அமைக்கப்படுகிறது…</string>
+    <string name="wallpaper_applied_successfully">வால்பேப்பர் வெற்றிகரமாக அமைக்கப்பட்டது!</string>
+    <string name="failed_to_apply_wallpaper">வால்பேப்பரை அமைக்க முடியவில்லை: %s</string>
+    <string name="cropped_percentage">%d%% செதுக்கப்பட்டது</string>
+    <string name="ok">சரி</string>
+    <string name="yes">ஆம்</string>
+
+    <!-- Common Labels -->
+    <string name="info">தகவல்</string>
+    <string name="more">மேலும்</string>
+    <string name="none">ஏதுமில்லை</string>
+    <string name="on">ஆன்</string>
+    <string name="off">ஆஃப்</string>
+    <string name="unknown">தெரியவில்லை</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">வால்பேப்பர்</string>
+    <string name="nav_style">ஸ்டைல்</string>
+    <string name="nav_lockscreen">லாக் ஸ்கிரீன்</string>
+    <string name="colors">நிறங்கள்</string>
+    <string name="fonts">எழுத்துருக்கள்</string>
+    <string name="shortcuts">குறுக்குவழிகள்</string>
+    <string name="widgets">விட்ஜெட்டுகள்</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">தற்போதைய வால்பேப்பர்</string>
+    <string name="customize_to_match_your_style">உங்கள் ஸ்டைலுக்கு ஏற்ப மாற்றியமைக்கவும்</string>
+    <string name="discover_new_wallpapers">புதிய வால்பேப்பர்களைக் கண்டறியவும்</string>
+    <string name="explore">ஆராய்க</string>
+    <string name="featured">சிறப்பு</string>
+    <string name="curated_wallpapers_for_you">உங்களுக்காகத் தொகுக்கப்பட்ட வால்பேப்பர்கள்</string>
+    <string name="make_it_yours">உங்களுடையதாக ஆக்குங்கள்</string>
+    <string name="photos">புகைப்படங்கள்</string>
+    <string name="walls">சுவர்கள்</string>
+    <string name="wallpaper">வால்பேப்பர்</string>
+    <string name="wallpaper_photo">வால்பேப்பர் புகைப்படம்</string>
+    <string name="your_wallpaper">உங்கள் வால்பேப்பர்</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">தற்போதைய வால்பேப்பரை மாற்றியமைக்கவும்</string>
+    <string name="edit_current_wallpaper">தற்போதைய வால்பேப்பரைத் திருத்தவும்</string>
+    <string name="header_collections">தொகுப்புகள்</string>
+    <string name="header_wallpaper_gallery">வால்பேப்பர் கேலரி</string>
+    <string name="latest_wallpapers">சமீபத்திய வால்பேப்பர்கள்</string>
+    <string name="live_wallpapers">லைவ் வால்பேப்பர்கள்</string>
+    <string name="more_wallpapers">கூடுதல் வால்பேப்பர்கள்</string>
+    <string name="my_photos">எனது புகைப்படங்கள்</string>
+    <string name="recently_added_designs">சமீபத்தில் சேர்க்கப்பட்ட வடிவமைப்புகள்</string>
+    <string name="view_all">அனைத்தையும் காண்க</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d தொகுக்கப்பட்ட வகை</item>
+        <item quantity="other">%d தொகுக்கப்பட்ட வகைகள்</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d வால்பேப்பர்</item>
+        <item quantity="other">%d வால்பேப்பர்கள்</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">வளிமண்டலம்</string>
+    <string name="glass">கண்ணாடி</string>
+    <string name="home_screen">முகப்புத் திரை</string>
+    <string name="lock_screen_label">லாக் ஸ்கிரீன்</string>
+    <string name="pinch_to_crop">செதுக்க விரல்களைக் குவிக்கவும்</string>
+    <string name="select_at_least_one">குறைந்தது ஒன்றை தேர்ந்தெடுக்கவும்</string>
+    <string name="set_wallpaper">வால்பேப்பரை அமை</string>
+    <string name="set_wallpaper_on">வால்பேப்பரை அமைக்குமிடம்</string>
+    <string name="wallpaper_info">வால்பேப்பர் தகவல்</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects பீட்டா™</string>
+    <string name="effects_beta_notice_desc">விளைவுகள் தற்காலிகமானவை, நிலைக்காது. அவற்றை அகற்ற புதிய வால்பேப்பரைப் பயன்படுத்தவும்.</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">ஆப் கிரிட்</string>
+    <string name="app_grid_title">ஆப் கிரிட்</string>
+    <string name="home_screen_layout">முகப்புத் திரை தளவமைப்பு</string>
+    <string name="home_screen_layout_title">முகப்புத் திரை தளவமைப்பு</string>
+    <string name="make_your_device_uniquely_yours">உங்கள் சாதனத்தைத் தனித்துவமாக்குங்கள்</string>
+    <string name="personalize">தனிப்பயனாக்கு</string>
+    <string name="pro_tip">ப்ரோ டிப்</string>
+    <string name="pro_tip_colors_message">வால்பேப்பரிலிருந்து நிறங்கள் தானாகவே எடுக்கப்படும். சீரான தோற்றத்திற்கு வால்பேப்பர் நிறங்களை இயக்கவும்.</string>
+    <string name="system_typography">முறைமை அச்சுக்கலை</string>
+    <string name="wallpaper_colors_and_themes">வால்பேப்பர் நிறங்கள் மற்றும் தீம்கள்</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">நிறத் தனிப்பயனாக்கம் பற்றி</string>
+    <string name="about_color_customization_desc">
+    Material You தீமிங்கை ஆதரிக்கும் அனைத்து ஆப்ஸுக்கும் முறைமை முழுவதும் நிற மாற்றங்கள் பயன்படுத்தப்படும்.
+    \nஇந்த நிறங்களைச் சரிசெய்வது உங்கள் சாதனத்திலுள்ள ஆப்ஸின் தோற்றத்தைப் பாதிக்கலாம்.
+    </string>
+    <string name="automatic">தானியங்கி</string>
+    <string name="brightness">ஒளிர்வு</string>
+    <string name="chroma_boost_title">க்ரோமா பூஸ்ட்</string>
+    <string name="choose_seed_color">அடிப்படை நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="color_picker">நிறத் தேர்வி</string>
+    <string name="colors_title">நிறங்கள்</string>
+    <string name="contrast_high">அதிகம்</string>
+    <string name="contrast_level_title">மாறுபாட்டு நிலை</string>
+    <string name="contrast_low">குறைவு</string>
+    <string name="contrast_normal">சாதாரணமானது</string>
+    <string name="custom">தனிப்பயன்</string>
+    <string name="custom_seed_color_title">தனிப்பயன் அடிப்படை நிறம்</string>
+    <string name="customize_palette_title">உங்கள் தட்டைத் தனிப்பயனாக்குங்கள்</string>
+    <string name="customize_palette_description">
+        உங்கள் ஸ்டைலுக்கு ஏற்ற நிறங்களுடன் உங்கள் சாதனத்தைத் தனிப்பயனாக்குங்கள்
+    </string>
+    <string name="fidelity_title">துல்லியம்</string>
+    <string name="fidelity_desc">நிறச் சாயல்களுக்கான துல்லிய அம்சத்தை இயக்கவும்</string>
+    <string name="fine_tuning">நுணுக்கமான சரிசெய்தல்</string>
+    <string name="following_wallpaper">வால்பேப்பரைப் பின்பற்றுகிறது</string>
+    <string name="from_wallpaper">வால்பேப்பரிலிருந்து</string>
+    <string name="hue">நிறச் சாயல்</string>
+    <string name="pick_from_wallpaper">வால்பேப்பரிலிருந்து தேர்ந்தெடுக்கவும்</string>
+    <string name="selected_color">தேர்ந்தெடுக்கப்பட்ட நிறம்</string>
+    <string name="selected_color_label">தேர்ந்தெடுக்கப்பட்ட நிறம்:</string>
+    <string name="saturation">செறிவூட்டல்</string>
+    <string name="style_font_tip">A என்பது Axion-ஐக் குறிக்கும் :)</string>
+    <string name="custom_color_picker_desc">உங்கள் தனிப்பயன் நிறத்தைத் தேர்ந்தெடுக்கும் முறையைத் தேர்ந்தெடுக்கவும்:</string>
+    <string name="nav_action">செயல்</string>
+    <string name="theme_colors">தீம் நிறங்கள்</string>
+    <string name="theme_style_title">தீம் ஸ்டைல்</string>
+    <string name="theme_style_desc">அடிப்படையிலிருந்து நிறங்கள் எவ்வாறு உருவாக்கப்படுகின்றன என்பதை வரையறுக்கிறது</string>
+    <string name="use_wallpaper_colors_title">வால்பேப்பர் நிறங்களைப் பயன்படுத்து</string>
+    <string name="use_wallpaper_colors_desc">உங்கள் வால்பேப்பரிலிருந்து நிறங்களை எடுக்கவும்</string>
+    <string name="using_custom_color">தனிப்பயன் நிறத்தைப் பயன்படுத்துகிறது</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">செயலில் உள்ளது</string>
+    <string name="add_custom_font">தனிப்பயன் எழுத்துருவைச் சேர்</string>
+    <string name="add_font">எழுத்துருவைச் சேர்</string>
+    <string name="change_custom_font">தனிப்பயன் எழுத்துருவை மாற்று</string>
+    <string name="custom_font">தனிப்பயன் எழுத்துரு</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">எழுத்துரு மாதிரிக்காட்சி</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">அச்சமே கண்டுபிடிப்பின் எதிரி.</string>
+    <string name="font_style">எழுத்துரு ஸ்டைல்</string>
+    <string name="font_title">எழுத்துரு</string>
+    <string name="no_custom_font">தனிப்பயன் எழுத்துரு இல்லை</string>
+    <string name="reboot_device">சாதனத்தை மறுதொடக்கம் செய்</string>
+    <string name="reboot_now">இப்போதே மறுதொடக்கம் செய்</string>
+    <string name="reboot_required_title">மறுதொடக்கம் தேவை</string>
+    <string name="reboot_required_message">எழுத்துரு மாற்றங்களைப் பயன்படுத்த மறுதொடக்கம் தேவை.\nஇப்போது மறுதொடக்கம் செய்ய விரும்புகிறீர்களா?</string>
+    <string name="reboot_required_custom_font_title">தனிப்பயன் எழுத்துரு மாற்றங்களுக்கு மறுதொடக்கம் தேவை</string>
+    <string name="reboot_required_custom_font_desc">தனிப்பயன் எழுத்துருவை மாற்றிய பின் மறுதொடக்கம் செய்வதைத் தவிர்ப்பது ஆப்ஸில் முரண்பாடுகளை ஏற்படுத்தலாம்.</string>
+    <string name="reset_custom_font_content_desc">தனிப்பயன் எழுத்துருவை மீட்டமை</string>
+    <string name="reset_default_title">இயல்புநிலைக்கு மீட்டமை</string>
+    <string name="reset_default_message">இது உங்கள் எழுத்துருவை முறைமை இயல்புநிலை எழுத்துருவுக்கு மீட்டமைக்கும். உறுதியாகவா?</string>
+    <string name="toast_failed_apply_font">எழுத்துருவைப் பயன்படுத்துவதில் தோல்வி</string>
+    <string name="toast_invalid_font_file">தவறான எழுத்துரு கோப்பு</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">குறுக்குவழியைச் சேர்</string>
+    <string name="add_information_at_a_glance">மேலோட்டத் தகவலைச் சேர்</string>
+    <string name="camera">கேமரா</string>
+    <string name="choose_your_time_format">நேர வடிவமைப்பைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="clock">கடிகாரம்</string>
+    <string name="clock_style">கடிகார ஸ்டைல்</string>
+    <string name="device_controls">சாதனக் கட்டுப்பாடுகள்</string>
+    <string name="do_not_disturb">தொந்தரவு செய்யாதே</string>
+    <string name="flashlight">ஃப்ளாஷ்லைட்</string>
+    <string name="left_affordance">இடது குறுக்குவழி</string>
+    <string name="lockscreen_customize_title">லாக் ஸ்கிரீன் தோற்றம்</string>
+    <string name="lockscreen_customize_summary">லாக் ஸ்கிரீன் தோற்றத்தைத் தனிப்பயனாக்கு</string>
+    <string name="lockscreen_title">லாக் ஸ்கிரீன்</string>
+    <string name="lockscreen_widgets_title">லாக் ஸ்கிரீன் விட்ஜெட்டுகள்</string>
+    <string name="lockscreen_widgets_enabled_title">லாக் ஸ்கிரீன் விட்ஜெட்டுகளை இயக்கு</string>
+    <string name="lockscreen_widgets_enabled_summary">லாக் ஸ்கிரீனில் விட்ஜெட்டுகளை அனுமதி</string>
+    <string name="mute">மௌனம்</string>
+    <string name="no_space_available">கூடுதல் விட்ஜெட்டுகளுக்கு இடமில்லை</string>
+    <string name="personalize_your_experience">உங்கள் அனுபவத்தைத் தனிப்பயனாக்குங்கள்</string>
+    <string name="pick_widgets">விட்ஜெட்டுகளைத் தேர்ந்தெடு</string>
+    <string name="qr_code_scanner">QR குறியீடு ஸ்கேனர்</string>
+    <string name="quick_access_to_your_favorites">உங்களுக்குப் பிடித்தவற்றுக்கான விரைவான அணுகல்</string>
+    <string name="right_affordance">வலது குறுக்குவழி</string>
+    <string name="selected_widgets">தேர்ந்தெடுக்கப்பட்ட விட்ஜெட்டுகள்</string>
+    <string name="selected_widgets_empty">விட்ஜெட்டுகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை</string>
+    <string name="selected_widgets_guide">இழுக்க நீண்ட நேரம் அழுத்தவும், நீக்க விட்ஜெட்டைத் தட்டவும்.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">அனைத்து விருப்பங்களையும் காண மாதிரிக்காட்சியைத் தட்டவும்</string>
+    <string name="tap_to_customize">தனிப்பயனாக்கத் தட்டவும்</string>
+    <string name="temperature_prev">27°</string>
+    <string name="video_camera">வீடியோ கேமரா</string>
+    <string name="wallet">வாலட்</string>
+    <string name="weather_prev">பெரும்பாலும் மேகமூட்டம்</string>
+    <string name="widget_bluetooth">புளூடூத்</string>
+    <string name="widget_data">டேட்டா</string>
+    <string name="widget_hotspot">ஹாட்ஸ்பாட்</string>
+    <string name="widget_removed">விட்ஜெட் நீக்கப்பட்டது</string>
+    <string name="widget_ringer">ரிங்கர்</string>
+    <string name="widget_torch">ஃப்ளாஷ்லைட்</string>
+    <string name="widget_wifi">வைஃபை</string>
+    <string name="widgets_title">விட்ஜெட்டுகள்</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">இயல்புநிலைக்கு மீட்டமை</string>
+    <string name="value_percentage">மதிப்பு: %d%%</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">படத்தை ஏற்ற முடியவில்லை</string>
+    <string name="no_image_provided">படம் வழங்கப்படவில்லை</string>
+    <string name="shared_image">பகிரப்பட்ட படம்</string>
+    <string name="unable_to_load_image">படத்தை ஏற்ற இயலவில்லை</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s மாதிரிக்காட்சி</string>
+    <string name="home_screen_preview">முகப்புத் திரை மாதிரிக்காட்சி</string>
+    <string name="wallpaper_background">வால்பேப்பர் பின்னணி</string>
+</resources>

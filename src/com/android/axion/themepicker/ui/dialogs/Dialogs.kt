@@ -131,7 +131,7 @@ fun StylePickerDialog(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         }
@@ -202,7 +202,7 @@ fun ColorPickerDialog(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "saturation",
+                    text = stringResource(R.string.saturation),
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
@@ -236,7 +236,12 @@ fun ColorPickerDialog(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "HEX: #${String.format("%06X", 0xFFFFFF and selectedColor.toArgb())} saturation: $saturation brightness: $brightness",
+                    text = stringResource(
+                        R.string.color_info_format,
+                        String.format("%06X", 0xFFFFFF and selectedColor.toArgb()),
+                        saturation,
+                        brightness
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
@@ -246,11 +251,11 @@ fun ColorPickerDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(onClick = { onColorSelected(selectedColor) }) {
-                        Text("Apply")
+                        Text(stringResource(R.string.apply))
                     }
                 }
             }
@@ -510,7 +515,7 @@ fun WallpaperColorPickerDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                          Text(
-                            text = "Selected Color:",
+                            text = stringResource(R.string.selected_color_label),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(end = 12.dp)
                         )
@@ -540,14 +545,14 @@ fun WallpaperColorPickerDialog(
                         horizontalArrangement = Arrangement.End
                     ) {
                         TextButton(onClick = onDismiss) {
-                            Text("Cancel")
+                            Text(stringResource(R.string.cancel))
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(
                             onClick = { selectedColor?.let { onColorSelected(it) } },
                             enabled = selectedColor != null
                         ) {
-                            Text("Apply")
+                            Text(stringResource(R.string.apply))
                         }
                     }
                 } else {

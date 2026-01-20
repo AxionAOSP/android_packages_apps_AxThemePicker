@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.android.axion.themepicker.data.model.NavigationDestination
 import com.android.axion.themepicker.ui.theme.*
@@ -124,7 +125,7 @@ private fun ExpressiveNavigationRail(
                 },
                 label = {
                     Text(
-                        text = destination.label,
+                        text = stringResource(destination.labelRes),
                         style = MaterialTheme.typography.labelMedium
                     )
                 },
@@ -171,7 +172,7 @@ private fun ExpressiveBottomBar(
                 },
                 label = {
                     Text(
-                        text = destination.label,
+                        text = stringResource(destination.labelRes),
                         style = MaterialTheme.typography.labelMedium
                     )
                 },
@@ -203,7 +204,7 @@ private fun ExpressiveNavIcon(
     
     Icon(
         imageVector = if (selected) destination.selectedIcon else destination.unselectedIcon,
-        contentDescription = destination.label,
+        contentDescription = stringResource(destination.labelRes),
         modifier = modifier.graphicsLayer {
             scaleX = scale
             scaleY = scale

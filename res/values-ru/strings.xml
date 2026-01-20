@@ -12,6 +12,11 @@
     <string name="no">Нет</string>
     <string name="reset">Сброс</string>
     <string name="undo">Отменить</string>
+    <string name="setting_wallpaper">Установка обоев…</string>
+    <string name="wallpaper_applied_successfully">Обои успешно применены!</string>
+    <string name="failed_to_apply_wallpaper">Не удалось применить обои: %s</string>
+    <string name="cropped_percentage">Обрезано %d%%</string>
+    <string name="ok">ОК</string>
     <string name="yes">Да</string>
 
     <!-- Common Labels -->
@@ -23,6 +28,9 @@
     <string name="unknown">Неизвестно</string>
 
     <!-- Navigation Sections -->
+    <string name="nav_wallpaper">Обои</string>
+    <string name="nav_style">Стиль</string>
+    <string name="nav_lockscreen">Блокировка</string>
     <string name="colors">Цвета</string>
     <string name="fonts">Шрифты</string>
     <string name="shortcuts">Ярлыки</string>
@@ -124,6 +132,11 @@
     <string name="hue">Оттенок</string>
     <string name="pick_from_wallpaper">Выбрать из обоев</string>
     <string name="selected_color">Выбранный цвет</string>
+    <string name="selected_color_label">Выбранный цвет:</string>
+    <string name="saturation">Насыщенность</string>
+    <string name="style_font_tip">A - значит Axion :)</string>
+    <string name="custom_color_picker_desc">Выберите, как выбрать свой цвет:</string>
+    <string name="nav_action">Действие</string>
     <string name="theme_colors">Цвета темы</string>
     <string name="theme_style_title">Стиль темы</string>
     <string name="theme_style_desc">Определяет, как генерируются цвета из основного</string>
@@ -209,6 +222,7 @@
     <string name="unable_to_load_image">Невозможно загрузить изображение</string>
 
     <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s предпросмотр</string>
     <string name="home_screen_preview">Предпросмотр главного экрана</string>
     <string name="wallpaper_background">Фон обоев</string>
 </resources>

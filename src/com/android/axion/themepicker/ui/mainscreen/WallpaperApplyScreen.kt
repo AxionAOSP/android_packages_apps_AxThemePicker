@@ -211,7 +211,7 @@ fun WallpaperApplyScreen(
                     homescreenSelected = homescreenSelected
                 ) {
                     isApplying = false
-                    Toast.makeText(context, "Wallpaper successfully applied!", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, context.getString(R.string.wallpaper_applied_successfully), Toast.LENGTH_SHORT)
                         .show()
                     wallpaperViewModel.updateSettings(updated)
                     mainScreenViewModel.resetToMain()
@@ -324,7 +324,7 @@ fun WallpaperPreviewBox(
                     } else {
                         Image(
                             painter = BitmapPainter(bitmap.asImageBitmap()),
-                            contentDescription = "$label preview",
+                            contentDescription = stringResource(R.string.preview_label, label),
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(13.dp)),
@@ -394,7 +394,7 @@ fun WallpaperZoomIndicator(zoomProperties: ZoomProperties) {
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        "Cropped ${(zoomProperties.scale * 100).toInt()}%",
+                        stringResource(R.string.cropped_percentage, (zoomProperties.scale * 100).toInt()),
                         style = MaterialTheme.typography.bodySmall,
                         color = colors.onSecondaryContainer
                     )
@@ -447,7 +447,7 @@ fun ApplyingWallpaperDialog(isApplying: Boolean) {
                         strokeWidth = 2.dp
                     )
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text("Setting wallpaper...")
+                    Text(stringResource(R.string.setting_wallpaper))
                 }
             },
             confirmButton = {}

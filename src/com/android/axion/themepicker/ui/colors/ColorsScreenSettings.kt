@@ -247,7 +247,7 @@ private fun ColorSourceCard(
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Choose how to pick your custom color:",
+                        text = stringResource(R.string.custom_color_picker_desc),
                         style = MaterialTheme.typography.labelMedium,
                         color = colors.onSurfaceVariant,
                         modifier = Modifier.padding(top = 4.dp)
@@ -551,7 +551,7 @@ private fun AdvancedColorsCard(
                 value = chromaBoost,
                 onValueChange = onChromaChange,
                 valueRange = 0f..100f,
-                valueLabel = "${chromaBoost.toInt()}%"
+                valueLabel = stringResource(R.string.percentage_format, chromaBoost.toInt())
             )
         }
     }

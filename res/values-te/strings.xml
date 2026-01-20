@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common Actions -->
+    <string name="apply">వర్తింపజేయి</string>
+    <string name="applied">వర్తింపజేయబడింది</string>
+    <string name="back">వెనుకకు</string>
+    <string name="cancel">రద్దు చేయి</string>
+    <string name="close">మూసివేయి</string>
+    <string name="confirm">నిర్ధారించు</string>
+    <string name="edit">సవరించు</string>
+    <string name="later">తర్వాత</string>
+    <string name="no">కాదు</string>
+    <string name="reset">రీసెట్ చేయి</string>
+    <string name="undo">వెనక్కి తీసుకో</string>
+    <string name="setting_wallpaper">వాల్‌పేపర్‌ని సెట్ చేస్తోంది…</string>
+    <string name="wallpaper_applied_successfully">వాల్‌పేపర్ విజయవంతంగా వర్తింపజేయబడింది!</string>
+    <string name="failed_to_apply_wallpaper">వాల్‌పేపర్‌ని వర్తింపజేయడంలో విఫలమైంది: %s</string>
+    <string name="cropped_percentage">%d%% క్రాప్ చేయబడింది</string>
+    <string name="ok">సరే</string>
+    <string name="yes">అవును</string>
+
+    <!-- Common Labels -->
+    <string name="info">సమాచారం</string>
+    <string name="more">మరిన్ని</string>
+    <string name="none">ఏదీ లేదు</string>
+    <string name="on">ఆన్</string>
+    <string name="off">ఆఫ్</string>
+    <string name="unknown">తెలియదు</string>
+
+    <!-- Navigation Sections -->
+    <string name="nav_wallpaper">వాల్‌పేపర్</string>
+    <string name="nav_style">శైలి</string>
+    <string name="nav_lockscreen">లాక్ స్క్రీన్</string>
+    <string name="colors">రంగులు</string>
+    <string name="fonts">ఫాంట్లు</string>
+    <string name="shortcuts">షార్ట్‌కట్లు</string>
+    <string name="widgets">విడ్జెట్లు</string>
+
+    <!-- Wallpaper Section -->
+    <string name="current_wallpaper">ప్రస్తుత వాల్‌పేపర్</string>
+    <string name="customize_to_match_your_style">మీ శైలికి అనుగుణంగా అనుకూలీకరించండి</string>
+    <string name="discover_new_wallpapers">కొత్త వాల్‌పేపర్‌లను కనుగొనండి</string>
+    <string name="explore">అన్వేషించండి</string>
+    <string name="featured">ఫీచర్ చేయబడినవి</string>
+    <string name="curated_wallpapers_for_you">మీ కోసం ఎంచుకున్న వాల్‌పేపర్‌లు</string>
+    <string name="make_it_yours">దీనిని మీ స్వంతం చేసుకోండి</string>
+    <string name="photos">ఫోటోలు</string>
+    <string name="walls">గోడలు</string>
+    <string name="wallpaper">వాల్‌పేపర్</string>
+    <string name="wallpaper_photo">వాల్‌పేపర్ ఫోటో</string>
+    <string name="your_wallpaper">మీ వాల్‌పేపర్</string>
+
+    <!-- Wallpaper Gallery -->
+    <string name="customize_active_wallpaper">మీ క్రియాశీల వాల్‌పేపర్‌ని అనుకూలీకరించండి</string>
+    <string name="edit_current_wallpaper">ప్రస్తుత వాల్‌పేపర్‌ని సవరించండి</string>
+    <string name="header_collections">సేకరణలు</string>
+    <string name="header_wallpaper_gallery">వాల్‌పేపర్ గ్యాలరీ</string>
+    <string name="latest_wallpapers">తాజా వాల్‌పేపర్‌లు</string>
+    <string name="live_wallpapers">లైవ్ వాల్‌పేపర్‌లు</string>
+    <string name="more_wallpapers">మరిన్ని వాల్‌పేపర్‌లు</string>
+    <string name="my_photos">నా ఫోటోలు</string>
+    <string name="recently_added_designs">ఇటీవల జోడించిన డిజైన్లు</string>
+    <string name="view_all">అన్నీ చూడండి</string>
+    <plurals name="curated_categories">
+        <item quantity="one">%d ఎంచుకున్న వర్గం</item>
+        <item quantity="other">%d ఎంచుకున్న వర్గాలు</item>
+    </plurals>
+    <plurals name="wallpaper_count">
+        <item quantity="one">%d వాల్‌పేపర్</item>
+        <item quantity="other">%d వాల్‌పేపర్‌లు</item>
+    </plurals>
+
+    <!-- Wallpaper Apply -->
+    <string name="atmosphere">వాతావరణం</string>
+    <string name="glass">గ్లాస్</string>
+    <string name="home_screen">హోమ్ స్క్రీన్</string>
+    <string name="lock_screen_label">లాక్ స్క్రీన్</string>
+    <string name="pinch_to_crop">క్రాప్ చేయడానికి పించ్ చేయండి</string>
+    <string name="select_at_least_one">కనీసం ఒకటి ఎంచుకోండి</string>
+    <string name="set_wallpaper">వాల్‌పేపర్‌ని సెట్ చేయి</string>
+    <string name="set_wallpaper_on">వాల్‌పేపర్‌ని ఇక్కడ సెట్ చేయి</string>
+    <string name="wallpaper_info">వాల్‌పేపర్ సమాచారం</string>
+
+    <!-- Effects -->
+    <string name="effects_beta_notice_title">AxEffects Beta™</string>
+    <string name="effects_beta_notice_desc">ప్రభావాలు తాత్కాలికమైనవి మరియు శాశ్వతంగా ఉండవు. వాటిని తీసివేయడానికి కొత్త వాల్‌పేపర్‌ను వర్తింపజేయండి.</string>
+
+    <!-- Style Section -->
+    <string name="app_grid">యాప్ గ్రిడ్</string>
+    <string name="app_grid_title">యాప్ గ్రిడ్</string>
+    <string name="home_screen_layout">హోమ్ స్క్రీన్ లేఅవుట్</string>
+    <string name="home_screen_layout_title">హోమ్ స్క్రీన్ లేఅవుట్</string>
+    <string name="make_your_device_uniquely_yours">మీ పరికరాన్ని ప్రత్యేకంగా మీ స్వంతం చేసుకోండి</string>
+    <string name="personalize">వ్యక్తిగతీకరించండి</string>
+    <string name="pro_tip">ప్రో టిప్</string>
+    <string name="pro_tip_colors_message">మీ వాల్‌పేపర్ నుండి రంగులు స్వయంచాలకంగా సంగ్రహించబడతాయి. సామరస్యపూర్వకమైన రూపం కోసం వాల్‌పేపర్ రంగులను ప్రారంభించండి.</string>
+    <string name="system_typography">సిస్టమ్ టైపోగ్రఫీ</string>
+    <string name="wallpaper_colors_and_themes">వాల్‌పేపర్ రంగులు &amp; థీమ్‌లు</string>
+
+    <!-- Colors Screen -->
+    <string name="about_color_customization_title">రంగు అనుకూలీకరణ గురించి</string>
+    <string name="about_color_customization_desc">
+    Material You థీమింగ్‌కు మద్దతు ఇచ్చే అన్ని యాప్‌ల కోసం సిస్టమ్-వ్యాప్త రంగు మార్పులు వర్తింపజేయబడతాయి.
+    \nఈ రంగులను సర్దుబాటు చేయడం వల్ల మీ పరికరంలోని యాప్‌ల రూపం ప్రభావితం కావచ్చు.
+    </string>
+    <string name="automatic">స్వయంచాలకం</string>
+    <string name="brightness">ప్రకాశం</string>
+    <string name="chroma_boost_title">క్రోమా బూస్ట్</string>
+    <string name="choose_seed_color">సీడ్ రంగును ఎంచుకోండి</string>
+    <string name="color_picker">కలర్ పికర్</string>
+    <string name="colors_title">రంగులు</string>
+    <string name="contrast_high">ఎక్కువ</string>
+    <string name="contrast_level_title">కాంట్రాస్ట్ స్థాయి</string>
+    <string name="contrast_low">తక్కువ</string>
+    <string name="contrast_normal">సాధారణం</string>
+    <string name="custom">కస్టమ్</string>
+    <string name="custom_seed_color_title">కస్టమ్ సీడ్ రంగు</string>
+    <string name="customize_palette_title">మీ ప్యాలెట్‌ను అనుకూలీకరించండి</string>
+    <string name="customize_palette_description">
+        మీ శైలికి సరిపోయే రంగులతో మీ పరికరాన్ని వ్యక్తిగతీకరించండి
+    </string>
+    <string name="fidelity_title">ఫిడిలిటీ</string>
+    <string name="fidelity_desc">రంగు టోన్‌ల కోసం ఫిడిలిటీ ఫీచర్‌ను ప్రారంభించండి</string>
+    <string name="fine_tuning">ఫైన్ ట్యూనింగ్</string>
+    <string name="following_wallpaper">వాల్‌పేపర్ ప్రకారం</string>
+    <string name="from_wallpaper">వాల్‌పేపర్ నుండి</string>
+    <string name="hue">హ్యూ</string>
+    <string name="pick_from_wallpaper">వాల్‌పేపర్ నుండి ఎంచుకోండి</string>
+    <string name="selected_color">ఎంచుకున్న రంగు</string>
+    <string name="selected_color_label">ఎంచుకున్న రంగు:</string>
+    <string name="saturation">శాచురేషన్</string>
+    <string name="style_font_tip">A అంటే Axion :)</string>
+    <string name="custom_color_picker_desc">మీ కస్టమ్ రంగును ఎలా ఎంచుకోవాలో ఎంచుకోండి:</string>
+    <string name="nav_action">చర్య</string>
+    <string name="theme_colors">థీమ్ రంగులు</string>
+    <string name="theme_style_title">థీమ్ శైలి</string>
+    <string name="theme_style_desc">సీడ్ నుండి రంగులు ఎలా ఉత్పత్తి అవుతాయో నిర్వచిస్తుంది</string>
+    <string name="use_wallpaper_colors_title">వాల్‌పేపర్ రంగులను ఉపయోగించండి</string>
+    <string name="use_wallpaper_colors_desc">మీ వాల్‌పేపర్ నుండి రంగులను సంగ్రహించండి</string>
+    <string name="using_custom_color">కస్టమ్ రంగును ఉపయోగిస్తున్నారు</string>
+
+    <!-- Fonts Screen -->
+    <string name="active_content_desc">క్రియాశీలం</string>
+    <string name="add_custom_font">కస్టమ్ ఫాంట్‌ను జోడించండి</string>
+    <string name="add_font">ఫాంట్‌ను జోడించండి</string>
+    <string name="change_custom_font">కస్టమ్ ఫాంట్‌ను మార్చండి</string>
+    <string name="custom_font">కస్టమ్ ఫాంట్</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">ఫాంట్ ప్రివ్యూ</string>
+    <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
+    <string name="font_preview_quote">భయం అనేది ఆవిష్కరణకు శత్రువు.</string>
+    <string name="font_style">ఫాంట్ శైలి</string>
+    <string name="font_title">ఫాంట్లు</string>
+    <string name="no_custom_font">కస్టమ్ ఫాంట్ లేదు</string>
+    <string name="reboot_device">పరికరాన్ని రీబూట్ చేయండి</string>
+    <string name="reboot_now">ఇప్పుడే రీబూట్ చేయి</string>
+    <string name="reboot_required_title">రీబూట్ అవసరం</string>
+    <string name="reboot_required_message">ఫాంట్ మార్పులను వర్తింపజేయడానికి రీబూట్ అవసరం.\nమీరు ఇప్పుడే రీబూట్ చేయాలనుకుంటున్నారా?</string>
+    <string name="reboot_required_custom_font_title">కస్టమ్ ఫాంట్ మార్పు కోసం రీబూట్ అవసరం</string>
+    <string name="reboot_required_custom_font_desc">కస్టమ్ ఫాంట్‌ని మార్చిన తర్వాత రీబూట్‌ను దాటవేయడం వల్ల యాప్‌ల అంతటా UI అసమానతలు ఏర్పడవచ్చు.</string>
+    <string name="reset_custom_font_content_desc">కస్టమ్ ఫాంట్‌ను రీసెట్ చేయండి</string>
+    <string name="reset_default_title">డిఫాల్ట్‌కు రీసెట్ చేయి</string>
+    <string name="reset_default_message">ఇది మీ ఫాంట్‌ను సిస్టమ్ డిఫాల్ట్ ఫాంట్‌కు రీసెట్ చేస్తుంది. మీరు ఖచ్చితంగా అనుకుంటున్నారా?</string>
+    <string name="toast_failed_apply_font">ఫాంట్‌ను వర్తింపజేయడంలో విఫలమైంది</string>
+    <string name="toast_invalid_font_file">చెల్లని ఫాంట్ ఫైల్</string>
+
+    <!-- Lockscreen Section -->
+    <string name="add_affordance">షార్ట్‌కట్‌ను జోడించండి</string>
+    <string name="add_information_at_a_glance">ఒక చూపులో సమాచారాన్ని జోడించండి</string>
+    <string name="camera">కెమెరా</string>
+    <string name="choose_your_time_format">మీ సమయ ఆకృతిని ఎంచుకోండి</string>
+    <string name="clock">గడియారం</string>
+    <string name="clock_style">గడియారం శైలి</string>
+    <string name="device_controls">పరికరం నియంత్రణలు</string>
+    <string name="do_not_disturb">అంతరాయం కలిగించవద్దు</string>
+    <string name="flashlight">ఫ్లాష్‌లైట్</string>
+    <string name="left_affordance">ఎడమ షార్ట్‌కట్</string>
+    <string name="lockscreen_customize_title">లాక్ స్క్రీన్ ప్రదర్శన</string>
+    <string name="lockscreen_customize_summary">లాక్ స్క్రీన్ ప్రదర్శనను అనుకూలీకరించండి</string>
+    <string name="lockscreen_title">లాక్ స్క్రీన్</string>
+    <string name="lockscreen_widgets_title">లాక్ స్క్రీన్ విడ్జెట్లు</string>
+    <string name="lockscreen_widgets_enabled_title">లాక్ స్క్రీన్ విడ్జెట్లను ప్రారంభించండి</string>
+    <string name="lockscreen_widgets_enabled_summary">లాక్ స్క్రీన్‌పై విడ్జెట్లను అనుమతించండి</string>
+    <string name="mute">మ్యూట్</string>
+    <string name="no_space_available">మరిన్ని విడ్జెట్ల కోసం స్థలం అందుబాటులో లేదు</string>
+    <string name="personalize_your_experience">మీ అనుభవాన్ని వ్యక్తిగతీకరించండి</string>
+    <string name="pick_widgets">విడ్జెట్లను ఎంచుకోండి</string>
+    <string name="qr_code_scanner">QR కోడ్ స్కానర్</string>
+    <string name="quick_access_to_your_favorites">మీకు ఇష్టమైన వాటికి శీఘ్ర ప్రాప్యత</string>
+    <string name="right_affordance">కుడి షార్ట్‌కట్</string>
+    <string name="selected_widgets">ఎంచుకున్న విడ్జెట్లు</string>
+    <string name="selected_widgets_empty">ఏ విడ్జెట్లు ఎంచుకోబడలేదు</string>
+    <string name="selected_widgets_guide">తరలించడానికి లాంగ్ ప్రెస్ చేయండి, తీసివేయడానికి విడ్జెట్‌పై నొక్కండి.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">అన్ని అనుకూలీకరణ ఎంపికలను చూడటానికి ప్రివ్యూపై నొక్కండి</string>
+    <string name="tap_to_customize">అనుకూలీకరించడానికి నొక్కండి</string>
+    <string name="temperature_prev">27°</string>
+    <string name="video_camera">వీడియో కెమెరా</string>
+    <string name="wallet">వాలెట్</string>
+    <string name="weather_prev">పాక్షికంగా మేఘావృతం</string>
+    <string name="widget_bluetooth">బ్లూటూత్</string>
+    <string name="widget_data">డేటా</string>
+    <string name="widget_hotspot">హాట్‌స్పాట్</string>
+    <string name="widget_removed">విడ్జెట్ తీసివేయబడింది</string>
+    <string name="widget_ringer">రింగర్</string>
+    <string name="widget_torch">ఫ్లాష్‌లైట్</string>
+    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widgets_title">విడ్జెట్లు</string>
+
+    <!-- Preferences -->
+    <string name="reset_to_default">డిఫాల్ట్‌కు రీసెట్ చేయి</string>
+    <string name="value_percentage">విలువ: %d%%</string>
+    <string name="percentage_format">%d%%</string>
+    <string name="color_info_format">HEX: #%1$s శాచురేషన్: %2$.2f ప్రకాశం: %3$.2f</string>
+
+    <!-- WallpaperSetActivity -->
+    <string name="failed_to_load_image">చిత్రాన్ని లోడ్ చేయడంలో విఫలమైంది</string>
+    <string name="no_image_provided">చిత్రం అందించబడలేదు</string>
+    <string name="shared_image">భాగస్వామ్యం చేయబడిన చిత్రం</string>
+    <string name="unable_to_load_image">చిత్రాన్ని లోడ్ చేయడం సాధ్యపడలేదు</string>
+
+    <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s ప్రివ్యూ</string>
+    <string name="home_screen_preview">హోమ్ స్క్రీన్ ప్రివ్యూ</string>
+    <string name="wallpaper_background">వాల్‌పేపర్ నేపథ్యం</string>
+</resources>

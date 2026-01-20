@@ -132,7 +132,7 @@ class WallpaperSetActivity : ComponentActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         context,
-                        "Error: ${e.message}",
+                        getString(R.string.error_loading_image, e.message ?: getString(R.string.unknown)),
                         Toast.LENGTH_SHORT
                     ).show()
                     isLoadingImage = false

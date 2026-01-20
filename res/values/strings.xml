@@ -12,6 +12,11 @@
     <string name="no">No</string>
     <string name="reset">Reset</string>
     <string name="undo">Undo</string>
+    <string name="setting_wallpaper">Setting wallpaper…</string>
+    <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
+    <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
+    <string name="cropped_percentage">Cropped %d%%</string>
+    <string name="ok">OK</string>
     <string name="yes">Yes</string>
 
     <!-- Common Labels -->
@@ -23,6 +28,9 @@
     <string name="unknown">Unknown</string>
 
     <!-- Navigation Sections -->
+    <string name="nav_wallpaper">Wallpaper</string>
+    <string name="nav_style">Style</string>
+    <string name="nav_lockscreen">Lock screen</string>
     <string name="colors">Colors</string>
     <string name="fonts">Fonts</string>
     <string name="shortcuts">Shortcuts</string>
@@ -119,6 +127,11 @@
     <string name="hue">Hue</string>
     <string name="pick_from_wallpaper">Pick from Wallpaper</string>
     <string name="selected_color">Selected Color</string>
+    <string name="selected_color_label">Selected Color:</string>
+    <string name="saturation">Saturation</string>
+    <string name="style_font_tip">A is for Axion :)</string>
+    <string name="custom_color_picker_desc">Choose how to pick your custom color:</string>
+    <string name="nav_action">Action</string>
     <string name="theme_colors">Theme Colors</string>
     <string name="theme_style_title">Theme Style</string>
     <string name="theme_style_desc">Defines how colors are generated from the seed</string>
@@ -196,14 +209,18 @@
     <!-- Preferences -->
     <string name="reset_to_default">Reset to default</string>
     <string name="value_percentage">Value: %d%%</string>
+    <string name="percentage_format">%d%%</string>
+    <string name="color_info_format">HEX: #%1$s saturation: %2$.2f brightness: %3$.2f</string>
 
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">Failed to load image</string>
     <string name="no_image_provided">No image provided</string>
     <string name="shared_image">Shared Image</string>
     <string name="unable_to_load_image">Unable to load image</string>
+    <string name="error_loading_image">Error: %s</string>
 
     <!-- Content Descriptions (Accessibility) -->
+    <string name="preview_label">%s preview</string>
     <string name="home_screen_preview">Home screen preview</string>
     <string name="wallpaper_background">Wallpaper background</string>
 </resources>

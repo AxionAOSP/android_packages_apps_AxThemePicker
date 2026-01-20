@@ -154,13 +154,13 @@ fun StandaloneWallpaperApplyScreen(
                             
                             (context as? Activity)?.runOnUiThread {
                                 isApplying = false
-                                Toast.makeText(context, "Wallpaper successfully applied!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.wallpaper_applied_successfully), Toast.LENGTH_SHORT).show()
                                 onApplyComplete()
                             }
                         } catch (e: Exception) {
                             (context as? Activity)?.runOnUiThread {
                                 isApplying = false
-                                Toast.makeText(context, "Failed to apply wallpaper: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.failed_to_apply_wallpaper, e.message ?: ""), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }.start()
