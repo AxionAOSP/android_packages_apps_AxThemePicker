@@ -5,13 +5,13 @@
     <string name="applied">Applied</string>
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
-    <string name="close">Fechar</string>
+    <string name="close">Close</string>
     <string name="confirm">Confirm</string>
-    <string name="edit">Editar</string>
+    <string name="edit">Edit</string>
     <string name="later">Later</string>
     <string name="no">No</string>
     <string name="reset">Reset</string>
-    <string name="undo">Desfazer</string>
+    <string name="undo">Undo</string>
     <string name="setting_wallpaper">Setting wallpaper…</string>
     <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
     <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
@@ -22,12 +22,12 @@
     <string name="info">Info</string>
     <string name="more">More</string>
     <string name="none">None</string>
-    <string name="on">Ativados</string>
-    <string name="off">Desativado</string>
-    <string name="unknown">Desconhecido</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="unknown">Unknown</string>
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Wallpaper</string>
-    <string name="nav_style">Estilo</string>
+    <string name="nav_style">Style</string>
     <string name="nav_lockscreen">Lock screen</string>
     <string name="colors">Colors</string>
     <string name="fonts">Fonts</string>
@@ -104,7 +104,7 @@
     <string name="contrast_level_title">Contrast Level</string>
     <string name="contrast_low">Low</string>
     <string name="contrast_normal">Normal</string>
-    <string name="custom">Personalizado</string>
+    <string name="custom">Custom</string>
     <string name="custom_seed_color_title">Custom Seed Color</string>
     <string name="customize_palette_title">Customize Your Palette</string>
     <string name="customize_palette_description">        Personalize your device with colors that match your style
@@ -129,7 +129,7 @@
     <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
     <string name="using_custom_color">Using custom color</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">Ativo</string>
+    <string name="active_content_desc">Active</string>
     <string name="add_custom_font">Add custom font</string>
     <string name="add_font">Add font</string>
     <string name="change_custom_font">Change custom font</string>
@@ -161,7 +161,7 @@
     <string name="clock_style">Clock Style</string>
     <string name="device_controls">Device controls</string>
     <string name="do_not_disturb">Do Not Disturb</string>
-    <string name="flashlight">Lanterna</string>
+    <string name="flashlight">Flashlight</string>
     <string name="left_affordance">Left Affordance</string>
     <string name="lockscreen_customize_title">Lockscreen appearance</string>
     <string name="lockscreen_customize_summary">Customize lockscreen appearance</string>
