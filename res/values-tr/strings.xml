@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common Actions -->
-    <string name="apply">Apply</string>
-    <string name="applied">Applied</string>
+    <string name="apply">Uygula</string>
+    <string name="applied">Uygulandı</string>
     <string name="back">Geri</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Vazgeç</string>
     <string name="close">Kapat</string>
-    <string name="confirm">Confirm</string>
+    <string name="confirm">Onayla</string>
     <string name="edit">Düzenle</string>
-    <string name="later">Later</string>
-    <string name="no">No</string>
-    <string name="reset">Reset</string>
+    <string name="later">Sonra</string>
+    <string name="no">Hayır</string>
+    <string name="reset">Sıfırla</string>
     <string name="undo">Geri al</string>
-    <string name="setting_wallpaper">Setting wallpaper…</string>
-    <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
-    <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
-    <string name="cropped_percentage">Cropped %d%%</string>
-    <string name="ok">OK</string>
-    <string name="yes">Yes</string>
+    <string name="setting_wallpaper">Duvar kağıdı ayarlanıyor…</string>
+    <string name="wallpaper_applied_successfully">Duvar kağıdı başarıyla onaylandı!</string>
+    <string name="failed_to_apply_wallpaper">Duvar kağıdı uygulanamadı: %s</string>
+    <string name="cropped_percentage">Kırpıldı %d%%</string>
+    <string name="ok">Tamam</string>
+    <string name="yes">Evet</string>
     <!-- Common Labels -->
     <string name="info">Bilgi</string>
     <string name="more">More</string>
@@ -28,13 +28,13 @@
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Wallpaper</string>
     <string name="nav_style">Stil</string>
-    <string name="nav_lockscreen">Lock screen</string>
-    <string name="colors">Colors</string>
-    <string name="fonts">Fonts</string>
-    <string name="shortcuts">Shortcuts</string>
+    <string name="nav_lockscreen">Kilit ekranı</string>
+    <string name="colors">Renkler</string>
+    <string name="fonts">Yazı tipleri</string>
+    <string name="shortcuts">Kısayollar</string>
     <string name="widgets">Widget\'lar</string>
     <!-- Wallpaper Section -->
-    <string name="current_wallpaper">Current wallpaper</string>
+    <string name="current_wallpaper">Mevcut duvar kağıdı</string>
     <string name="customize_to_match_your_style">Customize to match your style</string>
     <string name="discover_new_wallpapers">Discover new wallpapers</string>
     <string name="explore">Explore</string>
@@ -68,13 +68,13 @@
     <!-- Wallpaper Apply -->
     <string name="atmosphere">Atmosphere</string>
     <string name="glass">Glass</string>
-    <string name="home_screen">Home screen</string>
-    <string name="lock_screen_label">Lock screen</string>
-    <string name="pinch_to_crop">Pinch to crop</string>
-    <string name="select_at_least_one">Select at least one</string>
-    <string name="set_wallpaper">Set wallpaper</string>
+    <string name="home_screen">Ana ekran</string>
+    <string name="lock_screen_label">Kilit ekranı</string>
+    <string name="pinch_to_crop">Kırpmak için çimdikleyin</string>
+    <string name="select_at_least_one">En az birini seçin</string>
+    <string name="set_wallpaper">Duvar kağıdı ayarla</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
-    <string name="wallpaper_info">Wallpaper info</string>
+    <string name="wallpaper_info">Duvar kağıdı hakkında</string>
     <!-- Effects -->
     <string name="effects_beta_notice_title">AxEffects Beta™</string>
     <string name="effects_beta_notice_desc">Effects are temporary and won\'t persist. Apply a new wallpaper to remove them.</string>
@@ -99,7 +99,7 @@
     <string name="chroma_boost_title">Chroma Boost</string>
     <string name="choose_seed_color">Choose Seed Color</string>
     <string name="color_picker">Color Picker</string>
-    <string name="colors_title">Colors</string>
+    <string name="colors_title">Renkler</string>
     <string name="contrast_high">High</string>
     <string name="contrast_level_title">Contrast Level</string>
     <string name="contrast_low">Low</string>
