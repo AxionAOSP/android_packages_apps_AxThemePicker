@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common Actions -->
-    <string name="apply">Apply</string>
+    <string name="apply">Применить</string>
     <string name="applied">Applied</string>
     <string name="back">Назад</string>
     <string name="cancel">Отмена</string>
     <string name="close">Закрыть</string>
-    <string name="confirm">Confirm</string>
+    <string name="confirm">Подтвердить</string>
     <string name="edit">Изменить</string>
-    <string name="later">Later</string>
-    <string name="no">No</string>
-    <string name="reset">Reset</string>
+    <string name="later">Позже</string>
+    <string name="no">Нет</string>
+    <string name="reset">Сброс</string>
     <string name="undo">Отменить</string>
-    <string name="setting_wallpaper">Setting wallpaper…</string>
-    <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
-    <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
-    <string name="cropped_percentage">Cropped %d%%</string>
+    <string name="setting_wallpaper">Установка обоев…</string>
+    <string name="wallpaper_applied_successfully">Обои успешно применены!</string>
+    <string name="failed_to_apply_wallpaper">Не удалось применить обои: %s</string>
+    <string name="cropped_percentage">Обрезано %d%%</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <!-- Common Labels -->
@@ -28,35 +28,35 @@
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Wallpaper</string>
     <string name="nav_style">Стиль</string>
-    <string name="nav_lockscreen">Lock screen</string>
+    <string name="nav_lockscreen">Экран блокировки</string>
     <string name="colors">Colors</string>
-    <string name="fonts">Fonts</string>
-    <string name="shortcuts">Shortcuts</string>
+    <string name="fonts">Шрифты</string>
+    <string name="shortcuts">Ярлыки</string>
     <string name="widgets">Виджеты</string>
     <!-- Wallpaper Section -->
-    <string name="current_wallpaper">Current wallpaper</string>
+    <string name="current_wallpaper">Текущие обои</string>
     <string name="customize_to_match_your_style">Customize to match your style</string>
-    <string name="discover_new_wallpapers">Discover new wallpapers</string>
-    <string name="explore">Explore</string>
-    <string name="featured">Featured</string>
-    <string name="curated_wallpapers_for_you">Curated wallpapers for you</string>
+    <string name="discover_new_wallpapers">Найти новые обои</string>
+    <string name="explore">Обзор</string>
+    <string name="featured">Рекомендуем</string>
+    <string name="curated_wallpapers_for_you">Подобрали для вас</string>
     <string name="make_it_yours">Make it yours</string>
-    <string name="photos">Photos</string>
+    <string name="photos">Фото</string>
     <string name="walls">Walls</string>
     <string name="wallpaper">Wallpaper</string>
     <string name="wallpaper_photo">Wallpaper Photo</string>
-    <string name="your_wallpaper">Your Wallpaper</string>
+    <string name="your_wallpaper">Ваши обои</string>
     <!-- Wallpaper Gallery -->
-    <string name="customize_active_wallpaper">Customize your active wallpaper</string>
-    <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
-    <string name="header_collections">Collections</string>
-    <string name="header_wallpaper_gallery">Wallpaper Gallery</string>
-    <string name="latest_wallpapers">Latest Wallpapers</string>
-    <string name="live_wallpapers">Live Wallpapers</string>
-    <string name="more_wallpapers">More wallpapers</string>
-    <string name="my_photos">My Photos</string>
+    <string name="customize_active_wallpaper">Настройка активных обоев</string>
+    <string name="edit_current_wallpaper">Редактировать текущие обои</string>
+    <string name="header_collections">Коллекции</string>
+    <string name="header_wallpaper_gallery">Галерея обоев</string>
+    <string name="latest_wallpapers">Новые обои</string>
+    <string name="live_wallpapers">Живые обои</string>
+    <string name="more_wallpapers">Ещё</string>
+    <string name="my_photos">Мои фото</string>
     <string name="recently_added_designs">Recently added designs</string>
-    <string name="view_all">View All</string>
+    <string name="view_all">Показать все</string>
     <plurals name="curated_categories">
         <item quantity="one">%d curated category</item>
         <item quantity="few">%d curated categories</item>
@@ -72,8 +72,8 @@
     <!-- Wallpaper Apply -->
     <string name="atmosphere">Atmosphere</string>
     <string name="glass">Glass</string>
-    <string name="home_screen">Home screen</string>
-    <string name="lock_screen_label">Lock screen</string>
+    <string name="home_screen">Главный экран</string>
+    <string name="lock_screen_label">Экран блокировки</string>
     <string name="pinch_to_crop">Pinch to crop</string>
     <string name="select_at_least_one">Select at least one</string>
     <string name="set_wallpaper">Set wallpaper</string>
