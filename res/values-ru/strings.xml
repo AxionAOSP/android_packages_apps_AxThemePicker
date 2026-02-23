@@ -186,30 +186,30 @@
     <string name="tap_the_preview_to_see_all_customization_options">Tap the preview to see all customization options</string>
     <string name="tap_to_customize">Tap to customize</string>
     <string name="temperature_prev">27°</string>
-    <string name="video_camera">Video camera</string>
-    <string name="wallet">Wallet</string>
-    <string name="weather_prev">Mostly Cloudy</string>
+    <string name="video_camera">Видеокамера</string>
+    <string name="wallet">Кошелек</string>
+    <string name="weather_prev">В основном облачно</string>
     <string name="widget_bluetooth">Bluetooth</string>
-    <string name="widget_data">Data</string>
-    <string name="widget_hotspot">Hotspot</string>
-    <string name="widget_removed">Widget removed</string>
-    <string name="widget_ringer">Ringer</string>
-    <string name="widget_torch">Torch</string>
+    <string name="widget_data">Данные</string>
+    <string name="widget_hotspot">Точка доступа</string>
+    <string name="widget_removed">Виджет удален</string>
+    <string name="widget_ringer">Звонок</string>
+    <string name="widget_torch">Фонарик</string>
     <string name="widget_wifi">Wi-Fi</string>
     <string name="widgets_title">Виджеты</string>
     <!-- Preferences -->
-    <string name="reset_to_default">Reset to default</string>
-    <string name="value_percentage">Value: %d%%</string>
+    <string name="reset_to_default">Сброс по умолчанию</string>
+    <string name="value_percentage">Значение: %d%%</string>
     <string name="percentage_format">%d%%</string>
-    <string name="color_info_format">HEX: #%1$s saturation: %2$.2f brightness: %3$.2f</string>
+    <string name="color_info_format">HEX: #%1$s насыщенность: %2$.2f яркость: %3$.2f</string>
     <!-- WallpaperSetActivity -->
-    <string name="failed_to_load_image">Failed to load image</string>
-    <string name="no_image_provided">No image provided</string>
-    <string name="shared_image">Shared Image</string>
-    <string name="unable_to_load_image">Unable to load image</string>
-    <string name="error_loading_image">Error: %s</string>
+    <string name="failed_to_load_image">Не удалось загрузить изображение</string>
+    <string name="no_image_provided">Изображение не предоставлено</string>
+    <string name="shared_image">Поделиться изображением</string>
+    <string name="unable_to_load_image">Не удалось загрузить изображение</string>
+    <string name="error_loading_image">Ошибка: %s</string>
     <!-- Content Descriptions (Accessibility) -->
     <string name="preview_label">%s preview</string>
     <string name="home_screen_preview">Home screen preview</string>
-    <string name="wallpaper_background">Wallpaper background</string>
+    <string name="wallpaper_background">Фон обоев</string>
 </resources>
