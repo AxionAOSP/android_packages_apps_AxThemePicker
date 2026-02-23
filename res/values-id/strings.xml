@@ -127,7 +127,7 @@
     <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
     <string name="using_custom_color">Using custom color</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">Active</string>
+    <string name="active_content_desc">Aktif</string>
     <string name="add_custom_font">Add custom font</string>
     <string name="add_font">Add font</string>
     <string name="change_custom_font">Change custom font</string>
