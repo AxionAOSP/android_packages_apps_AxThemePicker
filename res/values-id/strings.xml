@@ -5,13 +5,13 @@
     <string name="applied">Applied</string>
     <string name="back">Back</string>
     <string name="cancel">Batal</string>
-    <string name="close">Close</string>
+    <string name="close">Tutup</string>
     <string name="confirm">Confirm</string>
     <string name="edit">Edit</string>
     <string name="later">Later</string>
     <string name="no">No</string>
     <string name="reset">Reset</string>
-    <string name="undo">Undo</string>
+    <string name="undo">Urungkan</string>
     <string name="setting_wallpaper">Setting wallpaper…</string>
     <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
     <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
@@ -22,12 +22,12 @@
     <string name="info">Info</string>
     <string name="more">More</string>
     <string name="none">None</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="unknown">Unknown</string>
+    <string name="on">Aktif</string>
+    <string name="off">Nonaktif</string>
+    <string name="unknown">Tidak dikenal</string>
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Wallpaper</string>
-    <string name="nav_style">Style</string>
+    <string name="nav_style">Gaya</string>
     <string name="nav_lockscreen">Lock screen</string>
     <string name="colors">Colors</string>
     <string name="fonts">Fonts</string>
@@ -102,7 +102,7 @@
     <string name="contrast_level_title">Contrast Level</string>
     <string name="contrast_low">Low</string>
     <string name="contrast_normal">Normal</string>
-    <string name="custom">Custom</string>
+    <string name="custom">Khusus</string>
     <string name="custom_seed_color_title">Custom Seed Color</string>
     <string name="customize_palette_title">Customize Your Palette</string>
     <string name="customize_palette_description">        Personalize your device with colors that match your style
