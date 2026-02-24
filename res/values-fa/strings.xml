@@ -32,7 +32,7 @@
     <string name="colors">Colors</string>
     <string name="fonts">Fonts</string>
     <string name="shortcuts">Shortcuts</string>
-    <string name="widgets">Widgets</string>
+    <string name="widgets">افزونه ها</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Current wallpaper</string>
     <string name="customize_to_match_your_style">Customize to match your style</string>
@@ -192,7 +192,7 @@
     <string name="widget_ringer">Ringer</string>
     <string name="widget_torch">Torch</string>
     <string name="widget_wifi">Wi-Fi</string>
-    <string name="widgets_title">Widgets</string>
+    <string name="widgets_title">افزونه ها</string>
     <!-- Preferences -->
     <string name="reset_to_default">Reset to default</string>
     <string name="value_percentage">Value: %d%%</string>
