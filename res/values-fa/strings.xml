@@ -4,14 +4,14 @@
     <string name="apply">Apply</string>
     <string name="applied">Applied</string>
     <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
-    <string name="close">Close</string>
+    <string name="cancel">گذشتن</string>
+    <string name="close">بستن</string>
     <string name="confirm">Confirm</string>
     <string name="edit">Edit</string>
     <string name="later">Later</string>
     <string name="no">No</string>
     <string name="reset">Reset</string>
-    <string name="undo">Undo</string>
+    <string name="undo">بازنشانی</string>
     <string name="setting_wallpaper">Setting wallpaper…</string>
     <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
     <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
