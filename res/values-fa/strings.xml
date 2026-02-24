@@ -22,9 +22,9 @@
     <string name="info">Info</string>
     <string name="more">More</string>
     <string name="none">None</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="unknown">Unknown</string>
+    <string name="on">روشن</string>
+    <string name="off">خاموش</string>
+    <string name="unknown">ناشناس</string>
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Wallpaper</string>
     <string name="nav_style">Style</string>
