@@ -48,14 +48,14 @@
     <string name="your_wallpaper">あなたの壁紙</string>
     <!-- Wallpaper Gallery -->
     <string name="customize_active_wallpaper">Customize your active wallpaper</string>
-    <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
+    <string name="edit_current_wallpaper">現在の壁紙を編集</string>
     <string name="header_collections">コレクション</string>
     <string name="header_wallpaper_gallery">壁紙ギャラリー</string>
     <string name="latest_wallpapers">最新の壁紙</string>
     <string name="live_wallpapers">ライブ壁紙</string>
     <string name="more_wallpapers">その他の壁紙</string>
     <string name="my_photos">マイフォト</string>
-    <string name="recently_added_designs">Recently added designs</string>
+    <string name="recently_added_designs">最近追加したデザイン</string>
     <string name="view_all">すべて表示</string>
     <plurals name="curated_categories">
         <item quantity="other">%d 件のキュレーションされたカテゴリー</item>
@@ -72,7 +72,7 @@
     <string name="select_at_least_one">Select at least one</string>
     <string name="set_wallpaper">壁紙を設定</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
-    <string name="wallpaper_info">Wallpaper info</string>
+    <string name="wallpaper_info">壁紙の情報</string>
     <!-- Effects -->
     <string name="effects_beta_notice_title">AxEffects Beta™</string>
     <string name="effects_beta_notice_desc">Effects are temporary and won\'t persist. Apply a new wallpaper to remove them.</string>
@@ -85,17 +85,17 @@
     <string name="personalize">パーソナライズ</string>
     <string name="pro_tip">Pro Tip</string>
     <string name="pro_tip_colors_message">Colors are automatically extracted from your wallpaper. Enable wallpaper colors for a cohesive look.</string>
-    <string name="system_typography">System typography</string>
-    <string name="wallpaper_colors_and_themes">Wallpaper colors &amp; themes</string>
+    <string name="system_typography">システムのタイポグラフィー</string>
+    <string name="wallpaper_colors_and_themes">壁紙の色とテーマ</string>
     <!-- Colors Screen -->
-    <string name="about_color_customization_title">About Color Customization</string>
+    <string name="about_color_customization_title">カラーのカスタマイズについて</string>
     <string name="about_color_customization_desc">    Color changes apply system-wide to all apps that support Material You theming.
     \nAdjusting these colors may affect the appearance of apps across your device.
     </string>
     <string name="automatic">自動</string>
     <string name="brightness">輝度</string>
-    <string name="chroma_boost_title">Chroma Boost</string>
-    <string name="choose_seed_color">Choose Seed Color</string>
+    <string name="chroma_boost_title">彩度をブースト</string>
+    <string name="choose_seed_color">シードの色を選択</string>
     <string name="color_picker">カラーピッカー</string>
     <string name="colors_title">色</string>
     <string name="contrast_high">高</string>
@@ -161,16 +161,16 @@
     <string name="do_not_disturb">Do Not Disturb</string>
     <string name="flashlight">フラッシュライト</string>
     <string name="left_affordance">Left Affordance</string>
-    <string name="lockscreen_customize_title">Lockscreen appearance</string>
-    <string name="lockscreen_customize_summary">Customize lockscreen appearance</string>
+    <string name="lockscreen_customize_title">ロック画面の外観</string>
+    <string name="lockscreen_customize_summary">ロック画面の外観をカスタマイズします</string>
     <string name="lockscreen_title">ロック画面</string>
     <string name="lockscreen_widgets_title">ロック画面ウィジェット</string>
-    <string name="lockscreen_widgets_enabled_title">Enable Lockscreen Widgets</string>
-    <string name="lockscreen_widgets_enabled_summary">Allow widgets on lockscreen</string>
-    <string name="mute">Mute</string>
+    <string name="lockscreen_widgets_enabled_title">ロック画面ウィジェットを有効化</string>
+    <string name="lockscreen_widgets_enabled_summary">ロック画面でウィジェットを許可します</string>
+    <string name="mute">ミュート</string>
     <string name="no_space_available">No space available for more widgets</string>
-    <string name="personalize_your_experience">Personalize your experience</string>
-    <string name="pick_widgets">Pick Widgets</string>
+    <string name="personalize_your_experience">あなたの体験をパーソナライズします</string>
+    <string name="pick_widgets">ウィジェットを選択</string>
     <string name="qr_code_scanner">QR コードスキャナー</string>
     <string name="quick_access_to_your_favorites">Quick access to your favorites</string>
     <string name="right_affordance">Right Affordance</string>
@@ -195,15 +195,15 @@
     <string name="reset_to_default">デフォルトにリセット</string>
     <string name="value_percentage">値: %d%%</string>
     <string name="percentage_format">%d%%</string>
-    <string name="color_info_format">HEX: #%1$s saturation: %2$.2f brightness: %3$.2f</string>
+    <string name="color_info_format">HEX: #%1$s 彩度: %2$.2f 輝度: %3$.2f</string>
     <!-- WallpaperSetActivity -->
-    <string name="failed_to_load_image">Failed to load image</string>
+    <string name="failed_to_load_image">画像の読み込みに失敗しました</string>
     <string name="no_image_provided">No image provided</string>
     <string name="shared_image">Shared Image</string>
     <string name="unable_to_load_image">Unable to load image</string>
     <string name="error_loading_image">エラー: %s</string>
     <!-- Content Descriptions (Accessibility) -->
-    <string name="preview_label">%s preview</string>
+    <string name="preview_label">%s のプレビュー</string>
     <string name="home_screen_preview">ホーム画面のプレビュー</string>
     <string name="wallpaper_background">壁紙の背景</string>
 </resources>
