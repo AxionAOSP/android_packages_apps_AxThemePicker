@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common Actions -->
-    <string name="apply">Apply</string>
-    <string name="applied">Applied</string>
+    <string name="apply">Aplicar</string>
+    <string name="applied">Aplicado</string>
     <string name="back">Atrás</string>
     <string name="cancel">Cancelar</string>
     <string name="close">Cerrar</string>
-    <string name="confirm">Confirm</string>
+    <string name="confirm">Confirmar</string>
     <string name="edit">Editar</string>
-    <string name="later">Later</string>
+    <string name="later">Después</string>
     <string name="no">No</string>
-    <string name="reset">Reset</string>
+    <string name="reset">Restablecer</string>
     <string name="undo">Deshacer</string>
-    <string name="setting_wallpaper">Setting wallpaper…</string>
-    <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
-    <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
+    <string name="setting_wallpaper">Configuración fondo de pantalla</string>
+    <string name="wallpaper_applied_successfully">Fondo de pantalla aplicado con éxito!</string>
+    <string name="failed_to_apply_wallpaper">No se pudo aplicar el fondo de pantalla: %s</string>
     <string name="cropped_percentage">Cropped %d%%</string>
-    <string name="ok">OK</string>
-    <string name="yes">Yes</string>
+    <string name="ok">Aceptar</string>
+    <string name="yes">Si</string>
     <!-- Common Labels -->
     <string name="info">Información</string>
     <string name="more">More</string>
