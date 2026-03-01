@@ -35,28 +35,28 @@
     <string name="widgets">Widget\'lar</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Mevcut duvar kağıdı</string>
-    <string name="customize_to_match_your_style">Customize to match your style</string>
-    <string name="discover_new_wallpapers">Discover new wallpapers</string>
-    <string name="explore">Explore</string>
-    <string name="featured">Featured</string>
-    <string name="curated_wallpapers_for_you">Curated wallpapers for you</string>
-    <string name="make_it_yours">Make it yours</string>
-    <string name="photos">Photos</string>
-    <string name="walls">Walls</string>
+    <string name="customize_to_match_your_style">Tercihlerine göre özelleştir</string>
+    <string name="discover_new_wallpapers">Yeni duvar kağıtları keşfet</string>
+    <string name="explore">Keşfet</string>
+    <string name="featured">Öne Çıkanlar</string>
+    <string name="curated_wallpapers_for_you">Sana özel seçilmiş duvar kâğıtları</string>
+    <string name="make_it_yours">Kişiselleştir</string>
+    <string name="photos">Fotoğraflar</string>
+    <string name="walls">Duvarlar</string>
     <string name="wallpaper">Duvar Kağıdı</string>
-    <string name="wallpaper_photo">Wallpaper Photo</string>
-    <string name="your_wallpaper">Your Wallpaper</string>
+    <string name="wallpaper_photo">Duvar kağıdı fotosu</string>
+    <string name="your_wallpaper">Duvar kağıdın</string>
     <!-- Wallpaper Gallery -->
-    <string name="customize_active_wallpaper">Customize your active wallpaper</string>
-    <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
-    <string name="header_collections">Collections</string>
-    <string name="header_wallpaper_gallery">Wallpaper Gallery</string>
-    <string name="latest_wallpapers">Latest Wallpapers</string>
-    <string name="live_wallpapers">Live Wallpapers</string>
-    <string name="more_wallpapers">More wallpapers</string>
-    <string name="my_photos">My Photos</string>
-    <string name="recently_added_designs">Recently added designs</string>
-    <string name="view_all">View All</string>
+    <string name="customize_active_wallpaper">Etkin duvar kağıdını özelleştir</string>
+    <string name="edit_current_wallpaper">Mevcut duvar kâğıdını düzenle</string>
+    <string name="header_collections">Koleksiyonlar</string>
+    <string name="header_wallpaper_gallery">Duvar kağıdı galerisi</string>
+    <string name="latest_wallpapers">Yeni duvar kâğıtları</string>
+    <string name="live_wallpapers">Hareketli duvar kâğıtları</string>
+    <string name="more_wallpapers">Daha fazla duvar kağıdı</string>
+    <string name="my_photos">Fotoğraflarım</string>
+    <string name="recently_added_designs">Yeni eklenen tasarımlar</string>
+    <string name="view_all">Tümünü görüntüle</string>
     <plurals name="curated_categories">
         <item quantity="one">%d curated category</item>
         <item quantity="other">%d curated categories</item>
@@ -66,31 +66,31 @@
         <item quantity="other">%d wallpapers</item>
     </plurals>
     <!-- Wallpaper Apply -->
-    <string name="atmosphere">Atmosphere</string>
-    <string name="glass">Glass</string>
+    <string name="atmosphere">Atmosfer</string>
+    <string name="glass">Cam</string>
     <string name="home_screen">Ana ekran</string>
     <string name="lock_screen_label">Kilit ekranı</string>
     <string name="pinch_to_crop">Kırpmak için çimdikleyin</string>
     <string name="select_at_least_one">En az birini seçin</string>
     <string name="set_wallpaper">Duvar kağıdı ayarla</string>
-    <string name="set_wallpaper_on">Set wallpaper on</string>
+    <string name="set_wallpaper_on">Duvar kağıdının ayarlanacağı yer</string>
     <string name="wallpaper_info">Duvar kağıdı hakkında</string>
     <!-- Effects -->
     <string name="effects_beta_notice_title">AxEffects Beta™</string>
-    <string name="effects_beta_notice_desc">Effects are temporary and won\'t persist. Apply a new wallpaper to remove them.</string>
+    <string name="effects_beta_notice_desc">Efektler geçicidir ve kalıcı olmaz. Kaldırmak için yeni bir duvar kâğıdı uygula.</string>
     <!-- Style Section -->
-    <string name="app_grid">App Grid</string>
-    <string name="app_grid_title">App Grid</string>
-    <string name="home_screen_layout">Home screen layout</string>
-    <string name="home_screen_layout_title">Home screen Layout</string>
-    <string name="make_your_device_uniquely_yours">Make your device uniquely yours</string>
-    <string name="personalize">Personalize</string>
-    <string name="pro_tip">Pro Tip</string>
-    <string name="pro_tip_colors_message">Colors are automatically extracted from your wallpaper. Enable wallpaper colors for a cohesive look.</string>
-    <string name="system_typography">System typography</string>
-    <string name="wallpaper_colors_and_themes">Wallpaper colors &amp; themes</string>
+    <string name="app_grid">Uygulama Izgarası</string>
+    <string name="app_grid_title">Uygulama Izgarası</string>
+    <string name="home_screen_layout">Ana ekran düzeni</string>
+    <string name="home_screen_layout_title">Ana ekran düzeni</string>
+    <string name="make_your_device_uniquely_yours">Cihazını benzersiz kıl</string>
+    <string name="personalize">Kişiselleştir</string>
+    <string name="pro_tip">Özel İpucu</string>
+    <string name="pro_tip_colors_message">Renkler duvar kâğıdından otomatik seçilir. Uyumlu bir görünüm için duvar kâğıdı renklerini etkinleştir.</string>
+    <string name="system_typography">Sistem Yazı Tipleri</string>
+    <string name="wallpaper_colors_and_themes">Duvar kâğıdı renkleri &amp; temalar</string>
     <!-- Colors Screen -->
-    <string name="about_color_customization_title">About Color Customization</string>
+    <string name="about_color_customization_title">Renk Ayarları Hakkında</string>
     <string name="about_color_customization_desc">    Color changes apply system-wide to all apps that support Material You theming.
     \nAdjusting these colors may affect the appearance of apps across your device.
     </string>
@@ -121,9 +121,9 @@
     <string name="saturation">Saturation</string>
     <string name="style_font_tip">A is for Axion :)</string>
     <string name="custom_color_picker_desc">Choose how to pick your custom color:</string>
-    <string name="nav_action">Action</string>
-    <string name="theme_colors">Theme Colors</string>
-    <string name="theme_style_title">Theme Style</string>
+    <string name="nav_action">Eylem</string>
+    <string name="theme_colors">Tema Renkleri</string>
+    <string name="theme_style_title">Tema Tarzı</string>
     <string name="theme_style_desc">Defines how colors are generated from the seed</string>
     <string name="use_wallpaper_colors_title">Use Wallpaper Colors</string>
     <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
