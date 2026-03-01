@@ -20,13 +20,13 @@
     <string name="yes">Evet</string>
     <!-- Common Labels -->
     <string name="info">Bilgi</string>
-    <string name="more">More</string>
-    <string name="none">None</string>
+    <string name="more">Daha fazla</string>
+    <string name="none">Hiçbiri</string>
     <string name="on">Açık</string>
     <string name="off">Kapalı</string>
     <string name="unknown">Bilinmiyor</string>
     <!-- Navigation Sections -->
-    <string name="nav_wallpaper">Wallpaper</string>
+    <string name="nav_wallpaper">Duvar Kağıdı</string>
     <string name="nav_style">Stil</string>
     <string name="nav_lockscreen">Kilit ekranı</string>
     <string name="colors">Renkler</string>
@@ -43,7 +43,7 @@
     <string name="make_it_yours">Make it yours</string>
     <string name="photos">Photos</string>
     <string name="walls">Walls</string>
-    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper">Duvar Kağıdı</string>
     <string name="wallpaper_photo">Wallpaper Photo</string>
     <string name="your_wallpaper">Your Wallpaper</string>
     <!-- Wallpaper Gallery -->
