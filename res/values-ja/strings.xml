@@ -125,7 +125,7 @@
     <string name="theme_style_desc">Defines how colors are generated from the seed</string>
     <string name="use_wallpaper_colors_title">壁紙の色を使用する</string>
     <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
-    <string name="using_custom_color">Using custom color</string>
+    <string name="using_custom_color">カスタムカラーを使用</string>
     <!-- Fonts Screen -->
     <string name="active_content_desc">有効</string>
     <string name="add_custom_font">カスタムフォントを追加</string>
@@ -146,9 +146,9 @@
     <string name="reboot_required_custom_font_title">Reboot required for custom font changes</string>
     <string name="reboot_required_custom_font_desc">Skipping reboot after changing the custom font may cause UI inconsistencies across apps.</string>
     <string name="reset_custom_font_content_desc">カスタムフォントをリセット</string>
-    <string name="reset_default_title">Reset to Default</string>
+    <string name="reset_default_title">デフォルトにリセット</string>
     <string name="reset_default_message">This will reset your font to the default system font. Are you sure?</string>
-    <string name="toast_failed_apply_font">Failed to apply font</string>
+    <string name="toast_failed_apply_font">フォントの適用に失敗しました</string>
     <string name="toast_invalid_font_file">無効なフォントファイル</string>
     <!-- Lockscreen Section -->
     <string name="add_affordance">Add affordance</string>
@@ -158,7 +158,7 @@
     <string name="clock">時計</string>
     <string name="clock_style">時計のスタイル</string>
     <string name="device_controls">デバイスのコントロール</string>
-    <string name="do_not_disturb">Do Not Disturb</string>
+    <string name="do_not_disturb">サイレントモード</string>
     <string name="flashlight">フラッシュライト</string>
     <string name="left_affordance">Left Affordance</string>
     <string name="lockscreen_customize_title">ロック画面の外観</string>
@@ -199,7 +199,7 @@
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">画像の読み込みに失敗しました</string>
     <string name="no_image_provided">No image provided</string>
-    <string name="shared_image">Shared Image</string>
+    <string name="shared_image">共有した画像</string>
     <string name="unable_to_load_image">Unable to load image</string>
     <string name="error_loading_image">エラー: %s</string>
     <!-- Content Descriptions (Accessibility) -->
