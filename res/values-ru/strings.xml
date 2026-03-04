@@ -128,7 +128,7 @@
     <string name="nav_action">Action</string>
     <string name="theme_colors">Theme Colors</string>
     <string name="theme_style_title">Theme Style</string>
-    <string name="theme_style_desc">Defines how colors are generated from the seed</string>
+    <string name="theme_style_desc"></string>
     <string name="use_wallpaper_colors_title">Использовать цвета обоев</string>
     <string name="use_wallpaper_colors_desc">Извлечь цвета из ваших обоев</string>
     <string name="using_custom_color">Использовать свой цвет</string>
