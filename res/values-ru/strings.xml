@@ -141,7 +141,7 @@
     <string name="font_preview_aa">Aa</string>
     <string name="font_preview_dialog_title">Предпросмотр шрифта</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
-    <string name="font_preview_quote">Fear is the enemy of innovation.</string>
+    <string name="font_preview_quote">Страх — враг инноваций.</string>
     <string name="font_style">Стиль шрифта</string>
     <string name="font_title">Шрифт</string>
     <string name="no_custom_font">Пользовательский шрифт не установлен</string>
@@ -158,8 +158,8 @@
     <string name="toast_invalid_font_file">Некорректный файл шрифта</string>
     <!-- Lockscreen Section -->
     <string name="add_affordance">Add affordance</string>
-    <string name="add_information_at_a_glance">Add information at a glance</string>
-    <string name="camera">Camera</string>
+    <string name="add_information_at_a_glance">Добавить информацию на взгляд</string>
+    <string name="camera">Камера</string>
     <string name="choose_your_time_format">Выберите формат времени</string>
     <string name="clock">Часы</string>
     <string name="clock_style">Стиль часов</string>
@@ -173,9 +173,9 @@
     <string name="lockscreen_widgets_title">Виджеты на экране блокировки</string>
     <string name="lockscreen_widgets_enabled_title">Включить виджеты на экране блокировки</string>
     <string name="lockscreen_widgets_enabled_summary">Разрешить виджеты на экране блокировки</string>
-    <string name="mute">Mute</string>
+    <string name="mute">Без звука</string>
     <string name="no_space_available">Недостаточно места для других виджетов</string>
-    <string name="personalize_your_experience">Personalize your experience</string>
+    <string name="personalize_your_experience">Персонализируй свой опыт</string>
     <string name="pick_widgets">Выбор виджетов</string>
     <string name="qr_code_scanner">Сканер QR-кодов</string>
     <string name="quick_access_to_your_favorites">Быстрый доступ к избранному</string>
@@ -183,8 +183,8 @@
     <string name="selected_widgets">Выбранные виджеты</string>
     <string name="selected_widgets_empty">Виджеты не выбраны</string>
     <string name="selected_widgets_guide">Нажмите на виджет чтобы удалить, длительное нажатие для перемещения.</string>
-    <string name="tap_the_preview_to_see_all_customization_options">Tap the preview to see all customization options</string>
-    <string name="tap_to_customize">Tap to customize</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Нажмите на превью для просмотра всех параметров настройки</string>
+    <string name="tap_to_customize">Коснитесь для настройки</string>
     <string name="temperature_prev">27°</string>
     <string name="video_camera">Видеокамера</string>
     <string name="wallet">Кошелек</string>
@@ -209,7 +209,7 @@
     <string name="unable_to_load_image">Не удалось загрузить изображение</string>
     <string name="error_loading_image">Ошибка: %s</string>
     <!-- Content Descriptions (Accessibility) -->
-    <string name="preview_label">%s preview</string>
-    <string name="home_screen_preview">Home screen preview</string>
+    <string name="preview_label">Предпросмотр %s</string>
+    <string name="home_screen_preview">Просмотр рабочего стола</string>
     <string name="wallpaper_background">Фон обоев</string>
 </resources>
