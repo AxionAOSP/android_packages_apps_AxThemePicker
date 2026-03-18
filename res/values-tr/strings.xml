@@ -27,7 +27,7 @@
     <string name="unknown">Bilinmiyor</string>
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Duvar Kağıdı</string>
-    <string name="nav_style">Stil</string>
+    <string name="nav_style">Tarz</string>
     <string name="nav_lockscreen">Kilit ekranı</string>
     <string name="colors">Renkler</string>
     <string name="fonts">Yazı tipleri</string>
@@ -35,28 +35,28 @@
     <string name="widgets">Widget\'lar</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Mevcut duvar kağıdı</string>
-    <string name="customize_to_match_your_style">Tercihlerine göre özelleştir</string>
-    <string name="discover_new_wallpapers">Yeni duvar kağıtları keşfet</string>
+    <string name="customize_to_match_your_style">Tercihlerinize göre özelleştirin</string>
+    <string name="discover_new_wallpapers">Yeni duvar kağıtları keşfedin</string>
     <string name="explore">Keşfet</string>
     <string name="featured">Öne Çıkanlar</string>
-    <string name="curated_wallpapers_for_you">Sana özel seçilmiş duvar kağıtları</string>
-    <string name="make_it_yours">Kişiselleştir</string>
+    <string name="curated_wallpapers_for_you">Size özel seçilmiş duvar kağıtları</string>
+    <string name="make_it_yours">Kişiselleştirin</string>
     <string name="photos">Fotoğraflar</string>
     <string name="walls">Duvarlar</string>
     <string name="wallpaper">Duvar Kağıdı</string>
-    <string name="wallpaper_photo">Duvar kağıdı fotosu</string>
-    <string name="your_wallpaper">Duvar kağıdın</string>
+    <string name="wallpaper_photo">Duvar Kağıdı Fotosu</string>
+    <string name="your_wallpaper">Duvar Kağıdın</string>
     <!-- Wallpaper Gallery -->
     <string name="customize_active_wallpaper">Etkin duvar kağıdını özelleştir</string>
-    <string name="edit_current_wallpaper">Mevcut duvar kâğıdını düzenle</string>
+    <string name="edit_current_wallpaper">Mevcut Duvar Kağıdını Düzenle</string>
     <string name="header_collections">Koleksiyonlar</string>
-    <string name="header_wallpaper_gallery">Duvar kağıdı galerisi</string>
-    <string name="latest_wallpapers">Yeni duvar kâğıtları</string>
-    <string name="live_wallpapers">Hareketli duvar kâğıtları</string>
-    <string name="more_wallpapers">Daha fazla duvar kağıdı</string>
+    <string name="header_wallpaper_gallery">Duvar Kağıdı Galerisi</string>
+    <string name="latest_wallpapers">Yeni Duvar Kağıtları</string>
+    <string name="live_wallpapers">Hareketli Duvar Kağıtları</string>
+    <string name="more_wallpapers">Daha Fazla Duvar Kağıdı</string>
     <string name="my_photos">Fotoğraflarım</string>
     <string name="recently_added_designs">Yeni eklenen tasarımlar</string>
-    <string name="view_all">Tümünü görüntüle</string>
+    <string name="view_all">Tümünü Görüntüle</string>
     <plurals name="curated_categories">
         <item quantity="one">%d seçilmiş kategori</item>
         <item quantity="other">%d seçilmiş kategoriler</item>
@@ -83,10 +83,10 @@
     <string name="app_grid_title">Uygulama Izgarası</string>
     <string name="home_screen_layout">Ana ekran düzeni</string>
     <string name="home_screen_layout_title">Ana ekran düzeni</string>
-    <string name="make_your_device_uniquely_yours">Cihazını benzersiz kıl</string>
+    <string name="make_your_device_uniquely_yours">Cihazını benzersiz kılın</string>
     <string name="personalize">Kişiselleştir</string>
-    <string name="pro_tip">Özel İpucu</string>
-    <string name="pro_tip_colors_message">Renkler duvar kâğıdından otomatik seçilir. Uyumlu bir görünüm için duvar kâğıdı renklerini etkinleştir.</string>
+    <string name="pro_tip">Püf Nokta</string>
+    <string name="pro_tip_colors_message">Renkler duvar kâğıdından otomatik seçilir. Uyumlu bir görünüm için duvar kâğıdı renklerini etkinleştirin.</string>
     <string name="system_typography">Sistem Yazı Tipleri</string>
     <string name="wallpaper_colors_and_themes">Duvar kâğıdı renkleri &amp; temalar</string>
     <!-- Colors Screen -->
@@ -178,33 +178,33 @@
     <string name="selected_widgets">Seçili Widget\'lar</string>
     <string name="selected_widgets_empty">Hiç Widget seçilmedi</string>
     <string name="selected_widgets_guide">Sürüklemek için uzun basın, kaldırmak için widget’a dokunun.</string>
-    <string name="tap_the_preview_to_see_all_customization_options">Tap the preview to see all customization options</string>
-    <string name="tap_to_customize">Tap to customize</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Tüm özelleştirme seçeneklerini görmek için önizlemeye dokunun</string>
+    <string name="tap_to_customize">Özelleştirmek için dokunun</string>
     <string name="temperature_prev">27°</string>
-    <string name="video_camera">Video camera</string>
-    <string name="wallet">Wallet</string>
-    <string name="weather_prev">Mostly Cloudy</string>
+    <string name="video_camera">Video kamera</string>
+    <string name="wallet">Cüzdan</string>
+    <string name="weather_prev">Çok Bulutlu</string>
     <string name="widget_bluetooth">Bluetooth</string>
-    <string name="widget_data">Data</string>
-    <string name="widget_hotspot">Hotspot</string>
-    <string name="widget_removed">Widget removed</string>
+    <string name="widget_data">Veri</string>
+    <string name="widget_hotspot">Erişim Noktası</string>
+    <string name="widget_removed">Widget kaldırıldı</string>
     <string name="widget_ringer">Zil Sesi</string>
-    <string name="widget_torch">Torch</string>
-    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widget_torch">Meşale</string>
+    <string name="widget_wifi">Kablosuz Ağ</string>
     <string name="widgets_title">Widget\'lar</string>
     <!-- Preferences -->
-    <string name="reset_to_default">Reset to default</string>
-    <string name="value_percentage">Value: %d%%</string>
+    <string name="reset_to_default">Varsayılana sıfırla</string>
+    <string name="value_percentage">Değer: %d%%</string>
     <string name="percentage_format">%d%%</string>
-    <string name="color_info_format">HEX: #%1$s saturation: %2$.2f brightness: %3$.2f</string>
+    <string name="color_info_format">HEX: #%1$s doygunluk: %2$.2f parlaklık: %3$.2f</string>
     <!-- WallpaperSetActivity -->
-    <string name="failed_to_load_image">Failed to load image</string>
-    <string name="no_image_provided">No image provided</string>
-    <string name="shared_image">Shared Image</string>
-    <string name="unable_to_load_image">Unable to load image</string>
-    <string name="error_loading_image">Error: %s</string>
+    <string name="failed_to_load_image">Görsel yükleme başarısız oldu</string>
+    <string name="no_image_provided">Görsel sağlanmadı</string>
+    <string name="shared_image">Paylaşılan Görsel</string>
+    <string name="unable_to_load_image">Görsel yüklenemiyor</string>
+    <string name="error_loading_image">Hata: %s</string>
     <!-- Content Descriptions (Accessibility) -->
-    <string name="preview_label">%s preview</string>
-    <string name="home_screen_preview">Home screen preview</string>
-    <string name="wallpaper_background">Wallpaper background</string>
+    <string name="preview_label">%s önizlemesi</string>
+    <string name="home_screen_preview">Ana ekran önizlemesi</string>
+    <string name="wallpaper_background">Duvar kağıdı arka planı</string>
 </resources>
