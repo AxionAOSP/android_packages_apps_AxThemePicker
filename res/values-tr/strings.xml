@@ -111,7 +111,7 @@
     <string name="fidelity_title">Renk Doğruluğu</string>
     <string name="fidelity_desc">Renk tonları için doğruluk özelliğini etkinleştirin</string>
     <string name="fine_tuning">İnce Ayar</string>
-    <string name="following_wallpaper">Takip Eden Duvar Kağıdı</string>
+    <string name="following_wallpaper">Duvar kağıdını takip eden</string>
     <string name="from_wallpaper">Duvar Kağıdından</string>
     <string name="hue">Ton</string>
     <string name="pick_from_wallpaper">Duvar Kağıdından Seç</string>
@@ -142,7 +142,7 @@
     <string name="no_custom_font">Özel yazı tipi yok</string>
     <string name="reboot_device">Cihazı yeniden başlatın</string>
     <string name="reboot_now">Şimdi Yeniden Başlat</string>
-    <string name="reboot_required_title">Yeniden başlatma gerekiyor</string>
+    <string name="reboot_required_title">Yeniden Başlatma Gerekli</string>
     <string name="reboot_required_message">Yazı tipi değişikliklerini uygulamak için yeniden başlatma gereklidir.\nŞimdi yeniden başlatmak ister misiniz?</string>
     <string name="reboot_required_custom_font_title">Özel yazı tipi değişiklikleri için yeniden başlatma gerekiyor</string>
     <string name="reboot_required_custom_font_desc">Özel yazı tipi değişikliğinden sonra cihaz yeniden başlatılmazsa, uygulamalarda arayüz tutarsızlıkları oluşabilir.</string>
@@ -152,7 +152,7 @@
     <string name="toast_failed_apply_font">Özel yazı tipi uygulanamadı</string>
     <string name="toast_invalid_font_file">Geçersiz yazı tipi dosyası</string>
     <!-- Lockscreen Section -->
-    <string name="add_affordance">Kilit ekranına ipucu ekle</string>
+    <string name="add_affordance">Kilit ekranına kısayol ekle</string>
     <string name="add_information_at_a_glance">Hızlı bilgi ekle</string>
     <string name="camera">Kamera</string>
     <string name="choose_your_time_format">Saat biçimini seçin</string>
@@ -161,7 +161,7 @@
     <string name="device_controls">Cihaz denetimleri</string>
     <string name="do_not_disturb">Rahatsız Etmeyin</string>
     <string name="flashlight">El feneri</string>
-    <string name="left_affordance">Sol İpucu</string>
+    <string name="left_affordance">Sol Kısayol</string>
     <string name="lockscreen_customize_title">Kilit Ekranı Görünümü</string>
     <string name="lockscreen_customize_summary">Kilit ekranı görünümünü özelleştirin</string>
     <string name="lockscreen_title">Kilit Ekranı</string>
@@ -174,7 +174,7 @@
     <string name="pick_widgets">Widget Seçin</string>
     <string name="qr_code_scanner">QR kod tarayıcı</string>
     <string name="quick_access_to_your_favorites">Favorilerinize hızlı erişim</string>
-    <string name="right_affordance">Sağ İpucu</string>
+    <string name="right_affordance">Sağ Kısayol</string>
     <string name="selected_widgets">Seçili Widget\'lar</string>
     <string name="selected_widgets_empty">Hiç Widget seçilmedi</string>
     <string name="selected_widgets_guide">Sürüklemek için uzun basın, kaldırmak için widget’a dokunun.</string>
