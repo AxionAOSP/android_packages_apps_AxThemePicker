@@ -3,8 +3,8 @@
     <!-- Common Actions -->
     <string name="apply">应用</string>
     <string name="applied">已应用</string>
-    <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
+    <string name="back">返回</string>
+    <string name="cancel">取消</string>
     <string name="close">关闭</string>
     <string name="confirm">确认</string>
     <string name="edit">编辑</string>
@@ -22,9 +22,9 @@
     <string name="info">信息</string>
     <string name="more">更多</string>
     <string name="none">无</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="unknown">Unknown</string>
+    <string name="on">开启</string>
+    <string name="off">关闭</string>
+    <string name="unknown">未知</string>
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">壁纸</string>
     <string name="nav_style">样式</string>
@@ -91,8 +91,9 @@
     <string name="wallpaper_colors_and_themes">壁纸颜色 &amp; 主题</string>
     <!-- Colors Screen -->
     <string name="about_color_customization_title">关于颜色自定义</string>
-    <string name="about_color_customization_desc">颜色更改将在系统范围内应用于所有支持 Material You 主题的应用。
-\n调整这些颜色可能会影响设备上所有应用的显示效果    </string>
+    <string name="about_color_customization_desc">    颜色更改将在系统范围内应用于所有支持 Material You 主题的应用。
+    \n调整这些颜色可能会影响设备上所有应用的显示效果
+    </string>
     <string name="automatic">自动</string>
     <string name="brightness">亮度</string>
     <string name="chroma_boost_title">色彩增强</string>
@@ -106,7 +107,8 @@
     <string name="custom">自定义</string>
     <string name="custom_seed_color_title">自定义主题色</string>
     <string name="customize_palette_title">自定义调色板</string>
-    <string name="customize_palette_description">使用贴合你风格的色彩，个性化你的设备    </string>
+    <string name="customize_palette_description">        使用贴合你风格的色彩，个性化你的设备
+    </string>
     <string name="fidelity_title">色彩保真</string>
     <string name="fidelity_desc">启用色彩保真功能以保留色调</string>
     <string name="fine_tuning">微调</string>
@@ -127,7 +129,7 @@
     <string name="use_wallpaper_colors_desc">从壁纸中提取颜色</string>
     <string name="using_custom_color">使用自定义颜色</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">Active</string>
+    <string name="active_content_desc">启用</string>
     <string name="add_custom_font">添加自定义字体</string>
     <string name="add_font">添加字体</string>
     <string name="change_custom_font">更换自定义字体</string>
