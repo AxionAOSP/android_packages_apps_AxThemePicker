@@ -4,72 +4,67 @@
     <string name="apply">Uygula</string>
     <string name="applied">Uygulandı</string>
     <string name="back">Geri</string>
-    <string name="cancel">İptal</string>
+    <string name="cancel">Vazgeç</string>
     <string name="close">Kapat</string>
     <string name="confirm">Onayla</string>
     <string name="edit">Düzenle</string>
-    <string name="later">Daha Sonra</string>
+    <string name="later">Sonra</string>
     <string name="no">Hayır</string>
     <string name="reset">Sıfırla</string>
-    <string name="undo">Geri Al</string>
+    <string name="undo">Geri al</string>
     <string name="setting_wallpaper">Duvar kağıdı ayarlanıyor…</string>
-    <string name="wallpaper_applied_successfully">Duvar kağıdı başarıyla uygulandı!</string>
+    <string name="wallpaper_applied_successfully">Duvar kağıdı başarıyla onaylandı!</string>
     <string name="failed_to_apply_wallpaper">Duvar kağıdı uygulanamadı: %s</string>
-    <string name="cropped_percentage">Kırpıldı %%d%%</string>
+    <string name="cropped_percentage">Kırpıldı %d%%</string>
     <string name="ok">Tamam</string>
     <string name="yes">Evet</string>
-
     <!-- Common Labels -->
     <string name="info">Bilgi</string>
-    <string name="more">Daha Fazla</string>
+    <string name="more">Daha fazla</string>
     <string name="none">Hiçbiri</string>
     <string name="on">Açık</string>
     <string name="off">Kapalı</string>
     <string name="unknown">Bilinmiyor</string>
-
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">Duvar Kağıdı</string>
-    <string name="nav_style">Stil</string>
-    <string name="nav_lockscreen">Kilit Ekranı</string>
+    <string name="nav_style">Tarz</string>
+    <string name="nav_lockscreen">Kilit ekranı</string>
     <string name="colors">Renkler</string>
-    <string name="fonts">Yazı Tipleri</string>
+    <string name="fonts">Yazı tipleri</string>
     <string name="shortcuts">Kısayollar</string>
     <string name="widgets">Widget\'lar</string>
-
     <!-- Wallpaper Section -->
-    <string name="current_wallpaper">Geçerli duvar kağıdı</string>
-    <string name="customize_to_match_your_style">Tarzınıza uyacak şekilde özelleştirin</string>
+    <string name="current_wallpaper">Mevcut duvar kağıdı</string>
+    <string name="customize_to_match_your_style">Tercihlerinize göre özelleştirin</string>
     <string name="discover_new_wallpapers">Yeni duvar kağıtları keşfedin</string>
     <string name="explore">Keşfet</string>
     <string name="featured">Öne Çıkanlar</string>
-    <string name="curated_wallpapers_for_you">Sizin için seçilmiş duvar kağıtları</string>
-    <string name="make_it_yours">Kendinize göre yapın</string>
+    <string name="curated_wallpapers_for_you">Size özel seçilmiş duvar kağıtları</string>
+    <string name="make_it_yours">Kişiselleştirin</string>
     <string name="photos">Fotoğraflar</string>
-    <string name="walls">Duvar Kağıtları</string>
+    <string name="walls">Duvarlar</string>
     <string name="wallpaper">Duvar Kağıdı</string>
-    <string name="wallpaper_photo">Duvar Kağıdı Fotoğrafı</string>
-    <string name="your_wallpaper">Duvar Kağıdınız</string>
-
+    <string name="wallpaper_photo">Duvar Kağıdı Fotosu</string>
+    <string name="your_wallpaper">Duvar Kağıdın</string>
     <!-- Wallpaper Gallery -->
-    <string name="customize_active_wallpaper">Aktif duvar kağıdını özelleştir</string>
-    <string name="edit_current_wallpaper">Geçerli Duvar Kağıdını Düzenle</string>
+    <string name="customize_active_wallpaper">Etkin duvar kağıdını özelleştir</string>
+    <string name="edit_current_wallpaper">Mevcut Duvar Kağıdını Düzenle</string>
     <string name="header_collections">Koleksiyonlar</string>
     <string name="header_wallpaper_gallery">Duvar Kağıdı Galerisi</string>
-    <string name="latest_wallpapers">En Yeni Duvar Kağıtları</string>
-    <string name="live_wallpapers">Canlı Duvar Kağıtları</string>
-    <string name="more_wallpapers">Daha fazla duvar kağıdı</string>
+    <string name="latest_wallpapers">Yeni Duvar Kağıtları</string>
+    <string name="live_wallpapers">Hareketli Duvar Kağıtları</string>
+    <string name="more_wallpapers">Daha Fazla Duvar Kağıdı</string>
     <string name="my_photos">Fotoğraflarım</string>
-    <string name="recently_added_designs">Yakın zamanda eklenen tasarımlar</string>
+    <string name="recently_added_designs">Yeni eklenen tasarımlar</string>
     <string name="view_all">Tümünü Görüntüle</string>
     <plurals name="curated_categories">
         <item quantity="one">%d seçilmiş kategori</item>
-        <item quantity="other">%d seçilmiş kategori</item>
+        <item quantity="other">%d seçilmiş kategoriler</item>
     </plurals>
     <plurals name="wallpaper_count">
         <item quantity="one">%d duvar kağıdı</item>
-        <item quantity="other">%d duvar kağıdı</item>
+        <item quantity="other">%d duvar kağıtları</item>
     </plurals>
-
     <!-- Wallpaper Apply -->
     <string name="atmosphere">Atmosfer</string>
     <string name="glass">Cam</string>
@@ -78,36 +73,31 @@
     <string name="pinch_to_crop">Kırpmak için çimdikleyin</string>
     <string name="select_at_least_one">En az birini seçin</string>
     <string name="set_wallpaper">Duvar kağıdı ayarla</string>
-    <string name="set_wallpaper_on">Duvar kağıdını şurada ayarla</string>
-    <string name="wallpaper_info">Duvar kağıdı bilgisi</string>
-
+    <string name="set_wallpaper_on">Duvar kağıdının ayarlanacağı yer</string>
+    <string name="wallpaper_info">Duvar kağıdı hakkında</string>
     <!-- Effects -->
     <string name="effects_beta_notice_title">AxEffects Beta™</string>
-    <string name="effects_beta_notice_desc">Efektler geçicidir ve kalıcı değildir. Kaldırmak için yeni bir duvar kağıdı uygulayın.</string>
-
-
+    <string name="effects_beta_notice_desc">Efektler geçicidir ve kalıcı olmaz. Kaldırmak için yeni bir duvar kâğıdı uygulayın.</string>
     <!-- Style Section -->
     <string name="app_grid">Uygulama Izgarası</string>
     <string name="app_grid_title">Uygulama Izgarası</string>
     <string name="home_screen_layout">Ana ekran düzeni</string>
-    <string name="home_screen_layout_title">Ana Ekran Düzeni</string>
-    <string name="make_your_device_uniquely_yours">Cihazınızı benzersiz kılın</string>
+    <string name="home_screen_layout_title">Ana ekran düzeni</string>
+    <string name="make_your_device_uniquely_yours">Cihazını benzersiz kılın</string>
     <string name="personalize">Kişiselleştir</string>
-    <string name="pro_tip">Profesyonel İpucu</string>
-    <string name="pro_tip_colors_message">Renkler otomatik olarak duvar kağıdınızdan çıkarılır. Uyumlu bir görünüm için duvar kağıdı renklerini etkinleştirin.</string>
-    <string name="system_typography">Sistem tipografisi</string>
-    <string name="wallpaper_colors_and_themes">Duvar kağıdı renkleri ve temalar</string>
-
+    <string name="pro_tip">Püf Nokta</string>
+    <string name="pro_tip_colors_message">Renkler duvar kâğıdından otomatik seçilir. Uyumlu bir görünüm için duvar kâğıdı renklerini etkinleştirin.</string>
+    <string name="system_typography">Sistem Yazı Tipleri</string>
+    <string name="wallpaper_colors_and_themes">Duvar kâğıdı renkleri &amp; temalar</string>
     <!-- Colors Screen -->
-    <string name="about_color_customization_title">Renk Özelleştirmesi Hakkında</string>
-    <string name="about_color_customization_desc">
-    Renk değişiklikleri, Material You temasını destekleyen tüm uygulamalara sistem genelinde uygulanır.
+    <string name="about_color_customization_title">Renk Ayarları Hakkında</string>
+    <string name="about_color_customization_desc">    Renk değişiklikleri, Material You uyumlu tüm uygulamalara sistem genelinde uygulanır.
     \nBu renkleri ayarlamak, cihazınızdaki uygulamaların görünümünü etkileyebilir.
     </string>
     <string name="automatic">Otomatik</string>
     <string name="brightness">Parlaklık</string>
-    <string name="chroma_boost_title">Renk Yoğunluğu Artırma</string>
-    <string name="choose_seed_color">Tohum Rengi Seçin</string>
+    <string name="chroma_boost_title">Renk Canlandırma</string>
+    <string name="choose_seed_color">Temel Rengi Seç</string>
     <string name="color_picker">Renk Seçici</string>
     <string name="colors_title">Renkler</string>
     <string name="contrast_high">Yüksek</string>
@@ -115,33 +105,30 @@
     <string name="contrast_low">Düşük</string>
     <string name="contrast_normal">Normal</string>
     <string name="custom">Özel</string>
-    <string name="custom_seed_color_title">Özel Tohum Rengi</string>
-    <string name="customize_palette_title">Paletinizi Özelleştirin</string>
-    <string name="customize_palette_description">
-        Tarzınıza uygun renklerle cihazınızı kişiselleştirin
-    </string>
-    <string name="fidelity_title">Sadakat</string>
-    <string name="fidelity_desc">Renk tonları için sadakat özelliğini etkinleştir</string>
+    <string name="custom_seed_color_title">Özel Ana Renk</string>
+    <string name="customize_palette_title">Paleti Özelleştirin</string>
+    <string name="customize_palette_description">        Cihazınızı tarzınıza uygun renklerle kişiselleştirin    </string>
+    <string name="fidelity_title">Renk Doğruluğu</string>
+    <string name="fidelity_desc">Renk tonları için doğruluk özelliğini etkinleştirin</string>
     <string name="fine_tuning">İnce Ayar</string>
-    <string name="following_wallpaper">Duvar kağıdını takip ediyor</string>
+    <string name="following_wallpaper">Duvar kağıdını takip eden</string>
     <string name="from_wallpaper">Duvar Kağıdından</string>
     <string name="hue">Ton</string>
     <string name="pick_from_wallpaper">Duvar Kağıdından Seç</string>
-    <string name="selected_color">Seçili Renk</string>
-    <string name="selected_color_label">Seçili Renk:</string>
+    <string name="selected_color">Seçilen Renk</string>
+    <string name="selected_color_label">Seçilen Renk:</string>
     <string name="saturation">Doygunluk</string>
     <string name="style_font_tip">A, Axion içindir :)</string>
-    <string name="custom_color_picker_desc">Özel renginizi nasıl seçeceğinizi belirleyin:</string>
+    <string name="custom_color_picker_desc">Özel rengi seçme yöntemini belirleyin:</string>
     <string name="nav_action">Eylem</string>
     <string name="theme_colors">Tema Renkleri</string>
-    <string name="theme_style_title">Tema Stili</string>
-    <string name="theme_style_desc">Renklerin tohumdan nasıl oluşturulduğunu tanımlar</string>
-    <string name="use_wallpaper_colors_title">Duvar Kağıdı Renklerini Kullan</string>
-    <string name="use_wallpaper_colors_desc">Duvar kağıdınızdan renkleri çıkarın</string>
-    <string name="using_custom_color">Özel renk kullanılıyor</string>
-
+    <string name="theme_style_title">Tema Tarzı</string>
+    <string name="theme_style_desc">Renklerin, temel renkten nasıl oluşturulacağını tanımlar</string>
+    <string name="use_wallpaper_colors_title">Duvar Kağıdı Rengini Kullan</string>
+    <string name="use_wallpaper_colors_desc">Duvar kağından renkleri çıkarın</string>
+    <string name="using_custom_color">Özel renkler kullanılıyor</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">Aktif</string>
+    <string name="active_content_desc">Etkin</string>
     <string name="add_custom_font">Özel yazı tipi ekle</string>
     <string name="add_font">Yazı tipi ekle</string>
     <string name="change_custom_font">Özel yazı tipini değiştir</string>
@@ -149,74 +136,73 @@
     <string name="font_preview_aa">Aa</string>
     <string name="font_preview_dialog_title">Yazı Tipi Önizlemesi</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
-    <string name="font_preview_quote">Korku, yeniliğin düşmanıdır.</string>
-    <string name="font_style">Yazı tipi stili</string>
+    <string name="font_preview_quote">Korku, yaratıcılığın düşmanıdır.</string>
+    <string name="font_style">Yazı tipi tarzı</string>
     <string name="font_title">Yazı Tipi</string>
     <string name="no_custom_font">Özel yazı tipi yok</string>
-    <string name="reboot_device">Cihazı yeniden başlat</string>
+    <string name="reboot_device">Cihazı yeniden başlatın</string>
     <string name="reboot_now">Şimdi Yeniden Başlat</string>
     <string name="reboot_required_title">Yeniden Başlatma Gerekli</string>
     <string name="reboot_required_message">Yazı tipi değişikliklerini uygulamak için yeniden başlatma gereklidir.\nŞimdi yeniden başlatmak ister misiniz?</string>
-    <string name="reboot_required_custom_font_title">Özel yazı tipi değişiklikleri için yeniden başlatma gerekli</string>
-    <string name="reboot_required_custom_font_desc">Özel yazı tipini değiştirdikten sonra yeniden başlatmayı atlamak, uygulamalarda arayüz tutarsızlıklarına neden olabilir.</string>
+    <string name="reboot_required_custom_font_title">Özel yazı tipi değişiklikleri için yeniden başlatma gerekiyor</string>
+    <string name="reboot_required_custom_font_desc">Özel yazı tipi değişikliğinden sonra cihaz yeniden başlatılmazsa, uygulamalarda arayüz tutarsızlıkları oluşabilir.</string>
     <string name="reset_custom_font_content_desc">Özel yazı tipini sıfırla</string>
     <string name="reset_default_title">Varsayılana Sıfırla</string>
     <string name="reset_default_message">Bu, yazı tipinizi varsayılan sistem yazı tipine sıfırlayacaktır. Emin misiniz?</string>
-    <string name="toast_failed_apply_font">Yazı tipi uygulanamadı</string>
+    <string name="toast_failed_apply_font">Özel yazı tipi uygulanamadı</string>
     <string name="toast_invalid_font_file">Geçersiz yazı tipi dosyası</string>
-
     <!-- Lockscreen Section -->
-    <string name="add_affordance">Kısayol ekle</string>
-    <string name="add_information_at_a_glance">Bir bakışta bilgi ekleyin</string>
+    <string name="add_affordance">Kilit ekranına kısayol ekle</string>
+    <string name="add_information_at_a_glance">Hızlı bilgi ekle</string>
     <string name="camera">Kamera</string>
-    <string name="choose_your_time_format">Saat formatınızı seçin</string>
+    <string name="choose_your_time_format">Saat biçimini seçin</string>
     <string name="clock">Saat</string>
-    <string name="clock_style">Saat Stili</string>
-    <string name="device_controls">Cihaz kontrolleri</string>
+    <string name="clock_style">Saat Tarzı</string>
+    <string name="device_controls">Cihaz denetimleri</string>
     <string name="do_not_disturb">Rahatsız Etmeyin</string>
-    <string name="flashlight">El Feneri</string>
+    <string name="flashlight">El feneri</string>
     <string name="left_affordance">Sol Kısayol</string>
-    <string name="lockscreen_customize_title">Kilit ekranı görünümü</string>
-    <string name="lockscreen_customize_summary">Kilit ekranı görünümünü özelleştir</string>
+    <string name="lockscreen_customize_title">Kilit Ekranı Görünümü</string>
+    <string name="lockscreen_customize_summary">Kilit ekranı görünümünü özelleştirin</string>
     <string name="lockscreen_title">Kilit Ekranı</string>
     <string name="lockscreen_widgets_title">Kilit Ekranı Widget\'ları</string>
     <string name="lockscreen_widgets_enabled_title">Kilit Ekranı Widget\'larını Etkinleştir</string>
-    <string name="lockscreen_widgets_enabled_summary">Kilit ekranında widget\'lara izin ver</string>
-    <string name="mute">Sessiz</string>
-    <string name="no_space_available">Daha fazla widget için yer yok</string>
+    <string name="lockscreen_widgets_enabled_summary">Kilit ekranında Widget\'lara izin ver</string>
+    <string name="mute">Sessize al</string>
+    <string name="no_space_available">Daha fazla widget için alan yok</string>
     <string name="personalize_your_experience">Deneyiminizi kişiselleştirin</string>
-    <string name="pick_widgets">Widget Seç</string>
-    <string name="qr_code_scanner">QR Kod Tarayıcı</string>
+    <string name="pick_widgets">Widget Seçin</string>
+    <string name="qr_code_scanner">QR kod tarayıcı</string>
     <string name="quick_access_to_your_favorites">Favorilerinize hızlı erişim</string>
     <string name="right_affordance">Sağ Kısayol</string>
     <string name="selected_widgets">Seçili Widget\'lar</string>
-    <string name="selected_widgets_empty">Widget seçilmedi</string>
-    <string name="selected_widgets_guide">Sürükleyip bırakmak için uzun basın, kaldırmak için widget\'a dokunun.</string>
+    <string name="selected_widgets_empty">Hiç Widget seçilmedi</string>
+    <string name="selected_widgets_guide">Sürüklemek için uzun basın, kaldırmak için widget’a dokunun.</string>
     <string name="tap_the_preview_to_see_all_customization_options">Tüm özelleştirme seçeneklerini görmek için önizlemeye dokunun</string>
     <string name="tap_to_customize">Özelleştirmek için dokunun</string>
     <string name="temperature_prev">27°</string>
-    <string name="video_camera">Video Kamera</string>
+    <string name="video_camera">Video kamera</string>
     <string name="wallet">Cüzdan</string>
-    <string name="weather_prev">Parçalı Bulutlu</string>
+    <string name="weather_prev">Çok Bulutlu</string>
     <string name="widget_bluetooth">Bluetooth</string>
     <string name="widget_data">Veri</string>
     <string name="widget_hotspot">Erişim Noktası</string>
     <string name="widget_removed">Widget kaldırıldı</string>
     <string name="widget_ringer">Zil Sesi</string>
-    <string name="widget_torch">El Feneri</string>
-    <string name="widget_wifi">Wi-Fi</string>
+    <string name="widget_torch">Meşale</string>
+    <string name="widget_wifi">Kablosuz Ağ</string>
     <string name="widgets_title">Widget\'lar</string>
-
     <!-- Preferences -->
     <string name="reset_to_default">Varsayılana sıfırla</string>
-    <string name="value_percentage">Değer: %%d%%</string>
-
+    <string name="value_percentage">Değer: %d%%</string>
+    <string name="percentage_format">%d%%</string>
+    <string name="color_info_format">HEX: #%1$s doygunluk: %2$.2f parlaklık: %3$.2f</string>
     <!-- WallpaperSetActivity -->
-    <string name="failed_to_load_image">Görüntü yüklenemedi</string>
-    <string name="no_image_provided">Görüntü sağlanmadı</string>
-    <string name="shared_image">Paylaşılan Görüntü</string>
-    <string name="unable_to_load_image">Görüntü yüklenemiyor</string>
-
+    <string name="failed_to_load_image">Görsel yükleme başarısız oldu</string>
+    <string name="no_image_provided">Görsel sağlanmadı</string>
+    <string name="shared_image">Paylaşılan Görsel</string>
+    <string name="unable_to_load_image">Görsel yüklenemiyor</string>
+    <string name="error_loading_image">Hata: %s</string>
     <!-- Content Descriptions (Accessibility) -->
     <string name="preview_label">%s önizlemesi</string>
     <string name="home_screen_preview">Ana ekran önizlemesi</string>

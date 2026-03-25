@@ -1,223 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common Actions -->
-    <string name="apply">Applica</string>
-    <string name="applied">Applicato</string>
+    <string name="apply">Apply</string>
+    <string name="applied">Applied</string>
     <string name="back">Indietro</string>
-    <string name="cancel">Annulla</string>
+    <string name="cancel">Cancellare</string>
     <string name="close">Chiudi</string>
-    <string name="confirm">Conferma</string>
+    <string name="confirm">Confirm</string>
     <string name="edit">Modifica</string>
-    <string name="later">Dopo</string>
+    <string name="later">Later</string>
     <string name="no">No</string>
-    <string name="reset">Ripristina</string>
-    <string name="undo">Annulla azione</string>
-    <string name="setting_wallpaper">Impostazione sfondo…</string>
-    <string name="wallpaper_applied_successfully">Sfondo applicato con successo!</string>
-    <string name="failed_to_apply_wallpaper">Impossibile applicare lo sfondo: %s</string>
-    <string name="cropped_percentage">Ritagliato al %d%%</string>
+    <string name="reset">Reset</string>
+    <string name="undo">Annulla</string>
+    <string name="setting_wallpaper">Setting wallpaper…</string>
+    <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
+    <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
+    <string name="cropped_percentage">Cropped %d%%</string>
     <string name="ok">OK</string>
-    <string name="yes">Sì</string>
-
+    <string name="yes">Yes</string>
     <!-- Common Labels -->
-    <string name="info">Info</string>
-    <string name="more">Altro</string>
-    <string name="none">Nessuno</string>
+    <string name="info">Informazioni</string>
+    <string name="more">More</string>
+    <string name="none">None</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="unknown">Sconosciuto</string>
-
     <!-- Navigation Sections -->
-    <string name="nav_wallpaper">Sfondo</string>
+    <string name="nav_wallpaper">Wallpaper</string>
     <string name="nav_style">Stile</string>
-    <string name="nav_lockscreen">Schermata di blocco</string>
-    <string name="colors">Colori</string>
-    <string name="fonts">Font</string>
-    <string name="shortcuts">Scorciatoie</string>
+    <string name="nav_lockscreen">Lock screen</string>
+    <string name="colors">Colors</string>
+    <string name="fonts">Fonts</string>
+    <string name="shortcuts">Shortcuts</string>
     <string name="widgets">Widget</string>
-
     <!-- Wallpaper Section -->
-    <string name="current_wallpaper">Sfondo attuale</string>
-    <string name="customize_to_match_your_style">Personalizza in base al tuo stile</string>
-    <string name="discover_new_wallpapers">Scopri nuovi sfondi</string>
-    <string name="explore">Esplora</string>
-    <string name="featured">In primo piano</string>
-    <string name="curated_wallpapers_for_you">Sfondi selezionati per te</string>
-    <string name="make_it_yours">Rendilo tuo</string>
-    <string name="photos">Foto</string>
+    <string name="current_wallpaper">Current wallpaper</string>
+    <string name="customize_to_match_your_style">Customize to match your style</string>
+    <string name="discover_new_wallpapers">Discover new wallpapers</string>
+    <string name="explore">Explore</string>
+    <string name="featured">Featured</string>
+    <string name="curated_wallpapers_for_you">Curated wallpapers for you</string>
+    <string name="make_it_yours">Make it yours</string>
+    <string name="photos">Photos</string>
     <string name="walls">Walls</string>
-    <string name="wallpaper">Sfondo</string>
-    <string name="wallpaper_photo">Foto sfondo</string>
-    <string name="your_wallpaper">Il tuo sfondo</string>
-
+    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper_photo">Wallpaper Photo</string>
+    <string name="your_wallpaper">Your Wallpaper</string>
     <!-- Wallpaper Gallery -->
-    <string name="customize_active_wallpaper">Personalizza lo sfondo attivo</string>
-    <string name="edit_current_wallpaper">Modifica sfondo attuale</string>
-    <string name="header_collections">Collezioni</string>
-    <string name="header_wallpaper_gallery">Galleria sfondi</string>
-    <string name="latest_wallpapers">Ultimi sfondi</string>
-    <string name="live_wallpapers">Sfondi animati</string>
-    <string name="more_wallpapers">Altri sfondi</string>
-    <string name="my_photos">Le mie foto</string>
-    <string name="recently_added_designs">Design aggiunti di recente</string>
-    <string name="view_all">Vedi tutto</string>
+    <string name="customize_active_wallpaper">Customize your active wallpaper</string>
+    <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
+    <string name="header_collections">Collections</string>
+    <string name="header_wallpaper_gallery">Wallpaper Gallery</string>
+    <string name="latest_wallpapers">Latest Wallpapers</string>
+    <string name="live_wallpapers">Live Wallpapers</string>
+    <string name="more_wallpapers">More wallpapers</string>
+    <string name="my_photos">My Photos</string>
+    <string name="recently_added_designs">Recently added designs</string>
+    <string name="view_all">View All</string>
     <plurals name="curated_categories">
-        <item quantity="one">%d categoria selezionata</item>
-        <item quantity="other">%d categorie selezionate</item>
+        <item quantity="one">%d curated category</item>
+        <item quantity="other">%d curated categories</item>
     </plurals>
     <plurals name="wallpaper_count">
-        <item quantity="one">%d sfondo</item>
-        <item quantity="other">%d sfondi</item>
+        <item quantity="one">%d wallpaper</item>
+        <item quantity="other">%d wallpapers</item>
     </plurals>
-
     <!-- Wallpaper Apply -->
-    <string name="atmosphere">Atmosfera</string>
-    <string name="glass">Vetro</string>
-    <string name="home_screen">Schermata home</string>
-    <string name="lock_screen_label">Schermata di blocco</string>
-    <string name="pinch_to_crop">Pizzica per ritagliare</string>
-    <string name="select_at_least_one">Seleziona almeno uno</string>
-    <string name="set_wallpaper">Imposta sfondo</string>
-    <string name="set_wallpaper_on">Imposta sfondo su</string>
-    <string name="wallpaper_info">Info sfondo</string>
-
+    <string name="atmosphere">Atmosphere</string>
+    <string name="glass">Glass</string>
+    <string name="home_screen">Home screen</string>
+    <string name="lock_screen_label">Lock screen</string>
+    <string name="pinch_to_crop">Pinch to crop</string>
+    <string name="select_at_least_one">Select at least one</string>
+    <string name="set_wallpaper">Set wallpaper</string>
+    <string name="set_wallpaper_on">Set wallpaper on</string>
+    <string name="wallpaper_info">Wallpaper info</string>
     <!-- Effects -->
     <string name="effects_beta_notice_title">AxEffects Beta™</string>
-    <string name="effects_beta_notice_desc">Gli effetti sono temporanei e non persistono. Applica un nuovo sfondo per rimuoverli.</string>
-
+    <string name="effects_beta_notice_desc">Effects are temporary and won\'t persist. Apply a new wallpaper to remove them.</string>
     <!-- Style Section -->
-    <string name="app_grid">Griglia app</string>
-    <string name="app_grid_title">Griglia app</string>
-    <string name="home_screen_layout">Layout schermata home</string>
-    <string name="home_screen_layout_title">Layout schermata home</string>
-    <string name="make_your_device_uniquely_yours">Rendi il tuo dispositivo unico</string>
-    <string name="personalize">Personalizza</string>
-    <string name="pro_tip">Suggerimento</string>
-    <string name="pro_tip_colors_message">I colori vengono estratti automaticamente dallo sfondo. Attiva i colori dello sfondo per un look armonioso.</string>
-    <string name="system_typography">Tipografia di sistema</string>
-    <string name="wallpaper_colors_and_themes">Colori e temi dello sfondo</string>
-
+    <string name="app_grid">App Grid</string>
+    <string name="app_grid_title">App Grid</string>
+    <string name="home_screen_layout">Home screen layout</string>
+    <string name="home_screen_layout_title">Home screen Layout</string>
+    <string name="make_your_device_uniquely_yours">Make your device uniquely yours</string>
+    <string name="personalize">Personalize</string>
+    <string name="pro_tip">Pro Tip</string>
+    <string name="pro_tip_colors_message">Colors are automatically extracted from your wallpaper. Enable wallpaper colors for a cohesive look.</string>
+    <string name="system_typography">System typography</string>
+    <string name="wallpaper_colors_and_themes">Wallpaper colors &amp; themes</string>
     <!-- Colors Screen -->
-    <string name="about_color_customization_title">Informazioni sulla personalizzazione dei colori</string>
-    <string name="about_color_customization_desc">
-    Le modifiche ai colori vengono applicate a tutto il sistema per tutte le app che supportano i temi Material You.
-    \nLa regolazione di questi colori può influire sull\'aspetto delle app sul dispositivo.
+    <string name="about_color_customization_title">About Color Customization</string>
+    <string name="about_color_customization_desc">    Color changes apply system-wide to all apps that support Material You theming.
+    \nAdjusting these colors may affect the appearance of apps across your device.
     </string>
-    <string name="automatic">Automatico</string>
-    <string name="brightness">Luminosità</string>
+    <string name="automatic">Automatic</string>
+    <string name="brightness">Brightness</string>
     <string name="chroma_boost_title">Chroma Boost</string>
-    <string name="choose_seed_color">Scegli colore di base</string>
-    <string name="color_picker">Selettore colori</string>
-    <string name="colors_title">Colori</string>
-    <string name="contrast_high">Alto</string>
-    <string name="contrast_level_title">Livello di contrasto</string>
-    <string name="contrast_low">Basso</string>
-    <string name="contrast_normal">Normale</string>
+    <string name="choose_seed_color">Choose Seed Color</string>
+    <string name="color_picker">Color Picker</string>
+    <string name="colors_title">Colors</string>
+    <string name="contrast_high">High</string>
+    <string name="contrast_level_title">Contrast Level</string>
+    <string name="contrast_low">Low</string>
+    <string name="contrast_normal">Normal</string>
     <string name="custom">Personalizzato</string>
-    <string name="custom_seed_color_title">Colore di base personalizzato</string>
-    <string name="customize_palette_title">Personalizza la tua tavolozza</string>
-    <string name="customize_palette_description">
-        Personalizza il tuo dispositivo con colori che si adattano al tuo stile
+    <string name="custom_seed_color_title">Custom Seed Color</string>
+    <string name="customize_palette_title">Customize Your Palette</string>
+    <string name="customize_palette_description">        Personalize your device with colors that match your style
     </string>
-    <string name="fidelity_title">Fedeltà</string>
-    <string name="fidelity_desc">Attiva la funzione fedeltà per le tonalità di colore</string>
-    <string name="fine_tuning">Regolazione fine</string>
-    <string name="following_wallpaper">In base allo sfondo</string>
-    <string name="from_wallpaper">Dallo sfondo</string>
-    <string name="hue">Tonalità</string>
-    <string name="pick_from_wallpaper">Scegli dallo sfondo</string>
-    <string name="selected_color">Colore selezionato</string>
-    <string name="selected_color_label">Colore selezionato:</string>
-    <string name="saturation">Saturazione</string>
-    <string name="style_font_tip">A sta per Axion :)</string>
-    <string name="custom_color_picker_desc">Scegli come selezionare il tuo colore personalizzato:</string>
-    <string name="nav_action">Azione</string>
-    <string name="theme_colors">Colori del tema</string>
-    <string name="theme_style_title">Stile del tema</string>
-    <string name="theme_style_desc">Definisce come vengono generati i colori dalla base</string>
-    <string name="use_wallpaper_colors_title">Usa i colori dello sfondo</string>
-    <string name="use_wallpaper_colors_desc">Estrai i colori dallo sfondo</string>
-    <string name="using_custom_color">Uso di un colore personalizzato</string>
-
+    <string name="fidelity_title">Fidelity</string>
+    <string name="fidelity_desc">Enable fidelity feature for color tones</string>
+    <string name="fine_tuning">Fine Tuning</string>
+    <string name="following_wallpaper">Following wallpaper</string>
+    <string name="from_wallpaper">From Wallpaper</string>
+    <string name="hue">Hue</string>
+    <string name="pick_from_wallpaper">Pick from Wallpaper</string>
+    <string name="selected_color">Selected Color</string>
+    <string name="selected_color_label">Selected Color:</string>
+    <string name="saturation">Saturation</string>
+    <string name="style_font_tip">A is for Axion :)</string>
+    <string name="custom_color_picker_desc">Choose how to pick your custom color:</string>
+    <string name="nav_action">Action</string>
+    <string name="theme_colors">Theme Colors</string>
+    <string name="theme_style_title">Theme Style</string>
+    <string name="theme_style_desc">Defines how colors are generated from the seed</string>
+    <string name="use_wallpaper_colors_title">Use Wallpaper Colors</string>
+    <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
+    <string name="using_custom_color">Using custom color</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">Attivo</string>
-    <string name="add_custom_font">Aggiungi font personalizzato</string>
-    <string name="add_font">Aggiungi font</string>
-    <string name="change_custom_font">Cambia font personalizzato</string>
-    <string name="custom_font">Font personalizzato</string>
+    <string name="active_content_desc">Attiva</string>
+    <string name="add_custom_font">Add custom font</string>
+    <string name="add_font">Add font</string>
+    <string name="change_custom_font">Change custom font</string>
+    <string name="custom_font">Custom font</string>
     <string name="font_preview_aa">Aa</string>
-    <string name="font_preview_dialog_title">Anteprima font</string>
+    <string name="font_preview_dialog_title">Font Preview</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
-    <string name="font_preview_quote">La paura è il nemico dell\'innovazione.</string>
-    <string name="font_style">Stile font</string>
+    <string name="font_preview_quote">Fear is the enemy of innovation.</string>
+    <string name="font_style">Font style</string>
     <string name="font_title">Font</string>
-    <string name="no_custom_font">Nessun font personalizzato</string>
-    <string name="reboot_device">Riavvia dispositivo</string>
-    <string name="reboot_now">Riavvia ora</string>
-    <string name="reboot_required_title">Riavvio richiesto</string>
-    <string name="reboot_required_message">È richiesto il riavvio per applicare le modifiche al font.\nVuoi riavviare ora?</string>
-    <string name="reboot_required_custom_font_title">Riavvio richiesto per la modifica del font personalizzato</string>
-    <string name="reboot_required_custom_font_desc">Saltare il riavvio dopo aver cambiato il font personalizzato può causare incongruenze nell\'interfaccia.</string>
-    <string name="reset_custom_font_content_desc">Ripristina font personalizzato</string>
-    <string name="reset_default_title">Ripristina predefinito</string>
-    <string name="reset_default_message">Questo ripristinerà il font di sistema predefinito. Sei sicuro?</string>
-    <string name="toast_failed_apply_font">Impossibile applicare il font</string>
-    <string name="toast_invalid_font_file">File font non valido</string>
-
+    <string name="no_custom_font">No custom font</string>
+    <string name="reboot_device">Reboot device</string>
+    <string name="reboot_now">Reboot Now</string>
+    <string name="reboot_required_title">Reboot Required</string>
+    <string name="reboot_required_message">A reboot is required to apply the font changes.\nWould you like to reboot now?</string>
+    <string name="reboot_required_custom_font_title">Reboot required for custom font changes</string>
+    <string name="reboot_required_custom_font_desc">Skipping reboot after changing the custom font may cause UI inconsistencies across apps.</string>
+    <string name="reset_custom_font_content_desc">Reset custom font</string>
+    <string name="reset_default_title">Reset to Default</string>
+    <string name="reset_default_message">This will reset your font to the default system font. Are you sure?</string>
+    <string name="toast_failed_apply_font">Failed to apply font</string>
+    <string name="toast_invalid_font_file">Invalid font file</string>
     <!-- Lockscreen Section -->
-    <string name="add_affordance">Aggiungi scorciatoia</string>
-    <string name="add_information_at_a_glance">Aggiungi info a colpo d\'occhio</string>
-    <string name="camera">Fotocamera</string>
-    <string name="choose_your_time_format">Scegli il formato dell\'ora</string>
-    <string name="clock">Orologio</string>
-    <string name="clock_style">Stile orologio</string>
-    <string name="device_controls">Controlli dispositivo</string>
-    <string name="do_not_disturb">Non disturbare</string>
+    <string name="add_affordance">Add affordance</string>
+    <string name="add_information_at_a_glance">Add information at a glance</string>
+    <string name="camera">Camera</string>
+    <string name="choose_your_time_format">Choose your time format</string>
+    <string name="clock">Clock</string>
+    <string name="clock_style">Clock Style</string>
+    <string name="device_controls">Device controls</string>
+    <string name="do_not_disturb">Do Not Disturb</string>
     <string name="flashlight">Torcia</string>
-    <string name="left_affordance">Scorciatoia sinistra</string>
-    <string name="lockscreen_customize_title">Aspetto schermata di blocco</string>
-    <string name="lockscreen_customize_summary">Personalizza l\'aspetto della schermata di blocco</string>
-    <string name="lockscreen_title">Schermata di blocco</string>
-    <string name="lockscreen_widgets_title">Widget schermata di blocco</string>
-    <string name="lockscreen_widgets_enabled_title">Attiva widget nella schermata di blocco</string>
-    <string name="lockscreen_widgets_enabled_summary">Consenti i widget nella schermata di blocco</string>
-    <string name="mute">Muto</string>
-    <string name="no_space_available">Spazio esaurito per altri widget</string>
-    <string name="personalize_your_experience">Personalizza la tua esperienza</string>
-    <string name="pick_widgets">Scegli widget</string>
-    <string name="qr_code_scanner">Scanner codici QR</string>
-    <string name="quick_access_to_your_favorites">Accesso rapido ai preferiti</string>
-    <string name="right_affordance">Scorciatoia destra</string>
-    <string name="selected_widgets">Widget selezionati</string>
-    <string name="selected_widgets_empty">Nessun widget selezionato</string>
-    <string name="selected_widgets_guide">Premi a lungo per trascinare, tocca il widget per rimuoverlo.</string>
-    <string name="tap_the_preview_to_see_all_customization_options">Tocca l\'anteprima per vedere tutte le opzioni</string>
-    <string name="tap_to_customize">Tocca per personalizzare</string>
+    <string name="left_affordance">Left Affordance</string>
+    <string name="lockscreen_customize_title">Lockscreen appearance</string>
+    <string name="lockscreen_customize_summary">Customize lockscreen appearance</string>
+    <string name="lockscreen_title">Lock Screen</string>
+    <string name="lockscreen_widgets_title">Lockscreen Widgets</string>
+    <string name="lockscreen_widgets_enabled_title">Enable Lockscreen Widgets</string>
+    <string name="lockscreen_widgets_enabled_summary">Allow widgets on lockscreen</string>
+    <string name="mute">Mute</string>
+    <string name="no_space_available">No space available for more widgets</string>
+    <string name="personalize_your_experience">Personalize your experience</string>
+    <string name="pick_widgets">Pick Widgets</string>
+    <string name="qr_code_scanner">QR code scanner</string>
+    <string name="quick_access_to_your_favorites">Quick access to your favorites</string>
+    <string name="right_affordance">Right Affordance</string>
+    <string name="selected_widgets">Selected Widgets</string>
+    <string name="selected_widgets_empty">No widgets selected</string>
+    <string name="selected_widgets_guide">Long press to drag and drop, tap widget to remove.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Tap the preview to see all customization options</string>
+    <string name="tap_to_customize">Tap to customize</string>
     <string name="temperature_prev">27°</string>
-    <string name="video_camera">Videocamera</string>
+    <string name="video_camera">Video camera</string>
     <string name="wallet">Wallet</string>
-    <string name="weather_prev">Parzialmente nuvoloso</string>
+    <string name="weather_prev">Mostly Cloudy</string>
     <string name="widget_bluetooth">Bluetooth</string>
-    <string name="widget_data">Dati</string>
+    <string name="widget_data">Data</string>
     <string name="widget_hotspot">Hotspot</string>
-    <string name="widget_removed">Widget rimosso</string>
-    <string name="widget_ringer">Suoneria</string>
-    <string name="widget_torch">Torcia</string>
+    <string name="widget_removed">Widget removed</string>
+    <string name="widget_ringer">Ringer</string>
+    <string name="widget_torch">Torch</string>
     <string name="widget_wifi">Wi-Fi</string>
     <string name="widgets_title">Widget</string>
-
     <!-- Preferences -->
-    <string name="reset_to_default">Ripristina predefiniti</string>
-    <string name="value_percentage">Valore: %d%%</string>
-
+    <string name="reset_to_default">Reset to default</string>
+    <string name="value_percentage">Value: %d%%</string>
+    <string name="percentage_format">%d%%</string>
+    <string name="color_info_format">HEX: #%1$s saturation: %2$.2f brightness: %3$.2f</string>
     <!-- WallpaperSetActivity -->
-    <string name="failed_to_load_image">Impossibile caricare l\'immagine</string>
-    <string name="no_image_provided">Nessuna immagine fornita</string>
-    <string name="shared_image">Immagine condivisa</string>
-    <string name="unable_to_load_image">Impossibile caricare l\'immagine</string>
-
+    <string name="failed_to_load_image">Failed to load image</string>
+    <string name="no_image_provided">No image provided</string>
+    <string name="shared_image">Shared Image</string>
+    <string name="unable_to_load_image">Unable to load image</string>
+    <string name="error_loading_image">Error: %s</string>
     <!-- Content Descriptions (Accessibility) -->
-    <string name="preview_label">Anteprima di %s</string>
-    <string name="home_screen_preview">Anteprima schermata home</string>
-    <string name="wallpaper_background">Sfondo del wallpaper</string>
+    <string name="preview_label">%s preview</string>
+    <string name="home_screen_preview">Home screen preview</string>
+    <string name="wallpaper_background">Wallpaper background</string>
 </resources>

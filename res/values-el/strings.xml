@@ -1,223 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common Actions -->
-    <string name="apply">Εφαρμογή</string>
-    <string name="applied">Εφαρμόστηκε</string>
-    <string name="back">Πίσω</string>
-    <string name="cancel">Ακύρωση</string>
+    <string name="apply">Apply</string>
+    <string name="applied">Applied</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
     <string name="close">Κλείσιμο</string>
-    <string name="confirm">Επιβεβαίωση</string>
+    <string name="confirm">Confirm</string>
     <string name="edit">Επεξεργασία</string>
-    <string name="later">Αργότερα</string>
-    <string name="no">Όχι</string>
-    <string name="reset">Επαναφορά</string>
+    <string name="later">Later</string>
+    <string name="no">No</string>
+    <string name="reset">Reset</string>
     <string name="undo">Αναίρεση</string>
-    <string name="setting_wallpaper">Ορισμός ταπετσαρίας…</string>
-    <string name="wallpaper_applied_successfully">Η ταπετσαρία εφαρμόστηκε με επιτυχία!</string>
-    <string name="failed_to_apply_wallpaper">Αποτυχία εφαρμογής ταπετσαρίας: %s</string>
-    <string name="cropped_percentage">Περικοπή κατά %d%%</string>
+    <string name="setting_wallpaper">Setting wallpaper…</string>
+    <string name="wallpaper_applied_successfully">Wallpaper successfully applied!</string>
+    <string name="failed_to_apply_wallpaper">Failed to apply wallpaper: %s</string>
+    <string name="cropped_percentage">Cropped %d%%</string>
     <string name="ok">OK</string>
-    <string name="yes">Ναι</string>
-
+    <string name="yes">Yes</string>
     <!-- Common Labels -->
     <string name="info">Πληροφορίες</string>
-    <string name="more">Περισσότερα</string>
-    <string name="none">Κανένα</string>
-    <string name="on">Ενεργό</string>
-    <string name="off">Ανενεργό</string>
+    <string name="more">More</string>
+    <string name="none">None</string>
+    <string name="on">Ενεργοποίηση</string>
+    <string name="off">Απενεργοποίηση</string>
     <string name="unknown">Άγνωστο</string>
-
     <!-- Navigation Sections -->
-    <string name="nav_wallpaper">Ταπετσαρία</string>
+    <string name="nav_wallpaper">Wallpaper</string>
     <string name="nav_style">Στυλ</string>
-    <string name="nav_lockscreen">Οθόνη κλειδώματος</string>
-    <string name="colors">Χρώματα</string>
-    <string name="fonts">Γραμματοσειρές</string>
-    <string name="shortcuts">Συντομεύσεις</string>
-    <string name="widgets">Widget</string>
-
+    <string name="nav_lockscreen">Lock screen</string>
+    <string name="colors">Colors</string>
+    <string name="fonts">Fonts</string>
+    <string name="shortcuts">Shortcuts</string>
+    <string name="widgets">Γραφικά στοιχεία</string>
     <!-- Wallpaper Section -->
-    <string name="current_wallpaper">Τρέχουσα ταπετσαρία</string>
-    <string name="customize_to_match_your_style">Προσαρμογή στο στυλ σας</string>
-    <string name="discover_new_wallpapers">Ανακαλύψτε νέες ταπετσαρίες</string>
-    <string name="explore">Εξερεύνηση</string>
-    <string name="featured">Προτεινόμενα</string>
-    <string name="curated_wallpapers_for_you">Επιλεγμένες ταπετσαρίες για εσάς</string>
-    <string name="make_it_yours">Κάντε το δικό σας</string>
-    <string name="photos">Φωτογραφίες</string>
+    <string name="current_wallpaper">Current wallpaper</string>
+    <string name="customize_to_match_your_style">Customize to match your style</string>
+    <string name="discover_new_wallpapers">Discover new wallpapers</string>
+    <string name="explore">Explore</string>
+    <string name="featured">Featured</string>
+    <string name="curated_wallpapers_for_you">Curated wallpapers for you</string>
+    <string name="make_it_yours">Make it yours</string>
+    <string name="photos">Photos</string>
     <string name="walls">Walls</string>
-    <string name="wallpaper">Ταπετσαρία</string>
-    <string name="wallpaper_photo">Φωτογραφία ταπετσαρίας</string>
-    <string name="your_wallpaper">Η ταπετσαρία σας</string>
-
+    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper_photo">Wallpaper Photo</string>
+    <string name="your_wallpaper">Your Wallpaper</string>
     <!-- Wallpaper Gallery -->
-    <string name="customize_active_wallpaper">Προσαρμόστε την ενεργή ταπετσαρία</string>
-    <string name="edit_current_wallpaper">Επεξεργασία τρέχουσας ταπετσαρίας</string>
-    <string name="header_collections">Συλλογές</string>
-    <string name="header_wallpaper_gallery">Γκαλερί ταπετσαριών</string>
-    <string name="latest_wallpapers">Τελευταίες ταπετσαρίες</string>
-    <string name="live_wallpapers">Ζωντανές ταπετσαρίες</string>
-    <string name="more_wallpapers">Περισσότερες ταπετσαρίες</string>
-    <string name="my_photos">Οι φωτογραφίες μου</string>
-    <string name="recently_added_designs">Πρόσφατα σχέδια</string>
-    <string name="view_all">Εμφάνιση όλων</string>
+    <string name="customize_active_wallpaper">Customize your active wallpaper</string>
+    <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
+    <string name="header_collections">Collections</string>
+    <string name="header_wallpaper_gallery">Wallpaper Gallery</string>
+    <string name="latest_wallpapers">Latest Wallpapers</string>
+    <string name="live_wallpapers">Live Wallpapers</string>
+    <string name="more_wallpapers">More wallpapers</string>
+    <string name="my_photos">My Photos</string>
+    <string name="recently_added_designs">Recently added designs</string>
+    <string name="view_all">View All</string>
     <plurals name="curated_categories">
-        <item quantity="one">%d επιλεγμένη κατηγορία</item>
-        <item quantity="other">%d επιλεγμένες κατηγορίες</item>
+        <item quantity="one">%d curated category</item>
+        <item quantity="other">%d curated categories</item>
     </plurals>
     <plurals name="wallpaper_count">
-        <item quantity="one">%d ταπετσαρία</item>
-        <item quantity="other">%d ταπετσαρίες</item>
+        <item quantity="one">%d wallpaper</item>
+        <item quantity="other">%d wallpapers</item>
     </plurals>
-
     <!-- Wallpaper Apply -->
-    <string name="atmosphere">Ατμόσφαιρα</string>
-    <string name="glass">Γυαλί</string>
-    <string name="home_screen">Αρχική οθόνη</string>
-    <string name="lock_screen_label">Οθόνη κλειδώματος</string>
-    <string name="pinch_to_crop">Τσιμπήστε για περικοπή</string>
-    <string name="select_at_least_one">Επιλέξτε τουλάχιστον ένα</string>
-    <string name="set_wallpaper">Ορισμός ταπετσαρίας</string>
-    <string name="set_wallpaper_on">Ορισμός ταπετσαρίας σε</string>
-    <string name="wallpaper_info">Πληροφορίες ταπετσαρίας</string>
-
+    <string name="atmosphere">Atmosphere</string>
+    <string name="glass">Glass</string>
+    <string name="home_screen">Home screen</string>
+    <string name="lock_screen_label">Lock screen</string>
+    <string name="pinch_to_crop">Pinch to crop</string>
+    <string name="select_at_least_one">Select at least one</string>
+    <string name="set_wallpaper">Set wallpaper</string>
+    <string name="set_wallpaper_on">Set wallpaper on</string>
+    <string name="wallpaper_info">Wallpaper info</string>
     <!-- Effects -->
     <string name="effects_beta_notice_title">AxEffects Beta™</string>
-    <string name="effects_beta_notice_desc">Τα εφέ είναι προσωρινά και δεν θα παραμείνουν. Εφαρμόστε μια νέα ταπετσαρία για να τα καταργήσετε.</string>
-
+    <string name="effects_beta_notice_desc">Effects are temporary and won\'t persist. Apply a new wallpaper to remove them.</string>
     <!-- Style Section -->
-    <string name="app_grid">Πλέγμα εφαρμογών</string>
-    <string name="app_grid_title">Πλέγμα εφαρμογών</string>
-    <string name="home_screen_layout">Διάταξη αρχικής οθόνης</string>
-    <string name="home_screen_layout_title">Διάταξη αρχικής οθόνης</string>
-    <string name="make_your_device_uniquely_yours">Κάντε τη συσκευή σας μοναδική</string>
-    <string name="personalize">Εξατομίκευση</string>
-    <string name="pro_tip">Συμβουλή</string>
-    <string name="pro_tip_colors_message">Τα χρώματα εξάγονται αυτόματα από την ταπετσαρία σας. Ενεργοποιήστε τα χρώματα ταπετσαρίας για μια αρμονική εμφάνιση.</string>
-    <string name="system_typography">Τυπογραφία συστήματος</string>
-    <string name="wallpaper_colors_and_themes">Χρώματα &amp; θέματα ταπετσαρίας</string>
-
+    <string name="app_grid">App Grid</string>
+    <string name="app_grid_title">App Grid</string>
+    <string name="home_screen_layout">Home screen layout</string>
+    <string name="home_screen_layout_title">Home screen Layout</string>
+    <string name="make_your_device_uniquely_yours">Make your device uniquely yours</string>
+    <string name="personalize">Personalize</string>
+    <string name="pro_tip">Pro Tip</string>
+    <string name="pro_tip_colors_message">Colors are automatically extracted from your wallpaper. Enable wallpaper colors for a cohesive look.</string>
+    <string name="system_typography">System typography</string>
+    <string name="wallpaper_colors_and_themes">Wallpaper colors &amp; themes</string>
     <!-- Colors Screen -->
-    <string name="about_color_customization_title">Σχετικά με την προσαρμογή χρωμάτων</string>
-    <string name="about_color_customization_desc">
-    Οι αλλαγές χρωμάτων εφαρμόζονται σε όλο το σύστημα για όλες τις εφαρμογές που υποστηρίζουν το Material You.
-    \nΗ προσαρμογή αυτών των χρωμάτων μπορεί να επηρεάσει την εμφάνιση των εφαρμογών στη συσκευή σας.
+    <string name="about_color_customization_title">About Color Customization</string>
+    <string name="about_color_customization_desc">    Color changes apply system-wide to all apps that support Material You theming.
+    \nAdjusting these colors may affect the appearance of apps across your device.
     </string>
-    <string name="automatic">Αυτόματο</string>
-    <string name="brightness">Φωτεινότητα</string>
+    <string name="automatic">Automatic</string>
+    <string name="brightness">Brightness</string>
     <string name="chroma_boost_title">Chroma Boost</string>
-    <string name="choose_seed_color">Επιλέξτε βασικό χρώμα</string>
-    <string name="color_picker">Επιλογέας χρωμάτων</string>
-    <string name="colors_title">Χρώματα</string>
-    <string name="contrast_high">Υψηλή</string>
-    <string name="contrast_level_title">Επίπεδο αντίθεσης</string>
-    <string name="contrast_low">Χαμηλή</string>
-    <string name="contrast_normal">Κανονική</string>
+    <string name="choose_seed_color">Choose Seed Color</string>
+    <string name="color_picker">Color Picker</string>
+    <string name="colors_title">Colors</string>
+    <string name="contrast_high">High</string>
+    <string name="contrast_level_title">Contrast Level</string>
+    <string name="contrast_low">Low</string>
+    <string name="contrast_normal">Normal</string>
     <string name="custom">Προσαρμοσμένο</string>
-    <string name="custom_seed_color_title">Προσαρμοσμένο βασικό χρώμα</string>
-    <string name="customize_palette_title">Προσαρμόστε την παλέτα σας</string>
-    <string name="customize_palette_description">
-        Εξατομικεύστε τη συσκευή σας με χρώματα που ταιριάζουν στο στυλ σας
+    <string name="custom_seed_color_title">Custom Seed Color</string>
+    <string name="customize_palette_title">Customize Your Palette</string>
+    <string name="customize_palette_description">        Personalize your device with colors that match your style
     </string>
-    <string name="fidelity_title">Πιστότητα</string>
-    <string name="fidelity_desc">Ενεργοποίηση λειτουργίας πιστότητας για χρωματικούς τόνους</string>
-    <string name="fine_tuning">Μικρορύθμιση</string>
-    <string name="following_wallpaper">Σύμφωνα με την ταπετσαρία</string>
-    <string name="from_wallpaper">Από την ταπετσαρία</string>
-    <string name="hue">Απόχρωση</string>
-    <string name="pick_from_wallpaper">Επιλογή από την ταπετσαρία</string>
-    <string name="selected_color">Επιλεγμένο χρώμα</string>
-    <string name="selected_color_label">Επιλεγμένο χρώμα:</string>
-    <string name="saturation">Κορεσμός</string>
-    <string name="style_font_tip">A για το Axion :)</string>
-    <string name="custom_color_picker_desc">Επιλέξτε πώς θα επιλέξετε το προσαρμοσμένο χρώμα σας:</string>
-    <string name="nav_action">Ενέργεια</string>
-    <string name="theme_colors">Χρώματα θέματος</string>
-    <string name="theme_style_title">Στυλ θέματος</string>
-    <string name="theme_style_desc">Καθορίζει τον τρόπο παραγωγής χρωμάτων από τη βάση</string>
-    <string name="use_wallpaper_colors_title">Χρήση χρωμάτων ταπετσαρίας</string>
-    <string name="use_wallpaper_colors_desc">Εξαγωγή χρωμάτων από την ταπετσαρία σας</string>
-    <string name="using_custom_color">Χρήση προσαρμοσμένου χρώματος</string>
-
+    <string name="fidelity_title">Fidelity</string>
+    <string name="fidelity_desc">Enable fidelity feature for color tones</string>
+    <string name="fine_tuning">Fine Tuning</string>
+    <string name="following_wallpaper">Following wallpaper</string>
+    <string name="from_wallpaper">From Wallpaper</string>
+    <string name="hue">Hue</string>
+    <string name="pick_from_wallpaper">Pick from Wallpaper</string>
+    <string name="selected_color">Selected Color</string>
+    <string name="selected_color_label">Selected Color:</string>
+    <string name="saturation">Saturation</string>
+    <string name="style_font_tip">A is for Axion :)</string>
+    <string name="custom_color_picker_desc">Choose how to pick your custom color:</string>
+    <string name="nav_action">Action</string>
+    <string name="theme_colors">Theme Colors</string>
+    <string name="theme_style_title">Theme Style</string>
+    <string name="theme_style_desc">Defines how colors are generated from the seed</string>
+    <string name="use_wallpaper_colors_title">Use Wallpaper Colors</string>
+    <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
+    <string name="using_custom_color">Using custom color</string>
     <!-- Fonts Screen -->
     <string name="active_content_desc">Ενεργό</string>
-    <string name="add_custom_font">Προσθήκη προσαρμοσμένης γραμματοσειράς</string>
-    <string name="add_font">Προσθήκη γραμματοσειράς</string>
-    <string name="change_custom_font">Αλλαγή προσαρμοσμένης γραμματοσειράς</string>
-    <string name="custom_font">Προσαρμοσμένη γραμματοσειρά</string>
-    <string name="font_preview_aa">Αα</string>
-    <string name="font_preview_dialog_title">Προεπισκόπηση γραμματοσειράς</string>
+    <string name="add_custom_font">Add custom font</string>
+    <string name="add_font">Add font</string>
+    <string name="change_custom_font">Change custom font</string>
+    <string name="custom_font">Custom font</string>
+    <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_dialog_title">Font Preview</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
-    <string name="font_preview_quote">Ο φόβος είναι ο εχθρός της καινοτομίας.</string>
-    <string name="font_style">Στυλ γραμματοσειράς</string>
-    <string name="font_title">Γραμματοσειρές</string>
-    <string name="no_custom_font">Καμία προσαρμοσμένη γραμματοσειρά</string>
-    <string name="reboot_device">Επανεκκίνηση συσκευής</string>
-    <string name="reboot_now">Επανεκκίνηση τώρα</string>
-    <string name="reboot_required_title">Απαιτείται επανεκκίνηση</string>
-    <string name="reboot_required_message">Απαιτείται επανεκκίνηση για την εφαρμογή των αλλαγών γραμματοσειράς.\nΘέλετε να κάνετε επανεκκίνηση τώρα;</string>
-    <string name="reboot_required_custom_font_title">Απαιτείται επανεκκίνηση για αλλαγή προσαρμοσμένης γραμματοσειράς</string>
-    <string name="reboot_required_custom_font_desc">Η παράλειψη της επανεκκίνησης μετά την αλλαγή προσαρμοσμένης γραμματοσειράς μπορεί να προκαλέσει ασυνέπειες στο περιβάλλον χρήστη.</string>
-    <string name="reset_custom_font_content_desc">Επαναφορά προσαρμοσμένης γραμματοσειράς</string>
-    <string name="reset_default_title">Επαναφορά στις προεπιλογές</string>
-    <string name="reset_default_message">Αυτό θα επαναφέρει τη γραμματοσειρά σας στην προεπιλεγμένη του συστήματος. Είστε σίγουροι;</string>
-    <string name="toast_failed_apply_font">Αποτυχία εφαρμογής γραμματοσειράς</string>
-    <string name="toast_invalid_font_file">Μη έγκυρο αρχείο γραμματοσειράς</string>
-
+    <string name="font_preview_quote">Fear is the enemy of innovation.</string>
+    <string name="font_style">Font style</string>
+    <string name="font_title">Font</string>
+    <string name="no_custom_font">No custom font</string>
+    <string name="reboot_device">Reboot device</string>
+    <string name="reboot_now">Reboot Now</string>
+    <string name="reboot_required_title">Reboot Required</string>
+    <string name="reboot_required_message">A reboot is required to apply the font changes.\nWould you like to reboot now?</string>
+    <string name="reboot_required_custom_font_title">Reboot required for custom font changes</string>
+    <string name="reboot_required_custom_font_desc">Skipping reboot after changing the custom font may cause UI inconsistencies across apps.</string>
+    <string name="reset_custom_font_content_desc">Reset custom font</string>
+    <string name="reset_default_title">Reset to Default</string>
+    <string name="reset_default_message">This will reset your font to the default system font. Are you sure?</string>
+    <string name="toast_failed_apply_font">Failed to apply font</string>
+    <string name="toast_invalid_font_file">Invalid font file</string>
     <!-- Lockscreen Section -->
-    <string name="add_affordance">Προσθήκη συντόμευσης</string>
-    <string name="add_information_at_a_glance">Προσθήκη πληροφοριών με μια ματιά</string>
-    <string name="camera">Κάμερα</string>
-    <string name="choose_your_time_format">Επιλέξτε τη μορφή ώρας</string>
-    <string name="clock">Ρολόι</string>
-    <string name="clock_style">Στυλ ρολογιού</string>
-    <string name="device_controls">Έλεγχοι συσκευής</string>
-    <string name="do_not_disturb">Μην ενοχλείτε</string>
+    <string name="add_affordance">Add affordance</string>
+    <string name="add_information_at_a_glance">Add information at a glance</string>
+    <string name="camera">Camera</string>
+    <string name="choose_your_time_format">Choose your time format</string>
+    <string name="clock">Clock</string>
+    <string name="clock_style">Clock Style</string>
+    <string name="device_controls">Device controls</string>
+    <string name="do_not_disturb">Do Not Disturb</string>
     <string name="flashlight">Φακός</string>
-    <string name="left_affordance">Αριστερή συντόμευση</string>
-    <string name="lockscreen_customize_title">Εμφάνιση οθόνης κλειδώματος</string>
-    <string name="lockscreen_customize_summary">Προσαρμόστε την εμφάνιση της οθόνης κλειδώματος</string>
-    <string name="lockscreen_title">Οθόνη κλειδώματος</string>
-    <string name="lockscreen_widgets_title">Widget οθόνης κλειδώματος</string>
-    <string name="lockscreen_widgets_enabled_title">Ενεργοποίηση widget οθόνης κλειδώματος</string>
-    <string name="lockscreen_widgets_enabled_summary">Να επιτρέπονται τα widget στην οθόνη κλειδώματος</string>
-    <string name="mute">Σίγαση</string>
-    <string name="no_space_available">Δεν υπάρχει διαθέσιμος χώρος για περισσότερα widget</string>
-    <string name="personalize_your_experience">Εξατομικεύστε την εμπειρία σας</string>
-    <string name="pick_widgets">Επιλογή widget</string>
-    <string name="qr_code_scanner">Σαρωτής κωδικών QR</string>
-    <string name="quick_access_to_your_favorites">Γρήγορη πρόσβαση στα αγαπημένα σας</string>
-    <string name="right_affordance">Δεξιά συντόμευση</string>
-    <string name="selected_widgets">Επιλεγμένα widget</string>
-    <string name="selected_widgets_empty">Δεν έχουν επιλεγεί widget</string>
-    <string name="selected_widgets_guide">Πατήστε παρατεταμένα για μεταφορά, πατήστε το widget για αφαίρεση.</string>
-    <string name="tap_the_preview_to_see_all_customization_options">Πατήστε την προεπισκόπηση για όλες τις επιλογές</string>
-    <string name="tap_to_customize">Πατήστε για προσαρμογή</string>
+    <string name="left_affordance">Left Affordance</string>
+    <string name="lockscreen_customize_title">Lockscreen appearance</string>
+    <string name="lockscreen_customize_summary">Customize lockscreen appearance</string>
+    <string name="lockscreen_title">Lock Screen</string>
+    <string name="lockscreen_widgets_title">Lockscreen Widgets</string>
+    <string name="lockscreen_widgets_enabled_title">Enable Lockscreen Widgets</string>
+    <string name="lockscreen_widgets_enabled_summary">Allow widgets on lockscreen</string>
+    <string name="mute">Mute</string>
+    <string name="no_space_available">No space available for more widgets</string>
+    <string name="personalize_your_experience">Personalize your experience</string>
+    <string name="pick_widgets">Pick Widgets</string>
+    <string name="qr_code_scanner">QR code scanner</string>
+    <string name="quick_access_to_your_favorites">Quick access to your favorites</string>
+    <string name="right_affordance">Right Affordance</string>
+    <string name="selected_widgets">Selected Widgets</string>
+    <string name="selected_widgets_empty">No widgets selected</string>
+    <string name="selected_widgets_guide">Long press to drag and drop, tap widget to remove.</string>
+    <string name="tap_the_preview_to_see_all_customization_options">Tap the preview to see all customization options</string>
+    <string name="tap_to_customize">Tap to customize</string>
     <string name="temperature_prev">27°</string>
-    <string name="video_camera">Βιντεοκάμερα</string>
-    <string name="wallet">Πορτοφόλι</string>
-    <string name="weather_prev">Κυρίως συννεφιά</string>
+    <string name="video_camera">Video camera</string>
+    <string name="wallet">Wallet</string>
+    <string name="weather_prev">Mostly Cloudy</string>
     <string name="widget_bluetooth">Bluetooth</string>
-    <string name="widget_data">Δεδομένα</string>
+    <string name="widget_data">Data</string>
     <string name="widget_hotspot">Hotspot</string>
-    <string name="widget_removed">Το widget αφαιρέθηκε</string>
-    <string name="widget_ringer">Ήχος κλήσης</string>
-    <string name="widget_torch">Φακός</string>
+    <string name="widget_removed">Widget removed</string>
+    <string name="widget_ringer">Ringer</string>
+    <string name="widget_torch">Torch</string>
     <string name="widget_wifi">Wi-Fi</string>
-    <string name="widgets_title">Widget</string>
-
+    <string name="widgets_title">Γραφικά στοιχεία</string>
     <!-- Preferences -->
-    <string name="reset_to_default">Επαναφορά στις προεπιλογές</string>
-    <string name="value_percentage">Τιμή: %d%%</string>
-
+    <string name="reset_to_default">Reset to default</string>
+    <string name="value_percentage">Value: %d%%</string>
+    <string name="percentage_format">%d%%</string>
+    <string name="color_info_format">HEX: #%1$s saturation: %2$.2f brightness: %3$.2f</string>
     <!-- WallpaperSetActivity -->
-    <string name="failed_to_load_image">Αποτυχία φόρτωσης εικόνας</string>
-    <string name="no_image_provided">Δεν παρέχεται εικόνα</string>
-    <string name="shared_image">Κοινόχρηστη εικόνα</string>
-    <string name="unable_to_load_image">Αδυναμία φόρτωσης εικόνας</string>
-
+    <string name="failed_to_load_image">Failed to load image</string>
+    <string name="no_image_provided">No image provided</string>
+    <string name="shared_image">Shared Image</string>
+    <string name="unable_to_load_image">Unable to load image</string>
+    <string name="error_loading_image">Error: %s</string>
     <!-- Content Descriptions (Accessibility) -->
-    <string name="preview_label">Προεπισκόπηση %s</string>
-    <string name="home_screen_preview">Προεπισκόπηση αρχικής οθόνης</string>
-    <string name="wallpaper_background">Φόντο ταπετσαρίας</string>
+    <string name="preview_label">%s preview</string>
+    <string name="home_screen_preview">Home screen preview</string>
+    <string name="wallpaper_background">Wallpaper background</string>
 </resources>
