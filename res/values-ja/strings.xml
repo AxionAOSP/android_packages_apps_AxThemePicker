@@ -8,7 +8,7 @@
     <string name="close">閉じる</string>
     <string name="confirm">確認</string>
     <string name="edit">編集</string>
-    <string name="later">Later</string>
+    <string name="later">後ほど</string>
     <string name="no">いいえ</string>
     <string name="reset">リセット</string>
     <string name="undo">元に戻す</string>
@@ -154,7 +154,7 @@
     <string name="add_affordance">Add affordance</string>
     <string name="add_information_at_a_glance">Add information at a glance</string>
     <string name="camera">カメラ</string>
-    <string name="choose_your_time_format">Choose your time format</string>
+    <string name="choose_your_time_format">時刻のフォーマットを選択してください</string>
     <string name="clock">時計</string>
     <string name="clock_style">時計のスタイル</string>
     <string name="device_controls">デバイスのコントロール</string>
@@ -172,7 +172,7 @@
     <string name="personalize_your_experience">あなたの体験をパーソナライズします</string>
     <string name="pick_widgets">ウィジェットを選択</string>
     <string name="qr_code_scanner">QR コードスキャナー</string>
-    <string name="quick_access_to_your_favorites">Quick access to your favorites</string>
+    <string name="quick_access_to_your_favorites">お気に入りに素早くアクセスします</string>
     <string name="right_affordance">Right Affordance</string>
     <string name="selected_widgets">選択したウィジェット</string>
     <string name="selected_widgets_empty">ウィジェットは選択されていません</string>
