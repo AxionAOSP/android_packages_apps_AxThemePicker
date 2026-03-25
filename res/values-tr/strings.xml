@@ -36,10 +36,10 @@
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Mevcut duvar kağıdı</string>
     <string name="customize_to_match_your_style">Tercihlerinize göre özelleştirin</string>
-    <string name="discover_new_wallpapers">Yeni duvar kağıtları keşfedin</string>
+    <string name="discover_new_wallpapers">Yeni duvar kağıtları keşfet</string>
     <string name="explore">Keşfet</string>
     <string name="featured">Öne Çıkanlar</string>
-    <string name="curated_wallpapers_for_you">Size özel seçilmiş duvar kağıtları</string>
+    <string name="curated_wallpapers_for_you">Sana özel seçilmiş duvar kâğıtları</string>
     <string name="make_it_yours">Kişiselleştirin</string>
     <string name="photos">Fotoğraflar</string>
     <string name="walls">Duvarlar</string>
@@ -56,7 +56,7 @@
     <string name="more_wallpapers">Daha Fazla Duvar Kağıdı</string>
     <string name="my_photos">Fotoğraflarım</string>
     <string name="recently_added_designs">Yeni eklenen tasarımlar</string>
-    <string name="view_all">Tümünü Görüntüle</string>
+    <string name="view_all">Tümünü görüntüle</string>
     <plurals name="curated_categories">
         <item quantity="one">%d seçilmiş kategori</item>
         <item quantity="other">%d seçilmiş kategoriler</item>
@@ -85,7 +85,7 @@
     <string name="home_screen_layout_title">Ana ekran düzeni</string>
     <string name="make_your_device_uniquely_yours">Cihazını benzersiz kılın</string>
     <string name="personalize">Kişiselleştir</string>
-    <string name="pro_tip">Püf Nokta</string>
+    <string name="pro_tip">Özel İpucu</string>
     <string name="pro_tip_colors_message">Renkler duvar kâğıdından otomatik seçilir. Uyumlu bir görünüm için duvar kâğıdı renklerini etkinleştirin.</string>
     <string name="system_typography">Sistem Yazı Tipleri</string>
     <string name="wallpaper_colors_and_themes">Duvar kâğıdı renkleri &amp; temalar</string>
