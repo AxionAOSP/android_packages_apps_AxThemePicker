@@ -123,7 +123,7 @@
     <string name="theme_colors">テーマの色</string>
     <string name="theme_style_title">テーマのスタイル</string>
     <string name="theme_style_desc">Defines how colors are generated from the seed</string>
-    <string name="use_wallpaper_colors_title">壁紙の色を使用する</string>
+    <string name="use_wallpaper_colors_title">壁紙の色を使用</string>
     <string name="use_wallpaper_colors_desc">Extract colors from your wallpaper</string>
     <string name="using_custom_color">カスタムカラーを使用</string>
     <!-- Fonts Screen -->

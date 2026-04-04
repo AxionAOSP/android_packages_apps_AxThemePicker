@@ -3,15 +3,15 @@
     <!-- Common Actions -->
     <string name="apply">应用</string>
     <string name="applied">已应用</string>
-    <string name="back">返回</string>
-    <string name="cancel">取消</string>
-    <string name="close">关闭</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
     <string name="confirm">确认</string>
-    <string name="edit">编辑</string>
+    <string name="edit">編輯</string>
     <string name="later">稍后</string>
     <string name="no">否</string>
     <string name="reset">重置</string>
-    <string name="undo">还原</string>
+    <string name="undo">Undo</string>
     <string name="setting_wallpaper">正在设置壁纸…</string>
     <string name="wallpaper_applied_successfully">壁纸应用成功！</string>
     <string name="failed_to_apply_wallpaper">壁纸应用失败：%s</string>
@@ -19,20 +19,20 @@
     <string name="ok">确定</string>
     <string name="yes">是</string>
     <!-- Common Labels -->
-    <string name="info">信息</string>
+    <string name="info">Info</string>
     <string name="more">更多</string>
     <string name="none">无</string>
-    <string name="on">开启</string>
-    <string name="off">关闭</string>
-    <string name="unknown">未知</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="unknown">Unknown</string>
     <!-- Navigation Sections -->
     <string name="nav_wallpaper">壁纸</string>
-    <string name="nav_style">样式</string>
+    <string name="nav_style">Style</string>
     <string name="nav_lockscreen">锁屏</string>
     <string name="colors">颜色</string>
     <string name="fonts">字体</string>
     <string name="shortcuts">快捷方式</string>
-    <string name="widgets">小组件</string>
+    <string name="widgets">Widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">当前壁纸</string>
     <string name="customize_to_match_your_style">自定义以匹配你的风格</string>
@@ -104,7 +104,7 @@
     <string name="contrast_level_title">对比度等级</string>
     <string name="contrast_low">低</string>
     <string name="contrast_normal">标准</string>
-    <string name="custom">自定义</string>
+    <string name="custom">自訂</string>
     <string name="custom_seed_color_title">自定义主题色</string>
     <string name="customize_palette_title">自定义调色板</string>
     <string name="customize_palette_description">        使用贴合你风格的色彩，个性化你的设备
@@ -129,7 +129,7 @@
     <string name="use_wallpaper_colors_desc">从壁纸中提取颜色</string>
     <string name="using_custom_color">使用自定义颜色</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">启用</string>
+    <string name="active_content_desc">Active</string>
     <string name="add_custom_font">添加自定义字体</string>
     <string name="add_font">添加字体</string>
     <string name="change_custom_font">更换自定义字体</string>
@@ -161,7 +161,7 @@
     <string name="clock_style">时钟样式</string>
     <string name="device_controls">设备控制</string>
     <string name="do_not_disturb">请勿打扰</string>
-    <string name="flashlight">闪光灯</string>
+    <string name="flashlight">Flashlight</string>
     <string name="left_affordance">左侧快捷操作</string>
     <string name="lockscreen_customize_title">锁屏外观</string>
     <string name="lockscreen_customize_summary">自定义锁屏外观</string>
@@ -192,7 +192,7 @@
     <string name="widget_ringer">铃声</string>
     <string name="widget_torch">手电筒</string>
     <string name="widget_wifi">Wi-Fi</string>
-    <string name="widgets_title">小组件</string>
+    <string name="widgets_title">Widgets</string>
     <!-- Preferences -->
     <string name="reset_to_default">恢复默认</string>
     <string name="value_percentage">值：%d%%</string>
