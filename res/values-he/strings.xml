@@ -4,11 +4,11 @@
     <!-- Common Actions -->
     <string name="apply">Apply</string>
     <string name="applied">Applied</string>
-    <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
+    <string name="back">חזרה</string>
+    <string name="cancel">ביטול</string>
     <string name="close">Close</string>
     <string name="confirm">Confirm</string>
-    <string name="edit">Edit</string>
+    <string name="edit">עריכה</string>
     <string name="later">Later</string>
     <string name="no">No</string>
     <string name="reset">Reset</string>
@@ -115,7 +115,7 @@
     <string name="portrait_shape_label">Shape</string>
     <string name="portrait_color_label">Background Color</string>
     <string name="portrait_shape_oval">Oval</string>
-    <string name="portrait_shape_square">Square</string>
+    <string name="portrait_shape_square">ריבוע</string>
     <string name="portrait_shape_arch">Arch</string>
     <string name="portrait_shape_clover">Clover</string>
     <string name="portrait_shape_flower">Flower</string>
