@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Axion ThemePicker</string>
+    <string name="app_name">Axion 主題選擇器</string>
     <!-- Common Actions -->
     <string name="apply">套用</string>
     <string name="applied">已套用</string>
@@ -69,41 +69,41 @@
     <string name="select_at_least_one">至少選取一項</string>
     <string name="set_wallpaper">設定桌布</string>
     <string name="set_wallpaper_on">設定桌布為</string>
-    <string name="home_lock_both">Both</string>
+    <string name="home_lock_both">兩者</string>
     <string name="wallpaper_info">桌布資訊</string>
     <string name="wallpaper_fill_mode">Fill</string>
     <string name="wallpaper_fit_mode">Fit</string>
     <!-- Effects -->
-    <string name="wallpaper_effects_title">Effects</string>
-    <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
+    <string name="wallpaper_effects_title">效果</string>
+    <string name="wallpaper_effects_description">添加視覺效果到桌布</string>
     <string name="effect_none">無</string>
-    <string name="effect_none_description">No effect applied</string>
+    <string name="effect_none_description">沒有效果套用</string>
     <string name="effect_atmosphere">氛圍</string>
     <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
     <string name="effect_glass">玻璃</string>
     <string name="effect_glass_description">Ribbed glass distortion effect</string>
-    <string name="effect_preview">Effect Preview</string>
-    <string name="effect_apply">Apply Effect</string>
-    <string name="effect_applying">Applying effect\u2026</string>
-    <string name="effect_applied">Effect applied</string>
-    <string name="effect_removed">Effect removed</string>
-    <string name="effect_service_not_found">Effect service not installed</string>
+    <string name="effect_preview">效果預覽</string>
+    <string name="effect_apply">套用效果</string>
+    <string name="effect_applying">正在套用效果\u2026</string>
+    <string name="effect_applied">效果已套用</string>
+    <string name="effect_removed">效果已刪除</string>
+    <string name="effect_service_not_found">效果服務未安裝</string>
     <string name="effect_apply_to">Apply to</string>
-    <string name="effect_home_screen_only">Home screen only</string>
-    <string name="effect_lock_screen_only">Lock screen only</string>
-    <string name="effect_home_and_lock">Home &amp; Lock screen</string>
+    <string name="effect_home_screen_only">僅主畫面</string>
+    <string name="effect_lock_screen_only">僅鎖定屏幕</string>
+    <string name="effect_home_and_lock">主畫面 &amp; 鎖定屏幕</string>
     <string name="effect_weather">Weather</string>
     <string name="effect_weather_description">Weather-reactive animated overlay</string>
     <string name="effect_magic_portrait">Magic Portrait</string>
     <string name="effect_magic_portrait_description">Shaped frame with color background around your subject</string>
     <!-- Weather Config -->
-    <string name="weather_type_label">Weather Type</string>
+    <string name="weather_type_label">天氣類型</string>
     <string name="weather_type_auto">自動</string>
-    <string name="weather_type_rain">Rain</string>
-    <string name="weather_type_snow">Snow</string>
-    <string name="weather_type_fog">Fog</string>
-    <string name="weather_type_clouds">Clouds</string>
-    <string name="weather_type_sun">Sun</string>
+    <string name="weather_type_rain">雨</string>
+    <string name="weather_type_snow">雪</string>
+    <string name="weather_type_fog">霧</string>
+    <string name="weather_type_clouds">多雲</string>
+    <string name="weather_type_sun">晴天</string>
     <string name="weather_intensity_label">Intensity</string>
     <!-- Portrait Config -->
     <string name="portrait_shape_label">Shape</string>
@@ -122,7 +122,7 @@
     <string name="tab_glass">玻璃</string>
     <string name="effect_cinematic">Cinematic</string>
     <string name="effect_cinematic_description">Depth-based 3D parallax with gyroscope tracking</string>
-    <string name="effect_remove">Remove effect</string>
+    <string name="effect_remove">刪除效果</string>
     <string name="effect_preparing">Preparing photo\u2026</string>
     <string name="effect_connecting">Connecting to effect\u2026</string>
     <string name="effect_processing">Processing effect\u2026</string>
