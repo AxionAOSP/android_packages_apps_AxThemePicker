@@ -207,9 +207,9 @@
     <string name="font_preview_dialog_title">Pré-visualização da fonte</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">Fear is the enemy of innovation.</string>
-    <string name="font_style">Font style</string>
-    <string name="font_title">Font</string>
-    <string name="no_custom_font">No custom font</string>
+    <string name="font_style">Estilo da fonte</string>
+    <string name="font_title">Fonte</string>
+    <string name="no_custom_font">Nenhuma fonte personalizada</string>
     <string name="reboot_device">Reiniciar dispositivo</string>
     <string name="reboot_now">Reiniciar agora</string>
     <string name="reboot_required_title">Reinicialização necessária</string>
@@ -220,7 +220,7 @@
     <string name="reset_default_title">Reset to Default</string>
     <string name="reset_default_message">This will reset your font to the default system font. Are you sure?</string>
     <string name="toast_failed_apply_font">Failed to apply font</string>
-    <string name="toast_invalid_font_file">Invalid font file</string>
+    <string name="toast_invalid_font_file">Arquivo de fonte inválido</string>
     <!-- Lockscreen Section -->
     <string name="add_affordance">Add affordance</string>
     <string name="affordance_none">Nenhum</string>
@@ -243,7 +243,7 @@
     <string name="clock_date_below">Below</string>
     <string name="clock_color">Clock Color</string>
     <string name="device_controls">Controles do dispositivo</string>
-    <string name="do_not_disturb">Do Not Disturb</string>
+    <string name="do_not_disturb">Não perturbe</string>
     <string name="flashlight">Lanterna</string>
     <string name="left_affordance">Left Affordance</string>
     <string name="lockscreen_customize_title">Lockscreen appearance</string>
