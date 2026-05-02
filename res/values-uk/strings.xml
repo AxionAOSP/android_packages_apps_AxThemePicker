@@ -50,26 +50,26 @@
     <string name="header_wallpaper_gallery">Галерея шпалер</string>
     <string name="latest_wallpapers">Останні шпалери</string>
     <string name="live_wallpapers">Живі шпалери</string>
-    <string name="more_wallpapers">More wallpapers</string>
-    <string name="my_photos">My Photos</string>
-    <string name="recently_added_designs">Recently added designs</string>
-    <string name="view_all">View All</string>
+    <string name="more_wallpapers">Більше шпалер</string>
+    <string name="my_photos">Мої фото</string>
+    <string name="recently_added_designs">Нещодавно додані дизайни</string>
+    <string name="view_all">Переглянути все</string>
     <plurals name="curated_categories">
-        <item quantity="one">%d curated category</item>
-        <item quantity="few">%d curated categories</item>
-        <item quantity="many">%d curated categories</item>
-        <item quantity="other">%d curated categories</item>
+        <item quantity="one">%d кураторстка категорія</item>
+        <item quantity="few">%d кураторських категорій</item>
+        <item quantity="many">%d кураторських категорій</item>
+        <item quantity="other">%d кураторські категорії</item>
     </plurals>
     <plurals name="wallpaper_count">
-        <item quantity="one">%d wallpaper</item>
-        <item quantity="few">%d wallpapers</item>
-        <item quantity="many">%d wallpapers</item>
-        <item quantity="other">%d wallpapers</item>
+        <item quantity="one">%d шпалери</item>
+        <item quantity="few">%d шпалер</item>
+        <item quantity="many">%d шпалер</item>
+        <item quantity="other">%d шпалери</item>
     </plurals>
     <!-- Wallpaper Apply -->
-    <string name="atmosphere">Atmosphere</string>
-    <string name="glass">Glass</string>
-    <string name="home_screen">Home screen</string>
+    <string name="atmosphere">Атмосфера</string>
+    <string name="glass">Скло</string>
+    <string name="home_screen">Головний екран</string>
     <string name="lock_screen_label">Екран блокування</string>
     <string name="pinch_to_crop">Pinch to crop</string>
     <string name="select_at_least_one">Select at least one</string>
@@ -84,9 +84,9 @@
     <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
     <string name="effect_none">Нічого</string>
     <string name="effect_none_description">No effect applied</string>
-    <string name="effect_atmosphere">Atmosphere</string>
+    <string name="effect_atmosphere">Атмосфера</string>
     <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
-    <string name="effect_glass">Glass</string>
+    <string name="effect_glass">Скло</string>
     <string name="effect_glass_description">Ribbed glass distortion effect</string>
     <string name="effect_preview">Effect Preview</string>
     <string name="effect_apply">Apply Effect</string>
@@ -123,9 +123,9 @@
     <!-- Effect Tabs -->
     <string name="tab_shape">Shape</string>
     <string name="tab_weather">Weather</string>
-    <string name="tab_atmosphere">Atmosphere</string>
+    <string name="tab_atmosphere">Атмосфера</string>
     <string name="tab_cinematic">Cinematic</string>
-    <string name="tab_glass">Glass</string>
+    <string name="tab_glass">Скло</string>
     <string name="effect_cinematic">Cinematic</string>
     <string name="effect_cinematic_description">Depth-based 3D parallax with gyroscope tracking</string>
     <string name="effect_remove">Remove effect</string>
