@@ -13,38 +13,38 @@
     <string name="no">Ні</string>
     <string name="reset">Скинути</string>
     <string name="undo">Скасувати</string>
-    <string name="yes">Yes</string>
+    <string name="yes">Так</string>
     <!-- Common Labels -->
     <string name="info">Інформація</string>
-    <string name="more">More</string>
-    <string name="none">None</string>
+    <string name="more">Більше</string>
+    <string name="none">Нічого</string>
     <string name="on">Увімкнено</string>
     <string name="off">Вимкнено</string>
     <string name="unknown">Невідомо</string>
     <!-- Navigation Sections -->
     <!-- Navigation Tabs -->
-    <string name="nav_wallpaper">Wallpaper</string>
+    <string name="nav_wallpaper">Фоновий малюнок</string>
     <string name="nav_style">Стиль</string>
-    <string name="nav_lockscreen">Lock screen</string>
-    <string name="colors">Colors</string>
-    <string name="fonts">Fonts</string>
-    <string name="shortcuts">Shortcuts</string>
+    <string name="nav_lockscreen">Екран блокування</string>
+    <string name="colors">Кольори</string>
+    <string name="fonts">Шрифти</string>
+    <string name="shortcuts">Ярлики</string>
     <string name="widgets">Віджети</string>
     <!-- Wallpaper Section -->
-    <string name="current_wallpaper">Current wallpaper</string>
-    <string name="customize_to_match_your_style">Customize to match your style</string>
-    <string name="discover_new_wallpapers">Discover new wallpapers</string>
-    <string name="explore">Explore</string>
-    <string name="featured">Featured</string>
-    <string name="curated_wallpapers_for_you">Curated wallpapers for you</string>
-    <string name="make_it_yours">Make it yours</string>
-    <string name="photos">Photos</string>
-    <string name="walls">Walls</string>
-    <string name="wallpaper">Wallpaper</string>
-    <string name="wallpaper_photo">Wallpaper Photo</string>
-    <string name="your_wallpaper">Your Wallpaper</string>
+    <string name="current_wallpaper">Поточні шпалери</string>
+    <string name="customize_to_match_your_style">Налаштуйте відповідно до ваших стилів</string>
+    <string name="discover_new_wallpapers">Відкрийте для себе нові фонові зображення</string>
+    <string name="explore">Переглянути</string>
+    <string name="featured">Рекомендовані</string>
+    <string name="curated_wallpapers_for_you">Рекомендовані шпалери для вас</string>
+    <string name="make_it_yours">Зробіть це своїм</string>
+    <string name="photos">Фотографії</string>
+    <string name="walls">Стіни</string>
+    <string name="wallpaper">Фоновий малюнок</string>
+    <string name="wallpaper_photo">Фото шпалери</string>
+    <string name="your_wallpaper">Ваші шпалери</string>
     <!-- Wallpaper Gallery -->
-    <string name="customize_active_wallpaper">Customize your active wallpaper</string>
+    <string name="customize_active_wallpaper">Налаштування ваших активних шпалер</string>
     <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
     <string name="header_collections">Collections</string>
     <string name="header_wallpaper_gallery">Wallpaper Gallery</string>
@@ -70,7 +70,7 @@
     <string name="atmosphere">Atmosphere</string>
     <string name="glass">Glass</string>
     <string name="home_screen">Home screen</string>
-    <string name="lock_screen_label">Lock screen</string>
+    <string name="lock_screen_label">Екран блокування</string>
     <string name="pinch_to_crop">Pinch to crop</string>
     <string name="select_at_least_one">Select at least one</string>
     <string name="set_wallpaper">Set wallpaper</string>
@@ -82,7 +82,7 @@
     <!-- Effects -->
     <string name="wallpaper_effects_title">Effects</string>
     <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
-    <string name="effect_none">None</string>
+    <string name="effect_none">Нічого</string>
     <string name="effect_none_description">No effect applied</string>
     <string name="effect_atmosphere">Atmosphere</string>
     <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
@@ -158,7 +158,7 @@
     <string name="icon_pack_active">Додаток активний</string>
     <string name="themed_icon_pack_title">Themed Icon Pack</string>
     <string name="themed_icon_pack_description">Third-party themed icons like Lawnicons provide monochrome icons for more apps</string>
-    <string name="themed_icon_pack_none">None</string>
+    <string name="themed_icon_pack_none">Нічого</string>
     <string name="make_your_device_uniquely_yours">Make your device uniquely yours</string>
     <string name="personalize">Personalize</string>
     <string name="pro_tip">Pro Tip</string>
@@ -175,7 +175,7 @@
     <string name="chroma_boost_title">Підсилення насиченості</string>
     <string name="choose_seed_color">Виберіть базовий колір</string>
     <string name="color_picker">Вибір кольору</string>
-    <string name="colors_title">Colors</string>
+    <string name="colors_title">Кольори</string>
     <string name="contrast_high">Високий</string>
     <string name="contrast_level_title">Рівень контрастності</string>
     <string name="contrast_low">Низький</string>
@@ -227,7 +227,7 @@
     <string name="toast_invalid_font_file">Invalid font file</string>
     <!-- Lockscreen Section -->
     <string name="add_affordance">Add affordance</string>
-    <string name="affordance_none">None</string>
+    <string name="affordance_none">Нічого</string>
     <string name="add_information_at_a_glance">Add information at a glance</string>
     <string name="camera">Camera</string>
     <string name="choose_your_time_format">Choose your time format</string>
