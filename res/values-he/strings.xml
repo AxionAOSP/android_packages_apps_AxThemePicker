@@ -18,8 +18,8 @@
     <string name="info">Info</string>
     <string name="more">עוד</string>
     <string name="none">ללא</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
+    <string name="on">מופעלות</string>
+    <string name="off">כבויות</string>
     <string name="unknown">Unknown</string>
     <!-- Navigation Sections -->
     <!-- Navigation Tabs -->
@@ -98,7 +98,7 @@
     <string name="effect_home_screen_only">Home screen only</string>
     <string name="effect_lock_screen_only">Lock screen only</string>
     <string name="effect_home_and_lock">Home &amp; Lock screen</string>
-    <string name="effect_weather">Weather</string>
+    <string name="effect_weather">מזג אוויר</string>
     <string name="effect_weather_description">Weather-reactive animated overlay</string>
     <string name="effect_magic_portrait">Magic Portrait</string>
     <string name="effect_magic_portrait_description">Shaped frame with color background around your subject</string>
@@ -122,7 +122,7 @@
     <string name="portrait_brightness_label">Brightness</string>
     <!-- Effect Tabs -->
     <string name="tab_shape">Shape</string>
-    <string name="tab_weather">Weather</string>
+    <string name="tab_weather">מזג אוויר</string>
     <string name="tab_atmosphere">Atmosphere</string>
     <string name="tab_cinematic">Cinematic</string>
     <string name="tab_glass">Glass</string>
