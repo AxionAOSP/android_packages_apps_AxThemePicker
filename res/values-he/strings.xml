@@ -143,11 +143,11 @@
     <string name="app_grid_title">App Grid</string>
     <string name="home_screen_layout">Home screen layout</string>
     <string name="home_screen_layout_title">Home Screen Layout</string>
-    <string name="icon_shape_title">Icon Shape</string>
+    <string name="icon_shape_title">צורת סמל</string>
     <string name="icon_shape_description">App icon appearance</string>
     <string name="themed_icons_title">Icons</string>
     <string name="themed_icons_summary">Themed icons &amp; icon packs</string>
-    <string name="themed_icons_card_title">Themed Icons</string>
+    <string name="themed_icons_card_title">סמלים מסוגננים</string>
     <string name="themed_icons_description">Monochrome icons that adapt to your wallpaper colors</string>
     <string name="themed_icons_style">Icon Style</string>
     <string name="themed_icons_neutral">Neutral</string>
@@ -156,7 +156,7 @@
     <string name="icon_pack_description">Third-party icon packs change the look of your app icons</string>
     <string name="icon_pack_system_default">System Default</string>
     <string name="icon_pack_active">Active</string>
-    <string name="themed_icon_pack_title">Themed Icon Pack</string>
+    <string name="themed_icon_pack_title">ערכת סמלים מסוגננת</string>
     <string name="themed_icon_pack_description">Third-party themed icons like Lawnicons provide monochrome icons for more apps</string>
     <string name="themed_icon_pack_none">ללא</string>
     <string name="make_your_device_uniquely_yours">Make your device uniquely yours</string>
@@ -180,7 +180,7 @@
     <string name="contrast_level_title">Contrast Level</string>
     <string name="contrast_low">Low</string>
     <string name="contrast_normal">Normal</string>
-    <string name="custom">Custom</string>
+    <string name="custom">מותאם אישית</string>
     <string name="custom_seed_color_title">צבע בסיס מותאם אישית</string>
     <string name="customize_palette_title">Customize Your Palette</string>
     <string name="customize_palette_description">        Personalize your device with colors that match your style
@@ -248,7 +248,7 @@
     <string name="clock_color">Clock Color</string>
     <string name="device_controls">Device controls</string>
     <string name="do_not_disturb">Do Not Disturb</string>
-    <string name="flashlight">Flashlight</string>
+    <string name="flashlight">פנס</string>
     <string name="left_affordance">Left Affordance</string>
     <string name="lockscreen_customize_title">Lockscreen appearance</string>
     <string name="lockscreen_customize_summary">Customize lockscreen appearance</string>
@@ -275,7 +275,7 @@
     <string name="tap_the_preview_to_see_all_customization_options">Tap the preview to see all customization options</string>
     <string name="depth_effect">Depth effect</string>
     <string name="at_a_glance">At a glance</string>
-    <string name="quick_access">Quick access</string>
+    <string name="quick_access">גישה מהירה</string>
     <string name="time_style">Time style</string>
     <string name="tap_to_customize">Tap to customize</string>
     <string name="temperature_prev">27°</string>
