@@ -92,7 +92,7 @@
     <string name="effect_home_screen_only">僅主畫面</string>
     <string name="effect_lock_screen_only">僅鎖定屏幕</string>
     <string name="effect_home_and_lock">主畫面 &amp; 鎖定屏幕</string>
-    <string name="effect_weather">Weather</string>
+    <string name="effect_weather">天氣</string>
     <string name="effect_weather_description">Weather-reactive animated overlay</string>
     <string name="effect_magic_portrait">Magic Portrait</string>
     <string name="effect_magic_portrait_description">Shaped frame with color background around your subject</string>
@@ -116,7 +116,7 @@
     <string name="portrait_brightness_label">亮度</string>
     <!-- Effect Tabs -->
     <string name="tab_shape">Shape</string>
-    <string name="tab_weather">Weather</string>
+    <string name="tab_weather">天氣</string>
     <string name="tab_atmosphere">氛圍</string>
     <string name="tab_cinematic">Cinematic</string>
     <string name="tab_glass">玻璃</string>
@@ -269,7 +269,7 @@
     <string name="tap_the_preview_to_see_all_customization_options">輕觸預覽以查看所有個人化設定選項</string>
     <string name="depth_effect">Depth effect</string>
     <string name="at_a_glance">At a glance</string>
-    <string name="quick_access">快速访问</string>
+    <string name="quick_access">快速存取</string>
     <string name="time_style">Time style</string>
     <string name="tap_to_customize">輕觸以進行自訂</string>
     <string name="temperature_prev">27°</string>
