@@ -60,7 +60,7 @@
     </plurals>
     <plurals name="wallpaper_count">
         <item quantity="one">Plano de fundo %d</item>
-        <item quantity="other">%d wallpapers</item>
+        <item quantity="other">Plano de fundo %d</item>
     </plurals>
     <!-- Wallpaper Apply -->
     <string name="atmosphere">Atmosphere</string>
@@ -191,7 +191,7 @@
     <string name="selected_color">Cor selecionada</string>
     <string name="theme_colors">Cores do Tema</string>
     <string name="theme_style_title">Estilo do tema</string>
-    <string name="theme_style_desc">Defines how colors are generated from the seed</string>
+    <string name="theme_style_desc">Define como as cores são geradas a partir da semente</string>
     <string name="theme_style_disabled_by_fidelity">Disabled while Fidelity is on</string>
     <string name="use_wallpaper_colors_title">Usar cores do papel de parede</string>
     <string name="use_wallpaper_colors_desc">Extrair cores do seu papel de parede</string>
@@ -222,9 +222,9 @@
     <string name="toast_failed_apply_font">Falha ao aplicar fonte</string>
     <string name="toast_invalid_font_file">Arquivo de fonte inválido</string>
     <!-- Lockscreen Section -->
-    <string name="add_affordance">Add affordance</string>
+    <string name="add_affordance">Adicionar acessibilidade</string>
     <string name="affordance_none">Nenhum</string>
-    <string name="add_information_at_a_glance">Add information at a glance</string>
+    <string name="add_information_at_a_glance">Adicionar informações no resumo</string>
     <string name="camera">Câmera</string>
     <string name="choose_your_time_format">Escolha o seu formato de hora</string>
     <string name="clock">Relógio</string>
@@ -245,7 +245,7 @@
     <string name="device_controls">Controles do dispositivo</string>
     <string name="do_not_disturb">Não perturbe</string>
     <string name="flashlight">Lanterna</string>
-    <string name="left_affordance">Left Affordance</string>
+    <string name="left_affordance">Afordância Esquerda</string>
     <string name="lockscreen_customize_title">Aparência da tela de bloqueio</string>
     <string name="lockscreen_customize_summary">Personalize a aparência da tela de bloqueio</string>
     <string name="lockscreen_title">Tela de Bloqueio</string>
