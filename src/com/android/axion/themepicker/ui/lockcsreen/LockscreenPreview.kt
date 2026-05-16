@@ -51,6 +51,7 @@ import com.android.axion.themepicker.ui.components.CommonBottomSheet
 import com.android.axion.themepicker.ui.lockscreen.widgets.*
 import com.android.axion.themepicker.utils.math.scaleRatio
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
+import com.android.axion.themepicker.utils.wallpaper.getForegroundBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -67,6 +68,7 @@ fun LockscreenPreview(
 ) {
     val context = LocalContext.current
     val wallpaper = wallpaperBitmap ?: getCurrentWallpaperBitmap(context, false) ?: return
+    val foreground: Bitmap? = remember(wallpaper) { getForegroundBitmap(context) }
 
     val isRegionDark by
         produceState(true, wallpaper) {
@@ -290,6 +292,7 @@ fun LockscreenPreview(
                     if (!isPreview) {
                         { showClockSheet = true }
                     } else null,
+                foregroundBitmap = foreground,
             )
         } else {
             PortraitLayout(
@@ -315,6 +318,7 @@ fun LockscreenPreview(
                         { showClockSheet = true }
                     } else null,
                 onClockBottomMeasured = { clockBottomPx = it },
+                foregroundBitmap = foreground,
             )
         }
 
@@ -426,6 +430,7 @@ private fun PortraitLayout(
     onEditWallpaper: (() -> Unit)? = null,
     onClockTapped: (() -> Unit)? = null,
     onClockBottomMeasured: ((Float) -> Unit)? = null,
+    foregroundBitmap: Bitmap? = null,
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(top = Dimens.ClockTopPadding * scale * 1.5f),
@@ -445,6 +450,15 @@ private fun PortraitLayout(
                     }
         ) {
             PreviewClock(isPreview, isRegionDark)
+
+            if (foregroundBitmap != null) {
+                Image(
+                    bitmap = foregroundBitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.Crop,
+                )
+            }
         }
         if (!isPreview) Spacer(modifier = Modifier.height(Dimens.ClockSpacer * scale))
         WidgetGrid(
@@ -497,6 +511,7 @@ private fun LandscapeLayout(
     onWidgetsMoved: ((List<GridWidgetItem>) -> Unit)?,
     onEditWallpaper: (() -> Unit)? = null,
     onClockTapped: (() -> Unit)? = null,
+    foregroundBitmap: Bitmap? = null,
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -513,6 +528,15 @@ private fun LandscapeLayout(
                     }
             ) {
                 PreviewClock(isPreview, isRegionDark)
+
+                if (foregroundBitmap != null) {
+                    Image(
+                        bitmap = foregroundBitmap.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.matchParentSize(),
+                        contentScale = ContentScale.Crop,
+                    )
+                }
             }
             if (!isPreview) Spacer(modifier = Modifier.height(Dimens.ClockSpacer * scale))
             WidgetGrid(

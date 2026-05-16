@@ -180,11 +180,11 @@ fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
             clockProvider.createClock(context, ClockSettings(clockId = clockId)).apply {
                 initialize(isDarkTheme = true, dozeFraction = 0f, foldFraction = 0f)
                 (smallClock.view as? AxClockView)?.apply {
-                    depthEffectEnabled = false
+                    depthEffectEnabled = true
                     touchEnabled = false
                 }
                 (largeClock.view as? AxClockView)?.apply {
-                    depthEffectEnabled = false
+                    depthEffectEnabled = true
                     touchEnabled = false
                 }
                 smallClock.events.onRegionDarknessChanged(isRegionDark)

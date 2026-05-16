@@ -237,6 +237,24 @@ private fun readEffectsWallpaperBitmap(context: Context): Bitmap? {
     }
 }
 
+fun getForegroundBitmap(context: Context): Bitmap? {
+    return try {
+        val effectsCtx = context.createPackageContext(EFFECTS_PKG, Context.CONTEXT_IGNORE_SECURITY)
+        val deCtx = effectsCtx.createDeviceProtectedStorageContext()
+        val file = File(deCtx.filesDir, "effect_foreground.png")
+        if (!file.exists()) return null
+
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = 1
+            inPreferredConfig = Bitmap.Config.ARGB_8888
+        }
+        BitmapFactory.decodeFile(file.absolutePath, options)
+    } catch (e: Exception) {
+        Log.w(TAG, "Failed to read foreground from effects DE storage", e)
+        null
+    }
+}
+
 fun Bitmap.toCompressedStream(): ByteArrayInputStream {
     val baos = ByteArrayOutputStream()
     compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 100, baos)
