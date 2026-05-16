@@ -702,10 +702,11 @@ fun centerCrop(context: Context, bmp: Bitmap?, targetSize: Point? = null): Bitma
     return croppedBmp
 }
 
-fun getOriginalWallpaperUri(context: Context): Uri? {
+fun getOriginalWallpaperUri(context: Context, isHome: Boolean = true): Uri? {
     val wm = WallpaperManager.getInstance(context)
+    val flag = if (isHome) WallpaperManager.FLAG_SYSTEM else WallpaperManager.FLAG_LOCK
 
-    if (wm.wallpaperInfo != null) {
+    if (isHome && wm.wallpaperInfo != null) {
         try {
             val effectsCtx =
                 context.createPackageContext(EFFECTS_PKG, Context.CONTEXT_IGNORE_SECURITY)
@@ -724,12 +725,13 @@ fun getOriginalWallpaperUri(context: Context): Uri? {
     }
 
     try {
-        val pfd = wm.getWallpaperFile(WallpaperManager.FLAG_SYSTEM)
+        val pfd = wm.getWallpaperFile(flag)
         if (pfd != null) {
             pfd.use { fd ->
                 val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
                 if (bitmap != null) {
-                    val tempFile = File(context.filesDir, "temp_wallpaper_original.jpg")
+                    val fileName = if (isHome) "temp_wallpaper_original.jpg" else "temp_lock_wallpaper_original.jpg"
+                    val tempFile = File(context.filesDir, fileName)
                     tempFile.outputStream().use {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 95, it)
                     }
@@ -743,7 +745,7 @@ fun getOriginalWallpaperUri(context: Context): Uri? {
             }
         }
     } catch (e: Exception) {
-        Log.w(TAG, "Failed to get original wallpaper file", e)
+        Log.w(TAG, "Failed to get original wallpaper file for flag=$flag", e)
     }
 
     return null

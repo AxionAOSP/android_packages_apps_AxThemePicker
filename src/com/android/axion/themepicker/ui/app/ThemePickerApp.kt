@@ -324,7 +324,7 @@ private fun DetailScreenContent(
                     modifier = Modifier.fillMaxSize(),
                     entryPoint = screen.entryPoint,
                     onEditWallpaper = {
-                        val uri = getOriginalWallpaperUri(context)
+                        val uri = getOriginalWallpaperUri(context, isHome = false)
                         mainScreenViewModel.onOpenWallpaperCrop(
                             sourceUri = uri,
                             targetFlags = WallpaperManager.FLAG_LOCK,
