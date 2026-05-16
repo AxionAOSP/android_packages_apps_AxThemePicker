@@ -159,7 +159,6 @@ fun WallpaperCropScreen(
         if (fitMode) {
             minScale =
                 min(screenW / bmp.width.toFloat(), screenH / bmp.height.toFloat())
-                    .coerceAtMost(1f)
         } else {
             val ms = calculateMinScale(screenW, screenH, bmp.width.toFloat(), bmp.height.toFloat())
             minScale =
@@ -491,7 +490,7 @@ private fun buildFitWp(src: Bitmap, target: Point): Bitmap {
     canvas.drawColor(colors.primaryColor.toArgb())
 
     val fgScale =
-        min(targetW.toFloat() / src.width, targetH.toFloat() / src.height).coerceAtMost(1f)
+        min(targetW.toFloat() / src.width, targetH.toFloat() / src.height)
     val fgW = (src.width * fgScale).roundToInt().coerceAtLeast(1)
     val fgH = (src.height * fgScale).roundToInt().coerceAtLeast(1)
     val fgLeft = (targetW - fgW) / 2f
