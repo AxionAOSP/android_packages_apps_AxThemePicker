@@ -57,7 +57,9 @@ fun SimpleLockscreenPreview(wallpaperBitmap: Bitmap? = null, modifier: Modifier 
 
     val imageBitmap = remember(wallpaper) { wallpaper.asImageBitmap() }
 
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+    ) {
         Image(
             bitmap = imageBitmap,
             contentDescription = null,
@@ -69,7 +71,12 @@ fun SimpleLockscreenPreview(wallpaperBitmap: Bitmap? = null, modifier: Modifier 
             modifier = Modifier.fillMaxSize().padding(top = Dimens.ClockTopPadding * scale * 1.5f),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            PreviewClock(isPreview = true, isRegionDark = isRegionDark)
+            EditablePreviewClock(
+                isPreview = true,
+                isRegionDark = isRegionDark,
+                editable = false,
+                depthEffectEnabled = false,
+            )
             Spacer(modifier = Modifier.weight(1f))
             AffordanceOverlay(
                 isPreview = true,

@@ -62,6 +62,10 @@ fun LockscreenSection(onOpenFullPreview: (EntryPoint) -> Unit, modifier: Modifie
     val colors = MaterialTheme.colorScheme
     val design = LocalExpressiveDesign.current
     val layoutInfo = LocalAdaptiveLayoutInfo.current
+    val displayMetrics = context.resources.displayMetrics
+    val previewAspectRatio =
+        minOf(displayMetrics.widthPixels, displayMetrics.heightPixels).toFloat() /
+            maxOf(displayMetrics.widthPixels, displayMetrics.heightPixels)
 
     val lockImages by
         produceState<LockWallpaperImages?>(null) {
@@ -114,6 +118,7 @@ fun LockscreenSection(onOpenFullPreview: (EntryPoint) -> Unit, modifier: Modifie
 
             LockPreview(
                 lockImages = lockImages,
+                previewAspectRatio = previewAspectRatio,
                 onClick = { onOpenFullPreview(EntryPoint.DEFAULT) },
                 modifier = Modifier.weight(0.5f).fillMaxHeight(),
             )
@@ -127,6 +132,7 @@ fun LockscreenSection(onOpenFullPreview: (EntryPoint) -> Unit, modifier: Modifie
             item {
                 LockPreview(
                     lockImages = lockImages,
+                    previewAspectRatio = previewAspectRatio,
                     onClick = { onOpenFullPreview(EntryPoint.DEFAULT) },
                     modifier = Modifier.fillMaxWidth().aspectRatio(0.75f),
                 )
@@ -173,6 +179,7 @@ fun LockscreenSection(onOpenFullPreview: (EntryPoint) -> Unit, modifier: Modifie
 @Composable
 private fun LockPreview(
     lockImages: LockWallpaperImages?,
+    previewAspectRatio: Float,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -232,7 +239,10 @@ private fun LockPreview(
             )
 
             Box(
-                modifier = Modifier.align(Alignment.Center).fillMaxHeight(0.85f).aspectRatio(0.5f),
+                modifier =
+                    Modifier.align(Alignment.Center)
+                        .fillMaxHeight(0.85f)
+                        .aspectRatio(previewAspectRatio),
                 contentAlignment = Alignment.Center,
             ) {
                 Card(

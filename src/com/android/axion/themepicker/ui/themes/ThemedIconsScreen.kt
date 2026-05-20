@@ -16,7 +16,15 @@
 
 package com.android.axion.themepicker.ui.themes
 
+import android.R.color.system_accent1_100 as SystemAccent1_100
+import android.R.color.system_accent1_200 as SystemAccent1_200
+import android.R.color.system_accent1_600 as SystemAccent1_600
+import android.R.color.system_accent1_700 as SystemAccent1_700
+import android.R.color.system_accent2_800 as SystemAccent2_800
+import android.R.color.system_neutral1_50 as SystemNeutral1_50
+import android.R.color.system_neutral1_900 as SystemNeutral1_900
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ThemeEngine
 import android.graphics.drawable.Drawable
@@ -27,8 +35,10 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,19 +52,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -70,8 +81,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -79,6 +92,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import com.android.axion.compose.color.ColorPickerDialog
+import com.android.axion.compose.color.ColorPickerPreset
 import com.android.axion.compose.scaffold.AxionScaffold
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.theme.LocalAdaptiveLayoutInfo
@@ -86,18 +101,22 @@ import com.android.axion.themepicker.ui.theme.bounceable
 import com.android.axion.themepicker.utils.math.scaleRatio
 import com.android.axion.themepicker.viewmodel.MainScreenViewModel
 import kotlin.math.cos
+import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-private const val SETTING_THEMED_ICON_STYLE = "themed_icon_style"
 private const val SETTING_THEMED_ICONS_ENABLED = "themed_icons"
 private const val SETTING_THEMED_ICON_PACK = "themed_icon_pack"
+private const val SETTING_THEMED_ICON_SCALE = "themed_icon_scale"
+private const val SETTING_THEMED_ICON_BACKGROUND = "themed_icon_background_color"
+private const val SETTING_THEMED_ICON_FOREGROUND = "themed_icon_foreground_color"
 private const val SETTINGS_THEME_ENGINE_DATA = "theme_engine_data"
 private const val CATEGORY_ICON_PACK = "icon_pack"
-private const val STYLE_AXION = "axion"
-private const val STYLE_AOSP = "aosp"
+private const val DEFAULT_THEMED_ICON_SCALE = 72
+private const val MIN_THEMED_ICON_SCALE = 48
+private const val MAX_THEMED_ICON_SCALE = 100
 
 private const val ACTION_THEMED_ICON = "app.lawnchair.icons.THEMED_ICON"
 
@@ -107,6 +126,17 @@ private data class IconPackInfo(
     val icon: Drawable? = null,
     val isThemedPack: Boolean = false,
 )
+
+private data class ThemedIconColorDefault(
+    val label: String,
+    val background: Int,
+    val foreground: Int,
+)
+
+private enum class ColorTarget {
+    Background,
+    Foreground,
+}
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -120,10 +150,42 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
     var enabled by remember {
         mutableStateOf(Settings.Secure.getInt(resolver, SETTING_THEMED_ICONS_ENABLED, 0) == 1)
     }
-    var currentStyle by remember {
+    val darkTheme = isSystemInDarkTheme()
+    val colorDefaults = remember(context, darkTheme) { themedIconColorDefaults(context, darkTheme) }
+    var iconScale by remember { mutableStateOf(readThemedIconScale(context)) }
+    var backgroundColor by remember(colorDefaults) {
         mutableStateOf(
-            Settings.Secure.getString(resolver, SETTING_THEMED_ICON_STYLE) ?: STYLE_AXION
+            readSecureInt(
+                context,
+                SETTING_THEMED_ICON_BACKGROUND,
+                colorDefaults.first().background,
+            )
         )
+    }
+    var foregroundColor by remember(colorDefaults) {
+        mutableStateOf(
+            readSecureInt(
+                context,
+                SETTING_THEMED_ICON_FOREGROUND,
+                colorDefaults.first().foreground,
+            )
+        )
+    }
+
+    fun updateIconScale(value: Int) {
+        val coerced = value.coerceIn(MIN_THEMED_ICON_SCALE, MAX_THEMED_ICON_SCALE)
+        iconScale = coerced
+        Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_SCALE, coerced)
+    }
+
+    fun updateBackgroundColor(value: Int) {
+        backgroundColor = value
+        Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_BACKGROUND, value)
+    }
+
+    fun updateForegroundColor(value: Int) {
+        foregroundColor = value
+        Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_FOREGROUND, value)
     }
 
     var iconPacks by remember { mutableStateOf<List<IconPackInfo>>(emptyList()) }
@@ -160,7 +222,7 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                 val seenPackages = mutableSetOf<String>()
 
                 try {
-                    val themedIntent = android.content.Intent(ACTION_THEMED_ICON)
+                    val themedIntent = Intent(ACTION_THEMED_ICON)
                     val themedResults = pm.queryIntentActivities(themedIntent, 0)
                     for (ri in themedResults) {
                         val pkg = ri.activityInfo.packageName
@@ -220,7 +282,9 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                     contentAlignment = Alignment.Center,
                 ) {
                     ThemedIconPreviewLarge(
-                        isAxIcons = currentStyle == STYLE_AXION,
+                        scale = iconScale,
+                        backgroundColor = backgroundColor,
+                        foregroundColor = foregroundColor,
                         enabled = enabled,
                     )
                 }
@@ -234,7 +298,10 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                 ) {
                     ThemedIconSettingsCard(
                         enabled = enabled,
-                        currentStyle = currentStyle,
+                        iconScale = iconScale,
+                        backgroundColor = backgroundColor,
+                        foregroundColor = foregroundColor,
+                        colorDefaults = colorDefaults,
                         onEnabledChange = { newEnabled ->
                             enabled = newEnabled
                             Settings.Secure.putInt(
@@ -243,10 +310,9 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                                 if (newEnabled) 1 else 0,
                             )
                         },
-                        onStyleChange = { newStyle ->
-                            currentStyle = newStyle
-                            Settings.Secure.putString(resolver, SETTING_THEMED_ICON_STYLE, newStyle)
-                        },
+                        onIconScaleChange = ::updateIconScale,
+                        onBackgroundColorChange = ::updateBackgroundColor,
+                        onForegroundColorChange = ::updateForegroundColor,
                     )
 
                     IconPackCard(
@@ -284,14 +350,19 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                     contentAlignment = Alignment.Center,
                 ) {
                     ThemedIconPreviewLarge(
-                        isAxIcons = currentStyle == STYLE_AXION,
+                        scale = iconScale,
+                        backgroundColor = backgroundColor,
+                        foregroundColor = foregroundColor,
                         enabled = enabled,
                     )
                 }
 
                 ThemedIconSettingsCard(
                     enabled = enabled,
-                    currentStyle = currentStyle,
+                    iconScale = iconScale,
+                    backgroundColor = backgroundColor,
+                    foregroundColor = foregroundColor,
+                    colorDefaults = colorDefaults,
                     onEnabledChange = { newEnabled ->
                         enabled = newEnabled
                         Settings.Secure.putInt(
@@ -300,10 +371,9 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                             if (newEnabled) 1 else 0,
                         )
                     },
-                    onStyleChange = { newStyle ->
-                        currentStyle = newStyle
-                        Settings.Secure.putString(resolver, SETTING_THEMED_ICON_STYLE, newStyle)
-                    },
+                    onIconScaleChange = ::updateIconScale,
+                    onBackgroundColorChange = ::updateBackgroundColor,
+                    onForegroundColorChange = ::updateForegroundColor,
                     modifier = Modifier.padding(horizontal = 16.dp * scale),
                 )
 
@@ -342,7 +412,12 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
 }
 
 @Composable
-private fun ThemedIconPreviewLarge(isAxIcons: Boolean, enabled: Boolean) {
+private fun ThemedIconPreviewLarge(
+    scale: Int,
+    backgroundColor: Int,
+    foregroundColor: Int,
+    enabled: Boolean,
+) {
     val colors = MaterialTheme.colorScheme
 
     Card(
@@ -358,12 +433,12 @@ private fun ThemedIconPreviewLarge(isAxIcons: Boolean, enabled: Boolean) {
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        PreviewIcon(isAxIcons, IconType.PHONE)
-                        PreviewIcon(isAxIcons, IconType.MESSAGES)
+                        PreviewIcon(scale, backgroundColor, foregroundColor, IconType.PHONE)
+                        PreviewIcon(scale, backgroundColor, foregroundColor, IconType.MESSAGES)
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        PreviewIcon(isAxIcons, IconType.CAMERA)
-                        PreviewIcon(isAxIcons, IconType.SETTINGS)
+                        PreviewIcon(scale, backgroundColor, foregroundColor, IconType.CAMERA)
+                        PreviewIcon(scale, backgroundColor, foregroundColor, IconType.SETTINGS)
                     }
                 }
             } else {
@@ -381,13 +456,20 @@ private fun ThemedIconPreviewLarge(isAxIcons: Boolean, enabled: Boolean) {
 @Composable
 private fun ThemedIconSettingsCard(
     enabled: Boolean,
-    currentStyle: String,
+    iconScale: Int,
+    backgroundColor: Int,
+    foregroundColor: Int,
+    colorDefaults: List<ThemedIconColorDefault>,
     onEnabledChange: (Boolean) -> Unit,
-    onStyleChange: (String) -> Unit,
+    onIconScaleChange: (Int) -> Unit,
+    onBackgroundColorChange: (Int) -> Unit,
+    onForegroundColorChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
     val scale = LocalContext.current.scaleRatio
+    val scaleRange = remember { MIN_THEMED_ICON_SCALE.toFloat()..MAX_THEMED_ICON_SCALE.toFloat() }
+    var colorTarget by remember { mutableStateOf<ColorTarget?>(null) }
 
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -418,87 +500,260 @@ private fun ThemedIconSettingsCard(
                 Switch(
                     checked = enabled,
                     onCheckedChange = onEnabledChange,
-                    colors =
-                        SwitchDefaults.colors(
-                            checkedThumbColor = colors.primary,
-                            checkedTrackColor = colors.primaryContainer,
-                        ),
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = colors.primary,
+                        checkedTrackColor = colors.primaryContainer,
+                    ),
                 )
             }
 
             AnimatedVisibility(
                 visible = enabled,
-                enter =
-                    fadeIn(animationSpec = MaterialTheme.motionScheme.slowEffectsSpec()) +
-                        expandVertically(
-                            animationSpec = MaterialTheme.motionScheme.slowSpatialSpec()
-                        ),
-                exit =
-                    fadeOut(animationSpec = MaterialTheme.motionScheme.slowEffectsSpec()) +
-                        shrinkVertically(
-                            animationSpec = MaterialTheme.motionScheme.slowSpatialSpec()
-                        ),
+                enter = fadeIn(animationSpec = MaterialTheme.motionScheme.slowEffectsSpec()) +
+                    expandVertically(animationSpec = MaterialTheme.motionScheme.slowSpatialSpec()),
+                exit = fadeOut(animationSpec = MaterialTheme.motionScheme.slowEffectsSpec()) +
+                    shrinkVertically(animationSpec = MaterialTheme.motionScheme.slowSpatialSpec()),
             ) {
                 Column {
                     Spacer(modifier = Modifier.height(20.dp * scale))
                     HorizontalDivider(color = colors.outlineVariant.copy(alpha = 0.5f))
                     Spacer(modifier = Modifier.height(20.dp * scale))
 
-                    Text(
-                        text = stringResource(R.string.themed_icons_style),
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.onSurface,
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.themed_icon_size_title),
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colors.onSurface,
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = stringResource(R.string.themed_icon_size_summary),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = colors.onSurfaceVariant,
+                            )
+                        }
+                        Text(
+                            text = stringResource(R.string.themed_icon_size_percent, iconScale),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = colors.primary,
+                        )
+                    }
+
+                    Slider(
+                        value = iconScale.toFloat(),
+                        onValueChange = { onIconScaleChange(it.roundToInt()) },
+                        valueRange = scaleRange,
+                        colors = SliderDefaults.colors(
+                            thumbColor = colors.primary,
+                            activeTrackColor = colors.primary,
+                            inactiveTrackColor = colors.surfaceContainerHighest,
+                        ),
                     )
 
                     Spacer(modifier = Modifier.height(16.dp * scale))
 
-                    val options = listOf(STYLE_AXION, STYLE_AOSP)
-                    val labels = listOf("AxIcons", "AOSP")
-                    val subtitles =
-                        listOf(
-                            stringResource(R.string.themed_icons_neutral),
-                            stringResource(R.string.themed_icons_accent),
-                        )
-                    val selectedIndex = options.indexOf(currentStyle).coerceAtLeast(0)
+                    ThemedIconColorDefaultsRow(
+                        colorDefaults = colorDefaults,
+                        backgroundColor = backgroundColor,
+                        foregroundColor = foregroundColor,
+                        onSelect = { preset ->
+                            onBackgroundColorChange(preset.background)
+                            onForegroundColorChange(preset.foreground)
+                        },
+                    )
 
-                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                        options.forEachIndexed { index, style ->
-                            SegmentedButton(
-                                selected = selectedIndex == index,
-                                onClick = { onStyleChange(style) },
-                                shape =
-                                    SegmentedButtonDefaults.itemShape(
-                                        index = index,
-                                        count = options.size,
-                                    ),
-                            ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier.padding(vertical = 4.dp),
-                                ) {
-                                    Text(
-                                        text = labels[index],
-                                        style = MaterialTheme.typography.labelLarge,
-                                        fontWeight =
-                                            if (selectedIndex == index) FontWeight.Bold
-                                            else FontWeight.Medium,
-                                    )
-                                    Text(
-                                        text = subtitles[index],
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color =
-                                            if (selectedIndex == index) colors.onSecondaryContainer
-                                            else colors.onSurfaceVariant,
-                                    )
-                                }
-                            }
-                        }
-                    }
+                    Spacer(modifier = Modifier.height(12.dp * scale))
+
+                    ThemedIconColorRow(
+                        title = stringResource(R.string.themed_icon_background_title),
+                        color = backgroundColor,
+                        onClick = { colorTarget = ColorTarget.Background },
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp * scale))
+
+                    ThemedIconColorRow(
+                        title = stringResource(R.string.themed_icon_foreground_title),
+                        color = foregroundColor,
+                        onClick = { colorTarget = ColorTarget.Foreground },
+                    )
                 }
             }
         }
     }
+
+    colorTarget?.let { target ->
+        val isBackground = target == ColorTarget.Background
+        val title = stringResource(
+            if (isBackground) R.string.themed_icon_background_title
+            else R.string.themed_icon_foreground_title,
+        )
+        ColorPickerDialog(
+            initialColor = Color(if (isBackground) backgroundColor else foregroundColor),
+            title = title,
+            presets = colorDefaults.map { preset ->
+                ColorPickerPreset(
+                    label = preset.label,
+                    color = Color(if (isBackground) preset.background else preset.foreground),
+                )
+            },
+            defaultsLabel = stringResource(R.string.themed_icon_color_defaults_title),
+            onDismiss = { colorTarget = null },
+            onColorSelected = { color ->
+                if (isBackground) {
+                    onBackgroundColorChange(color.toArgb())
+                } else {
+                    onForegroundColorChange(color.toArgb())
+                }
+                colorTarget = null
+            },
+        )
+    }
+}
+
+@Composable
+private fun ThemedIconColorDefaultsRow(
+    colorDefaults: List<ThemedIconColorDefault>,
+    backgroundColor: Int,
+    foregroundColor: Int,
+    onSelect: (ThemedIconColorDefault) -> Unit,
+) {
+    val colors = MaterialTheme.colorScheme
+
+    Column {
+        Text(
+            text = stringResource(R.string.themed_icon_color_defaults_title),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+            color = colors.onSurface,
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = stringResource(R.string.themed_icon_color_defaults_summary),
+            style = MaterialTheme.typography.bodySmall,
+            color = colors.onSurfaceVariant,
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            colorDefaults.forEach { preset ->
+                ThemedIconColorDefaultChip(
+                    preset = preset,
+                    selected = backgroundColor == preset.background &&
+                        foregroundColor == preset.foreground,
+                    onClick = { onSelect(preset) },
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ThemedIconColorDefaultChip(
+    preset: ThemedIconColorDefault,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MaterialTheme.colorScheme
+
+    Card(
+        modifier = modifier.height(56.dp).bounceable(onClick = onClick, scale = 0.98f),
+        colors = CardDefaults.cardColors(
+            containerColor = if (selected) colors.primaryContainer else colors.surfaceContainerHigh,
+        ),
+        border = BorderStroke(1.dp, if (selected) colors.primary else colors.outlineVariant),
+        shape = MaterialTheme.shapes.large,
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ThemedIconPairSwatch(preset.background, preset.foreground)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = preset.label,
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                color = if (selected) colors.onPrimaryContainer else colors.onSurface,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemedIconColorRow(title: String, color: Int, onClick: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+
+    Card(
+        modifier = Modifier.fillMaxWidth().bounceable(onClick = onClick, scale = 0.98f),
+        colors = CardDefaults.cardColors(containerColor = colors.surfaceContainerHigh),
+        shape = MaterialTheme.shapes.large,
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ThemedIconSingleSwatch(color)
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = colors.onSurface,
+                )
+                Text(
+                    text = color.toHexColorString(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.onSurfaceVariant,
+                )
+            }
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = colors.onSurfaceVariant,
+                modifier = Modifier.size(20.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemedIconPairSwatch(backgroundColor: Int, foregroundColor: Int) {
+    Box(
+        modifier = Modifier
+            .size(28.dp)
+            .clip(MaterialTheme.shapes.small)
+            .background(Color(backgroundColor))
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small),
+        contentAlignment = Alignment.Center,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(12.dp)
+                .clip(MaterialTheme.shapes.extraSmall)
+                .background(Color(foregroundColor)),
+        )
+    }
+}
+
+@Composable
+private fun ThemedIconSingleSwatch(color: Int) {
+    Box(
+        modifier = Modifier
+            .size(32.dp)
+            .clip(MaterialTheme.shapes.small)
+            .background(Color(color))
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small),
+    )
 }
 
 @Composable
@@ -680,6 +935,34 @@ private fun ThemedIconPackCard(
     }
 }
 
+
+private fun themedIconColorDefaults(
+    context: Context,
+    isDark: Boolean,
+): List<ThemedIconColorDefault> = listOf(
+    ThemedIconColorDefault(
+        label = context.getString(R.string.themed_icon_color_preset_axicons),
+        background = context.getColor(if (isDark) SystemNeutral1_900 else SystemNeutral1_50),
+        foreground = context.getColor(if (isDark) SystemAccent1_100 else SystemAccent1_600),
+    ),
+    ThemedIconColorDefault(
+        label = context.getString(R.string.themed_icon_color_preset_aosp),
+        background = context.getColor(if (isDark) SystemAccent2_800 else SystemAccent1_100),
+        foreground = context.getColor(if (isDark) SystemAccent1_200 else SystemAccent1_700),
+    ),
+)
+
+private fun readThemedIconScale(context: Context): Int = readSecureInt(
+    context = context,
+    key = SETTING_THEMED_ICON_SCALE,
+    defaultValue = DEFAULT_THEMED_ICON_SCALE,
+).coerceIn(MIN_THEMED_ICON_SCALE, MAX_THEMED_ICON_SCALE)
+
+private fun readSecureInt(context: Context, key: String, defaultValue: Int): Int =
+    Settings.Secure.getInt(context.contentResolver, key, defaultValue)
+
+private fun Int.toHexColorString(): String = String.format("#%06X", 0xFFFFFF and this)
+
 private fun applyIconPack(context: Context, packageName: String) {
     try {
         val resolver = context.contentResolver
@@ -712,22 +995,15 @@ private enum class IconType {
 }
 
 @Composable
-private fun PreviewIcon(isAxIcons: Boolean, type: IconType) {
-    val bgColor =
-        if (isAxIcons) {
-            MaterialTheme.colorScheme.surfaceContainerLowest
-        } else {
-            MaterialTheme.colorScheme.primaryContainer
-        }
-
-    val fgColor =
-        if (isAxIcons) {
-            MaterialTheme.colorScheme.primary
-        } else {
-            MaterialTheme.colorScheme.onPrimaryContainer
-        }
-
-    val iconSize = if (isAxIcons) 22.dp else 28.dp
+private fun PreviewIcon(
+    scale: Int,
+    backgroundColor: Int,
+    foregroundColor: Int,
+    type: IconType,
+) {
+    val bgColor = Color(backgroundColor)
+    val fgColor = Color(foregroundColor)
+    val iconSize = (36f * scale / 100f).dp
 
     Box(
         modifier = Modifier.size(52.dp).clip(MaterialTheme.shapes.extraLarge).background(bgColor),

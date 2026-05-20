@@ -76,7 +76,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.android.axion.themepicker.R
-import com.android.axion.themepicker.ui.dialogs.ColorPickerDialog
+import com.android.axion.compose.color.ColorPickerDialog
 import com.android.axion.themepicker.ui.dialogs.StylePickerDialog
 import com.android.axion.themepicker.ui.dialogs.WallpaperColorPickerDialog
 import com.android.axion.themepicker.ui.theme.bounceable
@@ -152,6 +152,7 @@ fun BasicColorsSettings() {
     if (showColorPicker) {
         ColorPickerDialog(
             initialColor = settings.seedColor,
+            title = stringResource(R.string.choose_seed_color),
             onDismiss = { showColorPicker = false },
             onColorSelected = { color ->
                 settings = settings.copy(seedColor = color)

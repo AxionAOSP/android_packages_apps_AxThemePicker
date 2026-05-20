@@ -42,25 +42,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.CommonBottomSheet
 import com.android.axion.themepicker.ui.components.SheetDimens
-import com.android.axion.themepicker.ui.dialogs.ColorPickerDialog
+import com.android.axion.compose.color.ColorPickerDialog
 import com.android.systemui.shared.clocks.AxClockType
 import com.android.systemui.shared.clocks.ClockSettingsRepository
 import com.android.systemui.shared.clocks.view.AxClockView
 import com.android.systemui.shared.clocks.view.BitmapDigitComposeClockView
 import com.android.systemui.shared.clocks.view.BitmapFaceConfigs
+import com.android.systemui.shared.clocks.view.OplusBigClockView
+import com.android.systemui.shared.clocks.view.OplusClassicClockView
+import com.android.systemui.shared.clocks.view.OplusGraffitiClockView
 import com.android.systemui.shared.clocks.view.RenderMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -86,14 +92,33 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     val scope = rememberCoroutineScope()
 
     val allTypes = remember { AxClockType.entries }
+    val pickerTypes = remember { AxClockType.pickerEntries }
     var currentClockId by remember { mutableStateOf("DEFAULT") }
     var currentAlignment by remember { mutableStateOf(ClockSettingsRepository.ALIGNMENT_CENTER) }
-    var currentSize by remember { mutableStateOf(ClockSettingsRepository.SIZE_DEFAULT) }
     var depthEnabled by remember { mutableStateOf(false) }
     var currentDatePosition by remember {
         mutableStateOf(ClockSettingsRepository.DATE_POSITION_ABOVE)
     }
+    var currentInfoDisplayMode by remember {
+        mutableStateOf(ClockSettingsRepository.INFO_DISPLAY_AUTO)
+    }
+    var currentInfoDisplaySources by remember {
+        mutableStateOf(ClockSettingsRepository.DEFAULT_INFO_DISPLAY_SOURCES)
+    }
     var currentClockColor by remember { mutableStateOf(ClockSettingsRepository.COLOR_AUTO) }
+    var currentOplusClassicFace by remember {
+        mutableStateOf(ClockSettingsRepository.OPLUS_CLASSIC_FACE_DEFAULT)
+    }
+    var currentOplusBigFace by remember {
+        mutableStateOf(ClockSettingsRepository.OPLUS_BIG_FACE_DEFAULT)
+    }
+    var currentOplusBigDualTone by remember { mutableStateOf(false) }
+    var currentOplusGraffitiFace by remember {
+        mutableStateOf(ClockSettingsRepository.OPLUS_GRAFFITI_FACE_DEFAULT)
+    }
+    var currentOplusGraffitiAngle by remember {
+        mutableStateOf(ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_CENTER)
+    }
     var showColorPicker by remember { mutableStateOf(false) }
     var isLiveWallpaper by remember { mutableStateOf(false) }
 
@@ -102,18 +127,30 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
         withContext(Dispatchers.IO) {
             val id = readCurrentClockId(context)
             val align = readAlignment(context)
-            val size = readSize(context)
             val depth = readDepthEnabled(context)
             val datePos = readDatePosition(context)
+            val infoDisplayMode = ClockSettingsRepository.readInfoDisplayMode(context)
+            val infoDisplaySources = ClockSettingsRepository.readInfoDisplaySources(context)
             val clockColor = readClockColor(context)
+            val classicFace = readOplusClassicFace(context)
+            val bigFace = readOplusBigFace(context)
+            val bigDualTone = readOplusBigDualTone(context)
+            val graffitiFace = readOplusGraffitiFace(context)
+            val graffitiAngle = readOplusGraffitiAngle(context)
             val liveWp = WallpaperManager.getInstance(context).wallpaperInfo != null
             withContext(Dispatchers.Main) {
                 currentClockId = id
                 currentAlignment = align
-                currentSize = size
                 depthEnabled = depth
                 currentDatePosition = datePos
+                currentInfoDisplayMode = infoDisplayMode
+                currentInfoDisplaySources = infoDisplaySources
                 currentClockColor = clockColor
+                currentOplusClassicFace = classicFace
+                currentOplusBigFace = bigFace
+                currentOplusBigDualTone = bigDualTone
+                currentOplusGraffitiFace = graffitiFace
+                currentOplusGraffitiAngle = graffitiAngle
                 isLiveWallpaper = liveWp
             }
         }
@@ -124,6 +161,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
             allTypes.firstOrNull { context.resources.getString(it.clockId) == currentClockId }
                 ?: AxClockType.NTYPE
         }
+    val isNoClock = selectedType == AxClockType.NONE
 
     val isDigitFamily =
         remember(selectedType) {
@@ -131,10 +169,18 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
             val config = BitmapFaceConfigs.getConfig(style) ?: return@remember false
             config.renderMode !is RenderMode.AnalogClock
         }
-    val hasDateSupport = selectedType.bitmapFaceStyle != null
-    val supportsColorOverride = selectedType != AxClockType.CYBERPUNK
+    val hasDateSupport = !isNoClock && (selectedType.bitmapFaceStyle != null || selectedType.isOplusClock)
+    val supportsInfoDisplay = !isNoClock
+    val supportsColorOverride = !isNoClock && selectedType != AxClockType.CYBERPUNK
+    val supportsOplusClassicFace = selectedType == AxClockType.OPLUS_CLASSIC
+    val supportsOplusBigFace = selectedType == AxClockType.OPLUS_BIG
+    val supportsOplusGraffitiFace = selectedType == AxClockType.OPLUS_PLAYFUL
+    val clockPreviewSettingsKey =
+        "$currentAlignment:$currentDatePosition:$currentClockColor:" +
+            "$currentOplusClassicFace:$currentOplusBigFace:$currentOplusBigDualTone:" +
+            "$currentOplusGraffitiFace:$currentOplusGraffitiAngle"
     val digitFaceTypes = remember {
-        allTypes.filter { type ->
+        pickerTypes.filter { type ->
             val style = type.bitmapFaceStyle ?: return@filter false
             val config = BitmapFaceConfigs.getConfig(style) ?: return@filter false
             config.renderMode !is RenderMode.AnalogClock
@@ -142,8 +188,15 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
     val primaryTypes = remember {
         buildList {
+            add(AxClockType.NONE)
             add(AxClockType.NTYPE)
-            addAll(allTypes.filter { it.bitmapFaceStyle == null || it == AxClockType.GRAPHIC })
+            addAll(
+                pickerTypes.filter {
+                    it != AxClockType.NONE &&
+                        it != AxClockType.NTYPE &&
+                        (it.bitmapFaceStyle == null || it == AxClockType.GRAPHIC)
+                }
+            )
         }
     }
 
@@ -181,17 +234,6 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
         }
     }
 
-    fun writeSize(value: String) {
-        currentSize = value
-        scope.launch(Dispatchers.IO) {
-            Settings.Secure.putString(
-                context.contentResolver,
-                ClockSettingsRepository.SETTING_SIZE,
-                value,
-            )
-        }
-    }
-
     fun writeDepth(enabled: Boolean) {
         depthEnabled = enabled
         scope.launch(Dispatchers.IO) {
@@ -214,12 +256,94 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
         }
     }
 
+    fun writeInfoDisplayMode(value: String) {
+        currentInfoDisplayMode = value
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putString(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_INFO_DISPLAY_MODE,
+                value,
+            )
+        }
+    }
+
+    fun writeInfoDisplaySource(value: String) {
+        val updated = if (value in currentInfoDisplaySources) {
+            currentInfoDisplaySources - value
+        } else {
+            currentInfoDisplaySources + value
+        }
+        currentInfoDisplaySources = updated
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putString(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_INFO_DISPLAY_SOURCES,
+                updated.sorted().joinToString(","),
+            )
+        }
+    }
+
     fun writeClockColor(value: String) {
         currentClockColor = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
                 context.contentResolver,
                 ClockSettingsRepository.SETTING_CLOCK_COLOR,
+                value,
+            )
+        }
+    }
+
+    fun writeOplusClassicFace(value: String) {
+        currentOplusClassicFace = value
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putString(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_OPLUS_CLASSIC_FACE,
+                value,
+            )
+        }
+    }
+
+    fun writeOplusBigFace(value: String) {
+        currentOplusBigFace = value
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putString(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_OPLUS_BIG_FACE,
+                value,
+            )
+        }
+    }
+
+    fun writeOplusBigDualTone(enabled: Boolean) {
+        currentOplusBigDualTone = enabled
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putInt(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_OPLUS_BIG_DUAL_TONE,
+                if (enabled) 1 else 0,
+            )
+        }
+    }
+
+    fun writeOplusGraffitiFace(value: String) {
+        currentOplusGraffitiFace = value
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putString(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_OPLUS_GRAFFITI_FACE,
+                value,
+            )
+        }
+    }
+
+    fun writeOplusGraffitiAngle(value: String) {
+        currentOplusGraffitiAngle = value
+        scope.launch(Dispatchers.IO) {
+            Settings.Secure.putString(
+                context.contentResolver,
+                ClockSettingsRepository.SETTING_OPLUS_GRAFFITI_ANGLE,
                 value,
             )
         }
@@ -248,7 +372,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
                 tileWidth = StyleTileWidth,
                 tileHeight = StyleTileHeight,
                 previewScale = STYLE_PREVIEW_SCALE,
-                settingsKey = "$currentAlignment:$currentSize:$currentClockColor",
+                settingsKey = clockPreviewSettingsKey,
                 onSelect = { writeClockId(it) },
                 isSelectedOverride = { type ->
                     if (type == AxClockType.NTYPE) isDigitFamily else type == selectedType
@@ -266,114 +390,254 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
                     tileWidth = FaceTileWidth,
                     tileHeight = FaceTileHeight,
                     previewScale = FACE_PREVIEW_SCALE,
-                    settingsKey = "$currentAlignment:$currentSize:$currentClockColor",
+                    settingsKey = clockPreviewSettingsKey,
                     onSelect = { writeClockId(it) },
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
-            SectionTitle(stringResource(R.string.clock_size))
-            Spacer(modifier = Modifier.height(8.dp))
-            OptionRow(
-                options =
-                    listOf(
-                        OptionItem(
-                            ClockSettingsRepository.SIZE_DEFAULT,
-                            stringResource(R.string.clock_size_default),
-                        ) {
-                            SizeDefaultIcon(it)
-                        },
-                        OptionItem(
-                            ClockSettingsRepository.SIZE_LARGE,
-                            stringResource(R.string.clock_size_large),
-                        ) {
-                            SizeLargeIcon(it)
-                        },
-                    ),
-                selected = currentSize,
-                onSelect = { writeSize(it) },
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-            SectionTitle(stringResource(R.string.clock_alignment))
-            Spacer(modifier = Modifier.height(8.dp))
-            OptionRow(
-                options =
-                    listOf(
-                        OptionItem(
-                            ClockSettingsRepository.ALIGNMENT_LEFT,
-                            stringResource(R.string.clock_align_left),
-                        ) {
-                            AlignLeftIcon(it)
-                        },
-                        OptionItem(
-                            ClockSettingsRepository.ALIGNMENT_CENTER,
-                            stringResource(R.string.clock_align_center),
-                        ) {
-                            AlignCenterIcon(it)
-                        },
-                        OptionItem(
-                            ClockSettingsRepository.ALIGNMENT_RIGHT,
-                            stringResource(R.string.clock_align_right),
-                        ) {
-                            AlignRightIcon(it)
-                        },
-                    ),
-                selected = currentAlignment,
-                onSelect = { writeAlignment(it) },
-            )
-
-            if (hasDateSupport) {
+            if (supportsOplusClassicFace) {
                 Spacer(modifier = Modifier.height(20.dp))
-                SectionTitle(stringResource(R.string.clock_date_position))
+                SectionTitle(stringResource(R.string.clock_face_style))
                 Spacer(modifier = Modifier.height(8.dp))
-                OptionRow(
-                    options =
-                        listOf(
-                            OptionItem(
-                                ClockSettingsRepository.DATE_POSITION_ABOVE,
-                                stringResource(R.string.clock_date_above),
-                            ) {
-                                DateAboveIcon(it)
-                            },
-                            OptionItem(
-                                ClockSettingsRepository.DATE_POSITION_BELOW,
-                                stringResource(R.string.clock_date_below),
-                            ) {
-                                DateBelowIcon(it)
-                            },
-                        ),
-                    selected = currentDatePosition,
-                    onSelect = { writeDatePosition(it) },
+                OplusClassicFaceRow(
+                    context = context,
+                    selected = currentOplusClassicFace,
+                    settingsKey = clockPreviewSettingsKey,
+                    onSelect = { writeOplusClassicFace(it) },
                 )
             }
 
-            if (supportsColorOverride) {
+            if (supportsOplusBigFace) {
                 Spacer(modifier = Modifier.height(20.dp))
-                SectionTitle(stringResource(R.string.clock_color))
+                SectionTitle(stringResource(R.string.clock_face_style))
                 Spacer(modifier = Modifier.height(8.dp))
-                ClockColorRow(
-                    selected = currentClockColor,
-                    onSelect = { writeClockColor(it) },
-                    onCustom = { showColorPicker = true },
+                OplusBigFaceRow(
+                    context = context,
+                    selected = currentOplusBigFace,
+                    dualTone = currentOplusBigDualTone,
+                    settingsKey = clockPreviewSettingsKey,
+                    onSelect = { writeOplusBigFace(it) },
                 )
-            }
-
-            if (!isLiveWallpaper) {
                 Spacer(modifier = Modifier.height(20.dp))
-                SectionTitle(stringResource(R.string.depth_effect))
+                SectionTitle(stringResource(R.string.clock_dual_tone))
                 Spacer(modifier = Modifier.height(8.dp))
                 OptionRow(
                     options =
                         listOf(
                             OptionItem(DEPTH_OFF, stringResource(R.string.off)) {
-                                DepthOffIcon(it)
+                                DualToneOffIcon(it)
                             },
-                            OptionItem(DEPTH_ON, stringResource(R.string.on)) { DepthOnIcon(it) },
+                            OptionItem(DEPTH_ON, stringResource(R.string.on)) {
+                                DualToneOnIcon(it)
+                            },
                         ),
-                    selected = if (depthEnabled) DEPTH_ON else DEPTH_OFF,
-                    onSelect = { writeDepth(it == DEPTH_ON) },
+                    selected = if (currentOplusBigDualTone) DEPTH_ON else DEPTH_OFF,
+                    onSelect = { writeOplusBigDualTone(it == DEPTH_ON) },
                 )
+            }
+
+            if (supportsOplusGraffitiFace) {
+                Spacer(modifier = Modifier.height(20.dp))
+                SectionTitle(stringResource(R.string.clock_face_style))
+                Spacer(modifier = Modifier.height(8.dp))
+                OplusGraffitiFaceRow(
+                    context = context,
+                    selected = currentOplusGraffitiFace,
+                    angle = currentOplusGraffitiAngle,
+                    settingsKey = clockPreviewSettingsKey,
+                    onSelect = { writeOplusGraffitiFace(it) },
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                SectionTitle(stringResource(R.string.clock_graffiti_angle))
+                Spacer(modifier = Modifier.height(8.dp))
+                OptionRow(
+                    options =
+                        listOf(
+                            OptionItem(
+                                ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_LEFT,
+                                stringResource(R.string.clock_align_left),
+                            ) {
+                                GraffitiAngleLeftIcon(it)
+                            },
+                            OptionItem(
+                                ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_CENTER,
+                                stringResource(R.string.clock_align_center),
+                            ) {
+                                GraffitiAngleCenterIcon(it)
+                            },
+                            OptionItem(
+                                ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_RIGHT,
+                                stringResource(R.string.clock_align_right),
+                            ) {
+                                GraffitiAngleRightIcon(it)
+                            },
+                        ),
+                    selected = currentOplusGraffitiAngle,
+                    onSelect = { writeOplusGraffitiAngle(it) },
+                )
+            }
+
+            if (!isNoClock) {
+                Spacer(modifier = Modifier.height(20.dp))
+                SectionTitle(stringResource(R.string.clock_alignment))
+                Spacer(modifier = Modifier.height(8.dp))
+                OptionRow(
+                    options =
+                        listOf(
+                            OptionItem(
+                                ClockSettingsRepository.ALIGNMENT_LEFT,
+                                stringResource(R.string.clock_align_left),
+                            ) {
+                                AlignLeftIcon(it)
+                            },
+                            OptionItem(
+                                ClockSettingsRepository.ALIGNMENT_CENTER,
+                                stringResource(R.string.clock_align_center),
+                            ) {
+                                AlignCenterIcon(it)
+                            },
+                            OptionItem(
+                                ClockSettingsRepository.ALIGNMENT_RIGHT,
+                                stringResource(R.string.clock_align_right),
+                            ) {
+                                AlignRightIcon(it)
+                            },
+                        ),
+                    selected = currentAlignment,
+                    onSelect = { writeAlignment(it) },
+                )
+
+                if (hasDateSupport) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SectionTitle(stringResource(R.string.clock_date_position))
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OptionRow(
+                        options =
+                            listOf(
+                                OptionItem(
+                                    ClockSettingsRepository.DATE_POSITION_ABOVE,
+                                    stringResource(R.string.clock_date_above),
+                                ) {
+                                    DateAboveIcon(it)
+                                },
+                                OptionItem(
+                                    ClockSettingsRepository.DATE_POSITION_BELOW,
+                                    stringResource(R.string.clock_date_below),
+                                ) {
+                                    DateBelowIcon(it)
+                                },
+                            ),
+                        selected = currentDatePosition,
+                        onSelect = { writeDatePosition(it) },
+                    )
+                }
+
+                if (supportsInfoDisplay) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SectionTitle(stringResource(R.string.clock_info_display))
+                    Spacer(modifier = Modifier.height(8.dp))
+                    InfoDisplayRow(
+                        options =
+                            listOf(
+                                OptionItem(
+                                    ClockSettingsRepository.INFO_DISPLAY_AUTO,
+                                    stringResource(R.string.clock_info_auto),
+                                ) {
+                                    InfoAutoIcon(it)
+                                },
+                                OptionItem(
+                                    ClockSettingsRepository.INFO_DISPLAY_DATE,
+                                    stringResource(R.string.clock_info_date),
+                                ) {
+                                    InfoDateIcon(it)
+                                },
+                                OptionItem(
+                                    ClockSettingsRepository.INFO_DISPLAY_OFF,
+                                    stringResource(R.string.off),
+                                ) {
+                                    InfoOffIcon(it)
+                                },
+                            ),
+                        selected = currentInfoDisplayMode,
+                        onSelect = { writeInfoDisplayMode(it) },
+                    )
+                    if (currentInfoDisplayMode == ClockSettingsRepository.INFO_DISPLAY_AUTO) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = stringResource(R.string.clock_info_sources),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        InfoSourceRow(
+                            options =
+                                listOf(
+                                    OptionItem(
+                                        ClockSettingsRepository.INFO_DISPLAY_MEDIA,
+                                        stringResource(R.string.clock_info_media),
+                                    ) {
+                                        InfoMediaIcon(it)
+                                    },
+                                    OptionItem(
+                                        ClockSettingsRepository.INFO_DISPLAY_SMARTSPACE,
+                                        stringResource(R.string.clock_info_smartspace),
+                                    ) {
+                                        InfoSmartspaceIcon(it)
+                                    },
+                                    OptionItem(
+                                        ClockSettingsRepository.INFO_DISPLAY_ALARM,
+                                        stringResource(R.string.clock_info_alarm),
+                                    ) {
+                                        InfoAlarmIcon(it)
+                                    },
+                                    OptionItem(
+                                        ClockSettingsRepository.INFO_DISPLAY_CALENDAR,
+                                        stringResource(R.string.clock_info_calendar),
+                                    ) {
+                                        InfoCalendarIcon(it)
+                                    },
+                                    OptionItem(
+                                        ClockSettingsRepository.INFO_DISPLAY_WEATHER,
+                                        stringResource(R.string.clock_info_weather),
+                                    ) {
+                                        InfoWeatherIcon(it)
+                                    },
+                                ),
+                            selected = currentInfoDisplaySources,
+                            onToggle = { writeInfoDisplaySource(it) },
+                        )
+                    }
+                }
+
+                if (supportsColorOverride) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SectionTitle(stringResource(R.string.clock_color))
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ClockColorRow(
+                        selected = currentClockColor,
+                        onSelect = { writeClockColor(it) },
+                        onCustom = { showColorPicker = true },
+                    )
+                }
+
+                if (!isLiveWallpaper) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SectionTitle(stringResource(R.string.depth_effect))
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OptionRow(
+                        options =
+                            listOf(
+                                OptionItem(DEPTH_OFF, stringResource(R.string.off)) {
+                                    DepthOffIcon(it)
+                                },
+                                OptionItem(DEPTH_ON, stringResource(R.string.on)) {
+                                    DepthOnIcon(it)
+                                },
+                            ),
+                        selected = if (depthEnabled) DEPTH_ON else DEPTH_OFF,
+                        onSelect = { writeDepth(it == DEPTH_ON) },
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(SheetDimens.SheetPagerSpacingNav))
@@ -392,6 +656,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
 
         ColorPickerDialog(
             initialColor = initialColor,
+            title = stringResource(R.string.clock_color),
             onDismiss = { showColorPicker = false },
             onColorSelected = { color ->
                 val hex = "#%08X".format(color.toArgb())
@@ -412,6 +677,149 @@ private fun SectionTitle(title: String) {
 }
 
 @Composable
+private fun ClockTileRow(
+    itemCount: Int,
+    selectedIndex: Int,
+    tileWidth: Dp,
+    content: @Composable RowScope.(Int) -> Unit,
+) {
+    val scrollState = rememberScrollState()
+    val density = LocalDensity.current
+    val tileWidthPx = with(density) { tileWidth.toPx() }
+    val spacingPx = with(density) { 12.dp.toPx() }
+
+    LaunchedEffect(selectedIndex, tileWidthPx, spacingPx) {
+        val targetPx = (selectedIndex * (tileWidthPx + spacingPx)).toInt()
+        scrollState.animateScrollTo(targetPx)
+    }
+
+    Row(
+        modifier = Modifier.horizontalScroll(scrollState),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        repeat(itemCount) { index ->
+            content(index)
+        }
+    }
+}
+
+@Composable
+private fun OplusClassicFaceRow(
+    context: Context,
+    selected: String,
+    settingsKey: String,
+    onSelect: (String) -> Unit,
+) {
+    val selectedIndex =
+        remember(selected) {
+            OPLUS_CLASSIC_FACE_OPTIONS
+                .indexOfFirst { face -> face == selected }
+                .coerceAtLeast(0)
+        }
+
+    ClockTileRow(
+        itemCount = OPLUS_CLASSIC_FACE_OPTIONS.size,
+        selectedIndex = selectedIndex,
+        tileWidth = FaceTileWidth,
+    ) { index ->
+        val face = OPLUS_CLASSIC_FACE_OPTIONS[index]
+        val isSelected = face == selected
+        ClockTile(
+            context = context,
+            type = AxClockType.OPLUS_CLASSIC,
+            isSelected = isSelected,
+            previewScale = FACE_PREVIEW_SCALE,
+            settingsKey = "$settingsKey:$face",
+            onClick = { onSelect(face) },
+            modifier = Modifier.width(FaceTileWidth).height(FaceTileHeight),
+            configureView = { view ->
+                (view as? OplusClassicClockView)?.previewClassicFace = face
+            },
+        )
+    }
+}
+
+@Composable
+private fun OplusBigFaceRow(
+    context: Context,
+    selected: String,
+    dualTone: Boolean,
+    settingsKey: String,
+    onSelect: (String) -> Unit,
+) {
+    val selectedIndex =
+        remember(selected) {
+            OPLUS_BIG_FACE_OPTIONS
+                .indexOfFirst { face -> face == selected }
+                .coerceAtLeast(0)
+        }
+
+    ClockTileRow(
+        itemCount = OPLUS_BIG_FACE_OPTIONS.size,
+        selectedIndex = selectedIndex,
+        tileWidth = FaceTileWidth,
+    ) { index ->
+        val face = OPLUS_BIG_FACE_OPTIONS[index]
+        val isSelected = face == selected
+        ClockTile(
+            context = context,
+            type = AxClockType.OPLUS_BIG,
+            isSelected = isSelected,
+            previewScale = FACE_PREVIEW_SCALE,
+            settingsKey = "$settingsKey:$face",
+            onClick = { onSelect(face) },
+            modifier = Modifier.width(FaceTileWidth).height(FaceTileHeight),
+            configureView = { view ->
+                (view as? OplusBigClockView)?.let { bigView ->
+                    bigView.previewBigFace = face
+                    bigView.previewBigDualTone = dualTone
+                }
+            },
+        )
+    }
+}
+
+@Composable
+private fun OplusGraffitiFaceRow(
+    context: Context,
+    selected: String,
+    angle: String,
+    settingsKey: String,
+    onSelect: (String) -> Unit,
+) {
+    val selectedIndex =
+        remember(selected) {
+            OPLUS_GRAFFITI_FACE_OPTIONS
+                .indexOfFirst { face -> face == selected }
+                .coerceAtLeast(0)
+        }
+
+    ClockTileRow(
+        itemCount = OPLUS_GRAFFITI_FACE_OPTIONS.size,
+        selectedIndex = selectedIndex,
+        tileWidth = FaceTileWidth,
+    ) { index ->
+        val face = OPLUS_GRAFFITI_FACE_OPTIONS[index]
+        val isSelected = face == selected
+        ClockTile(
+            context = context,
+            type = AxClockType.OPLUS_PLAYFUL,
+            isSelected = isSelected,
+            previewScale = FACE_PREVIEW_SCALE,
+            settingsKey = "$settingsKey:$face",
+            onClick = { onSelect(face) },
+            modifier = Modifier.width(FaceTileWidth).height(FaceTileHeight),
+            configureView = { view ->
+                (view as? OplusGraffitiClockView)?.let { graffitiView ->
+                    graffitiView.previewGraffitiFace = face
+                    graffitiView.previewGraffitiAngle = angle
+                }
+            },
+        )
+    }
+}
+
+@Composable
 private fun ClockStyleGrid(
     context: Context,
     primaryTypes: List<AxClockType>,
@@ -423,11 +831,6 @@ private fun ClockStyleGrid(
     onSelect: (AxClockType) -> Unit,
     isSelectedOverride: ((AxClockType) -> Boolean)? = null,
 ) {
-    val scrollState = rememberScrollState()
-    val density = LocalDensity.current
-    val tileWidthPx = with(density) { tileWidth.toPx() }
-    val spacingPx = with(density) { 12.dp.toPx() }
-
     val selectedIndex =
         remember(selectedType, primaryTypes) {
             primaryTypes
@@ -435,27 +838,22 @@ private fun ClockStyleGrid(
                 .coerceAtLeast(0)
         }
 
-    LaunchedEffect(selectedIndex) {
-        val targetPx = (selectedIndex * (tileWidthPx + spacingPx)).toInt()
-        scrollState.animateScrollTo(targetPx)
-    }
-
-    Row(
-        modifier = Modifier.horizontalScroll(scrollState),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        primaryTypes.forEach { type ->
-            val isSelected = isSelectedOverride?.invoke(type) ?: (type == selectedType)
-            ClockTile(
-                context = context,
-                type = type,
-                isSelected = isSelected,
-                previewScale = previewScale,
-                settingsKey = settingsKey,
-                onClick = { onSelect(type) },
-                modifier = Modifier.width(tileWidth).height(tileHeight),
-            )
-        }
+    ClockTileRow(
+        itemCount = primaryTypes.size,
+        selectedIndex = selectedIndex,
+        tileWidth = tileWidth,
+    ) { index ->
+        val type = primaryTypes[index]
+        val isSelected = isSelectedOverride?.invoke(type) ?: (type == selectedType)
+        ClockTile(
+            context = context,
+            type = type,
+            isSelected = isSelected,
+            previewScale = previewScale,
+            settingsKey = settingsKey,
+            onClick = { onSelect(type) },
+            modifier = Modifier.width(tileWidth).height(tileHeight),
+        )
     }
 }
 
@@ -468,6 +866,7 @@ private fun ClockTile(
     settingsKey: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    configureView: (AxClockView) -> Unit = {},
 ) {
     val colors = MaterialTheme.colorScheme
     val isDarkTheme = isSystemInDarkTheme()
@@ -485,37 +884,47 @@ private fun ClockTile(
         contentAlignment = Alignment.Center,
     ) {
         key(type, settingsKey) {
-            val clockView = remember {
-                val inflater = LayoutInflater.from(context)
-                val view = inflater.inflate(type.viewId, null) as AxClockView
-                (view as? BitmapDigitComposeClockView)?.let { bitmapView ->
-                    type.bitmapFaceStyle?.let { bitmapView.faceStyle = it }
-                }
-                view.setupPreview()
-                view.onRegionDarknessChanged(isDarkTheme)
-                view
-            }
-
-            DisposableEffect(Unit) {
-                onDispose { (clockView.parent as? ViewGroup)?.removeView(clockView) }
-            }
-
-            AndroidView(
-                factory = {
-                    (clockView.parent as? ViewGroup)?.removeView(clockView)
-                    clockView.layoutParams =
-                        FrameLayout.LayoutParams(
-                            LayoutParams.MATCH_PARENT,
-                            LayoutParams.WRAP_CONTENT,
-                        )
-                    FrameLayout(it).apply {
-                        layoutParams =
-                            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-                        addView(clockView)
+            if (type == AxClockType.NONE) {
+                Text(
+                    text = stringResource(R.string.none),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = colors.onSurfaceVariant,
+                )
+            } else {
+                val clockView = remember {
+                    val inflater = LayoutInflater.from(context)
+                    val view = inflater.inflate(type.viewId, null) as AxClockView
+                    (view as? BitmapDigitComposeClockView)?.let { bitmapView ->
+                        type.bitmapFaceStyle?.let { bitmapView.faceStyle = it }
                     }
-                },
-                modifier = Modifier.fillMaxWidth().wrapContentHeight().scaledLayout(previewScale),
-            )
+                    configureView(view)
+                    view.setupPreview()
+                    view.onRegionDarknessChanged(isDarkTheme)
+                    view
+                }
+
+                DisposableEffect(Unit) {
+                    onDispose { (clockView.parent as? ViewGroup)?.removeView(clockView) }
+                }
+
+                AndroidView(
+                    factory = {
+                        (clockView.parent as? ViewGroup)?.removeView(clockView)
+                        clockView.layoutParams =
+                            FrameLayout.LayoutParams(
+                                LayoutParams.MATCH_PARENT,
+                                LayoutParams.WRAP_CONTENT,
+                            )
+                        FrameLayout(it).apply {
+                            layoutParams =
+                                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                            addView(clockView)
+                        }
+                    },
+                    modifier =
+                        Modifier.fillMaxWidth().wrapContentHeight().scaledLayout(previewScale),
+                )
+            }
         }
     }
 }
@@ -524,6 +933,30 @@ private class OptionItem(
     val value: String,
     val label: String,
     val icon: @Composable (Color) -> Unit,
+)
+
+private val OPLUS_CLASSIC_FACE_OPTIONS = listOf(
+    ClockSettingsRepository.OPLUS_CLASSIC_FACE_DEFAULT,
+    ClockSettingsRepository.OPLUS_CLASSIC_FACE_STACKED,
+)
+
+private val OPLUS_BIG_FACE_OPTIONS = listOf(
+    ClockSettingsRepository.OPLUS_BIG_FACE_DEFAULT,
+    ClockSettingsRepository.OPLUS_BIG_FACE_WIDE,
+)
+
+private val OPLUS_GRAFFITI_FACE_OPTIONS = listOf(
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_SANS,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_DEFAULT,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_BRIGHT,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_CUTE,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_DIGIT04,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_GAME,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_KEEP,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_WENDAO,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_SHENQI,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_GALADA,
+    ClockSettingsRepository.OPLUS_GRAFFITI_FACE_MODAK,
 )
 
 @Composable
@@ -553,20 +986,111 @@ private fun OptionRow(options: List<OptionItem>, selected: String, onSelect: (St
     }
 }
 
-private data class ClockColorOption(val value: String, val label: String, val color: Color?)
+@Composable
+private fun InfoDisplayRow(options: List<OptionItem>, selected: String, onSelect: (String) -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    val scrollState = rememberScrollState()
+    val density = LocalDensity.current
+    val selectedIndex = options.indexOfFirst { it.value == selected }.coerceAtLeast(0)
+
+    LaunchedEffect(selectedIndex) {
+        val itemWidth = with(density) { 112.dp.toPx() }
+        val spacing = with(density) { 10.dp.toPx() }
+        scrollState.animateScrollTo((selectedIndex * (itemWidth + spacing)).toInt())
+    }
+
+    Row(
+        modifier = Modifier.horizontalScroll(scrollState),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        options.forEach { option ->
+            val isSelected = option.value == selected
+            val contentColor = if (isSelected) colors.primary else colors.onSurfaceVariant
+
+            InfoOptionTile(
+                option = option,
+                selected = isSelected,
+                containerColor = colors.surfaceBright,
+                contentColor = contentColor,
+                onClick = { onSelect(option.value) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun InfoSourceRow(options: List<OptionItem>, selected: Set<String>, onToggle: (String) -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    val scrollState = rememberScrollState()
+
+    Row(
+        modifier = Modifier.horizontalScroll(scrollState),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        options.forEach { option ->
+            val isSelected = option.value in selected
+            val containerColor = if (isSelected) colors.secondaryContainer else colors.surfaceBright
+            val contentColor = if (isSelected) colors.onSecondaryContainer else colors.onSurfaceVariant
+
+            InfoOptionTile(
+                option = option,
+                selected = isSelected,
+                containerColor = containerColor,
+                contentColor = contentColor,
+                onClick = { onToggle(option.value) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun InfoOptionTile(
+    option: OptionItem,
+    selected: Boolean,
+    containerColor: Color,
+    contentColor: Color,
+    onClick: () -> Unit,
+) {
+    val borderColor = if (selected) MaterialTheme.colorScheme.primary else Color.Transparent
+
+    Column(
+        modifier =
+            Modifier.width(112.dp)
+                .height(72.dp)
+                .clip(RoundedCornerShape(TileCorner))
+                .background(containerColor)
+                .border(TileBorder, borderColor, RoundedCornerShape(TileCorner))
+                .clickable { onClick() }
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        option.icon(contentColor)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = option.label,
+            style = MaterialTheme.typography.labelMedium,
+            color = contentColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+private data class ClockColorOption(val value: String, val color: Color?)
 
 private val CLOCK_COLOR_PRESETS =
     listOf(
-        ClockColorOption(ClockSettingsRepository.COLOR_AUTO, "Auto", null),
-        ClockColorOption("#FFFFFFFF", "White", Color.White),
-        ClockColorOption("#FF000000", "Black", Color.Black),
-        ClockColorOption("#FFFF453A", "Red", Color(0xFFFF453A)),
-        ClockColorOption("#FFFF9F0A", "Orange", Color(0xFFFF9F0A)),
-        ClockColorOption("#FFFFD60A", "Yellow", Color(0xFFFFD60A)),
-        ClockColorOption("#FF34C759", "Green", Color(0xFF34C759)),
-        ClockColorOption("#FF0A84FF", "Blue", Color(0xFF0A84FF)),
-        ClockColorOption("#FF5856D6", "Indigo", Color(0xFF5856D6)),
-        ClockColorOption("#FFBF5AF2", "Purple", Color(0xFFBF5AF2)),
+        ClockColorOption(ClockSettingsRepository.COLOR_AUTO, null),
+        ClockColorOption("#FFFFFFFF", Color.White),
+        ClockColorOption("#FF000000", Color.Black),
+        ClockColorOption("#FFFF453A", Color(0xFFFF453A)),
+        ClockColorOption("#FFFF9F0A", Color(0xFFFF9F0A)),
+        ClockColorOption("#FFFFD60A", Color(0xFFFFD60A)),
+        ClockColorOption("#FF34C759", Color(0xFF34C759)),
+        ClockColorOption("#FF0A84FF", Color(0xFF0A84FF)),
+        ClockColorOption("#FF5856D6", Color(0xFF5856D6)),
+        ClockColorOption("#FFBF5AF2", Color(0xFFBF5AF2)),
     )
 
 @Composable
@@ -692,56 +1216,139 @@ private fun OptionIcon(tint: Color, draw: DrawScope.(Color) -> Unit) {
 }
 
 @Composable
-private fun SizeDefaultIcon(tint: Color) {
+private fun InfoAutoIcon(tint: Color) {
     OptionIcon(tint = tint) { color ->
-        val sw = 2.5f.dp.toPx()
+        val sw = 2.2f.dp.toPx()
         val cx = size.width / 2f
-        val inset = 5.dp.toPx()
-        val maxW = size.width - inset * 2
-        val gap = 4.dp.toPx()
-        val startY = (size.height - sw * 2 - gap) / 2f
-
-        drawLine(
-            color,
-            Offset(cx - maxW * 0.3f, startY + sw / 2f),
-            Offset(cx + maxW * 0.3f, startY + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-        drawLine(
-            color,
-            Offset(cx - maxW * 0.22f, startY + sw + gap + sw / 2f),
-            Offset(cx + maxW * 0.22f, startY + sw + gap + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
+        val ys = listOf(size.height * 0.28f, size.height * 0.5f, size.height * 0.72f)
+        ys.forEachIndexed { index, y ->
+            val width = size.width * (0.56f - index * 0.08f)
+            drawLine(color.copy(alpha = 1f - index * 0.18f), Offset(cx - width / 2f, y), Offset(cx + width / 2f, y), sw, StrokeCap.Round)
+        }
     }
 }
 
 @Composable
-private fun SizeLargeIcon(tint: Color) {
+private fun InfoDateIcon(tint: Color) {
     OptionIcon(tint = tint) { color ->
-        val sw = 3.5f.dp.toPx()
-        val cx = size.width / 2f
-        val inset = 3.dp.toPx()
-        val maxW = size.width - inset * 2
-        val gap = 4.dp.toPx()
-        val startY = (size.height - sw * 2 - gap) / 2f
+        val sw = 2.dp.toPx()
+        val left = 6.dp.toPx()
+        val right = size.width - left
+        val top = 7.dp.toPx()
+        val bottom = size.height - 5.dp.toPx()
+        drawLine(color, Offset(left, top), Offset(right, top), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, bottom), Offset(right, bottom), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, top), Offset(left, bottom), sw, StrokeCap.Round)
+        drawLine(color, Offset(right, top), Offset(right, bottom), sw, StrokeCap.Round)
+        drawLine(color.copy(alpha = 0.65f), Offset(left + 4.dp.toPx(), size.height * 0.52f), Offset(right - 4.dp.toPx(), size.height * 0.52f), sw, StrokeCap.Round)
+    }
+}
 
-        drawLine(
-            color,
-            Offset(cx - maxW * 0.42f, startY + sw / 2f),
-            Offset(cx + maxW * 0.42f, startY + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-        drawLine(
-            color,
-            Offset(cx - maxW * 0.32f, startY + sw + gap + sw / 2f),
-            Offset(cx + maxW * 0.32f, startY + sw + gap + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
+@Composable
+private fun InfoOffIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.4f.dp.toPx()
+        val left = 7.dp.toPx()
+        val right = size.width - left
+        val y1 = size.height * 0.38f
+        val y2 = size.height * 0.62f
+        drawLine(color.copy(alpha = 0.45f), Offset(left, y1), Offset(right, y1), sw, StrokeCap.Round)
+        drawLine(color.copy(alpha = 0.45f), Offset(left + 3.dp.toPx(), y2), Offset(right - 3.dp.toPx(), y2), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, size.height - 6.dp.toPx()), Offset(right, 6.dp.toPx()), sw, StrokeCap.Round)
+    }
+}
+
+@Composable
+private fun DualToneOffIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 3.dp.toPx()
+        val left = 5.dp.toPx()
+        val right = size.width - left
+        val top = size.height * 0.38f
+        val bottom = size.height * 0.62f
+        drawLine(color, Offset(left, top), Offset(right, top), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, bottom), Offset(right, bottom), sw, StrokeCap.Round)
+    }
+}
+
+@Composable
+private fun DualToneOnIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 3.dp.toPx()
+        val left = 5.dp.toPx()
+        val right = size.width - left
+        val top = size.height * 0.38f
+        val bottom = size.height * 0.62f
+        drawLine(color, Offset(left, top), Offset(right, top), sw, StrokeCap.Round)
+        drawLine(color.copy(alpha = 0.48f), Offset(left, bottom), Offset(right, bottom), sw, StrokeCap.Round)
+    }
+}
+
+@Composable
+private fun InfoMediaIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.2f.dp.toPx()
+        val stemX = size.width * 0.58f
+        val stemTop = 6.dp.toPx()
+        val stemBottom = size.height * 0.62f
+        drawLine(color, Offset(stemX, stemTop), Offset(stemX, stemBottom), sw, StrokeCap.Round)
+        drawLine(color, Offset(stemX, stemTop), Offset(size.width * 0.75f, stemTop + 3.dp.toPx()), sw, StrokeCap.Round)
+        drawCircle(color, radius = 4.dp.toPx(), center = Offset(size.width * 0.42f, size.height * 0.72f))
+        drawLine(color, Offset(stemX, stemBottom), Offset(size.width * 0.42f, size.height * 0.72f), sw, StrokeCap.Round)
+    }
+}
+
+@Composable
+private fun InfoSmartspaceIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.dp.toPx()
+        val cx = size.width / 2f
+        val cy = size.height / 2f
+        drawLine(color, Offset(cx, 5.dp.toPx()), Offset(cx, size.height - 5.dp.toPx()), sw, StrokeCap.Round)
+        drawLine(color, Offset(5.dp.toPx(), cy), Offset(size.width - 5.dp.toPx(), cy), sw, StrokeCap.Round)
+        drawLine(color.copy(alpha = 0.62f), Offset(8.dp.toPx(), 8.dp.toPx()), Offset(size.width - 8.dp.toPx(), size.height - 8.dp.toPx()), sw, StrokeCap.Round)
+        drawLine(color.copy(alpha = 0.62f), Offset(8.dp.toPx(), size.height - 8.dp.toPx()), Offset(size.width - 8.dp.toPx(), 8.dp.toPx()), sw, StrokeCap.Round)
+    }
+}
+
+@Composable
+private fun InfoAlarmIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.dp.toPx()
+        val center = Offset(size.width / 2f, size.height * 0.56f)
+        drawCircle(color, radius = 8.dp.toPx(), center = center, style = Stroke(sw))
+        drawLine(color, center, Offset(center.x, center.y - 5.dp.toPx()), sw, StrokeCap.Round)
+        drawLine(color, center, Offset(center.x + 4.dp.toPx(), center.y + 2.dp.toPx()), sw, StrokeCap.Round)
+        drawLine(color, Offset(8.dp.toPx(), 6.dp.toPx()), Offset(4.dp.toPx(), 10.dp.toPx()), sw, StrokeCap.Round)
+        drawLine(color, Offset(size.width - 8.dp.toPx(), 6.dp.toPx()), Offset(size.width - 4.dp.toPx(), 10.dp.toPx()), sw, StrokeCap.Round)
+    }
+}
+
+@Composable
+private fun InfoCalendarIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.dp.toPx()
+        val left = 5.dp.toPx()
+        val right = size.width - left
+        val top = 7.dp.toPx()
+        val bottom = size.height - 5.dp.toPx()
+        drawLine(color, Offset(left, top), Offset(right, top), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, bottom), Offset(right, bottom), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, top), Offset(left, bottom), sw, StrokeCap.Round)
+        drawLine(color, Offset(right, top), Offset(right, bottom), sw, StrokeCap.Round)
+        drawLine(color, Offset(left, top + 6.dp.toPx()), Offset(right, top + 6.dp.toPx()), sw, StrokeCap.Round)
+        drawCircle(color, radius = 1.8f.dp.toPx(), center = Offset(size.width * 0.38f, size.height * 0.62f))
+        drawCircle(color, radius = 1.8f.dp.toPx(), center = Offset(size.width * 0.62f, size.height * 0.62f))
+    }
+}
+
+@Composable
+private fun InfoWeatherIcon(tint: Color) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.2f.dp.toPx()
+        drawCircle(color.copy(alpha = 0.72f), radius = 4.5f.dp.toPx(), center = Offset(size.width * 0.68f, size.height * 0.32f))
+        drawArc(color, startAngle = 200f, sweepAngle = 250f, useCenter = false, topLeft = Offset(6.dp.toPx(), 10.dp.toPx()), size = Size(16.dp.toPx(), 12.dp.toPx()), style = Stroke(sw, cap = StrokeCap.Round))
+        drawLine(color, Offset(7.dp.toPx(), size.height * 0.68f), Offset(size.width - 6.dp.toPx(), size.height * 0.68f), sw, StrokeCap.Round)
     }
 }
 
@@ -821,6 +1428,46 @@ private fun AlignCenterIcon(tint: Color) {
             color,
             Offset(cx - w2 / 2, startY + sw + gap + sw / 2f),
             Offset(cx + w2 / 2, startY + sw + gap + sw / 2f),
+            sw,
+            StrokeCap.Round,
+        )
+    }
+}
+
+@Composable
+private fun GraffitiAngleLeftIcon(tint: Color) {
+    GraffitiAngleIcon(tint, -1f)
+}
+
+@Composable
+private fun GraffitiAngleCenterIcon(tint: Color) {
+    GraffitiAngleIcon(tint, 0f)
+}
+
+@Composable
+private fun GraffitiAngleRightIcon(tint: Color) {
+    GraffitiAngleIcon(tint, 1f)
+}
+
+@Composable
+private fun GraffitiAngleIcon(tint: Color, direction: Float) {
+    OptionIcon(tint = tint) { color ->
+        val sw = 2.5f.dp.toPx()
+        val cx = size.width / 2f
+        val cy = size.height / 2f
+        val half = 9.dp.toPx()
+        val tilt = direction * 5.dp.toPx()
+        drawLine(
+            color.copy(alpha = 0.42f),
+            Offset(cx - half, cy - 6.dp.toPx() + tilt),
+            Offset(cx + half, cy - 6.dp.toPx() - tilt),
+            sw,
+            StrokeCap.Round,
+        )
+        drawLine(
+            color,
+            Offset(cx - half * 0.7f, cy + 3.dp.toPx() + tilt * 0.7f),
+            Offset(cx + half * 0.7f, cy + 3.dp.toPx() - tilt * 0.7f),
             sw,
             StrokeCap.Round,
         )
@@ -979,15 +1626,41 @@ private fun DateBelowIcon(tint: Color) {
 }
 
 private fun readCurrentClockId(context: Context): String {
+    return normalizeClockId(context, readRawClockId(context))
+}
+
+private fun readRawClockId(context: Context): String {
     return try {
         val json =
             Settings.Secure.getString(
                 context.contentResolver,
                 ClockSettingsRepository.SETTING_CLOCK_FACE,
             )
-        if (!json.isNullOrEmpty()) JSONObject(json).optString("clockId", "DEFAULT") else "DEFAULT"
+        val clockId = if (!json.isNullOrEmpty()) {
+            JSONObject(json).optString("clockId", "DEFAULT")
+        } else {
+            "DEFAULT"
+        }
+        clockId
     } catch (_: Exception) {
         "DEFAULT"
+    }
+}
+
+private fun normalizeClockId(context: Context, clockId: String): String {
+    val oplusClassic = context.resources.getString(AxClockType.OPLUS_CLASSIC.clockId)
+    val oplusBig = context.resources.getString(AxClockType.OPLUS_BIG.clockId)
+    return when (clockId) {
+        "OPLUS_CLASSIC_STACKED",
+        "OPLUS_CLASSIC_START_VERTICAL",
+        "OPLUS_CLASSIC_END_VERTICAL",
+        "OPLUS_CLASSIC_DUAL_VERTICAL" -> oplusClassic
+        "OPLUS_BIG_CENTER_VERTICAL",
+        "OPLUS_BIG_VERTICAL",
+        "OPLUS_BIG_WIDE",
+        "OPLUS_BIG_START_HORIZONTAL",
+        "OPLUS_BIG_END_HORIZONTAL" -> oplusBig
+        else -> clockId
     }
 }
 
@@ -996,11 +1669,6 @@ private fun readAlignment(context: Context): String {
         context.contentResolver,
         ClockSettingsRepository.SETTING_ALIGNMENT,
     ) ?: ClockSettingsRepository.ALIGNMENT_CENTER
-}
-
-private fun readSize(context: Context): String {
-    return Settings.Secure.getString(context.contentResolver, ClockSettingsRepository.SETTING_SIZE)
-        ?: ClockSettingsRepository.SIZE_DEFAULT
 }
 
 private fun readDatePosition(context: Context): String {
@@ -1020,3 +1688,107 @@ private fun readClockColor(context: Context): String {
         ClockSettingsRepository.SETTING_CLOCK_COLOR,
     ) ?: ClockSettingsRepository.COLOR_AUTO
 }
+
+private fun readOplusClassicFace(context: Context): String {
+    val selected = when (
+        Settings.Secure.getString(
+            context.contentResolver,
+            ClockSettingsRepository.SETTING_OPLUS_CLASSIC_FACE,
+        )
+    ) {
+        ClockSettingsRepository.OPLUS_CLASSIC_FACE_STACKED ->
+            ClockSettingsRepository.OPLUS_CLASSIC_FACE_STACKED
+        else -> ClockSettingsRepository.OPLUS_CLASSIC_FACE_DEFAULT
+    }
+    if (selected != ClockSettingsRepository.OPLUS_CLASSIC_FACE_DEFAULT) return selected
+    return when (readRawClockId(context)) {
+        "OPLUS_CLASSIC_STACKED",
+        "OPLUS_CLASSIC_START_VERTICAL",
+        "OPLUS_CLASSIC_END_VERTICAL",
+        "OPLUS_CLASSIC_DUAL_VERTICAL" ->
+            ClockSettingsRepository.OPLUS_CLASSIC_FACE_STACKED
+        else -> selected
+    }
+}
+
+private fun readOplusBigFace(context: Context): String {
+    val selected = when (
+        Settings.Secure.getString(
+            context.contentResolver,
+            ClockSettingsRepository.SETTING_OPLUS_BIG_FACE,
+        )
+    ) {
+        ClockSettingsRepository.OPLUS_BIG_FACE_STRETCH ->
+            ClockSettingsRepository.OPLUS_BIG_FACE_WIDE
+        ClockSettingsRepository.OPLUS_BIG_FACE_WIDE ->
+            ClockSettingsRepository.OPLUS_BIG_FACE_WIDE
+        else -> ClockSettingsRepository.OPLUS_BIG_FACE_DEFAULT
+    }
+    if (selected != ClockSettingsRepository.OPLUS_BIG_FACE_DEFAULT) return selected
+    return when (readRawClockId(context)) {
+        "OPLUS_BIG_VERTICAL",
+        "OPLUS_BIG_START_HORIZONTAL",
+        "OPLUS_BIG_END_HORIZONTAL" ->
+            ClockSettingsRepository.OPLUS_BIG_FACE_WIDE
+        "OPLUS_BIG_WIDE" ->
+            ClockSettingsRepository.OPLUS_BIG_FACE_WIDE
+        else -> selected
+    }
+}
+
+private fun readOplusBigDualTone(context: Context): Boolean {
+    return Settings.Secure.getInt(
+        context.contentResolver,
+        ClockSettingsRepository.SETTING_OPLUS_BIG_DUAL_TONE,
+        0,
+    ) == 1
+}
+
+private fun readOplusGraffitiFace(context: Context): String {
+    return when (
+        Settings.Secure.getString(
+            context.contentResolver,
+            ClockSettingsRepository.SETTING_OPLUS_GRAFFITI_FACE,
+        )
+    ) {
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_SANS ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_SANS
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_BRIGHT ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_BRIGHT
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_CUTE ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_CUTE
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_DIGIT04 ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_DIGIT04
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_GAME ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_GAME
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_KEEP ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_KEEP
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_WENDAO ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_WENDAO
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_SHENQI ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_SHENQI
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_GALADA ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_GALADA
+        ClockSettingsRepository.OPLUS_GRAFFITI_FACE_MODAK ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_FACE_MODAK
+        else -> ClockSettingsRepository.OPLUS_GRAFFITI_FACE_DEFAULT
+    }
+}
+
+private fun readOplusGraffitiAngle(context: Context): String {
+    return when (
+        Settings.Secure.getString(
+            context.contentResolver,
+            ClockSettingsRepository.SETTING_OPLUS_GRAFFITI_ANGLE,
+        )
+    ) {
+        ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_LEFT ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_LEFT
+        ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_RIGHT ->
+            ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_RIGHT
+        else -> ClockSettingsRepository.OPLUS_GRAFFITI_ANGLE_CENTER
+    }
+}
+
+private val AxClockType.isOplusClock: Boolean
+    get() = name.startsWith("OPLUS_")

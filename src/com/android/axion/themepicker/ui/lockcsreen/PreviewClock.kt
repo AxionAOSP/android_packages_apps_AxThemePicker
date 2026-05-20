@@ -18,6 +18,7 @@ package com.android.axion.themepicker.ui.lockscreen
 
 import android.content.Context
 import android.database.ContentObserver
+import android.graphics.RectF
 import android.icu.util.TimeZone as IcuTimeZone
 import android.os.Handler
 import android.os.Looper
@@ -41,6 +42,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.android.axion.themepicker.utils.math.scaleRatio
 import com.android.systemui.plugins.keyguard.ui.clocks.*
 import com.android.systemui.shared.clocks.AxClockProvider
+import com.android.systemui.shared.clocks.ClockEditScaleGeometry
 import com.android.systemui.shared.clocks.ClockSettingsRepository
 import com.android.systemui.shared.clocks.view.AxClockView
 import java.util.Calendar
@@ -76,7 +78,12 @@ val Context.previewScale: Float
         return adjustedMultiplier.coerceIn(0.22f, maxScale)
     }
 
-fun Modifier.scaledLayout(scale: Float, overrideWidth: Dp = Dp.Unspecified): Modifier =
+fun Modifier.scaledLayout(
+    scale: Float,
+    overrideWidth: Dp = Dp.Unspecified,
+    alignment: String = ClockSettingsRepository.ALIGNMENT_CENTER,
+    verticalAnchor: Float = 0.5f,
+): Modifier =
     this.layout { measurable, constraints ->
         val expandedMaxW =
             if (overrideWidth != Dp.Unspecified) {
@@ -96,23 +103,53 @@ fun Modifier.scaledLayout(scale: Float, overrideWidth: Dp = Dp.Unspecified): Mod
         val placeable = measurable.measure(childConstraints)
         val scaledWidth = (placeable.width * scale).roundToInt()
         val scaledHeight = (placeable.height * scale).roundToInt()
+        val horizontalOffset =
+            when (alignment) {
+                ClockSettingsRepository.ALIGNMENT_LEFT -> 0
+                ClockSettingsRepository.ALIGNMENT_RIGHT -> scaledWidth - placeable.width
+                else -> (scaledWidth - placeable.width) / 2
+            }
+        val pivotX =
+            when (alignment) {
+                ClockSettingsRepository.ALIGNMENT_LEFT -> 0f
+                ClockSettingsRepository.ALIGNMENT_RIGHT -> 1f
+                else -> 0.5f
+            }
+        val verticalOffset = ((scaledHeight - placeable.height) * verticalAnchor).roundToInt()
         layout(scaledWidth, scaledHeight) {
             placeable.placeWithLayer(
-                (scaledWidth - placeable.width) / 2,
-                (scaledHeight - placeable.height) / 2,
+                horizontalOffset,
+                verticalOffset,
             ) {
                 scaleX = scale
                 scaleY = scale
-                transformOrigin = TransformOrigin.Center
+                transformOrigin = TransformOrigin(pivotX, verticalAnchor)
             }
         }
     }
 
 @Composable
-fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
+fun PreviewClock(
+    isPreview: Boolean,
+    isRegionDark: Boolean = true,
+    depthSourceBoundsProvider: (() -> RectF?)? = null,
+    verticalPadding: Dp? = null,
+    fitClockBounds: Boolean = false,
+    sizeScaleOverride: Float? = null,
+    depthEffectVisible: Boolean = true,
+    onEditGeometryChanged: ((ClockEditScaleGeometry) -> Unit)? = null,
+) {
     val context = LocalContext.current
     val scale = if (isPreview) context.previewScale else context.scaleRatio
-    var settingsVersion by remember { mutableIntStateOf(0) }
+    val repositoryAlignment by ClockSettingsRepository.resolvedClockAlignment.collectAsState()
+    val repositorySizeScale by ClockSettingsRepository.sizeScale.collectAsState()
+    val editGeometryVersion by ClockSettingsRepository.clockEditGeometryVersion.collectAsState()
+    val currentOnEditGeometryChanged by rememberUpdatedState(onEditGeometryChanged)
+    var clockFaceVersion by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(context) {
+        ClockSettingsRepository.init(context)
+    }
 
     val clockProvider = remember {
         AxClockProvider(
@@ -128,23 +165,17 @@ fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
         val observer =
             object : ContentObserver(Handler(Looper.getMainLooper())) {
                 override fun onChange(selfChange: Boolean) {
-                    settingsVersion++
+                    clockFaceVersion++
                 }
             }
-        val uris =
-            listOf(
-                ClockSettingsRepository.clockFaceUri,
-                ClockSettingsRepository.alignmentUri,
-                ClockSettingsRepository.sizeUri,
-            )
-        uris.forEach { resolver.registerContentObserver(it, false, observer) }
+        resolver.registerContentObserver(ClockSettingsRepository.clockFaceUri, false, observer)
         onDispose { resolver.unregisterContentObserver(observer) }
     }
 
     var currentClockId by remember { mutableStateOf<String?>(null) }
     var currentTime by remember { mutableStateOf(Calendar.getInstance().time) }
 
-    LaunchedEffect(settingsVersion) {
+    LaunchedEffect(clockFaceVersion) {
         withContext(Dispatchers.IO) {
             try {
                 val json =
@@ -176,15 +207,19 @@ fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
     val clockId = currentClockId ?: return
 
     val controller =
-        remember(clockId, settingsVersion) {
+        remember(clockId) {
             clockProvider.createClock(context, ClockSettings(clockId = clockId)).apply {
                 initialize(isDarkTheme = true, dozeFraction = 0f, foldFraction = 0f)
                 (smallClock.view as? AxClockView)?.apply {
                     depthEffectEnabled = true
+                    this.depthSourceBoundsProvider = depthSourceBoundsProvider
+                    onDepthEffectVisibilityChanged(depthEffectVisible)
                     touchEnabled = false
                 }
                 (largeClock.view as? AxClockView)?.apply {
                     depthEffectEnabled = true
+                    this.depthSourceBoundsProvider = depthSourceBoundsProvider
+                    onDepthEffectVisibilityChanged(depthEffectVisible)
                     touchEnabled = false
                 }
                 smallClock.events.onRegionDarknessChanged(isRegionDark)
@@ -223,18 +258,53 @@ fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
 
     val configuration = LocalConfiguration.current
     val clockWidth = configuration.screenWidthDp.dp
+    val availableClockWidthDp = configuration.screenWidthDp / scale
+    val clockVerticalPadding = verticalPadding ?: 12.dp * scale
+    val editGeometry =
+        remember(
+            controller,
+            availableClockWidthDp,
+            repositorySizeScale,
+            sizeScaleOverride,
+            editGeometryVersion,
+        ) {
+            val requestedScale = sizeScaleOverride ?: repositorySizeScale
+            (controller.smallClock.view as? AxClockView)?.getClockEditScaleGeometry(
+                availableClockWidthDp,
+                requestedScale,
+            ) ?: ClockEditScaleGeometry.default(
+                availableWidthDp = availableClockWidthDp,
+                requestedScale = requestedScale,
+                scaleRange = ClockSettingsRepository.sizeScaleRange,
+            )
+        }
+
+    LaunchedEffect(editGeometry) {
+        currentOnEditGeometryChanged?.invoke(editGeometry)
+    }
 
     Column(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
         Box(
             modifier =
-                Modifier.fillMaxWidth().wrapContentHeight().padding(vertical = 12.dp * scale),
+                Modifier.fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(vertical = clockVerticalPadding),
             contentAlignment = Alignment.Center,
         ) {
-            key(clockId, settingsVersion) {
+            key(clockId) {
                 SystemUIClockView(
                     controller = controller,
                     modifier =
-                        Modifier.scaledLayout(scale, if (isPreview) clockWidth else Dp.Unspecified),
+                        Modifier.scaledLayout(
+                            scale = scale,
+                            overrideWidth = if (isPreview) clockWidth else Dp.Unspecified,
+                            alignment = repositoryAlignment,
+                            verticalAnchor = 0f,
+                    ),
+                    depthSourceBoundsProvider = depthSourceBoundsProvider,
+                    fitClockBounds = fitClockBounds,
+                    sizeScaleOverride = sizeScaleOverride,
+                    depthEffectVisible = depthEffectVisible,
                 )
             }
         }
@@ -242,21 +312,95 @@ fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
 }
 
 @Composable
-fun SystemUIClockView(controller: ClockController, modifier: Modifier = Modifier) {
+fun SystemUIClockView(
+    controller: ClockController,
+    modifier: Modifier = Modifier,
+    depthSourceBoundsProvider: (() -> RectF?)? = null,
+    fitClockBounds: Boolean = false,
+    sizeScaleOverride: Float? = null,
+    depthEffectVisible: Boolean = true,
+) {
     AndroidView(
         factory = { context ->
             val clockView = controller.smallClock.view
             (clockView.parent as? ViewGroup)?.removeView(clockView)
+            (clockView as? AxClockView)?.apply {
+                this.depthSourceBoundsProvider = depthSourceBoundsProvider
+                previewSizeScaleOverride = sizeScaleOverride
+                onDepthEffectVisibilityChanged(depthEffectVisible)
+            }
 
             clockView.layoutParams =
                 FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
-            FrameLayout(context).apply {
+            ClockPreviewFrameLayout(context).apply {
                 layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                clipChildren = false
+                clipToPadding = false
+                this.fitClockBounds = fitClockBounds
                 addView(clockView)
             }
         },
         modifier = modifier.fillMaxWidth().wrapContentHeight(),
-        update = { controller.smallClock.events.onTimeTick() },
+        update = { frame ->
+            frame.fitClockBounds = fitClockBounds
+            (controller.smallClock.view as? AxClockView)?.apply {
+                this.depthSourceBoundsProvider = depthSourceBoundsProvider
+                previewSizeScaleOverride = sizeScaleOverride
+                onDepthEffectVisibilityChanged(depthEffectVisible)
+            }
+            frame.requestLayout()
+        },
     )
+}
+
+private class ClockPreviewFrameLayout(context: Context) : FrameLayout(context) {
+    var fitClockBounds: Boolean = false
+        set(value) {
+            if (field == value) return
+            field = value
+            requestLayout()
+        }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val child = getChildAt(0)
+        if (!fitClockBounds || child !is AxClockView) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            return
+        }
+
+        val width = MeasureSpec.getSize(widthMeasureSpec)
+        val floorHeight = child.clockHeight
+        child.measure(
+            MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(floorHeight, MeasureSpec.EXACTLY),
+        )
+        val height = resolveTightHeight(
+            maxOf(child.measuredHeight, floorHeight),
+            heightMeasureSpec,
+        )
+        if (child.measuredHeight != height) {
+            child.measure(
+                MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY),
+            )
+        }
+        setMeasuredDimension(resolveSize(width, widthMeasureSpec), height)
+    }
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        if (!fitClockBounds) {
+            super.onLayout(changed, left, top, right, bottom)
+            return
+        }
+        val child = getChildAt(0) ?: return
+        child.layout(0, 0, right - left, bottom - top)
+    }
+
+    private fun resolveTightHeight(desiredHeight: Int, heightMeasureSpec: Int): Int {
+        val mode = MeasureSpec.getMode(heightMeasureSpec)
+        if (mode == MeasureSpec.UNSPECIFIED) return desiredHeight
+        val availableHeight = MeasureSpec.getSize(heightMeasureSpec)
+        return minOf(desiredHeight, availableHeight).coerceAtLeast(0)
+    }
 }

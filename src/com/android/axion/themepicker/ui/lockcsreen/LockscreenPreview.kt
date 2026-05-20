@@ -25,6 +25,7 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.database.ContentObserver
 import android.graphics.Bitmap
+import android.graphics.RectF
 import android.os.Handler
 import android.os.Looper
 import android.os.UserHandle
@@ -51,7 +52,8 @@ import com.android.axion.themepicker.ui.components.CommonBottomSheet
 import com.android.axion.themepicker.ui.lockscreen.widgets.*
 import com.android.axion.themepicker.utils.math.scaleRatio
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
-import com.android.axion.themepicker.utils.wallpaper.getForegroundBitmap
+import com.android.systemui.shared.clocks.ClockWidgetLayoutState
+import com.android.systemui.shared.clocks.ClockWidgetPlacement
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -68,7 +70,6 @@ fun LockscreenPreview(
 ) {
     val context = LocalContext.current
     val wallpaper = wallpaperBitmap ?: getCurrentWallpaperBitmap(context, false) ?: return
-    val foreground: Bitmap? = remember(wallpaper) { getForegroundBitmap(context) }
 
     val isRegionDark by
         produceState(true, wallpaper) {
@@ -88,6 +89,9 @@ fun LockscreenPreview(
     val dragDropState = remember { WidgetDragDropState() }
     val scale = if (isPreview) context.previewScale else context.scaleRatio
     val coroutineScope = rememberCoroutineScope()
+    var depthSourceBounds by remember { mutableStateOf<RectF?>(null) }
+    val currentDepthSourceBounds = depthSourceBounds
+    val depthSourceBoundsProvider = remember { { depthSourceBounds } }
 
     var affordanceSelections by remember { mutableStateOf<List<AffordanceSelection>>(emptyList()) }
     var affordanceList by remember { mutableStateOf<List<AffordanceInfo>>(emptyList()) }
@@ -261,7 +265,21 @@ fun LockscreenPreview(
 
     val wallpaperImageBitmap = remember(wallpaper) { wallpaper.asImageBitmap() }
 
-    Box(modifier = modifier) {
+    Box(
+        modifier =
+            modifier.onGloballyPositioned { coordinates ->
+                val bounds = coordinates.boundsInWindow()
+                if (
+                    currentDepthSourceBounds == null ||
+                        currentDepthSourceBounds.left != bounds.left ||
+                        currentDepthSourceBounds.top != bounds.top ||
+                        currentDepthSourceBounds.right != bounds.right ||
+                        currentDepthSourceBounds.bottom != bounds.bottom
+                ) {
+                    depthSourceBounds = RectF(bounds.left, bounds.top, bounds.right, bounds.bottom)
+                }
+            }
+    ) {
         Image(
             bitmap = wallpaperImageBitmap,
             contentDescription = null,
@@ -292,7 +310,7 @@ fun LockscreenPreview(
                     if (!isPreview) {
                         { showClockSheet = true }
                     } else null,
-                foregroundBitmap = foreground,
+                depthSourceBoundsProvider = depthSourceBoundsProvider,
             )
         } else {
             PortraitLayout(
@@ -318,7 +336,7 @@ fun LockscreenPreview(
                         { showClockSheet = true }
                     } else null,
                 onClockBottomMeasured = { clockBottomPx = it },
-                foregroundBitmap = foreground,
+                depthSourceBoundsProvider = depthSourceBoundsProvider,
             )
         }
 
@@ -430,56 +448,48 @@ private fun PortraitLayout(
     onEditWallpaper: (() -> Unit)? = null,
     onClockTapped: (() -> Unit)? = null,
     onClockBottomMeasured: ((Float) -> Unit)? = null,
-    foregroundBitmap: Bitmap? = null,
+    depthSourceBoundsProvider: (() -> RectF?)? = null,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(top = Dimens.ClockTopPadding * scale * 1.5f),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Box(
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
             modifier =
-                (if (onClockTapped != null) {
-                        Modifier.clickable { onClockTapped() }
-                    } else {
-                        Modifier
-                    })
-                    .onGloballyPositioned { coordinates ->
+                Modifier.fillMaxSize()
+                    .padding(top = Dimens.ClockTopPadding * scale * 1.5f)
+                    .padding(bottom = 96.dp * scale),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            val widgetLayoutState = remember(widgetItems) { widgetItems.toClockWidgetLayoutState() }
+            EditablePreviewClock(
+                isPreview = isPreview,
+                isRegionDark = isRegionDark,
+                editable = !isPreview,
+                depthSourceBoundsProvider = depthSourceBoundsProvider,
+                onClick = onClockTapped,
+                lockscreenWidgetLayoutState = widgetLayoutState,
+                modifier =
+                    Modifier.onGloballyPositioned { coordinates ->
                         val bottom =
                             coordinates.positionInRoot().y + coordinates.size.height.toFloat()
                         onClockBottomMeasured?.invoke(bottom)
-                    }
-        ) {
-            PreviewClock(isPreview, isRegionDark)
-
-            if (foregroundBitmap != null) {
-                Image(
-                    bitmap = foregroundBitmap.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.matchParentSize(),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-        }
-        if (!isPreview) Spacer(modifier = Modifier.height(Dimens.ClockSpacer * scale))
-        WidgetGrid(
-            isPreview = isPreview,
-            widgets = widgetItems,
-            onRemove = onRemoveWidget,
-            onPickWidget = onPickWidget,
-            onConfigure = onConfigureWidget,
-            onResizeWidget = onResizeWidget,
-            dragDropState = if (!isPreview) dragDropState else null,
-            onWidgetsMoved = onWidgetsMoved,
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        if (!isPreview) {
-            DummyNotifications(isPreview = false, scale = scale)
-            if (onEditWallpaper != null) {
-                Spacer(modifier = Modifier.height(8.dp * scale))
+                    },
+            )
+            if (!isPreview) Spacer(modifier = Modifier.height(Dimens.ClockSpacer * scale))
+            WidgetGrid(
+                isPreview = isPreview,
+                widgets = widgetItems,
+                onRemove = onRemoveWidget,
+                onPickWidget = onPickWidget,
+                onConfigure = onConfigureWidget,
+                onResizeWidget = onResizeWidget,
+                dragDropState = if (!isPreview) dragDropState else null,
+                onWidgetsMoved = onWidgetsMoved,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            if (!isPreview && onEditWallpaper != null) {
                 WallpaperPill(onClick = onEditWallpaper, scale = scale)
+                Spacer(modifier = Modifier.height(8.dp * scale))
             }
         }
-        Spacer(modifier = Modifier.height(8.dp * scale))
         AffordanceOverlay(
             isPreview = isPreview,
             scale = scale,
@@ -487,8 +497,8 @@ private fun PortraitLayout(
             affordances = affordanceList,
             activeSlot = activeAffordanceSlot,
             onSlotClicked = onAffordanceSlotClicked,
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp * scale),
         )
-        Spacer(modifier = Modifier.height(24.dp * scale))
     }
 }
 
@@ -511,7 +521,7 @@ private fun LandscapeLayout(
     onWidgetsMoved: ((List<GridWidgetItem>) -> Unit)?,
     onEditWallpaper: (() -> Unit)? = null,
     onClockTapped: (() -> Unit)? = null,
-    foregroundBitmap: Bitmap? = null,
+    depthSourceBoundsProvider: (() -> RectF?)? = null,
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -519,25 +529,15 @@ private fun LandscapeLayout(
                 Modifier.weight(1f).fillMaxHeight().padding(top = Dimens.ClockTopPadding * scale),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Box(
-                modifier =
-                    if (onClockTapped != null) {
-                        Modifier.clickable { onClockTapped() }
-                    } else {
-                        Modifier
-                    }
-            ) {
-                PreviewClock(isPreview, isRegionDark)
-
-                if (foregroundBitmap != null) {
-                    Image(
-                        bitmap = foregroundBitmap.asImageBitmap(),
-                        contentDescription = null,
-                        modifier = Modifier.matchParentSize(),
-                        contentScale = ContentScale.Crop,
-                    )
-                }
-            }
+            val widgetLayoutState = remember(widgetItems) { widgetItems.toClockWidgetLayoutState() }
+            EditablePreviewClock(
+                isPreview = isPreview,
+                isRegionDark = isRegionDark,
+                editable = !isPreview,
+                depthSourceBoundsProvider = depthSourceBoundsProvider,
+                onClick = onClockTapped,
+                lockscreenWidgetLayoutState = widgetLayoutState,
+            )
             if (!isPreview) Spacer(modifier = Modifier.height(Dimens.ClockSpacer * scale))
             WidgetGrid(
                 isPreview = isPreview,
@@ -577,6 +577,13 @@ private fun LandscapeLayout(
             }
         }
     }
+}
+
+private fun List<GridWidgetItem>.toClockWidgetLayoutState(): ClockWidgetLayoutState {
+    return ClockWidgetLayoutState(
+        enabled = isNotEmpty(),
+        placements = map { ClockWidgetPlacement(cellY = it.cellY, spanY = it.spanY) },
+    )
 }
 
 @Composable
