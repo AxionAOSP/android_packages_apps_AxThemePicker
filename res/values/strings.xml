@@ -157,19 +157,17 @@
     <string name="themed_icons_title">Icons</string>
     <string name="themed_icons_summary">Themed icons &amp; icon packs</string>
     <string name="themed_icons_card_title">Themed Icons</string>
-    <string name="themed_icons_description">Monochrome icons that adapt to your wallpaper colors</string>
+    <string name="themed_icons_description">Monochrome icons that adapt to your colors</string>
     <string name="themed_icons_style">Icon Style</string>
     <string name="themed_icons_neutral">Neutral</string>
     <string name="themed_icons_accent">Accent</string>
     <string name="themed_icon_size_title">Icon size</string>
     <string name="themed_icon_size_summary">Scale monochrome artwork inside themed icon backgrounds</string>
     <string name="themed_icon_size_percent">%d%%</string>
-    <string name="themed_icon_color_defaults_title">Color defaults</string>
-    <string name="themed_icon_color_defaults_summary">Former AxIcons and AOSP defaults for background and foreground</string>
     <string name="themed_icon_color_preset_axicons" translatable="false">AxIcons</string>
     <string name="themed_icon_color_preset_aosp" translatable="false">AOSP</string>
-    <string name="themed_icon_background_title">Background color</string>
-    <string name="themed_icon_foreground_title">Foreground color</string>
+    <string name="themed_icon_background_title">Background icon color</string>
+    <string name="themed_icon_foreground_title">Foreground icon color</string>
     <string name="icon_pack_title">Icon Pack</string>
     <string name="icon_pack_description">Third-party icon packs change the look of your app icons</string>
     <string name="icon_pack_system_default">System Default</string>

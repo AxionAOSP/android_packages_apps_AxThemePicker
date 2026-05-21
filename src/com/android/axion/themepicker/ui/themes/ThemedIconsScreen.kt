@@ -35,7 +35,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -53,11 +52,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -88,12 +89,13 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.android.axion.compose.color.ColorPickerDialog
-import com.android.axion.compose.color.ColorPickerPreset
 import com.android.axion.compose.scaffold.AxionScaffold
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.theme.LocalAdaptiveLayoutInfo
@@ -112,11 +114,15 @@ private const val SETTING_THEMED_ICON_PACK = "themed_icon_pack"
 private const val SETTING_THEMED_ICON_SCALE = "themed_icon_scale"
 private const val SETTING_THEMED_ICON_BACKGROUND = "themed_icon_background_color"
 private const val SETTING_THEMED_ICON_FOREGROUND = "themed_icon_foreground_color"
+private const val SETTING_THEMED_ICON_COLOR_PRESET = "themed_icon_color_preset"
 private const val SETTINGS_THEME_ENGINE_DATA = "theme_engine_data"
 private const val CATEGORY_ICON_PACK = "icon_pack"
 private const val DEFAULT_THEMED_ICON_SCALE = 72
 private const val MIN_THEMED_ICON_SCALE = 48
 private const val MAX_THEMED_ICON_SCALE = 100
+private const val COLOR_PRESET_AXICONS = "axicons"
+private const val COLOR_PRESET_AOSP = "aosp"
+private const val COLOR_PRESET_CUSTOM = "custom"
 
 private const val ACTION_THEMED_ICON = "app.lawnchair.icons.THEMED_ICON"
 
@@ -129,13 +135,34 @@ private data class IconPackInfo(
 
 private data class ThemedIconColorDefault(
     val label: String,
-    val background: Int,
-    val foreground: Int,
+    val preset: String,
+    val backgroundLight: Int,
+    val backgroundDark: Int,
+    val foregroundLight: Int,
+    val foregroundDark: Int,
 )
 
 private enum class ColorTarget {
     Background,
     Foreground,
+}
+
+private val ClockFacePaletteColors = listOf(
+    0xFFFFFFFF.toInt(),
+    0xFF000000.toInt(),
+    0xFFFF453A.toInt(),
+    0xFFFF9F0A.toInt(),
+    0xFFFFD60A.toInt(),
+    0xFF34C759.toInt(),
+    0xFF0A84FF.toInt(),
+    0xFF5856D6.toInt(),
+    0xFFBF5AF2.toInt(),
+)
+
+private fun resolveThemedIconColorPreset(preset: String?) = when (preset) {
+    COLOR_PRESET_AOSP -> COLOR_PRESET_AOSP
+    COLOR_PRESET_CUSTOM -> COLOR_PRESET_CUSTOM
+    else -> COLOR_PRESET_AXICONS
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -151,25 +178,39 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
         mutableStateOf(Settings.Secure.getInt(resolver, SETTING_THEMED_ICONS_ENABLED, 0) == 1)
     }
     val darkTheme = isSystemInDarkTheme()
-    val colorDefaults = remember(context, darkTheme) { themedIconColorDefaults(context, darkTheme) }
+    val colorDefaults = remember(context) { themedIconColorDefaults(context) }
     var iconScale by remember { mutableStateOf(readThemedIconScale(context)) }
-    var backgroundColor by remember(colorDefaults) {
+    var colorPreset by remember {
+        mutableStateOf(readThemedIconColorPreset(context, colorDefaults))
+    }
+    var customBackgroundColor by remember(colorDefaults) {
         mutableStateOf(
             readSecureInt(
                 context,
                 SETTING_THEMED_ICON_BACKGROUND,
-                colorDefaults.first().background,
+                colorDefaults.first().background(darkTheme),
             )
         )
     }
-    var foregroundColor by remember(colorDefaults) {
+    var customForegroundColor by remember(colorDefaults) {
         mutableStateOf(
             readSecureInt(
                 context,
                 SETTING_THEMED_ICON_FOREGROUND,
-                colorDefaults.first().foreground,
+                colorDefaults.first().foreground(darkTheme),
             )
         )
+    }
+    val resolvedColorPreset = resolveThemedIconColorPreset(colorPreset)
+    val backgroundColor = when (resolvedColorPreset) {
+        COLOR_PRESET_AOSP -> colorDefaults[1].background(darkTheme)
+        COLOR_PRESET_CUSTOM -> customBackgroundColor
+        else -> colorDefaults[0].background(darkTheme)
+    }
+    val foregroundColor = when (resolvedColorPreset) {
+        COLOR_PRESET_AOSP -> colorDefaults[1].foreground(darkTheme)
+        COLOR_PRESET_CUSTOM -> customForegroundColor
+        else -> colorDefaults[0].foreground(darkTheme)
     }
 
     fun updateIconScale(value: Int) {
@@ -178,14 +219,29 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
         Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_SCALE, coerced)
     }
 
+    fun updateColorPreset(value: String) {
+        colorPreset = value
+        Settings.Secure.putString(resolver, SETTING_THEMED_ICON_COLOR_PRESET, value)
+    }
+
     fun updateBackgroundColor(value: Int) {
-        backgroundColor = value
+        if (resolvedColorPreset != COLOR_PRESET_CUSTOM) {
+            customForegroundColor = foregroundColor
+            Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_FOREGROUND, foregroundColor)
+        }
+        customBackgroundColor = value
         Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_BACKGROUND, value)
+        updateColorPreset(COLOR_PRESET_CUSTOM)
     }
 
     fun updateForegroundColor(value: Int) {
-        foregroundColor = value
+        if (resolvedColorPreset != COLOR_PRESET_CUSTOM) {
+            customBackgroundColor = backgroundColor
+            Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_BACKGROUND, backgroundColor)
+        }
+        customForegroundColor = value
         Settings.Secure.putInt(resolver, SETTING_THEMED_ICON_FOREGROUND, value)
+        updateColorPreset(COLOR_PRESET_CUSTOM)
     }
 
     var iconPacks by remember { mutableStateOf<List<IconPackInfo>>(emptyList()) }
@@ -299,6 +355,7 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                     ThemedIconSettingsCard(
                         enabled = enabled,
                         iconScale = iconScale,
+                        colorPreset = resolvedColorPreset,
                         backgroundColor = backgroundColor,
                         foregroundColor = foregroundColor,
                         colorDefaults = colorDefaults,
@@ -311,6 +368,7 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                             )
                         },
                         onIconScaleChange = ::updateIconScale,
+                        onColorPresetChange = ::updateColorPreset,
                         onBackgroundColorChange = ::updateBackgroundColor,
                         onForegroundColorChange = ::updateForegroundColor,
                     )
@@ -360,6 +418,7 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                 ThemedIconSettingsCard(
                     enabled = enabled,
                     iconScale = iconScale,
+                    colorPreset = resolvedColorPreset,
                     backgroundColor = backgroundColor,
                     foregroundColor = foregroundColor,
                     colorDefaults = colorDefaults,
@@ -372,6 +431,7 @@ fun ThemedIconsScreen(mainScreenViewModel: MainScreenViewModel) {
                         )
                     },
                     onIconScaleChange = ::updateIconScale,
+                    onColorPresetChange = ::updateColorPreset,
                     onBackgroundColorChange = ::updateBackgroundColor,
                     onForegroundColorChange = ::updateForegroundColor,
                     modifier = Modifier.padding(horizontal = 16.dp * scale),
@@ -457,11 +517,13 @@ private fun ThemedIconPreviewLarge(
 private fun ThemedIconSettingsCard(
     enabled: Boolean,
     iconScale: Int,
+    colorPreset: String,
     backgroundColor: Int,
     foregroundColor: Int,
     colorDefaults: List<ThemedIconColorDefault>,
     onEnabledChange: (Boolean) -> Unit,
     onIconScaleChange: (Int) -> Unit,
+    onColorPresetChange: (String) -> Unit,
     onBackgroundColorChange: (Int) -> Unit,
     onForegroundColorChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -549,6 +611,7 @@ private fun ThemedIconSettingsCard(
                         value = iconScale.toFloat(),
                         onValueChange = { onIconScaleChange(it.roundToInt()) },
                         valueRange = scaleRange,
+                        steps = MAX_THEMED_ICON_SCALE - MIN_THEMED_ICON_SCALE - 1,
                         colors = SliderDefaults.colors(
                             thumbColor = colors.primary,
                             activeTrackColor = colors.primary,
@@ -558,30 +621,16 @@ private fun ThemedIconSettingsCard(
 
                     Spacer(modifier = Modifier.height(16.dp * scale))
 
-                    ThemedIconColorDefaultsRow(
+                    ThemedIconColorPalette(
                         colorDefaults = colorDefaults,
+                        colorPreset = colorPreset,
                         backgroundColor = backgroundColor,
                         foregroundColor = foregroundColor,
-                        onSelect = { preset ->
-                            onBackgroundColorChange(preset.background)
-                            onForegroundColorChange(preset.foreground)
-                        },
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp * scale))
-
-                    ThemedIconColorRow(
-                        title = stringResource(R.string.themed_icon_background_title),
-                        color = backgroundColor,
-                        onClick = { colorTarget = ColorTarget.Background },
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp * scale))
-
-                    ThemedIconColorRow(
-                        title = stringResource(R.string.themed_icon_foreground_title),
-                        color = foregroundColor,
-                        onClick = { colorTarget = ColorTarget.Foreground },
+                        onPresetSelect = { onColorPresetChange(it.preset) },
+                        onBackgroundSelect = onBackgroundColorChange,
+                        onForegroundSelect = onForegroundColorChange,
+                        onCustomBackground = { colorTarget = ColorTarget.Background },
+                        onCustomForeground = { colorTarget = ColorTarget.Foreground },
                     )
                 }
             }
@@ -597,13 +646,6 @@ private fun ThemedIconSettingsCard(
         ColorPickerDialog(
             initialColor = Color(if (isBackground) backgroundColor else foregroundColor),
             title = title,
-            presets = colorDefaults.map { preset ->
-                ColorPickerPreset(
-                    label = preset.label,
-                    color = Color(if (isBackground) preset.background else preset.foreground),
-                )
-            },
-            defaultsLabel = stringResource(R.string.themed_icon_color_defaults_title),
             onDismiss = { colorTarget = null },
             onColorSelected = { color ->
                 if (isBackground) {
@@ -618,36 +660,89 @@ private fun ThemedIconSettingsCard(
 }
 
 @Composable
-private fun ThemedIconColorDefaultsRow(
+private fun ThemedIconColorPalette(
     colorDefaults: List<ThemedIconColorDefault>,
+    colorPreset: String,
     backgroundColor: Int,
     foregroundColor: Int,
-    onSelect: (ThemedIconColorDefault) -> Unit,
+    onPresetSelect: (ThemedIconColorDefault) -> Unit,
+    onBackgroundSelect: (Int) -> Unit,
+    onForegroundSelect: (Int) -> Unit,
+    onCustomBackground: () -> Unit,
+    onCustomForeground: () -> Unit,
 ) {
-    val colors = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        ColorTargetPalette(
+            title = stringResource(R.string.themed_icon_background_title),
+            colorDefaults = colorDefaults,
+            colorPreset = colorPreset,
+            selectedColor = backgroundColor,
+            lightColorForPreset = { it.backgroundLight },
+            darkColorForPreset = { it.backgroundDark },
+            onPresetSelect = onPresetSelect,
+            onColorSelect = onBackgroundSelect,
+            onCustomClick = onCustomBackground,
+        )
+        ColorTargetPalette(
+            title = stringResource(R.string.themed_icon_foreground_title),
+            colorDefaults = colorDefaults,
+            colorPreset = colorPreset,
+            selectedColor = foregroundColor,
+            lightColorForPreset = { it.foregroundLight },
+            darkColorForPreset = { it.foregroundDark },
+            onPresetSelect = onPresetSelect,
+            onColorSelect = onForegroundSelect,
+            onCustomClick = onCustomForeground,
+        )
+    }
+}
 
-    Column {
+@Composable
+private fun ColorTargetPalette(
+    title: String,
+    colorDefaults: List<ThemedIconColorDefault>,
+    colorPreset: String,
+    selectedColor: Int,
+    lightColorForPreset: (ThemedIconColorDefault) -> Int,
+    darkColorForPreset: (ThemedIconColorDefault) -> Int,
+    onPresetSelect: (ThemedIconColorDefault) -> Unit,
+    onColorSelect: (Int) -> Unit,
+    onCustomClick: () -> Unit,
+) {
+    val customSelected = colorPreset == COLOR_PRESET_CUSTOM
+    val hasPaletteSelection = customSelected && ClockFacePaletteColors.any { it == selectedColor }
+    Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = stringResource(R.string.themed_icon_color_defaults_title),
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
-            color = colors.onSurface,
+            text = title,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurface,
         )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = stringResource(R.string.themed_icon_color_defaults_summary),
-            style = MaterialTheme.typography.bodySmall,
-            color = colors.onSurfaceVariant,
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            colorDefaults.forEach { preset ->
-                ThemedIconColorDefaultChip(
-                    preset = preset,
-                    selected = backgroundColor == preset.background &&
-                        foregroundColor == preset.foreground,
-                    onClick = { onSelect(preset) },
-                    modifier = Modifier.weight(1f),
+        Spacer(modifier = Modifier.height(8.dp))
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            items(colorDefaults) { preset ->
+                SplitPaletteSwatch(
+                    label = preset.label,
+                    lightColor = lightColorForPreset(preset),
+                    darkColor = darkColorForPreset(preset),
+                    selected = colorPreset == preset.preset,
+                    onClick = { onPresetSelect(preset) },
+                )
+            }
+            items(ClockFacePaletteColors) { color ->
+                SinglePaletteSwatch(
+                    color = color,
+                    selected = customSelected && color == selectedColor,
+                    onClick = { onColorSelect(color) },
+                )
+            }
+            item {
+                CustomPaletteSwatch(
+                    color = if (customSelected && !hasPaletteSelection) selectedColor else null,
+                    selected = customSelected && !hasPaletteSelection,
+                    onClick = onCustomClick,
                 )
             }
         }
@@ -655,105 +750,99 @@ private fun ThemedIconColorDefaultsRow(
 }
 
 @Composable
-private fun ThemedIconColorDefaultChip(
-    preset: ThemedIconColorDefault,
+private fun SplitPaletteSwatch(
+    label: String,
+    lightColor: Int,
+    darkColor: Int,
     selected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
-    val colors = MaterialTheme.colorScheme
-
-    Card(
-        modifier = modifier.height(56.dp).bounceable(onClick = onClick, scale = 0.98f),
-        colors = CardDefaults.cardColors(
-            containerColor = if (selected) colors.primaryContainer else colors.surfaceContainerHigh,
-        ),
-        border = BorderStroke(1.dp, if (selected) colors.primary else colors.outlineVariant),
-        shape = MaterialTheme.shapes.large,
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            ThemedIconPairSwatch(preset.background, preset.foreground)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = preset.label,
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
-                color = if (selected) colors.onPrimaryContainer else colors.onSurface,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ThemedIconColorRow(title: String, color: Int, onClick: () -> Unit) {
-    val colors = MaterialTheme.colorScheme
-
-    Card(
-        modifier = Modifier.fillMaxWidth().bounceable(onClick = onClick, scale = 0.98f),
-        colors = CardDefaults.cardColors(containerColor = colors.surfaceContainerHigh),
-        shape = MaterialTheme.shapes.large,
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            ThemedIconSingleSwatch(color)
-            Spacer(modifier = Modifier.width(12.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = colors.onSurface,
-                )
-                Text(
-                    text = color.toHexColorString(),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = colors.onSurfaceVariant,
-                )
-            }
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = colors.onSurfaceVariant,
-                modifier = Modifier.size(20.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun ThemedIconPairSwatch(backgroundColor: Int, foregroundColor: Int) {
+    val borderColor = if (selected) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.outlineVariant
     Box(
         modifier = Modifier
-            .size(28.dp)
-            .clip(MaterialTheme.shapes.small)
-            .background(Color(backgroundColor))
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small),
+            .size(40.dp)
+            .clip(CircleShape)
+            .bounceable(onClick = onClick, scale = 0.98f)
+            .semantics { contentDescription = label }
+            .border(if (selected) 3.dp else 1.dp, borderColor, CircleShape)
+            .padding(4.dp)
+            .clip(CircleShape),
+    ) {
+        Row(modifier = Modifier.size(32.dp).clip(CircleShape)) {
+            Box(
+                modifier = Modifier
+                    .size(width = 16.dp, height = 32.dp)
+                    .background(Color(lightColor)),
+            )
+            Box(
+                modifier = Modifier
+                    .size(width = 16.dp, height = 32.dp)
+                    .background(Color(darkColor)),
+            )
+        }
+    }
+}
+
+@Composable
+private fun SinglePaletteSwatch(color: Int, selected: Boolean, onClick: () -> Unit) {
+    val borderColor = if (selected) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.outlineVariant
+    Box(
+        modifier = Modifier
+            .size(40.dp)
+            .clip(CircleShape)
+            .bounceable(onClick = onClick, scale = 0.98f)
+            .border(if (selected) 3.dp else 1.dp, borderColor, CircleShape)
+            .padding(4.dp)
+            .clip(CircleShape)
+            .background(Color(color)),
+    )
+}
+
+@Composable
+private fun CustomPaletteSwatch(color: Int?, selected: Boolean, onClick: () -> Unit) {
+    val borderColor = if (selected) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.outlineVariant
+    Box(
+        modifier = Modifier
+            .size(40.dp)
+            .clip(CircleShape)
+            .bounceable(onClick = onClick, scale = 0.98f)
+            .border(if (selected) 3.dp else 1.dp, borderColor, CircleShape)
+            .padding(4.dp)
+            .clip(CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        Box(
-            modifier = Modifier
-                .size(12.dp)
-                .clip(MaterialTheme.shapes.extraSmall)
-                .background(Color(foregroundColor)),
-        )
+        if (color != null) {
+            Box(modifier = Modifier.size(32.dp).clip(CircleShape).background(Color(color)))
+        } else {
+            RainbowCircle()
+        }
     }
 }
 
 @Composable
-private fun ThemedIconSingleSwatch(color: Int) {
-    Box(
-        modifier = Modifier
-            .size(32.dp)
-            .clip(MaterialTheme.shapes.small)
-            .background(Color(color))
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small),
-    )
+private fun RainbowCircle() {
+    Canvas(modifier = Modifier.size(32.dp)) {
+        val colors = listOf(
+            Color.Red,
+            Color.Yellow,
+            Color.Green,
+            Color.Cyan,
+            Color.Blue,
+            Color.Magenta,
+        )
+        val sweep = 360f / colors.size
+        colors.forEachIndexed { index, color ->
+            drawArc(
+                color = color,
+                startAngle = index * sweep - 90f,
+                sweepAngle = sweep + 1f,
+                useCenter = true,
+            )
+        }
+    }
 }
 
 @Composable
@@ -936,21 +1025,63 @@ private fun ThemedIconPackCard(
 }
 
 
-private fun themedIconColorDefaults(
-    context: Context,
-    isDark: Boolean,
-): List<ThemedIconColorDefault> = listOf(
+private fun themedIconColorDefaults(context: Context): List<ThemedIconColorDefault> = listOf(
     ThemedIconColorDefault(
         label = context.getString(R.string.themed_icon_color_preset_axicons),
-        background = context.getColor(if (isDark) SystemNeutral1_900 else SystemNeutral1_50),
-        foreground = context.getColor(if (isDark) SystemAccent1_100 else SystemAccent1_600),
+        preset = COLOR_PRESET_AXICONS,
+        backgroundLight = context.getColor(SystemNeutral1_50),
+        backgroundDark = context.getColor(SystemNeutral1_900),
+        foregroundLight = context.getColor(SystemAccent1_600),
+        foregroundDark = context.getColor(SystemAccent1_100),
     ),
     ThemedIconColorDefault(
         label = context.getString(R.string.themed_icon_color_preset_aosp),
-        background = context.getColor(if (isDark) SystemAccent2_800 else SystemAccent1_100),
-        foreground = context.getColor(if (isDark) SystemAccent1_200 else SystemAccent1_700),
+        preset = COLOR_PRESET_AOSP,
+        backgroundLight = context.getColor(SystemAccent1_100),
+        backgroundDark = context.getColor(SystemAccent2_800),
+        foregroundLight = context.getColor(SystemAccent1_700),
+        foregroundDark = context.getColor(SystemAccent1_200),
     ),
 )
+
+private fun ThemedIconColorDefault.background(isDark: Boolean) =
+    if (isDark) backgroundDark else backgroundLight
+
+private fun ThemedIconColorDefault.foreground(isDark: Boolean) =
+    if (isDark) foregroundDark else foregroundLight
+
+private fun readThemedIconColorPreset(
+    context: Context,
+    colorDefaults: List<ThemedIconColorDefault>,
+): String {
+    val resolver = context.contentResolver
+    val preset = Settings.Secure.getString(resolver, SETTING_THEMED_ICON_COLOR_PRESET)
+    if (preset == COLOR_PRESET_AXICONS ||
+        preset == COLOR_PRESET_AOSP ||
+        preset == COLOR_PRESET_CUSTOM
+    ) {
+        return preset
+    }
+    val background = Settings.Secure.getString(resolver, SETTING_THEMED_ICON_BACKGROUND)
+        ?.toLongOrNull()
+        ?.toInt()
+    val foreground = Settings.Secure.getString(resolver, SETTING_THEMED_ICON_FOREGROUND)
+        ?.toLongOrNull()
+        ?.toInt()
+    if (background == null && foreground == null) {
+        return COLOR_PRESET_AXICONS
+    }
+    if (background != null && foreground != null) {
+        colorDefaults.firstOrNull { it.matches(background, foreground) }?.let {
+            return it.preset
+        }
+    }
+    return COLOR_PRESET_CUSTOM
+}
+
+private fun ThemedIconColorDefault.matches(background: Int, foreground: Int) =
+    background == backgroundLight && foreground == foregroundLight ||
+        background == backgroundDark && foreground == foregroundDark
 
 private fun readThemedIconScale(context: Context): Int = readSecureInt(
     context = context,
@@ -960,8 +1091,6 @@ private fun readThemedIconScale(context: Context): Int = readSecureInt(
 
 private fun readSecureInt(context: Context, key: String, defaultValue: Int): Int =
     Settings.Secure.getInt(context.contentResolver, key, defaultValue)
-
-private fun Int.toHexColorString(): String = String.format("#%06X", 0xFFFFFF and this)
 
 private fun applyIconPack(context: Context, packageName: String) {
     try {
