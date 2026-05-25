@@ -56,15 +56,25 @@ import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.CommonBottomSheet
 import com.android.axion.themepicker.ui.components.SheetDimens
 import com.android.axion.themepicker.ui.dialogs.ColorPickerDialog
+import android.content.pm.PackageManager
+import com.android.systemui.plugins.keyguard.ui.clocks.ClockMetadata
 import com.android.systemui.shared.clocks.AxClockType
 import com.android.systemui.shared.clocks.ClockSettingsRepository
 import com.android.systemui.shared.clocks.view.AxClockView
 import com.android.systemui.shared.clocks.view.BitmapDigitComposeClockView
+import com.android.systemui.shared.clocks.view.BitmapFaceConfig
 import com.android.systemui.shared.clocks.view.BitmapFaceConfigs
 import com.android.systemui.shared.clocks.view.RenderMode
+import com.android.systemui.plugins.keyguard.ui.clocks.ClockPickerConfig
+import com.android.systemui.plugins.keyguard.ui.clocks.ClockSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -80,12 +90,58 @@ private const val DEPTH_SETTINGS_KEY = "ax_depth_clock_enabled"
 private const val DEPTH_ON = "on"
 private const val DEPTH_OFF = "off"
 
+internal data class AxClockMetadata(
+    val id: String,
+    val type: AxClockType? = null,
+    val pluginPackage: String? = null,
+    val pluginProvider: String? = null
+)
+
+internal class ClockRegistryViewModel : ViewModel() {
+    private val _clocks = MutableStateFlow<List<AxClockMetadata>>(emptyList())
+    val clocks: StateFlow<List<AxClockMetadata>> = _clocks.asStateFlow()
+
+    private val contextCache = mutableMapOf<String, Context>()
+
+    fun initialize(context: Context, systemTypes: List<AxClockMetadata>) {
+        if (_clocks.value.isNotEmpty()) return
+        val plugins = discoverClockPlugins(context)
+        _clocks.value = systemTypes + plugins
+    }
+
+    fun getPluginContext(context: Context, packageName: String): Context? {
+        return try {
+            contextCache.getOrPut(packageName) {
+                context.createPackageContext(packageName, Context.CONTEXT_INCLUDE_CODE or Context.CONTEXT_IGNORE_SECURITY)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ClockRegistryVM", "Failed to create context for $packageName", e)
+            null
+        }
+    }
+
+    override fun onCleared() {
+        contextCache.clear()
+        super.onCleared()
+    }
+}
+
 @Composable
-fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: () -> Unit) {
+internal fun ClockFaceSheet(
+    visible: Boolean,
+    heightFraction: Float = 0.65f,
+    onDismiss: () -> Unit,
+    registryViewModel: ClockRegistryViewModel = viewModel()
+) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val allTypes = remember { AxClockType.entries }
+    val systemTypes = remember { AxClockType.entries.map {
+        AxClockMetadata(id = context.resources.getString(it.clockId), type = it)
+    } }
+
+    val allClocks by registryViewModel.clocks.collectAsState()
+
     var currentClockId by remember { mutableStateOf("DEFAULT") }
     var currentAlignment by remember { mutableStateOf(ClockSettingsRepository.ALIGNMENT_CENTER) }
     var currentSize by remember { mutableStateOf(ClockSettingsRepository.SIZE_DEFAULT) }
@@ -99,6 +155,8 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
 
     LaunchedEffect(visible) {
         if (!visible) return@LaunchedEffect
+        registryViewModel.initialize(context, systemTypes)
+
         withContext(Dispatchers.IO) {
             val id = readCurrentClockId(context)
             val align = readAlignment(context)
@@ -107,6 +165,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
             val datePos = readDatePosition(context)
             val clockColor = readClockColor(context)
             val liveWp = WallpaperManager.getInstance(context).wallpaperInfo != null
+
             withContext(Dispatchers.Main) {
                 currentClockId = id
                 currentAlignment = align
@@ -119,36 +178,42 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
         }
     }
 
-    val selectedType =
-        remember(currentClockId) {
-            allTypes.firstOrNull { context.resources.getString(it.clockId) == currentClockId }
-                ?: AxClockType.NTYPE
+    val selectedClock =
+        remember(currentClockId, allClocks) {
+            allClocks.firstOrNull { it.id == currentClockId }
+                ?: allClocks.firstOrNull { it.type == AxClockType.NTYPE }
+                ?: allClocks.firstOrNull() ?: systemTypes.firstOrNull()
+                ?: AxClockMetadata(id = "DEFAULT", type = AxClockType.NTYPE)
         }
 
     val isDigitFamily =
-        remember(selectedType) {
-            val style = selectedType.bitmapFaceStyle ?: return@remember false
+        remember(selectedClock) {
+            val type = selectedClock.type ?: return@remember false
+            val style = type.bitmapFaceStyle ?: return@remember false
             val config = BitmapFaceConfigs.getConfig(style) ?: return@remember false
             config.renderMode !is RenderMode.AnalogClock
         }
-    val hasDateSupport = selectedType.bitmapFaceStyle != null
-    val supportsColorOverride = selectedType != AxClockType.CYBERPUNK
-    val digitFaceTypes = remember {
-        allTypes.filter { type ->
+    val hasDateSupport = selectedClock.type?.bitmapFaceStyle != null
+    val supportsColorOverride = selectedClock.type != AxClockType.CYBERPUNK
+    val digitFaceTypes = remember(allClocks) {
+        allClocks.filter { clock ->
+            val type = clock.type ?: return@filter false
             val style = type.bitmapFaceStyle ?: return@filter false
             val config = BitmapFaceConfigs.getConfig(style) ?: return@filter false
             config.renderMode !is RenderMode.AnalogClock
         }
     }
-    val primaryTypes = remember {
+    val primaryTypes = remember(allClocks) {
+        if (allClocks.isEmpty()) return@remember emptyList<AxClockMetadata>()
         buildList {
-            add(AxClockType.NTYPE)
-            addAll(allTypes.filter { it.bitmapFaceStyle == null || it == AxClockType.GRAPHIC })
+            allClocks.firstOrNull { it.type == AxClockType.NTYPE }?.let { add(it) }
+            addAll(allClocks.filter { it.type != null && (it.type.bitmapFaceStyle == null || it.type == AxClockType.GRAPHIC) })
+            addAll(allClocks.filter { it.pluginPackage != null })
         }
     }
 
-    fun writeClockId(type: AxClockType) {
-        val clockId = context.resources.getString(type.clockId)
+    fun writeClockId(clock: AxClockMetadata) {
+        val clockId = clock.id
         currentClockId = clockId
         val json =
             JSONObject()
@@ -244,14 +309,15 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
             ClockStyleGrid(
                 context = context,
                 primaryTypes = primaryTypes,
-                selectedType = selectedType,
+                selectedType = selectedClock,
                 tileWidth = StyleTileWidth,
                 tileHeight = StyleTileHeight,
                 previewScale = STYLE_PREVIEW_SCALE,
                 settingsKey = "$currentAlignment:$currentSize:$currentClockColor",
                 onSelect = { writeClockId(it) },
-                isSelectedOverride = { type ->
-                    if (type == AxClockType.NTYPE) isDigitFamily else type == selectedType
+                registryViewModel = registryViewModel,
+                isSelectedOverride = { clock ->
+                    if (clock.type == AxClockType.NTYPE) isDigitFamily else clock == selectedClock
                 },
             )
 
@@ -262,12 +328,13 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
                 ClockStyleGrid(
                     context = context,
                     primaryTypes = digitFaceTypes,
-                    selectedType = selectedType,
+                    selectedType = selectedClock,
                     tileWidth = FaceTileWidth,
                     tileHeight = FaceTileHeight,
                     previewScale = FACE_PREVIEW_SCALE,
                     settingsKey = "$currentAlignment:$currentSize:$currentClockColor",
                     onSelect = { writeClockId(it) },
+                    registryViewModel = registryViewModel,
                 )
             }
 
@@ -414,14 +481,15 @@ private fun SectionTitle(title: String) {
 @Composable
 private fun ClockStyleGrid(
     context: Context,
-    primaryTypes: List<AxClockType>,
-    selectedType: AxClockType,
+    primaryTypes: List<AxClockMetadata>,
+    selectedType: AxClockMetadata,
     tileWidth: Dp,
     tileHeight: Dp,
     previewScale: Float,
     settingsKey: String,
-    onSelect: (AxClockType) -> Unit,
-    isSelectedOverride: ((AxClockType) -> Boolean)? = null,
+    onSelect: (AxClockMetadata) -> Unit,
+    registryViewModel: ClockRegistryViewModel,
+    isSelectedOverride: ((AxClockMetadata) -> Boolean)? = null,
 ) {
     val scrollState = rememberScrollState()
     val density = LocalDensity.current
@@ -448,11 +516,12 @@ private fun ClockStyleGrid(
             val isSelected = isSelectedOverride?.invoke(type) ?: (type == selectedType)
             ClockTile(
                 context = context,
-                type = type,
+                clock = type,
                 isSelected = isSelected,
                 previewScale = previewScale,
                 settingsKey = settingsKey,
                 onClick = { onSelect(type) },
+                registryViewModel = registryViewModel,
                 modifier = Modifier.width(tileWidth).height(tileHeight),
             )
         }
@@ -462,11 +531,12 @@ private fun ClockStyleGrid(
 @Composable
 private fun ClockTile(
     context: Context,
-    type: AxClockType,
+    clock: AxClockMetadata,
     isSelected: Boolean,
     previewScale: Float,
     settingsKey: String,
     onClick: () -> Unit,
+    registryViewModel: ClockRegistryViewModel,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -484,38 +554,45 @@ private fun ClockTile(
                 .clickable { onClick() },
         contentAlignment = Alignment.Center,
     ) {
-        key(type, settingsKey) {
+        key(clock.id, settingsKey) {
             val clockView = remember {
-                val inflater = LayoutInflater.from(context)
-                val view = inflater.inflate(type.viewId, null) as AxClockView
-                (view as? BitmapDigitComposeClockView)?.let { bitmapView ->
-                    type.bitmapFaceStyle?.let { bitmapView.faceStyle = it }
+                val view = if (clock.type != null) {
+                    val inflater = LayoutInflater.from(context)
+                    val v = inflater.inflate(clock.type.viewId, null) as AxClockView
+                    (v as? BitmapDigitComposeClockView)?.let { bitmapView ->
+                        clock.type.bitmapFaceStyle?.let { bitmapView.faceStyle = it }
+                    }
+                    v
+                } else {
+                    createPluginClockView(context, clock, registryViewModel)
                 }
-                view.setupPreview()
-                view.onRegionDarknessChanged(isDarkTheme)
+                view?.setupPreview()
+                view?.onRegionDarknessChanged(isDarkTheme)
                 view
             }
 
             DisposableEffect(Unit) {
-                onDispose { (clockView.parent as? ViewGroup)?.removeView(clockView) }
+                onDispose { (clockView?.parent as? ViewGroup)?.removeView(clockView) }
             }
 
-            AndroidView(
-                factory = {
-                    (clockView.parent as? ViewGroup)?.removeView(clockView)
-                    clockView.layoutParams =
-                        FrameLayout.LayoutParams(
-                            LayoutParams.MATCH_PARENT,
-                            LayoutParams.WRAP_CONTENT,
-                        )
-                    FrameLayout(it).apply {
-                        layoutParams =
-                            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-                        addView(clockView)
-                    }
-                },
-                modifier = Modifier.fillMaxWidth().wrapContentHeight().scaledLayout(previewScale),
-            )
+            if (clockView != null) {
+                AndroidView(
+                    factory = {
+                        (clockView.parent as? ViewGroup)?.removeView(clockView)
+                        clockView.layoutParams =
+                            FrameLayout.LayoutParams(
+                                LayoutParams.MATCH_PARENT,
+                                LayoutParams.WRAP_CONTENT,
+                            )
+                        FrameLayout(it).apply {
+                            layoutParams =
+                                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                            addView(clockView)
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth().wrapContentHeight().scaledLayout(previewScale),
+                )
+            }
         }
     }
 }
@@ -1019,4 +1096,72 @@ private fun readClockColor(context: Context): String {
         context.contentResolver,
         ClockSettingsRepository.SETTING_CLOCK_COLOR,
     ) ?: ClockSettingsRepository.COLOR_AUTO
+}
+
+private fun discoverClockPlugins(context: Context): List<AxClockMetadata> {
+    val pm = context.packageManager
+    val intent = android.content.Intent("com.android.systemui.action.PLUGIN_CLOCK_PROVIDER")
+    val resolveInfos = pm.queryIntentServices(intent, PackageManager.GET_META_DATA)
+
+    return resolveInfos.mapNotNull { info ->
+        val serviceInfo = info.serviceInfo ?: return@mapNotNull null
+        val packageName = serviceInfo.packageName
+        val className = serviceInfo.name
+
+        // We'll use the package name or a metadata field for the ID
+        val clockId = serviceInfo.metaData?.getString("com.axion.theme.CLOCK_ID") ?: packageName
+
+        AxClockMetadata(
+            id = clockId,
+            pluginPackage = packageName,
+            pluginProvider = className
+        )
+    }
+}
+
+private fun createPluginClockView(
+    context: Context,
+    metadata: AxClockMetadata,
+    registryViewModel: ClockRegistryViewModel
+): AxClockView? {
+    try {
+        val pluginPkg = metadata.pluginPackage ?: return null
+        val pluginContext = registryViewModel.getPluginContext(context, pluginPkg) ?: return null
+
+        val pm = context.packageManager
+        val intent = android.content.Intent("com.android.systemui.action.PLUGIN_CLOCK_PROVIDER")
+        val resolveInfo = pm.queryIntentServices(intent, PackageManager.GET_META_DATA)
+            .firstOrNull { it.serviceInfo.packageName == pluginPkg } ?: return null
+
+        val meta = resolveInfo.serviceInfo.metaData
+        val renderModeStr = meta?.getString("com.axion.theme.RENDER_MODE") ?: "BITMAP"
+
+        // Use host context for inflation so it can find the AxClockView classes
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.clock_bitmap_compose, null) as AxClockView
+        view.pluginContext = pluginContext
+
+        if (renderModeStr == "FONT" && meta != null) {
+            val fontPath = meta.getString("com.axion.theme.FONT_PATH")
+            if (fontPath != null) {
+                view.customConfig = BitmapFaceConfig(
+                    renderMode = RenderMode.FontDigit(
+                        fontPath = fontPath,
+                        fontSize = meta.getInt("com.axion.theme.FONT_SIZE", 120).toFloat(),
+                        lsFontWeight = meta.getInt("com.axion.theme.FONT_WEIGHT", 400),
+                        aodFontWeight = meta.getInt("com.axion.theme.AOD_FONT_WEIGHT", 100),
+                        largeScale = meta.getFloat("com.axion.theme.LARGE_SCALE", 2.2f)
+                    )
+                )
+            }
+        }
+
+        // Force a time refresh so the preview isn't empty
+        view.refreshTime()
+
+        return view
+    } catch (e: Exception) {
+        android.util.Log.e("ClockFaceSheet", "Error creating plugin clock view: ${metadata.id}", e)
+        return null
+    }
 }

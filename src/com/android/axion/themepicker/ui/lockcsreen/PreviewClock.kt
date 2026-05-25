@@ -116,6 +116,7 @@ fun PreviewClock(isPreview: Boolean, isRegionDark: Boolean = true) {
 
     val clockProvider = remember {
         AxClockProvider(
+            context = context,
             layoutInflater = LayoutInflater.from(context),
             resources = context.resources,
             isClockReactiveVariantsEnabled = true,
