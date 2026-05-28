@@ -237,8 +237,8 @@
     <string name="clock_align_center">置中</string>
     <string name="clock_align_right">靠右</string>
     <string name="clock_date_position">日期位置</string>
-    <string name="clock_date_above">高於</string>
-    <string name="clock_date_below">低於</string>
+    <string name="clock_date_above">以上</string>
+    <string name="clock_date_below">以下</string>
     <string name="clock_color">時鐘顏色</string>
     <string name="device_controls">裝置控制項</string>
     <string name="do_not_disturb">請勿打擾</string>
