@@ -213,6 +213,7 @@
     <string name="change_custom_font">Изменить свой шрифт</string>
     <string name="custom_font">Свой шрифт</string>
     <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_axion_phrase">\"А\" обозначает Axion :)</string>
     <string name="font_preview_dialog_title">Предпросмотр шрифта</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">Страх — враг инноваций.</string>
