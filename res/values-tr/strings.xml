@@ -208,6 +208,7 @@
     <string name="change_custom_font">Özel yazı tipini değiştir</string>
     <string name="custom_font">Özel yazı tipi</string>
     <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_axion_phrase">A, Axion içindir :)</string>
     <string name="font_preview_dialog_title">Yazı Tipi Önizlemesi</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">Korku, yaratıcılığın düşmanıdır.</string>
