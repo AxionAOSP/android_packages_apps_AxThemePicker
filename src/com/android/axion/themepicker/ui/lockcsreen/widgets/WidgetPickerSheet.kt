@@ -43,8 +43,6 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
@@ -259,7 +257,7 @@ private fun WidgetSearchBar(
         onValueChange = onQueryChange,
         modifier = modifier.height(48.dp).focusRequester(focusRequester),
         singleLine = true,
-        textStyle = TextStyle(color = colors.onSurface, fontSize = 16.sp),
+        textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.onSurface),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() }),
         decorationBox = { innerTextField ->
@@ -372,7 +370,6 @@ private fun WidgetAppHeader(
             text = group.appLabel,
             style = MaterialTheme.typography.titleSmall,
             color = colors.onSurface,
-            fontWeight = FontWeight.SemiBold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
@@ -435,7 +432,6 @@ private fun WidgetCard(meta: WidgetProviderMeta, onClick: () -> Unit) {
                 Text(
                     text = meta.label,
                     style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium,
                     color = colors.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -593,7 +589,6 @@ private fun WidgetSizePicker(
             Text(
                 text = label,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
                 color = colors.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

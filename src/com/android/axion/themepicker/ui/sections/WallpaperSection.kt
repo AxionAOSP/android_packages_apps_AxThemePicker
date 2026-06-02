@@ -80,7 +80,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -265,7 +264,6 @@ private fun HeroCard(
                         Text(
                             text = stringResource(R.string.your_wallpaper),
                             style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                         )
                     }
@@ -275,7 +273,6 @@ private fun HeroCard(
                     Text(
                         text = stringResource(R.string.make_it_yours),
                         style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
                         color = Color.White,
                     )
 
@@ -390,7 +387,6 @@ private fun WallpaperActionChip(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.Medium,
                     color = Color.White,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -476,4 +472,3 @@ private fun LoadingOverlayDialog(onDismissRequest: () -> Unit) {
         },
     )
 }
-

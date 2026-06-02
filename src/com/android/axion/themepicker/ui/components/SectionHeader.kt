@@ -32,7 +32,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -54,7 +53,6 @@ fun SectionHeader(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
                 color = colors.onSurface,
             )
             if (onAction != null && actionLabel != null) {
@@ -62,7 +60,6 @@ fun SectionHeader(
                     Text(
                         text = actionLabel,
                         style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.SemiBold,
                     )
                     Spacer(Modifier.width(4.dp))
                     Icon(

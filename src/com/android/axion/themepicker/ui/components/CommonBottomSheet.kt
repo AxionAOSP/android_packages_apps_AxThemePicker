@@ -32,7 +32,6 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.platform.*
-import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.*
 import kotlin.coroutines.*
@@ -46,7 +45,6 @@ object SheetDimens {
     val SheetPagerSpacing = 16.dp
     val SheetPagerSpacingNav = 28.dp
     val SheetCloseSize = 40.dp
-    val SheetTitleFont = 22.sp
     val SheetSpacerSmall = 12.dp
     val SheetSpacerMedium = 16.dp
 }
@@ -180,8 +178,7 @@ fun CommonBottomSheet(
 
                         Text(
                             text = title,
-                            fontSize = SheetDimens.SheetTitleFont,
-                            fontWeight = FontWeight.SemiBold,
+                            style = MaterialTheme.typography.titleLarge,
                             color = colors.onSurface,
                             modifier =
                                 Modifier.fillMaxWidth()

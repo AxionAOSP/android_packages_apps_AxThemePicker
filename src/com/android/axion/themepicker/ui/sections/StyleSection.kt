@@ -31,7 +31,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.SettingsCard
@@ -146,7 +145,6 @@ private fun StyleHeader(modifier: Modifier = Modifier) {
         Text(
             text = stringResource(R.string.personalize),
             style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold,
             color = colors.onSurface,
         )
 
@@ -333,7 +331,6 @@ private fun FontsCard(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
                     color = colors.onSurface,
                 )
                 Text(
@@ -349,13 +346,12 @@ private fun FontsCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
-                    text = "Aa",
+                    text = stringResource(R.string.font_preview_aa),
                     style = MaterialTheme.typography.displayLarge,
-                    fontWeight = FontWeight.Bold,
                     color = colors.primary,
                 )
                 Text(
-                    text = "A is for Axion :)",
+                    text = stringResource(R.string.font_preview_axion_phrase),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
@@ -392,7 +388,6 @@ private fun ProTip(text: String, modifier: Modifier = Modifier) {
                 Text(
                     text = stringResource(R.string.pro_tip),
                     style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.Bold,
                     color = colors.primary,
                 )
                 Text(
