@@ -137,6 +137,7 @@ fun PreviewClock(
     fitClockBounds: Boolean = false,
     sizeScaleOverride: Float? = null,
     depthEffectVisible: Boolean = true,
+    animationTrigger: Int = 0,
     onEditGeometryChanged: ((ClockEditScaleGeometry) -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -254,6 +255,16 @@ fun PreviewClock(
     LaunchedEffect(currentTime) {
         controller.smallClock.events.onTimeTick()
         controller.largeClock.events.onTimeTick()
+    }
+
+    LaunchedEffect(clockId, animationTrigger) {
+        if (animationTrigger == 0) return@LaunchedEffect
+        delay(100L)
+        withFrameNanos {}
+        controller.smallClock.animations.enter()
+        delay(140L)
+        val view = controller.smallClock.view
+        controller.smallClock.animations.onFidgetTap(view.width / 2f, view.height / 2f)
     }
 
     val configuration = LocalConfiguration.current

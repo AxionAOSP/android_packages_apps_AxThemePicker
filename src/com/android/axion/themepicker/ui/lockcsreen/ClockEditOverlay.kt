@@ -102,6 +102,7 @@ fun EditablePreviewClock(
     applyFluidSize: Boolean = true,
     applyFluidTopPadding: Boolean = true,
     depthEffectEnabled: Boolean = true,
+    clockAnimationTrigger: Int = 0,
     lockscreenWidgetLayoutState: ClockWidgetLayoutState = ClockWidgetLayoutState.Empty,
 ) {
     val context = LocalContext.current
@@ -403,6 +404,7 @@ fun EditablePreviewClock(
                 fitClockBounds = handlesVisible,
                 sizeScaleOverride = previewSizeScaleOverride,
                 depthEffectVisible = depthEffectVisible,
+                animationTrigger = clockAnimationTrigger,
                 onEditGeometryChanged = { scaleGeometry = it },
             )
 

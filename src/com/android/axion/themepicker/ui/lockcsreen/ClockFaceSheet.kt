@@ -87,7 +87,12 @@ private const val DEPTH_ON = "on"
 private const val DEPTH_OFF = "off"
 
 @Composable
-fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: () -> Unit) {
+fun ClockFaceSheet(
+    visible: Boolean,
+    heightFraction: Float = 0.65f,
+    onPreviewAnimationRequest: () -> Unit = {},
+    onDismiss: () -> Unit,
+) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -201,6 +206,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeClockId(type: AxClockType) {
+        onPreviewAnimationRequest()
         val clockId = context.resources.getString(type.clockId)
         currentClockId = clockId
         val json =
@@ -224,6 +230,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeAlignment(value: String) {
+        onPreviewAnimationRequest()
         currentAlignment = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -235,6 +242,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeDepth(enabled: Boolean) {
+        onPreviewAnimationRequest()
         depthEnabled = enabled
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putInt(
@@ -246,6 +254,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeDatePosition(value: String) {
+        onPreviewAnimationRequest()
         currentDatePosition = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -257,6 +266,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeInfoDisplayMode(value: String) {
+        onPreviewAnimationRequest()
         currentInfoDisplayMode = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -268,6 +278,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeInfoDisplaySource(value: String) {
+        onPreviewAnimationRequest()
         val updated = if (value in currentInfoDisplaySources) {
             currentInfoDisplaySources - value
         } else {
@@ -284,6 +295,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeClockColor(value: String) {
+        onPreviewAnimationRequest()
         currentClockColor = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -295,6 +307,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeOplusClassicFace(value: String) {
+        onPreviewAnimationRequest()
         currentOplusClassicFace = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -306,6 +319,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeOplusBigFace(value: String) {
+        onPreviewAnimationRequest()
         currentOplusBigFace = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -317,6 +331,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeOplusBigDualTone(enabled: Boolean) {
+        onPreviewAnimationRequest()
         currentOplusBigDualTone = enabled
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putInt(
@@ -328,6 +343,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeOplusGraffitiFace(value: String) {
+        onPreviewAnimationRequest()
         currentOplusGraffitiFace = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(
@@ -339,6 +355,7 @@ fun ClockFaceSheet(visible: Boolean, heightFraction: Float = 0.65f, onDismiss: (
     }
 
     fun writeOplusGraffitiAngle(value: String) {
+        onPreviewAnimationRequest()
         currentOplusGraffitiAngle = value
         scope.launch(Dispatchers.IO) {
             Settings.Secure.putString(

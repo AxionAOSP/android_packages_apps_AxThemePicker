@@ -82,6 +82,7 @@ fun LockscreenPreview(
 
     var showPicker by remember { mutableStateOf(false) }
     var showClockSheet by remember { mutableStateOf(false) }
+    var clockPreviewAnimationTrigger by remember { mutableIntStateOf(0) }
     var clockBottomPx by remember { mutableFloatStateOf(0f) }
     var showAffordancePicker by remember { mutableStateOf<AffordanceSlot?>(null) }
     var resizeTarget by remember { mutableStateOf<GridWidgetItem?>(null) }
@@ -310,6 +311,7 @@ fun LockscreenPreview(
                     if (!isPreview) {
                         { showClockSheet = true }
                     } else null,
+                clockAnimationTrigger = clockPreviewAnimationTrigger,
                 depthSourceBoundsProvider = depthSourceBoundsProvider,
             )
         } else {
@@ -336,6 +338,7 @@ fun LockscreenPreview(
                         { showClockSheet = true }
                     } else null,
                 onClockBottomMeasured = { clockBottomPx = it },
+                clockAnimationTrigger = clockPreviewAnimationTrigger,
                 depthSourceBoundsProvider = depthSourceBoundsProvider,
             )
         }
@@ -406,6 +409,7 @@ fun LockscreenPreview(
                 visible = showClockSheet,
                 heightFraction = sheetMaxFraction,
                 onDismiss = { showClockSheet = false },
+                onPreviewAnimationRequest = { clockPreviewAnimationTrigger++ },
             )
         }
     }
@@ -448,6 +452,7 @@ private fun PortraitLayout(
     onEditWallpaper: (() -> Unit)? = null,
     onClockTapped: (() -> Unit)? = null,
     onClockBottomMeasured: ((Float) -> Unit)? = null,
+    clockAnimationTrigger: Int = 0,
     depthSourceBoundsProvider: (() -> RectF?)? = null,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -465,6 +470,7 @@ private fun PortraitLayout(
                 editable = !isPreview,
                 depthSourceBoundsProvider = depthSourceBoundsProvider,
                 onClick = onClockTapped,
+                clockAnimationTrigger = clockAnimationTrigger,
                 lockscreenWidgetLayoutState = widgetLayoutState,
                 modifier =
                     Modifier.onGloballyPositioned { coordinates ->
@@ -521,6 +527,7 @@ private fun LandscapeLayout(
     onWidgetsMoved: ((List<GridWidgetItem>) -> Unit)?,
     onEditWallpaper: (() -> Unit)? = null,
     onClockTapped: (() -> Unit)? = null,
+    clockAnimationTrigger: Int = 0,
     depthSourceBoundsProvider: (() -> RectF?)? = null,
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
@@ -536,6 +543,7 @@ private fun LandscapeLayout(
                 editable = !isPreview,
                 depthSourceBoundsProvider = depthSourceBoundsProvider,
                 onClick = onClockTapped,
+                clockAnimationTrigger = clockAnimationTrigger,
                 lockscreenWidgetLayoutState = widgetLayoutState,
             )
             if (!isPreview) Spacer(modifier = Modifier.height(Dimens.ClockSpacer * scale))
