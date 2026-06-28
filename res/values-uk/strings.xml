@@ -254,7 +254,7 @@
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>
     <string name="clock_date_position">Date Position</string>
-    <string name="clock_date_above">Above</string>
+    <string name="clock_date_above">Вище</string>
     <string name="clock_date_below">Below</string>
     <string name="clock_info_display">Info Display</string>
     <string name="clock_info_sources">Shown in Auto</string>
@@ -262,7 +262,7 @@
     <string name="clock_info_date">Дата</string>
     <string name="clock_info_media">Media</string>
     <string name="clock_info_smartspace">Smartspace</string>
-    <string name="clock_info_alarm">Alarm</string>
+    <string name="clock_info_alarm">Будильник</string>
     <string name="clock_info_calendar">Calendar</string>
     <string name="clock_info_weather">Weather</string>
     <string name="clock_color">Clock Color</string>
