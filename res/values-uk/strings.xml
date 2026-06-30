@@ -136,7 +136,7 @@
     <string name="folded_display">Folded</string>
     <string name="unfolded_display">Unfolded</string>
     <string name="preview_title">Preview</string>
-    <string name="next_button">Next</string>
+    <string name="next_button">Далі</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
     <string name="app_grid">Сітка програм</string>
@@ -255,12 +255,12 @@
     <string name="clock_align_right">Right</string>
     <string name="clock_date_position">Date Position</string>
     <string name="clock_date_above">Вище</string>
-    <string name="clock_date_below">Below</string>
+    <string name="clock_date_below">Нижче</string>
     <string name="clock_info_display">Info Display</string>
     <string name="clock_info_sources">Shown in Auto</string>
     <string name="clock_info_auto">Авто</string>
     <string name="clock_info_date">Дата</string>
-    <string name="clock_info_media">Media</string>
+    <string name="clock_info_media">Медіа</string>
     <string name="clock_info_smartspace">Smartspace</string>
     <string name="clock_info_alarm">Будильник</string>
     <string name="clock_info_calendar">Calendar</string>
