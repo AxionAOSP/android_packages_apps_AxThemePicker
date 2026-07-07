@@ -1473,7 +1473,7 @@ private fun GraffitiAngleIcon(tint: Color, direction: Float) {
         val cx = size.width / 2f
         val cy = size.height / 2f
         val half = 9.dp.toPx()
-        val tilt = direction * 5.dp.toPx()
+        val tilt = -direction * 5.dp.toPx()
         drawLine(
             color.copy(alpha = 0.42f),
             Offset(cx - half, cy - 6.dp.toPx() + tilt),
