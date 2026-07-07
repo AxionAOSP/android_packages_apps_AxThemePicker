@@ -27,6 +27,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.PersistableBundle
+import android.os.SystemClock
 import android.os.UserHandle
 import android.provider.Settings
 import android.util.Log
@@ -77,6 +78,11 @@ import kotlinx.coroutines.withContext
 
 private const val TAG = "WallpaperEffects"
 private const val EFFECTS_PKG = "com.android.axion.wallpapereffects"
+private const val EFFECT_FOREGROUND_FILE = "effect_foreground.png"
+private const val EFFECT_FOREGROUND_META_FILE = "effect_foreground_v1.meta"
+private const val LEGACY_EFFECT_FOREGROUND_META_FILE = "effect_foreground.meta"
+private const val MAGIC_PORTRAIT_READY_TIMEOUT_MS = 15000L
+private const val MAGIC_PORTRAIT_READY_POLL_MS = 150L
 
 private val DEFAULT_PORTRAIT_COLOR = 0xFF1A1A2E.toInt()
 
@@ -185,7 +191,7 @@ fun WallpaperEffectsScreen(mainScreenViewModel: MainScreenViewModel = viewModel(
         if (!photoReady) {
             val wm = WallpaperManager.getInstance(context)
             val isEffectActive = wm.wallpaperInfo?.packageName == EFFECTS_PKG
-            
+
             if (!isEffectActive) {
                 val success = withContext(Dispatchers.IO) {
                     saveCurrentWallpaperForEffects(context)
@@ -278,20 +284,27 @@ fun WallpaperEffectsScreen(mainScreenViewModel: MainScreenViewModel = viewModel(
             return@LaunchedEffect
         }
         val effect = tabConfigs[selectedTab]!!.effect
+        if (effect == WallpaperEffect.MAGIC_PORTRAIT) {
+            waitForMagicPortraitReady(context)
+            delay(MAGIC_PORTRAIT_READY_POLL_MS)
+            livePreviewReady = true
+            return@LaunchedEffect
+        }
         val processingDelay =
             when (effect) {
-                WallpaperEffect.MAGIC_PORTRAIT -> 3000L
                 WallpaperEffect.CINEMATIC -> 2500L
                 WallpaperEffect.WEATHER -> 1500L
                 WallpaperEffect.ATMOSPHERE -> 1500L
                 WallpaperEffect.GLASS -> 1000L
                 WallpaperEffect.NONE -> 0L
+                WallpaperEffect.MAGIC_PORTRAIT -> 0L
             }
         delay(processingDelay)
         livePreviewReady = true
     }
 
-    val onApplyClick: () -> Unit = {
+    val onApplyClick: () -> Unit = applyClick@{
+        if (!livePreviewReady) return@applyClick
         if (config.showTargetDialog) {
             showTargetDialog = true
         } else {
@@ -497,7 +510,7 @@ fun WallpaperEffectsScreen(mainScreenViewModel: MainScreenViewModel = viewModel(
                         )
                     FilledIconButton(
                         onClick = onApplyClick,
-                        enabled = !isApplying,
+                        enabled = !isApplying && livePreviewReady,
                         interactionSource = applyInteraction,
                         modifier =
                             Modifier.graphicsLayer {
@@ -1371,7 +1384,7 @@ private fun saveSelectedPhotoForEffects(context: Context, uri: Uri) {
         val file = File(filesDir, "wallpaper.jpg")
         file.outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG, 95, it) }
 
-        File(filesDir, "effect_foreground.png").delete()
+        deleteEffectsForeground(filesDir)
 
         bitmap.recycle()
         Log.d(TAG, "Saved selected photo to ${file.absolutePath}")
@@ -1399,7 +1412,7 @@ private fun saveCurrentWallpaperForEffects(context: Context): Boolean {
             }
         }
 
-        File(filesDir, "effect_foreground.png").delete()
+        deleteEffectsForeground(filesDir)
         bitmap.recycle()
         Log.d(TAG, "Saved current wallpaper for effects to ${file.absolutePath}")
         return true
@@ -1407,4 +1420,35 @@ private fun saveCurrentWallpaperForEffects(context: Context): Boolean {
         Log.e(TAG, "Failed to save current wallpaper for effects", e)
         return false
     }
+}
+
+private suspend fun waitForMagicPortraitReady(context: Context) {
+    val start = SystemClock.elapsedRealtime()
+    while (SystemClock.elapsedRealtime() - start < MAGIC_PORTRAIT_READY_TIMEOUT_MS) {
+        if (isMagicPortraitReady(context)) return
+        delay(MAGIC_PORTRAIT_READY_POLL_MS)
+    }
+}
+
+private suspend fun isMagicPortraitReady(context: Context): Boolean =
+    withContext(Dispatchers.IO) {
+        try {
+            val effectsCtx =
+                context.createPackageContext(EFFECTS_PKG, Context.CONTEXT_IGNORE_SECURITY)
+            val filesDir = effectsCtx.createDeviceProtectedStorageContext().filesDir
+            val foreground = File(filesDir, EFFECT_FOREGROUND_FILE)
+            val meta = File(filesDir, EFFECT_FOREGROUND_META_FILE)
+            foreground.exists() &&
+                foreground.length() > 0L &&
+                meta.exists() &&
+                meta.length() > 0L
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+private fun deleteEffectsForeground(filesDir: File) {
+    File(filesDir, EFFECT_FOREGROUND_FILE).delete()
+    File(filesDir, EFFECT_FOREGROUND_META_FILE).delete()
+    File(filesDir, LEGACY_EFFECT_FOREGROUND_META_FILE).delete()
 }
