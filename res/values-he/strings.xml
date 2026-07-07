@@ -12,7 +12,7 @@
     <string name="later">Later</string>
     <string name="no">No</string>
     <string name="reset">איפוס</string>
-    <string name="undo">Undo</string>
+    <string name="undo">החזרה</string>
     <string name="yes">כן</string>
     <!-- Common Labels -->
     <string name="info">Info</string>
@@ -20,7 +20,7 @@
     <string name="none">ללא</string>
     <string name="on">מופעלות</string>
     <string name="off">כבויות</string>
-    <string name="unknown">Unknown</string>
+    <string name="unknown">לא ידוע</string>
     <!-- Navigation Sections -->
     <!-- Navigation Tabs -->
     <string name="nav_wallpaper">תמונת רקע</string>
