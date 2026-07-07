@@ -59,11 +59,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.graphics.drawable.toBitmap
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
+import com.android.axion.themepicker.utils.wallpaper.MonetButtonColors
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
 import com.android.axion.themepicker.utils.wallpaper.getWallpaperDrawable
+import com.android.axion.themepicker.utils.wallpaper.monetButtonColors
 import com.google.android.renderscript.Toolkit
 import kotlin.math.max
 import kotlin.math.min
@@ -86,10 +89,12 @@ fun WallpaperCropScreen(
     val context = LocalContext.current
     val isStandaloneMode = onApply != null || onApplyBitmap != null
     val showFitModeToggle = isStandaloneMode || onNext != null
+    val darkTheme = isSystemInDarkTheme()
 
     val wallpaperDisplaySize = remember { DisplayHelper.getWallpaperDisplaySize(context) }
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    var buttonColors by remember { mutableStateOf<MonetButtonColors?>(null) }
     var originalWidth by remember { mutableIntStateOf(0) }
     var originalHeight by remember { mutableIntStateOf(0) }
 
@@ -110,7 +115,7 @@ fun WallpaperCropScreen(
 
     var showHint by remember { mutableStateOf(true) }
 
-    LaunchedEffect(imageUri, drawableRes) {
+    LaunchedEffect(imageUri, drawableRes, darkTheme) {
         isLoading = true
         loadError = false
         withContext(Dispatchers.IO) {
@@ -144,6 +149,7 @@ fun WallpaperCropScreen(
                 Log.d(TAG, "Decoded: ${decoded.width}x${decoded.height}")
 
                 fitBgColor = Color(WallpaperColors.fromBitmap(decoded).primaryColor.toArgb())
+                buttonColors = runCatching { monetButtonColors(decoded, darkTheme) }.getOrNull()
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to decode image", e)
                 loadError = true
@@ -348,8 +354,10 @@ fun WallpaperCropScreen(
                             modifier = Modifier.weight(1f).height(48.dp),
                             shapes = ToggleButtonDefaults.shapesFor(100.dp),
                             colors = ToggleButtonDefaults.toggleButtonColors(
-                                checkedContainerColor = MaterialTheme.colorScheme.primary,
-                                checkedContentColor = MaterialTheme.colorScheme.onPrimary,
+                                checkedContainerColor =
+                                    buttonColors?.container ?: MaterialTheme.colorScheme.primary,
+                                checkedContentColor =
+                                    buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
                                 containerColor = MaterialTheme.colorScheme.surfaceBright,
                                 contentColor = MaterialTheme.colorScheme.onSurface,
                             ),
@@ -366,8 +374,10 @@ fun WallpaperCropScreen(
                             modifier = Modifier.weight(1f).height(48.dp),
                             shapes = ToggleButtonDefaults.shapesFor(100.dp),
                             colors = ToggleButtonDefaults.toggleButtonColors(
-                                checkedContainerColor = MaterialTheme.colorScheme.primary,
-                                checkedContentColor = MaterialTheme.colorScheme.onPrimary,
+                                checkedContainerColor =
+                                    buttonColors?.container ?: MaterialTheme.colorScheme.primary,
+                                checkedContentColor =
+                                    buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
                                 containerColor = MaterialTheme.colorScheme.surfaceBright,
                                 contentColor = MaterialTheme.colorScheme.onSurface,
                             ),
@@ -400,14 +410,16 @@ fun WallpaperCropScreen(
                 shape = MaterialTheme.shapes.extraLarge,
                 colors =
                     ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        containerColor =
+                            buttonColors?.container ?: MaterialTheme.colorScheme.primary,
+                        contentColor =
+                            buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
                     ),
             ) {
                 if (isApplying) {
                     LoadingIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = MaterialTheme.colorScheme.onPrimary,
+                        color = buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
                     )
                 } else {
                     Text(

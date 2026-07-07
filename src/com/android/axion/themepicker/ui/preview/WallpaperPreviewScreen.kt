@@ -29,6 +29,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,6 +66,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,6 +75,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -84,6 +87,8 @@ import android.os.Handler
 import android.os.Looper
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
+import com.android.axion.themepicker.utils.wallpaper.MonetButtonColors
+import com.android.axion.themepicker.utils.wallpaper.monetButtonColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -115,6 +120,17 @@ fun WallpaperPreviewScreen(
     val handler = remember { Handler(Looper.getMainLooper()) }
     var isApplying by remember { mutableStateOf(false) }
     var applyResultMessage by remember { mutableStateOf<String?>(null) }
+
+    val darkTheme = isSystemInDarkTheme()
+    var buttonColors by remember { mutableStateOf<MonetButtonColors?>(null) }
+
+    LaunchedEffect(wallpaperBitmap, darkTheme) {
+        val bmp = wallpaperBitmap ?: return@LaunchedEffect
+        buttonColors =
+            withContext(Dispatchers.IO) {
+                runCatching { monetButtonColors(bmp, darkTheme) }.getOrNull()
+            }
+    }
 
     BackHandler(enabled = !isApplying) { onBack() }
 
@@ -209,8 +225,10 @@ fun WallpaperPreviewScreen(
                 shape = MaterialTheme.shapes.extraLarge,
                 colors =
                     ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        containerColor =
+                            buttonColors?.container ?: MaterialTheme.colorScheme.primary,
+                        contentColor =
+                            buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
                     ),
             ) {
                 Text(
