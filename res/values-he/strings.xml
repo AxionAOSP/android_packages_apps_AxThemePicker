@@ -160,7 +160,7 @@
     <string name="icon_pack_title">ערכת סמלים</string>
     <string name="icon_pack_description">Third-party icon packs change the look of your app icons</string>
     <string name="icon_pack_system_default">System Default</string>
-    <string name="icon_pack_active">Active</string>
+    <string name="icon_pack_active">פעיל</string>
     <string name="themed_icon_pack_title">ערכת סמלים מסוגננת</string>
     <string name="themed_icon_pack_description">Third-party themed icons like Lawnicons provide monochrome icons for more apps</string>
     <string name="themed_icon_pack_none">ללא</string>
@@ -207,7 +207,7 @@
     <string name="using_custom_color">Using custom color</string>
     <string name="choose_custom_color_method">Choose how to pick your custom color:</string>
     <!-- Fonts Screen -->
-    <string name="active_content_desc">Active</string>
+    <string name="active_content_desc">פעיל</string>
     <string name="add_custom_font">Add custom font</string>
     <string name="add_font">Add font</string>
     <string name="change_custom_font">Change custom font</string>
