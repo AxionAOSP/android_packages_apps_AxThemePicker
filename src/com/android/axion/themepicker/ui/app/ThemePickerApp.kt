@@ -29,6 +29,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -38,6 +39,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -65,11 +68,15 @@ import com.android.axion.themepicker.ui.themes.IconShapesScreen
 import com.android.axion.themepicker.ui.themes.ThemedIconsScreen
 import com.android.axion.themepicker.ui.wallpaperset.WallpaperCropScreen
 import com.android.axion.themepicker.ui.wallpaperset.computeDisplayCropHints
+import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import com.android.axion.themepicker.utils.wallpaper.applyWallpaper
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
 import com.android.axion.themepicker.utils.wallpaper.getOriginalWallpaperUri
+import com.android.axion.themepicker.utils.wallpaper.monetPrimaryColors
 import com.android.axion.themepicker.viewmodel.MainScreenViewModel
 import com.android.axion.themepicker.viewmodel.WallpaperGalleryViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -291,9 +298,31 @@ private fun DetailScreenContent(
 
         is Screen.WallpaperPreview -> {
             BackHandler { mainScreenViewModel.goBack() }
-            DeferredScreen {
+            val wallpaperBitmap = mainScreenViewModel.pendingPreviewBitmap
+            val darkTheme = isSystemInDarkTheme()
+            var primaryColors by
+                remember(wallpaperBitmap, darkTheme) {
+                    mutableStateOf<MonetPrimaryColors?>(null)
+                }
+
+            LaunchedEffect(wallpaperBitmap, darkTheme) {
+                val bitmap = wallpaperBitmap ?: return@LaunchedEffect
+                primaryColors =
+                    withContext(Dispatchers.IO) {
+                        monetPrimaryColors(context, bitmap, darkTheme)
+                    }
+            }
+            val colors =
+                primaryColors?.applyTo(MaterialTheme.colorScheme) ?: MaterialTheme.colorScheme
+
+            DeferredScreen(
+                backgroundColor = colors.surfaceContainer,
+                loadingContainerColor = colors.primaryContainer,
+                loadingIndicatorColor = colors.onPrimaryContainer,
+            ) {
                 WallpaperPreviewScreen(
-                    wallpaperBitmap = mainScreenViewModel.pendingPreviewBitmap,
+                    wallpaperBitmap = wallpaperBitmap,
+                    primaryColors = primaryColors,
                     targetFlags = screen.targetFlags,
                     onApply = { bitmap, flags ->
                         val lockSelected = (flags and WallpaperManager.FLAG_LOCK) != 0

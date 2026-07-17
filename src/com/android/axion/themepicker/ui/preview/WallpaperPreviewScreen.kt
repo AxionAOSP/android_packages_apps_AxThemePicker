@@ -18,8 +18,9 @@
 
 package com.android.axion.themepicker.ui.preview
 
-import android.app.WallpaperManager
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
@@ -29,7 +30,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,12 +46,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ContainedLoadingIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -62,11 +62,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,7 +73,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -83,12 +80,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import android.os.Handler
-import android.os.Looper
 import com.android.axion.themepicker.R
+import com.android.axion.themepicker.ui.components.WallpaperTargetDialog
 import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
-import com.android.axion.themepicker.utils.wallpaper.MonetButtonColors
-import com.android.axion.themepicker.utils.wallpaper.monetButtonColors
+import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -98,6 +93,7 @@ private const val RESULT_DISPLAY_MS = 1500L
 @Composable
 fun WallpaperPreviewScreen(
     wallpaperBitmap: Bitmap?,
+    primaryColors: MonetPrimaryColors?,
     targetFlags: Int = 0,
     onApply: (Bitmap, Int) -> Unit,
     onBack: () -> Unit,
@@ -121,16 +117,7 @@ fun WallpaperPreviewScreen(
     var isApplying by remember { mutableStateOf(false) }
     var applyResultMessage by remember { mutableStateOf<String?>(null) }
 
-    val darkTheme = isSystemInDarkTheme()
-    var buttonColors by remember { mutableStateOf<MonetButtonColors?>(null) }
-
-    LaunchedEffect(wallpaperBitmap, darkTheme) {
-        val bmp = wallpaperBitmap ?: return@LaunchedEffect
-        buttonColors =
-            withContext(Dispatchers.IO) {
-                runCatching { monetButtonColors(bmp, darkTheme) }.getOrNull()
-            }
-    }
+    val colors = primaryColors?.applyTo(MaterialTheme.colorScheme) ?: MaterialTheme.colorScheme
 
     BackHandler(enabled = !isApplying) { onBack() }
 
@@ -153,11 +140,13 @@ fun WallpaperPreviewScreen(
                 },
                 colors =
                     TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainer
+                        containerColor = colors.surfaceContainer,
+                        titleContentColor = colors.onSurface,
+                        navigationIconContentColor = colors.onSurface,
                     ),
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        containerColor = colors.surfaceContainer,
     ) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize().padding(paddingValues).navigationBarsPadding(),
@@ -168,7 +157,7 @@ fun WallpaperPreviewScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 if (wallpaperBitmap == null) {
-                    LoadingIndicator()
+                    LoadingIndicator(color = colors.primary)
                 } else if (hasMultiDisplay && foldedSize != null) {
                     DualDisplayPreview(
                         wallpaperBitmap = wallpaperBitmap,
@@ -183,6 +172,11 @@ fun WallpaperPreviewScreen(
                     Card(
                         modifier = Modifier.fillMaxHeight(0.85f).aspectRatio(aspectRatio),
                         shape = shape,
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor = colors.surfaceContainerHigh,
+                                contentColor = colors.onSurface,
+                            ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                     ) {
                         imageBitmap?.let { bmp ->
@@ -225,10 +219,8 @@ fun WallpaperPreviewScreen(
                 shape = MaterialTheme.shapes.extraLarge,
                 colors =
                     ButtonDefaults.buttonColors(
-                        containerColor =
-                            buttonColors?.container ?: MaterialTheme.colorScheme.primary,
-                        contentColor =
-                            buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
+                        containerColor = colors.primary,
+                        contentColor = colors.onPrimary,
                     ),
             ) {
                 Text(
@@ -241,6 +233,7 @@ fun WallpaperPreviewScreen(
 
     if (showTargetDialog) {
         WallpaperTargetDialog(
+            colors = colors,
             onDismiss = { showTargetDialog = false },
             onSelect = { flags ->
                 showTargetDialog = false
@@ -260,6 +253,7 @@ fun WallpaperPreviewScreen(
     ApplyingWallpaperDialog(
         isApplying = isApplying,
         resultMessage = applyResultMessage,
+        colors = colors,
     )
 }
 
@@ -267,11 +261,10 @@ fun WallpaperPreviewScreen(
 private fun ApplyingWallpaperDialog(
     isApplying: Boolean,
     resultMessage: String?,
+    colors: ColorScheme,
 ) {
     val showDialog = isApplying || resultMessage != null
     if (!showDialog) return
-
-    val colors = MaterialTheme.colorScheme
 
     BasicAlertDialog(onDismissRequest = {}) {
         Surface(
@@ -328,7 +321,11 @@ private fun ApplyingWallpaperDialog(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
-                            ContainedLoadingIndicator(modifier = Modifier.size(48.dp))
+                            ContainedLoadingIndicator(
+                                modifier = Modifier.size(48.dp),
+                                containerColor = colors.primaryContainer,
+                                indicatorColor = colors.onPrimaryContainer,
+                            )
                             Text(
                                 text = stringResource(R.string.applying_wallpaper),
                                 style = MaterialTheme.typography.bodyLarge,
@@ -341,49 +338,4 @@ private fun ApplyingWallpaperDialog(
             }
         }
     }
-}
-
-@Composable
-private fun WallpaperTargetDialog(onDismiss: () -> Unit, onSelect: (Int) -> Unit) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.set_wallpaper_on)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                TextButton(
-                    onClick = { onSelect(WallpaperManager.FLAG_SYSTEM) },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_screen),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                TextButton(
-                    onClick = { onSelect(WallpaperManager.FLAG_LOCK) },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = stringResource(R.string.lock_screen_label),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                TextButton(
-                    onClick = {
-                        onSelect(WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_lock_both),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) }
-        },
-    )
 }

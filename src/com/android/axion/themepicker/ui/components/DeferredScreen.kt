@@ -45,6 +45,8 @@ private const val RENDER_BUFFER_MS = 100L
 @Composable
 fun DeferredScreen(
     backgroundColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+    loadingContainerColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    loadingIndicatorColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     content: @Composable () -> Unit,
 ) {
     var contentComposed by remember { mutableStateOf(false) }
@@ -76,7 +78,11 @@ fun DeferredScreen(
                 modifier = Modifier.fillMaxSize().background(backgroundColor),
                 contentAlignment = Alignment.Center,
             ) {
-                ContainedLoadingIndicator(modifier = Modifier.size(48.dp))
+                ContainedLoadingIndicator(
+                    modifier = Modifier.size(48.dp),
+                    containerColor = loadingContainerColor,
+                    indicatorColor = loadingIndicatorColor,
+                )
             }
         }
     }

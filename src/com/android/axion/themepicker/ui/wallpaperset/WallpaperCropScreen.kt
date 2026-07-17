@@ -19,7 +19,6 @@
 package com.android.axion.themepicker.ui.wallpaperset
 
 import android.app.WallpaperColors
-import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -62,20 +61,29 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.graphics.drawable.toBitmap
 import com.android.axion.themepicker.R
+import com.android.axion.themepicker.ui.components.WallpaperTargetDialog
 import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
-import com.android.axion.themepicker.utils.wallpaper.MonetButtonColors
+import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
 import com.android.axion.themepicker.utils.wallpaper.getWallpaperDrawable
-import com.android.axion.themepicker.utils.wallpaper.monetButtonColors
+import com.android.axion.themepicker.utils.wallpaper.monetPrimaryColors
 import com.google.android.renderscript.Toolkit
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 private const val TAG = "WallpaperCropScreen"
 private const val MAX_ZOOM_FACTOR = 8f
+
+private data class LoadedWallpaper(
+    val bitmap: Bitmap,
+    val dimensions: Pair<Int, Int>?,
+    val fitBackgroundColor: Color,
+    val primaryColors: MonetPrimaryColors,
+)
 
 @Composable
 fun WallpaperCropScreen(
@@ -94,7 +102,7 @@ fun WallpaperCropScreen(
     val wallpaperDisplaySize = remember { DisplayHelper.getWallpaperDisplaySize(context) }
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    var buttonColors by remember { mutableStateOf<MonetButtonColors?>(null) }
+    var primaryColors by remember { mutableStateOf<MonetPrimaryColors?>(null) }
     var originalWidth by remember { mutableIntStateOf(0) }
     var originalHeight by remember { mutableIntStateOf(0) }
 
@@ -118,45 +126,57 @@ fun WallpaperCropScreen(
     LaunchedEffect(imageUri, drawableRes, darkTheme) {
         isLoading = true
         loadError = false
-        withContext(Dispatchers.IO) {
-            try {
-                val decoded: Bitmap? =
-                    when {
-                        imageUri != null -> {
-
-                            if (isStandaloneMode) {
-                                val dims = getImageDimensions(context, imageUri)
-                                if (dims != null) {
-                                    originalWidth = dims.first
-                                    originalHeight = dims.second
-                                }
-                            }
-                            decodeFromUri(context, imageUri, wallpaperDisplaySize)
+        primaryColors = null
+        try {
+            val loaded =
+                withContext(Dispatchers.IO) {
+                    val dimensions =
+                        if (imageUri != null && isStandaloneMode) {
+                            getImageDimensions(context, imageUri)
+                        } else {
+                            null
                         }
-                        drawableRes != 0 -> {
-                            getWallpaperDrawable(context, drawableRes)?.toBitmap()
-                        }
-                        else -> getCurrentWallpaperBitmap(context, true)
-                    }
+                    val decoded =
+                        when {
+                            imageUri != null ->
+                                decodeFromUri(context, imageUri, wallpaperDisplaySize)
+                            drawableRes != 0 ->
+                                getWallpaperDrawable(context, drawableRes)?.toBitmap()
+                            else -> getCurrentWallpaperBitmap(context, true)
+                        } ?: return@withContext null
 
-                if (decoded == null) {
-                    loadError = true
-                    isLoading = false
-                    return@withContext
+                    LoadedWallpaper(
+                        bitmap = decoded,
+                        dimensions = dimensions,
+                        fitBackgroundColor =
+                            Color(WallpaperColors.fromBitmap(decoded).primaryColor.toArgb()),
+                        primaryColors = monetPrimaryColors(context, decoded, darkTheme),
+                    )
                 }
 
-                bitmap = decoded
-                Log.d(TAG, "Decoded: ${decoded.width}x${decoded.height}")
-
-                fitBgColor = Color(WallpaperColors.fromBitmap(decoded).primaryColor.toArgb())
-                buttonColors = runCatching { monetButtonColors(decoded, darkTheme) }.getOrNull()
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to decode image", e)
+            if (loaded == null) {
                 loadError = true
+                return@LaunchedEffect
             }
+
+            bitmap = loaded.bitmap
+            loaded.dimensions?.let { (width, height) ->
+                originalWidth = width
+                originalHeight = height
+            }
+            fitBgColor = loaded.fitBackgroundColor
+            primaryColors = loaded.primaryColors
+            Log.d(TAG, "Decoded: ${loaded.bitmap.width}x${loaded.bitmap.height}")
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decode image", e)
+            loadError = true
+        } finally {
             isLoading = false
         }
     }
+    val colors = primaryColors?.applyTo(MaterialTheme.colorScheme) ?: MaterialTheme.colorScheme
 
     LaunchedEffect(bitmap, screenW, screenH, fitMode) {
         val bmp = bitmap ?: return@LaunchedEffect
@@ -342,7 +362,7 @@ fun WallpaperCropScreen(
                 Surface(
                     modifier = Modifier.fillMaxWidth().widthIn(max = 400.dp),
                     shape = MaterialTheme.shapes.extraLarge,
-                    color = MaterialTheme.colorScheme.surfaceBright,
+                    color = colors.surfaceBright,
                 ) {
                     ButtonGroup(
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
@@ -354,12 +374,10 @@ fun WallpaperCropScreen(
                             modifier = Modifier.weight(1f).height(48.dp),
                             shapes = ToggleButtonDefaults.shapesFor(100.dp),
                             colors = ToggleButtonDefaults.toggleButtonColors(
-                                checkedContainerColor =
-                                    buttonColors?.container ?: MaterialTheme.colorScheme.primary,
-                                checkedContentColor =
-                                    buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
-                                containerColor = MaterialTheme.colorScheme.surfaceBright,
-                                contentColor = MaterialTheme.colorScheme.onSurface,
+                                checkedContainerColor = colors.primary,
+                                checkedContentColor = colors.onPrimary,
+                                containerColor = colors.surfaceBright,
+                                contentColor = colors.onSurface,
                             ),
                         ) {
                             Text(
@@ -374,12 +392,10 @@ fun WallpaperCropScreen(
                             modifier = Modifier.weight(1f).height(48.dp),
                             shapes = ToggleButtonDefaults.shapesFor(100.dp),
                             colors = ToggleButtonDefaults.toggleButtonColors(
-                                checkedContainerColor =
-                                    buttonColors?.container ?: MaterialTheme.colorScheme.primary,
-                                checkedContentColor =
-                                    buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
-                                containerColor = MaterialTheme.colorScheme.surfaceBright,
-                                contentColor = MaterialTheme.colorScheme.onSurface,
+                                checkedContainerColor = colors.primary,
+                                checkedContentColor = colors.onPrimary,
+                                containerColor = colors.surfaceBright,
+                                contentColor = colors.onSurface,
                             ),
                         ) {
                             Text(
@@ -410,16 +426,16 @@ fun WallpaperCropScreen(
                 shape = MaterialTheme.shapes.extraLarge,
                 colors =
                     ButtonDefaults.buttonColors(
-                        containerColor =
-                            buttonColors?.container ?: MaterialTheme.colorScheme.primary,
-                        contentColor =
-                            buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
+                        containerColor = colors.primary,
+                        contentColor = colors.onPrimary,
+                        disabledContainerColor = colors.primary,
+                        disabledContentColor = colors.onPrimary,
                     ),
             ) {
                 if (isApplying) {
                     LoadingIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = buttonColors?.content ?: MaterialTheme.colorScheme.onPrimary,
+                        color = colors.onPrimary,
                     )
                 } else {
                     Text(
@@ -440,6 +456,7 @@ fun WallpaperCropScreen(
 
     if (showTargetDialog && imageUri != null) {
         WallpaperTargetDialog(
+            colors = colors,
             onDismiss = { showTargetDialog = false },
             onSelect = { flags ->
                 showTargetDialog = false
@@ -514,51 +531,6 @@ private fun buildFitWp(src: Bitmap, target: Point): Bitmap {
         }
     canvas.drawBitmap(src, matrix, paint)
     return out
-}
-
-@Composable
-private fun WallpaperTargetDialog(onDismiss: () -> Unit, onSelect: (Int) -> Unit) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.set_wallpaper_on)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                TextButton(
-                    onClick = { onSelect(WallpaperManager.FLAG_SYSTEM) },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_screen),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                TextButton(
-                    onClick = { onSelect(WallpaperManager.FLAG_LOCK) },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = stringResource(R.string.lock_screen_label),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                TextButton(
-                    onClick = {
-                        onSelect(WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_lock_both),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) }
-        },
-    )
 }
 
 private fun decodeFromUri(context: Context, uri: Uri, wallpaperDisplaySize: Point): Bitmap? {
