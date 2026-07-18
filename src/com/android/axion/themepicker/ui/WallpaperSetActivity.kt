@@ -38,6 +38,7 @@ import androidx.lifecycle.lifecycleScope
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.theme.AxTheme
 import com.android.axion.themepicker.ui.wallpaperset.WallpaperCropScreen
+import com.android.axion.themepicker.ui.wallpaperset.adjustCropRect
 import com.android.axion.themepicker.utils.wallpaper.toCompressedStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -151,15 +152,21 @@ class WallpaperSetActivity : ComponentActivity() {
                                 TAG,
                                 "setStreamWithCrops not available, " + "falling back to setStream",
                             )
+                            val adjustedCropRect = Rect(cropRect).apply {
+                                adjustCropRect(this@WallpaperSetActivity, this, zoomIn = false)
+                            }
                             contentResolver.openInputStream(uri)?.use { stream ->
-                                wm.setStream(stream, cropRect, true, flags)
+                                wm.setStream(stream, adjustedCropRect, true, flags)
                             } ?: throw Exception("Failed to open image stream")
                         }
                     } else {
 
                         Log.d(TAG, "Applying: cropHint=$cropRect, flags=$flags")
+                        val adjustedCropRect = Rect(cropRect).apply {
+                            adjustCropRect(this@WallpaperSetActivity, this, zoomIn = false)
+                        }
                         contentResolver.openInputStream(uri)?.use { stream ->
-                            wm.setStream(stream, cropRect, true, flags)
+                            wm.setStream(stream, adjustedCropRect, true, flags)
                         } ?: throw Exception("Failed to open image stream")
                     }
                 }

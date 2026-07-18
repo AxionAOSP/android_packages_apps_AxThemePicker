@@ -327,15 +327,13 @@ private fun DetailScreenContent(
                     onApply = { bitmap, flags ->
                         val lockSelected = (flags and WallpaperManager.FLAG_LOCK) != 0
                         val homeSelected = (flags and WallpaperManager.FLAG_SYSTEM) != 0
-                        val cropHints =
-                            computeDisplayCropHints(context, bitmap.width, bitmap.height)
                         applyWallpaper(
                             context = context,
                             lockscreenBitmap = bitmap,
                             homescreenBitmap = bitmap,
                             lockscreenSelected = lockSelected,
                             homescreenSelected = homeSelected,
-                            cropHints = cropHints,
+                            cropHints = null,
                         )
                     },
                     onBack = { mainScreenViewModel.goBack() },
