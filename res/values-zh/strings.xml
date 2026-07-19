@@ -73,6 +73,8 @@
     <string name="wallpaper_info">桌布資訊</string>
     <string name="wallpaper_fill_mode">填滿</string>
     <string name="wallpaper_fit_mode">符合</string>
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
     <!-- Effects -->
     <string name="wallpaper_effects_title">效果</string>
     <string name="wallpaper_effects_description">添加視覺效果到桌布</string>
@@ -133,10 +135,6 @@
     <string name="next_button">下一步</string>
     <string name="applying_wallpaper">套用中\u2026</string>
     <!-- Style Section -->
-    <string name="app_grid">應用程式網格</string>
-    <string name="app_grid_title">應用程式網格</string>
-    <string name="home_screen_layout">主畫面版面配置</string>
-    <string name="home_screen_layout_title">主畫面版面配置</string>
     <string name="icon_shape_title">圖示形狀</string>
     <string name="icon_shape_description">應用程式圖示外觀</string>
     <string name="themed_icons_title">圖示</string>
