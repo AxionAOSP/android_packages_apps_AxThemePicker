@@ -75,6 +75,8 @@
     <string name="wallpaper_info">Información de fondo de pantalla</string>
     <string name="wallpaper_fill_mode">Fill</string>
     <string name="wallpaper_fit_mode">Fit</string>
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
     <!-- Effects -->
     <string name="wallpaper_effects_title">Effects</string>
     <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
@@ -135,10 +137,6 @@
     <string name="next_button">Next</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="app_grid">Cuadricula de aplicaciones</string>
-    <string name="app_grid_title">Cuadricula de aplicaciones</string>
-    <string name="home_screen_layout">Diseño de pantalla de inicio</string>
-    <string name="home_screen_layout_title">Home Screen Layout</string>
     <string name="icon_shape_title">Icon Shape</string>
     <string name="icon_shape_description">App icon appearance</string>
     <string name="themed_icons_title">Icons</string>
