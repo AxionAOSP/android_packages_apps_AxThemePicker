@@ -39,7 +39,6 @@ import com.android.axion.themepicker.ui.theme.*
 @Composable
 fun StyleSection(
     onOpenColors: () -> Unit,
-    onOpenAppGrid: () -> Unit,
     onOpenIconShapes: () -> Unit,
     onOpenThemedIcons: () -> Unit,
     onOpenFonts: () -> Unit,
@@ -68,8 +67,6 @@ fun StyleSection(
             ) {
                 ColorsCardContent(onClick = onOpenColors)
 
-                AppGridCardContent(onClick = onOpenAppGrid)
-
                 IconShapesCardContent(onClick = onOpenIconShapes)
 
                 ThemedIconsCardContent(onClick = onOpenThemedIcons)
@@ -93,8 +90,6 @@ fun StyleSection(
             StyleHeader()
 
             ColorsCardContent(onClick = onOpenColors)
-
-            AppGridCardContent(onClick = onOpenAppGrid)
 
             IconShapesCardContent(onClick = onOpenIconShapes)
 
@@ -187,44 +182,6 @@ private fun ColorsCardContent(onClick: () -> Unit, modifier: Modifier = Modifier
                     .clip(CircleShape)
                     .background(colors.secondary.copy(alpha = 0.6f))
         )
-    }
-}
-
-@Composable
-private fun AppGridCardContent(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val colors = MaterialTheme.colorScheme
-
-    SettingsCard(
-        title = stringResource(R.string.app_grid),
-        description = stringResource(R.string.home_screen_layout),
-        onClick = onClick,
-        modifier = modifier,
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                repeat(2) {
-                    Box(
-                        modifier =
-                            Modifier.size(14.dp)
-                                .clip(RoundedCornerShape(4.dp))
-                                .background(colors.primary.copy(alpha = 0.8f))
-                    )
-                }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                repeat(2) {
-                    Box(
-                        modifier =
-                            Modifier.size(14.dp)
-                                .clip(RoundedCornerShape(4.dp))
-                                .background(colors.primary.copy(alpha = 0.4f))
-                    )
-                }
-            }
-        }
     }
 }
 

@@ -92,10 +92,6 @@ class MainScreenViewModel : ViewModel() {
         navigateTo(Screen.ColorsSettings)
     }
 
-    fun onOpenAppGrid() {
-        navigateTo(Screen.AppGrid)
-    }
-
     fun onOpenIconShapes() {
         navigateTo(Screen.IconShapes)
     }

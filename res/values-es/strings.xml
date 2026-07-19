@@ -135,10 +135,6 @@
     <string name="next_button">Next</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="app_grid">Cuadricula de aplicaciones</string>
-    <string name="app_grid_title">Cuadricula de aplicaciones</string>
-    <string name="home_screen_layout">Diseño de pantalla de inicio</string>
-    <string name="home_screen_layout_title">Home Screen Layout</string>
     <string name="icon_shape_title">Icon Shape</string>
     <string name="icon_shape_description">App icon appearance</string>
     <string name="themed_icons_title">Icons</string>

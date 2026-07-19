@@ -79,10 +79,6 @@
     <string name="effects_beta_notice_desc">效果是临时的，不会保留。应用新壁纸以删除它们。</string>
 
     <!-- Style Section -->
-    <string name="app_grid">应用网格</string>
-    <string name="app_grid_title">应用网格</string>
-    <string name="home_screen_layout">主屏幕布局</string>
-    <string name="home_screen_layout_title">主屏幕布局</string>
     <string name="icon_shape_title">图标形状</string>
     <string name="icon_shape_description">应用图标外观</string>
     <string name="themed_icons_title">图标</string>

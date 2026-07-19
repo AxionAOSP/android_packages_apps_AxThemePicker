@@ -139,10 +139,6 @@
     <string name="next_button">Далее</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="app_grid">Сетка приложений</string>
-    <string name="app_grid_title">Сетка приложений</string>
-    <string name="home_screen_layout">Раскладка рабочего стола</string>
-    <string name="home_screen_layout_title">Home Screen Layout</string>
     <string name="icon_shape_title">Форма иконок</string>
     <string name="icon_shape_description">App icon appearance</string>
     <string name="themed_icons_title">Icons</string>

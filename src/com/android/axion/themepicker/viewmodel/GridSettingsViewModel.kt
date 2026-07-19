@@ -17,12 +17,10 @@
 package com.android.axion.themepicker.viewmodel
 
 import android.app.Application
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.customization.model.grid.DefaultShapeGridManager
-import com.android.customization.model.grid.GridOptionModel
 import com.android.customization.model.grid.ShapeOptionModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -35,12 +33,6 @@ class GridSettingsViewModel(application: Application) : AndroidViewModel(applica
 
     private val manager =
         DefaultShapeGridManager(application.applicationContext, Dispatchers.IO, bgScope)
-
-    private val _gridOptions = MutableStateFlow<List<GridOptionModel>>(emptyList())
-    val gridOptions: StateFlow<List<GridOptionModel>> = _gridOptions.asStateFlow()
-
-    private val _selectedGridKey = MutableStateFlow<String?>(null)
-    val selectedGridKey: StateFlow<String?> = _selectedGridKey.asStateFlow()
 
     private val _shapeOptions = MutableStateFlow<List<ShapeOptionModel>>(emptyList())
     val shapeOptions: StateFlow<List<ShapeOptionModel>> = _shapeOptions.asStateFlow()
@@ -63,26 +55,10 @@ class GridSettingsViewModel(application: Application) : AndroidViewModel(applica
             manager.isCustomizationAvailable.collect { available -> _isAvailable.value = available }
         }
         viewModelScope.launch {
-            manager.gridOptions.collect { options ->
-                _gridOptions.value = options
-                _selectedGridKey.value = options.firstOrNull { it.isCurrent }?.key
-            }
-        }
-        viewModelScope.launch {
             manager.shapeOptions.collect { options ->
                 _shapeOptions.value = options
                 _selectedShapeKey.value = options.firstOrNull { it.isCurrent }?.key
             }
-        }
-    }
-
-    fun selectGrid(option: GridOptionModel) {
-        viewModelScope.launch {
-            _isApplying.value = true
-            _selectedGridKey.value = option.key
-            withContext(Dispatchers.IO) { manager.applyGridOption(option.key) }
-            delay(500)
-            _isApplying.value = false
         }
     }
 
@@ -94,10 +70,6 @@ class GridSettingsViewModel(application: Application) : AndroidViewModel(applica
             delay(500)
             _isApplying.value = false
         }
-    }
-
-    fun getGridDrawable(iconId: Int): Drawable? {
-        return manager.getGridOptionDrawable(iconId)
     }
 
     override fun onCleared() {
