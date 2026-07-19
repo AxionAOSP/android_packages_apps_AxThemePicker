@@ -74,6 +74,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -82,6 +83,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.WallpaperTargetDialog
+import com.android.axion.themepicker.ui.wallpaperset.rememberWallpaperZoomScale
 import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
 import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import kotlinx.coroutines.Dispatchers
@@ -101,6 +103,7 @@ fun WallpaperPreviewScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val wallpaperZoomScale = rememberWallpaperZoomScale()
 
     val imageBitmap = remember(wallpaperBitmap) { wallpaperBitmap?.asImageBitmap() }
     val hasMultiDisplay = remember { DisplayHelper.hasMultiInternalDisplays(context) }
@@ -163,6 +166,7 @@ fun WallpaperPreviewScreen(
                         wallpaperBitmap = wallpaperBitmap,
                         foldedDisplaySize = foldedSize,
                         unfoldedDisplaySize = unfoldedSize,
+                        wallpaperZoomScale = wallpaperZoomScale,
                         modifier = Modifier.fillMaxWidth(),
                     )
                 } else {
@@ -183,7 +187,13 @@ fun WallpaperPreviewScreen(
                             Image(
                                 bitmap = bmp,
                                 contentDescription = stringResource(R.string.wallpaper_photo),
-                                modifier = Modifier.fillMaxSize().clip(shape),
+                                modifier =
+                                    Modifier.fillMaxSize()
+                                        .clip(shape)
+                                        .graphicsLayer(
+                                            scaleX = wallpaperZoomScale,
+                                            scaleY = wallpaperZoomScale,
+                                        ),
                                 contentScale = ContentScale.Crop,
                             )
                         }

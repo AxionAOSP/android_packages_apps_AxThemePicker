@@ -82,6 +82,8 @@
     <string name="wallpaper_info">Wallpaper info</string>
     <string name="wallpaper_fill_mode">Fill</string>
     <string name="wallpaper_fit_mode">Fit</string>
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
 
     <!-- Effects -->
     <string name="wallpaper_effects_title">Effects</string>

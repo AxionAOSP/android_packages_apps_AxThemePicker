@@ -19,7 +19,12 @@ package com.android.axion.themepicker.ui.preview
 import android.graphics.Bitmap
 import android.graphics.Point
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,6 +44,7 @@ fun DualDisplayPreview(
     wallpaperBitmap: Bitmap?,
     foldedDisplaySize: Point,
     unfoldedDisplaySize: Point,
+    wallpaperZoomScale: Float,
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 14.dp,
     spacing: Dp = 8.dp,
@@ -53,6 +60,7 @@ fun DualDisplayPreview(
             bitmap = wallpaperBitmap,
             aspectRatio = unfoldedAR,
             cornerRadius = cornerRadius,
+            wallpaperZoomScale = wallpaperZoomScale,
             modifier = Modifier.weight(unfoldedAR),
         )
 
@@ -60,6 +68,7 @@ fun DualDisplayPreview(
             bitmap = wallpaperBitmap,
             aspectRatio = foldedAR,
             cornerRadius = cornerRadius,
+            wallpaperZoomScale = wallpaperZoomScale,
             modifier = Modifier.weight(foldedAR),
         )
     }
@@ -70,6 +79,7 @@ private fun DisplayPreviewCard(
     bitmap: Bitmap?,
     aspectRatio: Float,
     cornerRadius: Dp,
+    wallpaperZoomScale: Float,
     modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(cornerRadius)
@@ -88,7 +98,13 @@ private fun DisplayPreviewCard(
             Image(
                 bitmap = imageBitmap,
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize().clip(shape),
+                modifier =
+                    Modifier.fillMaxSize()
+                        .clip(shape)
+                        .graphicsLayer(
+                            scaleX = wallpaperZoomScale,
+                            scaleY = wallpaperZoomScale,
+                        ),
                 contentScale = ContentScale.Crop,
             )
         }

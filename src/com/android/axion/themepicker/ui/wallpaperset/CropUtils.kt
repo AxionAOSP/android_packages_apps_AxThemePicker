@@ -128,22 +128,6 @@ fun calculateVisibleRect(outer: Point, inner: Point): Rect {
     }
 }
 
-fun adjustCropRect(context: Context, cropRect: Rect, zoomIn: Boolean) {
-    val centerX = cropRect.centerX().toFloat()
-    val centerY = cropRect.centerY().toFloat()
-    val width = cropRect.width().toFloat()
-    val height = cropRect.height().toFloat()
-    val maxScale = DisplayHelper.getSystemWallpaperMaxScale(context)
-    val scale = if (zoomIn) maxScale else 1f / maxScale
-
-    cropRect.set(
-        (centerX - width / 2f / scale).toInt(),
-        (centerY - height / 2f / scale).toInt(),
-        (centerX + width / 2f / scale).toInt(),
-        (centerY + height / 2f / scale).toInt(),
-    )
-}
-
 fun calculateCropRectForDisplay(
     context: Context,
     wallpaperZoom: Float,

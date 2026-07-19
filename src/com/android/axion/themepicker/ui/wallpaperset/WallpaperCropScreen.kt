@@ -30,36 +30,80 @@ import android.graphics.Rect
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.CropFree
+import androidx.compose.material.icons.filled.FitScreen
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroup
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ContainedLoadingIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.withSave
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.graphics.drawable.toBitmap
+import com.android.axion.compose.preferences.rememberSecureSettingBooleanState
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.WallpaperTargetDialog
 import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
@@ -67,8 +111,6 @@ import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
 import com.android.axion.themepicker.utils.wallpaper.getWallpaperDrawable
 import com.android.axion.themepicker.utils.wallpaper.monetPrimaryColors
-import com.google.android.renderscript.Toolkit
-import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CancellationException
@@ -98,6 +140,22 @@ fun WallpaperCropScreen(
     val isStandaloneMode = onApply != null || onApplyBitmap != null
     val showFitModeToggle = isStandaloneMode || onNext != null
     val darkTheme = isSystemInDarkTheme()
+    val (wallpaperZoomDisabled, setWallpaperZoomDisabled) =
+        rememberSecureSettingBooleanState(WALLPAPER_ZOOM_DISABLED_SETTING)
+    val maxWallpaperScale =
+        remember(context) { DisplayHelper.getSystemWallpaperMaxScale(context) }
+    val wallpaperZoomTargetScale = if (wallpaperZoomDisabled) 1f else maxWallpaperScale
+    val animatedWallpaperZoomScale by
+        animateFloatAsState(
+            targetValue = wallpaperZoomTargetScale,
+            animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
+            label = "wallpaperZoomScale",
+        )
+    val wallpaperZoomScale =
+        animatedWallpaperZoomScale.coerceIn(
+            minOf(1f, maxWallpaperScale),
+            maxOf(1f, maxWallpaperScale),
+        )
 
     val wallpaperDisplaySize = remember { DisplayHelper.getWallpaperDisplaySize(context) }
 
@@ -122,6 +180,7 @@ fun WallpaperCropScreen(
     var loadError by remember { mutableStateOf(false) }
 
     var showHint by remember { mutableStateOf(true) }
+    var controlsVisible by rememberSaveable { mutableStateOf(true) }
 
     LaunchedEffect(imageUri, drawableRes, darkTheme) {
         isLoading = true
@@ -206,6 +265,24 @@ fun WallpaperCropScreen(
         offsetY = 0f
     }
 
+    LaunchedEffect(wallpaperZoomTargetScale) {
+        val bmp = bitmap ?: return@LaunchedEffect
+        if (screenW <= 0f || screenH <= 0f) return@LaunchedEffect
+
+        offsetX =
+            clampOffset(
+                offsetX,
+                bmp.width * scale,
+                screenW / wallpaperZoomTargetScale,
+            )
+        offsetY =
+            clampOffset(
+                offsetY,
+                bmp.height * scale,
+                screenH / wallpaperZoomTargetScale,
+            )
+    }
+
     LaunchedEffect(showHint) {
         if (showHint) {
             kotlinx.coroutines.delay(3000)
@@ -224,7 +301,7 @@ fun WallpaperCropScreen(
 
         if (isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = Color.White)
+                ContainedLoadingIndicator(modifier = Modifier.size(48.dp))
             }
         } else if (loadError) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -255,63 +332,75 @@ fun WallpaperCropScreen(
                                                     minScale * MAX_ZOOM_FACTOR,
                                                 )
                                             val scaleChange = newScale / scale
-                                            val newOffsetX = offsetX * scaleChange + pan.x
-                                            val newOffsetY = offsetY * scaleChange + pan.y
+                                            val newOffsetX =
+                                                offsetX * scaleChange + pan.x / wallpaperZoomScale
+                                            val newOffsetY =
+                                                offsetY * scaleChange + pan.y / wallpaperZoomScale
 
                                             scale = newScale
                                             offsetX =
-                                                clampOffset(newOffsetX, imgW * newScale, screenW)
+                                                clampOffset(
+                                                    newOffsetX,
+                                                    imgW * newScale,
+                                                    screenW / wallpaperZoomScale,
+                                                )
                                             offsetY =
-                                                clampOffset(newOffsetY, imgH * newScale, screenH)
+                                                clampOffset(
+                                                    newOffsetY,
+                                                    imgH * newScale,
+                                                    screenH / wallpaperZoomScale,
+                                                )
                                         }
                                     }
                             )
-                            .then(
-                                if (fitMode) Modifier
-                                else
-                                    Modifier.pointerInput(bmp) {
-                                        detectTapGestures(
-                                            onDoubleTap = { tapOffset ->
-                                                if (scale > minScale * 1.1f) {
-                                                    scale = minScale
-                                                    offsetX = 0f
-                                                    offsetY = 0f
-                                                } else {
-                                                    val targetScale =
-                                                        (minScale * 3f).coerceAtMost(
-                                                            minScale * MAX_ZOOM_FACTOR
-                                                        )
-                                                    val focusX = tapOffset.x - screenW / 2f
-                                                    val focusY = tapOffset.y - screenH / 2f
-                                                    val scaleChange = targetScale / scale
+                            .pointerInput(bmp) {
+                                detectTapGestures(
+                                    onDoubleTap = { tapOffset ->
+                                        if (scale > minScale * 1.1f) {
+                                            scale = minScale
+                                            offsetX = 0f
+                                            offsetY = 0f
+                                        } else {
+                                            val targetScale =
+                                                (minScale * 3f).coerceAtMost(
+                                                    minScale * MAX_ZOOM_FACTOR
+                                                )
+                                            val focusX =
+                                                (tapOffset.x - screenW / 2f) / wallpaperZoomScale
+                                            val focusY =
+                                                (tapOffset.y - screenH / 2f) / wallpaperZoomScale
+                                            val scaleChange = targetScale / scale
 
-                                                    scale = targetScale
-                                                    offsetX =
-                                                        clampOffset(
-                                                            (offsetX - focusX) * scaleChange +
-                                                                focusX,
-                                                            imgW * targetScale,
-                                                            screenW,
-                                                        )
-                                                    offsetY =
-                                                        clampOffset(
-                                                            (offsetY - focusY) * scaleChange +
-                                                                focusY,
-                                                            imgH * targetScale,
-                                                            screenH,
-                                                        )
-                                                }
-                                            }
-                                        )
-                                    }
-                            )
+                                            scale = targetScale
+                                            offsetX =
+                                                clampOffset(
+                                                    (offsetX - focusX) * scaleChange + focusX,
+                                                    imgW * targetScale,
+                                                    screenW / wallpaperZoomScale,
+                                                )
+                                            offsetY =
+                                                clampOffset(
+                                                    (offsetY - focusY) * scaleChange + focusY,
+                                                    imgH * targetScale,
+                                                    screenH / wallpaperZoomScale,
+                                                )
+                                        }
+                                    },
+                                    onTap = {
+                                        showHint = false
+                                        controlsVisible = !controlsVisible
+                                    },
+                                )
+                            }
                 ) {
                     screenW = size.width
                     screenH = size.height
 
                     drawIntoCanvas { canvas ->
                         canvas.withSave {
-                            canvas.translate(size.width / 2f + offsetX, size.height / 2f + offsetY)
+                            canvas.translate(size.width / 2f, size.height / 2f)
+                            canvas.scale(wallpaperZoomScale, wallpaperZoomScale)
+                            canvas.translate(offsetX, offsetY)
                             canvas.scale(scale, scale)
                             canvas.translate(-imgW / 2f, -imgH / 2f)
                             canvas.nativeCanvas.drawBitmap(bmp, 0f, 0f, null)
@@ -321,134 +410,160 @@ fun WallpaperCropScreen(
             }
         }
 
-        TopAppBar(
-            title = {},
-            navigationIcon = {
-                IconButton(onClick = onCancel) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back),
-                        tint = Color.White,
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-            modifier = Modifier.statusBarsPadding(),
-        )
-
-        Column(
-            modifier =
-                Modifier.align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-                    .padding(horizontal = 24.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+        AnimatedVisibility(
+            visible = controlsVisible || isLoading || loadError,
+            enter =
+                fadeIn(MaterialTheme.motionScheme.defaultSpatialSpec()) +
+                    slideInVertically(MaterialTheme.motionScheme.defaultSpatialSpec()) { -it },
+            exit =
+                fadeOut(MaterialTheme.motionScheme.fastSpatialSpec()) +
+                    slideOutVertically(MaterialTheme.motionScheme.fastSpatialSpec()) { -it },
         ) {
-            AnimatedVisibility(
-                visible = showHint && !isLoading && !loadError && !fitMode,
-                enter = fadeIn(),
-                exit = fadeOut(),
-            ) {
-                Text(
-                    text = stringResource(R.string.pinch_to_crop),
-                    color = Color.White.copy(alpha = 0.7f),
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            if (showFitModeToggle && !isLoading && !loadError) {
-                Surface(
-                    modifier = Modifier.fillMaxWidth().widthIn(max = 400.dp),
-                    shape = MaterialTheme.shapes.extraLarge,
-                    color = colors.surfaceBright,
-                ) {
-                    ButtonGroup(
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        ToggleButton(
-                            checked = !fitMode,
-                            onCheckedChange = { fitMode = false },
-                            modifier = Modifier.weight(1f).height(48.dp),
-                            shapes = ToggleButtonDefaults.shapesFor(100.dp),
-                            colors = ToggleButtonDefaults.toggleButtonColors(
-                                checkedContainerColor = colors.primary,
-                                checkedContentColor = colors.onPrimary,
-                                containerColor = colors.surfaceBright,
-                                contentColor = colors.onSurface,
-                            ),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.wallpaper_fill_mode),
-                                style = MaterialTheme.typography.labelLarge,
-                                fontWeight = FontWeight.SemiBold,
-                            )
-                        }
-                        ToggleButton(
-                            checked = fitMode,
-                            onCheckedChange = { fitMode = true },
-                            modifier = Modifier.weight(1f).height(48.dp),
-                            shapes = ToggleButtonDefaults.shapesFor(100.dp),
-                            colors = ToggleButtonDefaults.toggleButtonColors(
-                                checkedContainerColor = colors.primary,
-                                checkedContentColor = colors.onPrimary,
-                                containerColor = colors.surfaceBright,
-                                contentColor = colors.onSurface,
-                            ),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.wallpaper_fit_mode),
-                                style = MaterialTheme.typography.labelLarge,
-                                fontWeight = FontWeight.SemiBold,
-                            )
-                        }
-                    }
-                }
-            }
-
-            Button(
-                onClick = {
-                    if (isStandaloneMode) {
-                        showTargetDialog = true
-                    } else {
-                        bitmap?.let { bmp ->
-                            val result =
-                                if (fitMode) buildFitWp(bmp, wallpaperDisplaySize)
-                                else extractVisibleBitmap(bmp, screenW, screenH, scale, offsetX, offsetY)
-                            onNext?.invoke(result)
-                        }
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.preview_title),
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onCancel) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                enabled = !isApplying && bitmap != null,
-                shape = MaterialTheme.shapes.extraLarge,
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = colors.primary,
-                        contentColor = colors.onPrimary,
-                        disabledContainerColor = colors.primary,
-                        disabledContentColor = colors.onPrimary,
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent,
+                        titleContentColor = Color.White,
+                        navigationIconContentColor = Color.White,
                     ),
-            ) {
-                if (isApplying) {
-                    LoadingIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = colors.onPrimary,
-                    )
-                } else {
-                    Text(
-                        text =
-                            stringResource(
-                                if (isStandaloneMode) R.string.set_wallpaper
-                                else R.string.next_button
-                            ),
-                        style =
-                            MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                    )
+                modifier = Modifier.statusBarsPadding(),
+            )
+        }
+
+        AnimatedVisibility(
+            visible = controlsVisible && !isLoading && !loadError,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            enter =
+                fadeIn(MaterialTheme.motionScheme.defaultSpatialSpec()) +
+                    slideInVertically(MaterialTheme.motionScheme.defaultSpatialSpec()) { it },
+            exit =
+                fadeOut(MaterialTheme.motionScheme.fastSpatialSpec()) +
+                    slideOutVertically(MaterialTheme.motionScheme.fastSpatialSpec()) { it },
+        ) {
+            MaterialTheme(colorScheme = colors) {
+                Card(
+                    modifier =
+                        Modifier.navigationBarsPadding()
+                            .padding(12.dp)
+                            .widthIn(max = 520.dp)
+                            .fillMaxWidth(),
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceBright
+                        ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        AnimatedVisibility(
+                            visible = showHint && !fitMode,
+                            enter =
+                                fadeIn(
+                                    animationSpec =
+                                        MaterialTheme.motionScheme.fastEffectsSpec()
+                                ),
+                            exit =
+                                fadeOut(
+                                    animationSpec =
+                                        MaterialTheme.motionScheme.fastEffectsSpec()
+                                ),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.pinch_to_crop),
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+
+                        if (showFitModeToggle) {
+                            WallpaperModeSelector(
+                                fitMode = fitMode,
+                                onFitModeChange = { fitMode = it },
+                            )
+                        }
+
+                        WallpaperZoomToggle(
+                            enabled = !wallpaperZoomDisabled,
+                            onEnabledChange = { setWallpaperZoomDisabled(!it) },
+                        )
+
+                        val actionButtonHeight = ButtonDefaults.MediumContainerHeight
+                        Button(
+                            onClick = {
+                                if (isStandaloneMode) {
+                                    showTargetDialog = true
+                                } else {
+                                    bitmap?.let { bmp ->
+                                        val result =
+                                            if (fitMode) {
+                                                buildFitWp(bmp, wallpaperDisplaySize)
+                                            } else {
+                                                extractVisibleBitmap(
+                                                    bmp,
+                                                    screenW,
+                                                    screenH,
+                                                    scale,
+                                                    offsetX,
+                                                    offsetY,
+                                                )
+                                            }
+                                        onNext?.invoke(result)
+                                    }
+                                }
+                            },
+                            shapes = ButtonDefaults.shapesFor(actionButtonHeight),
+                            modifier =
+                                Modifier.fillMaxWidth().heightIn(min = actionButtonHeight),
+                            enabled = !isApplying && bitmap != null,
+                            colors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                                    disabledContainerColor =
+                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                                    disabledContentColor =
+                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                                ),
+                            contentPadding =
+                                ButtonDefaults.contentPaddingFor(actionButtonHeight),
+                        ) {
+                            if (isApplying) {
+                                LoadingIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                )
+                            } else {
+                                Text(
+                                    text =
+                                        stringResource(
+                                            if (isStandaloneMode) R.string.set_wallpaper
+                                            else R.string.next_button
+                                        ),
+                                    style = ButtonDefaults.textStyleFor(actionButtonHeight),
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -505,6 +620,118 @@ fun WallpaperCropScreen(
                 onApply?.invoke(imageUri, cropRect, multiCropHints, flags)
             },
         )
+    }
+}
+
+@Composable
+private fun WallpaperModeSelector(
+    fitMode: Boolean,
+    onFitModeChange: (Boolean) -> Unit,
+) {
+    val colors = MaterialTheme.colorScheme
+    val buttonHeight = ButtonDefaults.MediumContainerHeight
+    val fillInteraction = remember { MutableInteractionSource() }
+    val fitInteraction = remember { MutableInteractionSource() }
+    val buttonColors =
+        ToggleButtonDefaults.toggleButtonColors(
+            checkedContainerColor = colors.secondaryContainer,
+            checkedContentColor = colors.onSecondaryContainer,
+            containerColor = colors.surfaceContainerHigh,
+            contentColor = colors.onSurfaceVariant,
+        )
+
+    ButtonGroup(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        ToggleButton(
+            checked = !fitMode,
+            onCheckedChange = { onFitModeChange(false) },
+            modifier =
+                Modifier.weight(1f)
+                    .animateWidth(fillInteraction)
+                    .heightIn(min = buttonHeight),
+            shapes = ToggleButtonDefaults.shapesFor(buttonHeight),
+            colors = buttonColors,
+            contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight),
+            interactionSource = fillInteraction,
+        ) {
+            Icon(
+                imageVector = Icons.Default.CropFree,
+                contentDescription = null,
+                modifier = Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight)),
+            )
+            Spacer(modifier = Modifier.width(ButtonDefaults.iconSpacingFor(buttonHeight)))
+            Text(
+                text = stringResource(R.string.wallpaper_fill_mode),
+                style = ButtonDefaults.textStyleFor(buttonHeight),
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+
+        ToggleButton(
+            checked = fitMode,
+            onCheckedChange = { onFitModeChange(true) },
+            modifier =
+                Modifier.weight(1f)
+                    .animateWidth(fitInteraction)
+                    .heightIn(min = buttonHeight),
+            shapes = ToggleButtonDefaults.shapesFor(buttonHeight),
+            colors = buttonColors,
+            contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight),
+            interactionSource = fitInteraction,
+        ) {
+            Icon(
+                imageVector = Icons.Default.FitScreen,
+                contentDescription = null,
+                modifier = Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight)),
+            )
+            Spacer(modifier = Modifier.width(ButtonDefaults.iconSpacingFor(buttonHeight)))
+            Text(
+                text = stringResource(R.string.wallpaper_fit_mode),
+                style = ButtonDefaults.textStyleFor(buttonHeight),
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+    }
+}
+
+@Composable
+private fun WallpaperZoomToggle(enabled: Boolean, onEnabledChange: (Boolean) -> Unit) {
+    Surface(
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+    ) {
+        Row(
+            modifier =
+                Modifier.fillMaxWidth()
+                    .heightIn(min = 72.dp)
+                    .toggleable(
+                        value = enabled,
+                        role = Role.Switch,
+                        onValueChange = onEnabledChange,
+                    )
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.wallpaper_zoom_title),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Text(
+                    text = stringResource(R.string.wallpaper_zoom_description),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Switch(checked = enabled, onCheckedChange = null)
+        }
     }
 }
 
