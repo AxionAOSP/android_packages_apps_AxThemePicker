@@ -33,27 +33,27 @@
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">תמונת רקע נוכחית</string>
     <string name="customize_to_match_your_style">Customize to match your style</string>
-    <string name="discover_new_wallpapers">Discover new wallpapers</string>
+    <string name="discover_new_wallpapers">היחשפות לתמונות רקע חדשות</string>
     <string name="explore">היחשפות</string>
     <string name="featured">מומלצים</string>
     <string name="curated_wallpapers_for_you">תמונות רקע שנבחרו בשבילך</string>
-    <string name="make_it_yours">Make it yours</string>
+    <string name="make_it_yours">סגנון משלך</string>
     <string name="photos">תמונות</string>
-    <string name="walls">Walls</string>
+    <string name="walls">תמונות רקע</string>
     <string name="wallpaper">תמונת רקע</string>
-    <string name="wallpaper_photo">Wallpaper Photo</string>
-    <string name="your_wallpaper">Your Wallpaper</string>
+    <string name="wallpaper_photo">תמונת רקע</string>
+    <string name="your_wallpaper">תמונת הרקע שלך</string>
     <!-- Wallpaper Gallery -->
     <string name="customize_active_wallpaper">Customize your active wallpaper</string>
     <string name="edit_current_wallpaper">Edit Current Wallpaper</string>
     <string name="header_collections">אוספים</string>
-    <string name="header_wallpaper_gallery">Wallpaper Gallery</string>
+    <string name="header_wallpaper_gallery">גלריית תמונות רקע</string>
     <string name="latest_wallpapers">Latest Wallpapers</string>
     <string name="live_wallpapers">טפטים מונפשים</string>
     <string name="more_wallpapers">טפטים נוספים</string>
     <string name="my_photos">התמונות שלי</string>
     <string name="recently_added_designs">Recently added designs</string>
-    <string name="view_all">View All</string>
+    <string name="view_all">צפייה בכול</string>
     <plurals name="curated_categories">
         <item quantity="one">%d curated category</item>
         <item quantity="two">%d curated categories</item>
@@ -68,8 +68,8 @@
     </plurals>
     <!-- Wallpaper Apply -->
     <string name="atmosphere">Atmosphere</string>
-    <string name="glass">Glass</string>
-    <string name="home_screen">Home screen</string>
+    <string name="glass">זכוכית</string>
+    <string name="home_screen">מסך הבית</string>
     <string name="lock_screen_label">מסך נעילה</string>
     <string name="pinch_to_crop">Pinch to crop</string>
     <string name="select_at_least_one">Select at least one</string>
@@ -88,7 +88,7 @@
     <string name="effect_none_description">No effect applied</string>
     <string name="effect_atmosphere">Atmosphere</string>
     <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
-    <string name="effect_glass">Glass</string>
+    <string name="effect_glass">זכוכית</string>
     <string name="effect_glass_description">Ribbed glass distortion effect</string>
     <string name="effect_preview">Effect Preview</string>
     <string name="effect_apply">Apply Effect</string>
@@ -127,7 +127,7 @@
     <string name="tab_weather">מזג אוויר</string>
     <string name="tab_atmosphere">Atmosphere</string>
     <string name="tab_cinematic">Cinematic</string>
-    <string name="tab_glass">Glass</string>
+    <string name="tab_glass">זכוכית</string>
     <string name="effect_cinematic">Cinematic</string>
     <string name="effect_cinematic_description">Depth-based 3D parallax with gyroscope tracking</string>
     <string name="effect_remove">Remove effect</string>
