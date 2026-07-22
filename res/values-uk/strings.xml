@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Axion ThemePicker</string>
+    <string name="app_name">Вибирач теми Axion</string>
     <!-- Common Actions -->
     <string name="apply">Застосувати</string>
     <string name="applied">Застосовано</string>
@@ -75,9 +75,9 @@
     <string name="select_at_least_one">Виберіть принаймні один</string>
     <string name="set_wallpaper">Встановити шпалери</string>
     <string name="set_wallpaper_on">Встановити шпалери на</string>
-    <string name="home_lock_both">Both</string>
+    <string name="home_lock_both">Обидва</string>
     <string name="wallpaper_info">Відомості про шпалери</string>
-    <string name="wallpaper_fill_mode">Fill</string>
+    <string name="wallpaper_fill_mode">Заповнити</string>
     <string name="wallpaper_fit_mode">Fit</string>
     <string name="wallpaper_zoom_title">Wallpaper zoom</string>
     <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
@@ -224,28 +224,28 @@
     <string name="clock_size_default">За замовчуванням</string>
     <string name="clock_size_large">Large</string>
     <string name="reset_clock">Reset clock</string>
-    <string name="reset_clock_size">Reset size</string>
-    <string name="reset_clock_position">Reset position</string>
-    <string name="clock_edit_education">Long-press the clock, then drag up or down to adjust its position. Drag the corner to resize.</string>
-    <string name="clock_dual_tone">Dual tone</string>
-    <string name="clock_alignment">Alignment</string>
-    <string name="clock_align_left">Left</string>
-    <string name="clock_align_center">Center</string>
-    <string name="clock_align_right">Right</string>
-    <string name="clock_date_position">Date Position</string>
+    <string name="reset_clock_size">Скинути розмір</string>
+    <string name="reset_clock_position">Скинути положення</string>
+    <string name="clock_edit_education">Затисніть годинник, а потім перетягніть вгору або вниз, щоби налаштувати його положення. Перетягніть за кут, щоб змінити розмір.</string>
+    <string name="clock_dual_tone">Двоколірний</string>
+    <string name="clock_alignment">Вирівнювання</string>
+    <string name="clock_align_left">Ліворуч</string>
+    <string name="clock_align_center">По центру</string>
+    <string name="clock_align_right">Праворуч</string>
+    <string name="clock_date_position">Позиція дати</string>
     <string name="clock_date_above">Вище</string>
     <string name="clock_date_below">Нижче</string>
-    <string name="clock_info_display">Info Display</string>
-    <string name="clock_info_sources">Shown in Auto</string>
+    <string name="clock_info_display">Показ інформації</string>
+    <string name="clock_info_sources">Показувати в авторежимі</string>
     <string name="clock_info_auto">Авто</string>
     <string name="clock_info_date">Дата</string>
     <string name="clock_info_media">Медіа</string>
-    <string name="clock_info_smartspace">Smartspace</string>
+    <string name="clock_info_smartspace">Розумний простір</string>
     <string name="clock_info_alarm">Будильник</string>
     <string name="clock_info_calendar">Календар</string>
     <string name="clock_info_weather">Погода</string>
-    <string name="clock_color">Clock Color</string>
-    <string name="clock_graffiti_angle">Graffiti Angle</string>
+    <string name="clock_color">Колір годинника</string>
+    <string name="clock_graffiti_angle">Ракурс графіті</string>
     <string name="device_controls">Елементи керування пристроєм</string>
     <string name="do_not_disturb">Режим \"Не турбувати\"</string>
     <string name="flashlight">Ліхтарик</string>
@@ -258,8 +258,8 @@
     <string name="lockscreen_widgets_enabled_summary">Дозволити віджети на екрані блокування</string>
     <string name="mute">Вимкнути звук</string>
     <string name="no_space_available">Немає місця для додаткових віджетів</string>
-    <string name="resize_widget">Resize Widget</string>
-    <string name="no_space_for_size">No space available for this size</string>
+    <string name="resize_widget">Змінити розмір віджета</string>
+    <string name="no_space_for_size">Бракує місця для цього розміру</string>
     <string name="personalize_your_experience">Персоналізуйте свій досвід</string>
     <string name="pick_widgets">Вибрати віджети</string>
     <string name="qr_code_scanner">Сканер QR-кодів</string>
@@ -267,16 +267,16 @@
     <string name="right_affordance">Права доступність</string>
     <string name="selected_widgets">Обрані віджети</string>
     <string name="selected_widgets_empty">Жодного віджету не вибрано</string>
-    <string name="selected_widgets_guide">Tap a cell to add a widget, tap a widget to remove it.</string>
-    <string name="no_widgets_available">No widgets available</string>
-    <string name="search_widgets">Search widgets</string>
-    <string name="no_results">No results</string>
-    <string name="widget_bind_failed">Failed to add widget</string>
+    <string name="selected_widgets_guide">Торкніться клітинки, аби додати віджет, або торкніться віджета, щоби видалити його.</string>
+    <string name="no_widgets_available">Немає доступних віджетів</string>
+    <string name="search_widgets">Знайти віджети</string>
+    <string name="no_results">Нічого не знайдено</string>
+    <string name="widget_bind_failed">Не вдалося додати віджет</string>
     <string name="tap_the_preview_to_see_all_customization_options">Натисніть на попередній перегляд, щоб побачити всі параметри налаштування</string>
-    <string name="depth_effect">Depth effect</string>
-    <string name="at_a_glance">At a glance</string>
+    <string name="depth_effect">Ефект глибини</string>
+    <string name="at_a_glance">З першого погляду</string>
     <string name="quick_access">Швидкий доступ</string>
-    <string name="time_style">Time style</string>
+    <string name="time_style">Стиль часу</string>
     <string name="tap_to_customize">Торкніться, щоб налаштувати</string>
     <string name="temperature_prev">27°</string>
     <string name="video_camera">Відеокамера</string>
@@ -289,12 +289,12 @@
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">Не вдалося завантажити зображення</string>
     <string name="no_image_provided">Зображення не надано</string>
-    <string name="setting_wallpaper">Setting wallpaper\u2026</string>
+    <string name="setting_wallpaper">Встановлення шпалер\u2026</string>
     <string name="shared_image">Спільне зображення</string>
     <string name="unable_to_load_image">Не вдалося завантажити зображення</string>
-    <string name="wallpaper_set_success">Wallpaper set</string>
+    <string name="wallpaper_set_success">Шпалери встановлено</string>
     <!-- Content Descriptions (Accessibility) -->
     <string name="home_screen_preview">Попередній перегляд головного екрана</string>
     <string name="wallpaper_background">Фон шпалер</string>
-    <string name="loading">Loading\u2026</string>
+    <string name="loading">Завантаження\u2026</string>
 </resources>
