@@ -100,7 +100,7 @@
     <string name="effect_home_screen_only">Home screen only</string>
     <string name="effect_lock_screen_only">Lock screen only</string>
     <string name="effect_home_and_lock">Home &amp; Lock screen</string>
-    <string name="effect_weather">Weather</string>
+    <string name="effect_weather">Погода</string>
     <string name="effect_weather_description">Weather-reactive animated overlay</string>
     <string name="effect_magic_portrait">Magic Portrait</string>
     <string name="effect_magic_portrait_description">Shaped frame with color background around your subject</string>
@@ -124,7 +124,7 @@
     <string name="portrait_brightness_label">Яскравість</string>
     <!-- Effect Tabs -->
     <string name="tab_shape">Shape</string>
-    <string name="tab_weather">Weather</string>
+    <string name="tab_weather">Погода</string>
     <string name="tab_atmosphere">Атмосфера</string>
     <string name="tab_cinematic">Cinematic</string>
     <string name="tab_glass">Скло</string>
@@ -242,8 +242,8 @@
     <string name="clock_info_media">Медіа</string>
     <string name="clock_info_smartspace">Smartspace</string>
     <string name="clock_info_alarm">Будильник</string>
-    <string name="clock_info_calendar">Calendar</string>
-    <string name="clock_info_weather">Weather</string>
+    <string name="clock_info_calendar">Календар</string>
+    <string name="clock_info_weather">Погода</string>
     <string name="clock_color">Clock Color</string>
     <string name="clock_graffiti_angle">Graffiti Angle</string>
     <string name="device_controls">Елементи керування пристроєм</string>
