@@ -137,20 +137,6 @@
     <!-- Style Section -->
     <string name="icon_shape_title">Simge Şekli</string>
     <string name="icon_shape_description">App icon appearance</string>
-    <string name="themed_icons_title">Icons</string>
-    <string name="themed_icons_summary">Themed icons &amp; icon packs</string>
-    <string name="themed_icons_card_title">Temalı Simgeler</string>
-    <string name="themed_icons_description">Monochrome icons that adapt to your wallpaper colors</string>
-    <string name="themed_icons_style">Icon Style</string>
-    <string name="themed_icons_neutral">Neutral</string>
-    <string name="themed_icons_accent">Accent</string>
-    <string name="icon_pack_title">Simge Paketi</string>
-    <string name="icon_pack_description">Third-party icon packs change the look of your app icons</string>
-    <string name="icon_pack_system_default">System Default</string>
-    <string name="icon_pack_active">Etkin</string>
-    <string name="themed_icon_pack_title">Temalı Simge Paketi</string>
-    <string name="themed_icon_pack_description">Third-party themed icons like Lawnicons provide monochrome icons for more apps</string>
-    <string name="themed_icon_pack_none">Hiçbiri</string>
     <string name="make_your_device_uniquely_yours">Cihazını benzersiz kılın</string>
     <string name="personalize">Kişiselleştir</string>
     <string name="pro_tip">Özel İpucu</string>

@@ -64,7 +64,7 @@ import com.android.axion.themepicker.ui.sections.StyleSection
 import com.android.axion.themepicker.ui.sections.WallpaperSection
 import com.android.axion.themepicker.ui.themes.FontScreen
 import com.android.axion.themepicker.ui.themes.IconShapesScreen
-import com.android.axion.themepicker.ui.themes.ThemedIconsScreen
+
 import com.android.axion.themepicker.ui.wallpaperset.WallpaperCropScreen
 import com.android.axion.themepicker.ui.wallpaperset.computeDisplayCropHints
 import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
@@ -209,7 +209,6 @@ private fun MainNavigationScaffold(
                         StyleSection(
                             onOpenColors = mainScreenViewModel::onOpenColorsSettings,
                             onOpenIconShapes = mainScreenViewModel::onOpenIconShapes,
-                            onOpenThemedIcons = mainScreenViewModel::onOpenThemedIcons,
                             onOpenFonts = mainScreenViewModel::onOpenFonts,
                         )
                     }
@@ -263,11 +262,6 @@ private fun DetailScreenContent(
         is Screen.IconShapes -> {
             BackHandler { mainScreenViewModel.goBack() }
             IconShapesScreen(mainScreenViewModel = mainScreenViewModel)
-        }
-
-        is Screen.ThemedIcons -> {
-            BackHandler { mainScreenViewModel.goBack() }
-            ThemedIconsScreen(mainScreenViewModel = mainScreenViewModel)
         }
 
         is Screen.Fonts -> {

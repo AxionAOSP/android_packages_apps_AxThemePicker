@@ -40,7 +40,6 @@ import com.android.axion.themepicker.ui.theme.*
 fun StyleSection(
     onOpenColors: () -> Unit,
     onOpenIconShapes: () -> Unit,
-    onOpenThemedIcons: () -> Unit,
     onOpenFonts: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -69,8 +68,6 @@ fun StyleSection(
 
                 IconShapesCardContent(onClick = onOpenIconShapes)
 
-                ThemedIconsCardContent(onClick = onOpenThemedIcons)
-
                 FontsCard(
                     title = stringResource(R.string.fonts),
                     description = stringResource(R.string.system_typography),
@@ -92,8 +89,6 @@ fun StyleSection(
             ColorsCardContent(onClick = onOpenColors)
 
             IconShapesCardContent(onClick = onOpenIconShapes)
-
-            ThemedIconsCardContent(onClick = onOpenThemedIcons)
 
             FontsCard(
                 title = stringResource(R.string.fonts),
@@ -211,52 +206,6 @@ private fun IconShapesCardContent(onClick: () -> Unit, modifier: Modifier = Modi
                         .clip(RoundedCornerShape(4.dp))
                         .background(colors.tertiary.copy(alpha = 0.7f))
             )
-        }
-    }
-}
-
-@Composable
-private fun ThemedIconsCardContent(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val colors = MaterialTheme.colorScheme
-
-    SettingsCard(
-        title = stringResource(R.string.themed_icons_title),
-        description = stringResource(R.string.themed_icons_summary),
-        onClick = onClick,
-        modifier = modifier,
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Box(
-                    modifier =
-                        Modifier.size(14.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(colors.primary.copy(alpha = 0.7f))
-                )
-                Box(
-                    modifier =
-                        Modifier.size(14.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(colors.primary.copy(alpha = 0.5f))
-                )
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Box(
-                    modifier =
-                        Modifier.size(14.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(colors.primary.copy(alpha = 0.5f))
-                )
-                Box(
-                    modifier =
-                        Modifier.size(14.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(colors.primary.copy(alpha = 0.3f))
-                )
-            }
         }
     }
 }

@@ -137,20 +137,6 @@
     <!-- Style Section -->
     <string name="icon_shape_title">Icon Shape</string>
     <string name="icon_shape_description">App icon appearance</string>
-    <string name="themed_icons_title">Icons</string>
-    <string name="themed_icons_summary">Themed icons &amp; icon packs</string>
-    <string name="themed_icons_card_title">Themed Icons</string>
-    <string name="themed_icons_description">Monochrome icons that adapt to your wallpaper colors</string>
-    <string name="themed_icons_style">Icon Style</string>
-    <string name="themed_icons_neutral">Neutral</string>
-    <string name="themed_icons_accent">Accent</string>
-    <string name="icon_pack_title">Icon Pack</string>
-    <string name="icon_pack_description">Third-party icon packs change the look of your app icons</string>
-    <string name="icon_pack_system_default">System Default</string>
-    <string name="icon_pack_active">Aktivt</string>
-    <string name="themed_icon_pack_title">Themed Icon Pack</string>
-    <string name="themed_icon_pack_description">Third-party themed icons like Lawnicons provide monochrome icons for more apps</string>
-    <string name="themed_icon_pack_none">None</string>
     <string name="make_your_device_uniquely_yours">Make your device uniquely yours</string>
     <string name="personalize">Personalize</string>
     <string name="pro_tip">Pro Tip</string>

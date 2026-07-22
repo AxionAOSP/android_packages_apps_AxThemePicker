@@ -32,8 +32,6 @@ sealed class Screen : Parcelable {
 
     @Parcelize object IconShapes : Screen()
 
-    @Parcelize object ThemedIcons : Screen()
-
     @Parcelize object Fonts : Screen()
 
     @Parcelize

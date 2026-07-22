@@ -135,20 +135,6 @@
     <!-- Style Section -->
     <string name="icon_shape_title">圖示形狀</string>
     <string name="icon_shape_description">應用程式圖示外觀</string>
-    <string name="themed_icons_title">圖示</string>
-    <string name="themed_icons_summary">主題圖示和圖示包</string>
-    <string name="themed_icons_card_title">主題圖示</string>
-    <string name="themed_icons_description">配合桌布顏色的單色圖示</string>
-    <string name="themed_icons_style">圖示樣式</string>
-    <string name="themed_icons_neutral">中性</string>
-    <string name="themed_icons_accent">強調色</string>
-    <string name="icon_pack_title">圖示包</string>
-    <string name="icon_pack_description">第三方圖示包可變更應用程式圖示的外觀</string>
-    <string name="icon_pack_system_default">系統預設</string>
-    <string name="icon_pack_active">運作中</string>
-    <string name="themed_icon_pack_title">主題圖示包</string>
-    <string name="themed_icon_pack_description">Lawnicons 等第三方主題圖示可為更多應用程式提供單色圖示</string>
-    <string name="themed_icon_pack_none">無</string>
     <string name="make_your_device_uniquely_yours">打造專屬於你的獨特裝置</string>
     <string name="personalize">個人化設定</string>
     <string name="pro_tip">溫馨提示</string>
