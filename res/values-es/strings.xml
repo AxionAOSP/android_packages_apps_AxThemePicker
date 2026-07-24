@@ -137,7 +137,7 @@
     <string name="next_button">Next</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">Icon Shape</string>
+    <string name="icon_shape_title">Forma de los iconos</string>
     <string name="icon_shape_description">App icon appearance</string>
     <string name="make_your_device_uniquely_yours">Haz que tu dispositivo sea único</string>
     <string name="personalize">Personalizar</string>
