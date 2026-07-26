@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Selector de Tema Axion</string>
+    <string name="app_name">Selector de tema Axion</string>
     <!-- Common Actions -->
     <string name="apply">Aplicar</string>
     <string name="applied">Aplicado</string>
@@ -83,14 +83,14 @@
     <string name="effect_none">Ninguno</string>
     <string name="effect_none_description">Ningún efecto aplicado</string>
     <string name="effect_atmosphere">Ambiente</string>
-    <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
+    <string name="effect_atmosphere_description">Desenfoque sonoro con blobs de color dinámico</string>
     <string name="effect_glass">Cristal</string>
-    <string name="effect_glass_description">Ribbed glass distortion effect</string>
-    <string name="effect_preview">Effect Preview</string>
-    <string name="effect_apply">Apply Effect</string>
-    <string name="effect_applying">Applying effect\u2026</string>
-    <string name="effect_applied">Effect applied</string>
-    <string name="effect_removed">Effect removed</string>
+    <string name="effect_glass_description">Efecto de distorsión de cristal agitado</string>
+    <string name="effect_preview">Vista previa del efecto</string>
+    <string name="effect_apply">Aplicar efecto</string>
+    <string name="effect_applying">Aplicando efecto\u2026</string>
+    <string name="effect_applied">Efecto aplicado</string>
+    <string name="effect_removed">Efecto removido</string>
     <string name="effect_service_not_found">Effect service not installed</string>
     <string name="effect_apply_to">Apply to</string>
     <string name="effect_home_screen_only">Home screen only</string>
@@ -213,20 +213,20 @@
     <string name="camera">Cámara</string>
     <string name="choose_your_time_format">Elige el formato de hora</string>
     <string name="clock">Reloj</string>
-    <string name="clock_face">Clock face</string>
+    <string name="clock_face">Cara del reloj</string>
     <string name="clock_style">Estilo de reloj</string>
     <string name="clock_face_style">Estilo de cara</string>
-    <string name="clock_size">Clock Size</string>
+    <string name="clock_size">Tamaño del reloj</string>
     <string name="clock_size_default">Predeterminado</string>
-    <string name="clock_size_large">Large</string>
-    <string name="reset_clock">Reset clock</string>
-    <string name="reset_clock_size">Reset size</string>
-    <string name="reset_clock_position">Reset position</string>
-    <string name="clock_edit_education">Long-press the clock, then drag up or down to adjust its position. Drag the corner to resize.</string>
-    <string name="clock_dual_tone">Dual tone</string>
-    <string name="clock_alignment">Alignment</string>
-    <string name="clock_align_left">Left</string>
-    <string name="clock_align_center">Center</string>
+    <string name="clock_size_large">Grande</string>
+    <string name="reset_clock">Restablecer reloj</string>
+    <string name="reset_clock_size">Restablecer tamaño</string>
+    <string name="reset_clock_position">Restablecer posición</string>
+    <string name="clock_edit_education">Mantenga pulsado el reloj, luego arrastre hacia arriba o hacia abajo para ajustar su posición. Arrastre la esquina para cambiar el tamaño.</string>
+    <string name="clock_dual_tone">Doble tono</string>
+    <string name="clock_alignment">Alineación</string>
+    <string name="clock_align_left">Izquierda</string>
+    <string name="clock_align_center">Centro</string>
     <string name="clock_align_right">Derecha</string>
     <string name="clock_date_position">Posición de la fecha</string>
     <string name="clock_date_above">Above</string>
@@ -255,7 +255,7 @@
     <string name="mute">Silenciar</string>
     <string name="no_space_available">No hay espacio disponible para más widgets</string>
     <string name="resize_widget">Cambiar tamaño de widget</string>
-    <string name="no_space_for_size">No space available for this size</string>
+    <string name="no_space_for_size">No hay espacio disponible para este tamaño</string>
     <string name="personalize_your_experience">Personaliza tu experiencia</string>
     <string name="pick_widgets">Escoger Widgets</string>
     <string name="qr_code_scanner">Lector de códigos QR</string>
@@ -263,16 +263,16 @@
     <string name="right_affordance">Acceso rápido derecho</string>
     <string name="selected_widgets">Widgets seleccionados</string>
     <string name="selected_widgets_empty">No hay widgets seleccionados</string>
-    <string name="selected_widgets_guide">Tap a cell to add a widget, tap a widget to remove it.</string>
-    <string name="no_widgets_available">No widgets available</string>
-    <string name="search_widgets">Search widgets</string>
-    <string name="no_results">No results</string>
-    <string name="widget_bind_failed">Failed to add widget</string>
+    <string name="selected_widgets_guide">Toca una celda para añadir un widget, toca un widget para eliminarlo.</string>
+    <string name="no_widgets_available">No hay widgets disponibles</string>
+    <string name="search_widgets">Buscar widget</string>
+    <string name="no_results">No hay resultados</string>
+    <string name="widget_bind_failed">Error al añadir el widget</string>
     <string name="tap_the_preview_to_see_all_customization_options">Toque la vista previa para ver todas las opciones de personalización</string>
-    <string name="depth_effect">Depth effect</string>
-    <string name="at_a_glance">At a glance</string>
+    <string name="depth_effect">Efecto de profundidad</string>
+    <string name="at_a_glance">De un vistazo</string>
     <string name="quick_access">Acceso rápido</string>
-    <string name="time_style">Time style</string>
+    <string name="time_style">Estilo de hora</string>
     <string name="tap_to_customize">Toca para personalizar</string>
     <string name="temperature_prev">27°</string>
     <string name="video_camera">Cámara de vídeo</string>
@@ -285,10 +285,10 @@
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">Fallo al cargar la imagen</string>
     <string name="no_image_provided">Imagen no proporcionada</string>
-    <string name="setting_wallpaper">Setting wallpaper\u2026</string>
+    <string name="setting_wallpaper">Estableciendo fondo de pantalla\u2026</string>
     <string name="shared_image">Compartir Imagen</string>
     <string name="unable_to_load_image">No se puede cargar la imagen</string>
-    <string name="wallpaper_set_success">Wallpaper set</string>
+    <string name="wallpaper_set_success">Fondo de pantalla establecido</string>
     <!-- Content Descriptions (Accessibility) -->
     <string name="home_screen_preview">Previsualización de la pantalla de inicio</string>
     <string name="wallpaper_background">Fondo de escritorio</string>
