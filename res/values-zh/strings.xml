@@ -228,7 +228,7 @@
     <string name="clock_dual_tone">Dual tone</string>
     <string name="clock_alignment">Alignment</string>
     <string name="clock_align_left">Left</string>
-    <string name="clock_align_center">Center</string>
+    <string name="clock_align_center">居中</string>
     <string name="clock_align_right">Right</string>
     <string name="clock_date_position">Date Position</string>
     <string name="clock_date_above">以上</string>
