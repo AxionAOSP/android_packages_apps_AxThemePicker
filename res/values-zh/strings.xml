@@ -90,25 +90,25 @@
     <string name="effect_apply">Apply Effect</string>
     <string name="effect_applying">Applying effect\u2026</string>
     <string name="effect_applied">Effect applied</string>
-    <string name="effect_removed">Effect removed</string>
+    <string name="effect_removed">效果已移除</string>
     <string name="effect_service_not_found">Effect service not installed</string>
     <string name="effect_apply_to">Apply to</string>
     <string name="effect_home_screen_only">Home screen only</string>
     <string name="effect_lock_screen_only">Lock screen only</string>
     <string name="effect_home_and_lock">Home &amp; Lock screen</string>
-    <string name="effect_weather">Weather</string>
-    <string name="effect_weather_description">Weather-reactive animated overlay</string>
+    <string name="effect_weather">天气</string>
+    <string name="effect_weather_description">天气动态叠加效果</string>
     <string name="effect_magic_portrait">Magic Portrait</string>
     <string name="effect_magic_portrait_description">Shaped frame with color background around your subject</string>
     <!-- Weather Config -->
-    <string name="weather_type_label">Weather Type</string>
+    <string name="weather_type_label">天气类型</string>
     <string name="weather_type_auto">自动</string>
-    <string name="weather_type_rain">Rain</string>
-    <string name="weather_type_snow">Snow</string>
-    <string name="weather_type_fog">Fog</string>
-    <string name="weather_type_clouds">Clouds</string>
-    <string name="weather_type_sun">Sun</string>
-    <string name="weather_intensity_label">Intensity</string>
+    <string name="weather_type_rain">雨</string>
+    <string name="weather_type_snow">雪</string>
+    <string name="weather_type_fog">雾</string>
+    <string name="weather_type_clouds">云</string>
+    <string name="weather_type_sun">太阳</string>
+    <string name="weather_intensity_label">强度</string>
     <!-- Portrait Config -->
     <string name="portrait_shape_label">Shape</string>
     <string name="portrait_color_label">Background Color</string>
@@ -120,13 +120,13 @@
     <string name="portrait_brightness_label">亮度</string>
     <!-- Effect Tabs -->
     <string name="tab_shape">Shape</string>
-    <string name="tab_weather">Weather</string>
+    <string name="tab_weather">天气</string>
     <string name="tab_atmosphere">氛围</string>
     <string name="tab_cinematic">Cinematic</string>
     <string name="tab_glass">玻璃</string>
     <string name="effect_cinematic">Cinematic</string>
     <string name="effect_cinematic_description">Depth-based 3D parallax with gyroscope tracking</string>
-    <string name="effect_remove">Remove effect</string>
+    <string name="effect_remove">移除特效</string>
     <string name="effect_preparing">Preparing photo\u2026</string>
     <string name="effect_connecting">Connecting to effect\u2026</string>
     <string name="effect_processing">Processing effect\u2026</string>
@@ -178,7 +178,7 @@
     <string name="theme_colors">主题颜色</string>
     <string name="theme_style_title">主题样式</string>
     <string name="theme_style_desc">定义如何从基准色生成颜色</string>
-    <string name="theme_style_disabled_by_fidelity">Disabled while Fidelity is on</string>
+    <string name="theme_style_disabled_by_fidelity">Fidelity 开启时禁用</string>
     <string name="use_wallpaper_colors_title">使用壁纸颜色</string>
     <string name="use_wallpaper_colors_desc">从壁纸中提取颜色</string>
     <string name="using_custom_color">使用自定义颜色</string>
@@ -224,7 +224,7 @@
     <string name="reset_clock">Reset clock</string>
     <string name="reset_clock_size">Reset size</string>
     <string name="reset_clock_position">Reset position</string>
-    <string name="clock_edit_education">Long-press the clock, then drag up or down to adjust its position. Drag the corner to resize.</string>
+    <string name="clock_edit_education">长按时钟，然后上下拖动调整位置。拖动边角可调整大小</string>
     <string name="clock_dual_tone">Dual tone</string>
     <string name="clock_alignment">Alignment</string>
     <string name="clock_align_left">Left</string>
@@ -240,8 +240,8 @@
     <string name="clock_info_media">媒体</string>
     <string name="clock_info_smartspace">Smartspace</string>
     <string name="clock_info_alarm">闹钟</string>
-    <string name="clock_info_calendar">Calendar</string>
-    <string name="clock_info_weather">Weather</string>
+    <string name="clock_info_calendar">日历</string>
+    <string name="clock_info_weather">天气</string>
     <string name="clock_color">Clock Color</string>
     <string name="clock_graffiti_angle">Graffiti Angle</string>
     <string name="device_controls">设备控制</string>
@@ -265,7 +265,7 @@
     <string name="right_affordance">右侧快捷操作</string>
     <string name="selected_widgets">已选小部件</string>
     <string name="selected_widgets_empty">未选择任何小部件</string>
-    <string name="selected_widgets_guide">Tap a cell to add a widget, tap a widget to remove it.</string>
+    <string name="selected_widgets_guide">点击空白格添加小部件，点击已添加的小部件将其移除</string>
     <string name="no_widgets_available">No widgets available</string>
     <string name="search_widgets">Search widgets</string>
     <string name="no_results">No results</string>
