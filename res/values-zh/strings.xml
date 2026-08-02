@@ -234,7 +234,7 @@
     <string name="clock_date_above">以上</string>
     <string name="clock_date_below">以下</string>
     <string name="clock_info_display">Info Display</string>
-    <string name="clock_info_sources">Shown in Auto</string>
+    <string name="clock_info_sources">自动显示</string>
     <string name="clock_info_auto">自动</string>
     <string name="clock_info_date">日期</string>
     <string name="clock_info_media">媒体</string>
