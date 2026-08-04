@@ -76,7 +76,7 @@
     <string name="set_wallpaper">Set wallpaper</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
     <string name="home_lock_both">Both</string>
-    <string name="wallpaper_info">Wallpaper info</string>
+    <string name="wallpaper_info">מידע על תמונת הרקע</string>
     <string name="wallpaper_fill_mode">Fill</string>
     <string name="wallpaper_fit_mode">Fit</string>
     <string name="wallpaper_zoom_title">Wallpaper zoom</string>
@@ -173,11 +173,11 @@
     <string name="fidelity_desc">Enable fidelity feature for color tones</string>
     <string name="fine_tuning">Fine Tuning</string>
     <string name="following_wallpaper">Following wallpaper</string>
-    <string name="from_wallpaper">From Wallpaper</string>
+    <string name="from_wallpaper">מתמונת הרקע</string>
     <string name="hue">גוון</string>
     <string name="pick_from_wallpaper">Pick from Wallpaper</string>
     <string name="selected_color">צבע נבחר</string>
-    <string name="theme_colors">Theme Colors</string>
+    <string name="theme_colors">צבעי ערכת נושא</string>
     <string name="theme_style_title">Theme Style</string>
     <string name="theme_style_desc">Defines how colors are generated from the seed</string>
     <string name="theme_style_disabled_by_fidelity">Disabled while Fidelity is on</string>
@@ -188,7 +188,7 @@
     <!-- Fonts Screen -->
     <string name="active_content_desc">פעיל</string>
     <string name="add_custom_font">Add custom font</string>
-    <string name="add_font">Add font</string>
+    <string name="add_font">הוספת גופן</string>
     <string name="change_custom_font">Change custom font</string>
     <string name="custom_font">Custom font</string>
     <string name="font_preview_aa">אA</string>
@@ -252,7 +252,7 @@
     <string name="left_affordance">Left Affordance</string>
     <string name="lockscreen_customize_title">Lockscreen appearance</string>
     <string name="lockscreen_customize_summary">Customize lockscreen appearance</string>
-    <string name="lockscreen_title">Lock Screen</string>
+    <string name="lockscreen_title">מסך נעילה</string>
     <string name="lockscreen_widgets_title">Lockscreen Widgets</string>
     <string name="lockscreen_widgets_enabled_title">Enable Lockscreen Widgets</string>
     <string name="lockscreen_widgets_enabled_summary">Allow widgets on lockscreen</string>
