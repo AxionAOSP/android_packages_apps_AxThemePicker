@@ -134,7 +134,7 @@
     <string name="folded_display">Dobrado</string>
     <string name="unfolded_display">Desdobrado</string>
     <string name="preview_title">Pré-visualizar</string>
-    <string name="next_button">Next</string>
+    <string name="next_button">Próximo</string>
     <string name="applying_wallpaper">Aplicando\u2026</string>
     <!-- Style Section -->
     <string name="icon_shape_title">Formato dos ícones</string>
@@ -235,9 +235,9 @@
     <string name="clock_info_sources">Exibido em Automático</string>
     <string name="clock_info_auto">Automático</string>
     <string name="clock_info_date">Data</string>
-    <string name="clock_info_media">Media</string>
+    <string name="clock_info_media">Mídia</string>
     <string name="clock_info_smartspace">Smartspace</string>
-    <string name="clock_info_alarm">Alarm</string>
+    <string name="clock_info_alarm">Alarme</string>
     <string name="clock_info_calendar">Calendar</string>
     <string name="clock_info_weather">Weather</string>
     <string name="clock_color">Cor do relógio</string>
