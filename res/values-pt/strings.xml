@@ -56,7 +56,7 @@
     <string name="view_all">Ver tudo</string>
     <plurals name="curated_categories">
         <item quantity="one">Categoria %d com curadoria</item>
-        <item quantity="other">%d curated categories</item>
+        <item quantity="other">Categoria %d com curadoria</item>
     </plurals>
     <plurals name="wallpaper_count">
         <item quantity="one">Plano de fundo %d</item>
