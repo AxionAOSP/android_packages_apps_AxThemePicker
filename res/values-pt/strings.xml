@@ -229,8 +229,8 @@
     <string name="clock_align_center">Centralizar</string>
     <string name="clock_align_right">Direita</string>
     <string name="clock_date_position">Posição da data</string>
-    <string name="clock_date_above">Above</string>
-    <string name="clock_date_below">Below</string>
+    <string name="clock_date_above">Acima</string>
+    <string name="clock_date_below">Abaixo</string>
     <string name="clock_info_display">Exibição de informação</string>
     <string name="clock_info_sources">Exibido em Automático</string>
     <string name="clock_info_auto">Automático</string>
