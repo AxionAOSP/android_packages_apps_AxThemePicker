@@ -96,7 +96,7 @@
     <string name="effect_home_screen_only">Tela inicial somente</string>
     <string name="effect_lock_screen_only">Somente tela de bloqueio</string>
     <string name="effect_home_and_lock">Home &amp; tela de bloqueio</string>
-    <string name="effect_weather">Weather</string>
+    <string name="effect_weather">Clima</string>
     <string name="effect_weather_description">Sobreposição animada com tempo reativo</string>
     <string name="effect_magic_portrait">Retrato Mágico</string>
     <string name="effect_magic_portrait_description">Moldura do quadro com fundo em torno do assunto</string>
@@ -120,7 +120,7 @@
     <string name="portrait_brightness_label">Brilho</string>
     <!-- Effect Tabs -->
     <string name="tab_shape">Forma</string>
-    <string name="tab_weather">Weather</string>
+    <string name="tab_weather">Clima</string>
     <string name="tab_atmosphere">Atmosphere</string>
     <string name="tab_cinematic">Cinemática</string>
     <string name="tab_glass">Glass</string>
@@ -238,8 +238,8 @@
     <string name="clock_info_media">Mídia</string>
     <string name="clock_info_smartspace">Smartspace</string>
     <string name="clock_info_alarm">Alarme</string>
-    <string name="clock_info_calendar">Calendar</string>
-    <string name="clock_info_weather">Weather</string>
+    <string name="clock_info_calendar">Calendário</string>
+    <string name="clock_info_weather">Clima</string>
     <string name="clock_color">Cor do relógio</string>
     <string name="clock_graffiti_angle">Ângulo de Grafite</string>
     <string name="device_controls">Controles do dispositivo</string>
