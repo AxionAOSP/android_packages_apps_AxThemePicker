@@ -30,6 +30,7 @@
     <string name="fonts">Шрифти</string>
     <string name="shortcuts">Ярлики</string>
     <string name="widgets">Віджети</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Поточні шпалери</string>
     <string name="customize_to_match_your_style">Налаштуйте відповідно до ваших стилів</string>
@@ -73,6 +74,7 @@
     <string name="lock_screen_label">Екран блокування</string>
     <string name="pinch_to_crop">Зведення/розведення пальців для того щоб обрізати</string>
     <string name="select_at_least_one">Виберіть принаймні один</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Встановити шпалери</string>
     <string name="set_wallpaper_on">Встановити шпалери на</string>
     <string name="home_lock_both">Обидва</string>
@@ -226,9 +228,7 @@
     <string name="reset_clock">Reset clock</string>
     <string name="reset_clock_size">Скинути розмір</string>
     <string name="reset_clock_position">Скинути положення</string>
-    <string name="clock_edit_education">Затисніть годинник, а потім перетягніть вгору або вниз, щоби налаштувати його положення. Перетягніть за кут, щоб змінити розмір.</string>
     <string name="clock_dual_tone">Двоколірний</string>
-    <string name="clock_alignment">Вирівнювання</string>
     <string name="clock_align_left">Ліворуч</string>
     <string name="clock_align_center">По центру</string>
     <string name="clock_align_right">Праворуч</string>
