@@ -30,6 +30,7 @@
     <string name="fonts">Font</string>
     <string name="shortcuts">Pintasan</string>
     <string name="widgets">Widget</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Wallpaper saat ini</string>
     <string name="customize_to_match_your_style">Sesuaikan agar sesuai dengan gaya Anda</string>
@@ -67,6 +68,7 @@
     <string name="lock_screen_label">Layar kunci</string>
     <string name="pinch_to_crop">Cubit untuk memangkas</string>
     <string name="select_at_least_one">Pilih setidaknya satu</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Atur wallpaper</string>
     <string name="set_wallpaper_on">Atur wallpaper pada</string>
     <string name="home_lock_both">Both</string>
@@ -220,9 +222,7 @@
     <string name="reset_clock">Reset clock</string>
     <string name="reset_clock_size">Reset size</string>
     <string name="reset_clock_position">Reset position</string>
-    <string name="clock_edit_education">Long-press the clock, then drag up or down to adjust its position. Drag the corner to resize.</string>
     <string name="clock_dual_tone">Dual tone</string>
-    <string name="clock_alignment">Alignment</string>
     <string name="clock_align_left">Left</string>
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>
