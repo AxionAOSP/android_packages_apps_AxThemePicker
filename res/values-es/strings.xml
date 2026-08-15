@@ -30,6 +30,7 @@
     <string name="fonts">Fuentes</string>
     <string name="shortcuts">Accesos directos</string>
     <string name="widgets">Widgets</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Fondo de pantalla actual</string>
     <string name="customize_to_match_your_style">Personalizar para que coincida con tu estilo</string>
@@ -69,6 +70,7 @@
     <string name="lock_screen_label">Pantalla de bloqueo</string>
     <string name="pinch_to_crop">Pellizca para recortar</string>
     <string name="select_at_least_one">Seleccione al menos uno.</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Establecer fondo</string>
     <string name="set_wallpaper_on">Establecer fondo de pantalla</string>
     <string name="home_lock_both">Ambos</string>
@@ -222,9 +224,7 @@
     <string name="reset_clock">Restablecer reloj</string>
     <string name="reset_clock_size">Restablecer tamaño</string>
     <string name="reset_clock_position">Restablecer posición</string>
-    <string name="clock_edit_education">Mantenga pulsado el reloj, luego arrastre hacia arriba o hacia abajo para ajustar su posición. Arrastre la esquina para cambiar el tamaño.</string>
     <string name="clock_dual_tone">Doble tono</string>
-    <string name="clock_alignment">Alineación</string>
     <string name="clock_align_left">Izquierda</string>
     <string name="clock_align_center">Centro</string>
     <string name="clock_align_right">Derecha</string>
