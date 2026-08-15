@@ -30,6 +30,7 @@
     <string name="fonts">Fonts</string>
     <string name="shortcuts">Shortcuts</string>
     <string name="widgets">Legstukke</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Current wallpaper</string>
     <string name="customize_to_match_your_style">Customize to match your style</string>
@@ -69,6 +70,7 @@
     <string name="lock_screen_label">Lock screen</string>
     <string name="pinch_to_crop">Pinch to crop</string>
     <string name="select_at_least_one">Select at least one</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Set wallpaper</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
     <string name="home_lock_both">Both</string>
@@ -222,9 +224,7 @@
     <string name="reset_clock">Reset clock</string>
     <string name="reset_clock_size">Reset size</string>
     <string name="reset_clock_position">Reset position</string>
-    <string name="clock_edit_education">Long-press the clock, then drag up or down to adjust its position. Drag the corner to resize.</string>
     <string name="clock_dual_tone">Dual tone</string>
-    <string name="clock_alignment">Alignment</string>
     <string name="clock_align_left">Left</string>
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>
