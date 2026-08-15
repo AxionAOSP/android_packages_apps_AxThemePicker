@@ -30,6 +30,7 @@
     <string name="fonts">Шрифты</string>
     <string name="shortcuts">Ярлыки</string>
     <string name="widgets">Виджеты</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Текущие обои</string>
     <string name="customize_to_match_your_style">Настройте под ваш стиль</string>
@@ -73,6 +74,7 @@
     <string name="lock_screen_label">Экран блокировки</string>
     <string name="pinch_to_crop">Перетаскивайте, чтобы обрезать</string>
     <string name="select_at_least_one">Выберите хотя бы один</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Установить обои</string>
     <string name="set_wallpaper_on">Применить обои в</string>
     <string name="home_lock_both">Both</string>
@@ -226,9 +228,7 @@
     <string name="reset_clock">Reset clock</string>
     <string name="reset_clock_size">Reset size</string>
     <string name="reset_clock_position">Reset position</string>
-    <string name="clock_edit_education">Long-press the clock, then drag up or down to adjust its position. Drag the corner to resize.</string>
     <string name="clock_dual_tone">Dual tone</string>
-    <string name="clock_alignment">Alignment</string>
     <string name="clock_align_left">Left</string>
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>
