@@ -47,10 +47,6 @@ object Dimens {
     val WidgetCellGap = 8.dp
     val WidgetCellCorner = 16.dp
 
-    val NotificationCardHeight = 56.dp
-    val NotificationCardGap = 6.dp
-    val NotificationCardCorner = 20.dp
-
     val TileCorner = 24.dp
     val TileBorder = 6.dp
     val TileIcon = 24.dp

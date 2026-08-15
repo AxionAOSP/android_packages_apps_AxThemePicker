@@ -18,6 +18,7 @@ package com.android.axion.themepicker.ui.wallpaperset
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.graphics.PointF
@@ -25,7 +26,7 @@ import android.graphics.Rect
 import android.net.Uri
 import android.util.Log
 import android.view.View
-import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
+import com.android.axion.util.DisplayUtils
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -48,7 +49,7 @@ fun calculateMinScale(screenW: Float, screenH: Float, imgW: Float, imgH: Float):
     maxOf(screenW / imgW, screenH / imgH)
 
 fun clampOffset(offset: Float, scaledDim: Float, screenDim: Float): Float {
-    val maxOffset = (scaledDim - screenDim) / 2f
+    val maxOffset = ((scaledDim - screenDim) / 2f).coerceAtLeast(0f)
     return offset.coerceIn(-maxOffset, maxOffset)
 }
 
@@ -174,53 +175,78 @@ fun calculateCropRectForDisplay(
 fun buildMultiDisplayCropHints(
     context: Context,
     wallpaperSize: Point,
+    previewBitmapSize: Point,
     userCropRect: Rect,
     wallpaperZoom: Float,
     hostViewSize: Point,
-): Map<Point, Rect>? {
-    val displaySizes = DisplayHelper.getInternalDisplaySizes(context, allDimensions = true)
-
-    if (
-        !DisplayHelper.hasMultiInternalDisplays(context) &&
-            !DisplayHelper.isLargeScreenDevice(context)
-    ) {
-        return null
-    }
-
-    val resources = context.resources
+): Map<Point, Rect> {
     val result = mutableMapOf<Point, Rect>()
+    val centerX = userCropRect.exactCenterX()
+    val centerY = userCropRect.exactCenterY()
+    val previewMinZoom =
+        calculateMinZoom(previewBitmapSize, hostViewSize).coerceAtLeast(Float.MIN_VALUE)
+    val relativeZoom = (wallpaperZoom / previewMinZoom).coerceAtLeast(1f)
 
-    for (displaySize in displaySizes) {
-        val cropSurfaceSize = getDefaultCropSurfaceSize(resources, displaySize)
+    val internalDisplays = DisplayUtils.getInternalDisplays(context)
+    for (display in internalDisplays) {
+        val size = DisplayUtils.getRealSize(display)
+        val resources = context.createDisplayContext(display).resources
 
-        val scrollX = (userCropRect.left * wallpaperZoom).roundToInt()
-        val scrollY = (userCropRect.top * wallpaperZoom).roundToInt()
+        for (displaySize in listOf(size, Point(size.y, size.x))) {
+            val targetZoom = calculateMinZoom(wallpaperSize, displaySize) * relativeZoom
+            val visibleWidth = (displaySize.x / targetZoom).coerceAtMost(wallpaperSize.x.toFloat())
+            val visibleHeight = (displaySize.y / targetZoom).coerceAtMost(wallpaperSize.y.toFloat())
+            val left =
+                (centerX - visibleWidth / 2f)
+                    .coerceIn(0f, wallpaperSize.x - visibleWidth)
+            val top =
+                (centerY - visibleHeight / 2f)
+                    .coerceIn(0f, wallpaperSize.y - visibleHeight)
+            val cropRect =
+                calculateCropRectForDisplay(
+                    context = context,
+                    wallpaperZoom = targetZoom,
+                    wallpaperSize = wallpaperSize,
+                    cropSurfaceSize = getDefaultCropSurfaceSize(resources, displaySize),
+                    targetHostSize = displaySize,
+                    scrollX = (left * targetZoom).roundToInt(),
+                    scrollY = (top * targetZoom).roundToInt(),
+                )
 
-        val cropRect =
-            calculateCropRectForDisplay(
-                context = context,
-                wallpaperZoom = wallpaperZoom,
-                wallpaperSize = wallpaperSize,
-                cropSurfaceSize = cropSurfaceSize,
-                targetHostSize = displaySize,
-                scrollX = scrollX,
-                scrollY = scrollY,
-                cropExtraWidth = true,
-            )
-
-        val rawCropRect =
-            Rect(
-                (cropRect.left / wallpaperZoom).roundToInt().coerceAtLeast(0),
-                (cropRect.top / wallpaperZoom).roundToInt().coerceAtLeast(0),
-                (cropRect.right / wallpaperZoom).roundToInt().coerceAtMost(wallpaperSize.x),
-                (cropRect.bottom / wallpaperZoom).roundToInt().coerceAtMost(wallpaperSize.y),
-            )
-
-        result[displaySize] = rawCropRect
+            result[displaySize] =
+                Rect(
+                    (cropRect.left / targetZoom).roundToInt().coerceAtLeast(0),
+                    (cropRect.top / targetZoom).roundToInt().coerceAtLeast(0),
+                    (cropRect.right / targetZoom).roundToInt().coerceAtMost(wallpaperSize.x),
+                    (cropRect.bottom / targetZoom).roundToInt().coerceAtMost(wallpaperSize.y),
+                )
+        }
     }
 
     Log.d(CROP_TAG, "Built multi-display crop hints for ${result.size} display configs")
     return result
+}
+
+internal fun rebaseWallpaperToCropHints(
+    bitmap: Bitmap,
+    cropHints: Map<Point, Rect>,
+): Pair<Bitmap, Map<Point, Rect>> {
+    val hints = cropHints.values.iterator()
+    val bounds = Rect(hints.next())
+    while (hints.hasNext()) {
+        bounds.union(hints.next())
+    }
+    if (bounds == Rect(0, 0, bitmap.width, bitmap.height)) {
+        return bitmap to cropHints
+    }
+
+    val croppedBitmap =
+        Bitmap.createBitmap(bitmap, bounds.left, bounds.top, bounds.width(), bounds.height())
+    val rebasedHints =
+        cropHints.mapValues { (_, hint) ->
+            Rect(hint).apply { offset(-bounds.left, -bounds.top) }
+        }
+    return croppedBitmap to rebasedHints
 }
 
 fun computeDisplayCropHints(
@@ -228,7 +254,7 @@ fun computeDisplayCropHints(
     bitmapWidth: Int,
     bitmapHeight: Int,
 ): Map<Point, Rect> {
-    val displaySizes = DisplayHelper.getInternalDisplaySizes(context, allDimensions = true)
+    val displaySizes = DisplayUtils.getInternalDisplaySizes(context, true)
     val result = mutableMapOf<Point, Rect>()
 
     for (displaySize in displaySizes) {

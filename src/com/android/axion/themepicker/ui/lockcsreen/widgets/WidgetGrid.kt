@@ -26,8 +26,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -39,13 +37,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Widgets
@@ -63,14 +60,19 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -78,6 +80,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import androidx.core.graphics.drawable.toBitmap
+import com.android.axion.themepicker.R
+import com.android.axion.themepicker.ui.lockscreen.CLOCK_EDIT_HANDLE_SIZE_DP
+import com.android.axion.themepicker.ui.lockscreen.ClockResizeCorner
+import com.android.axion.themepicker.ui.lockscreen.CornerResizeHandle
 import com.android.axion.themepicker.ui.lockscreen.Dimens
 import com.android.axion.themepicker.ui.lockscreen.previewScale
 import com.android.axion.themepicker.utils.math.scaleRatio
@@ -99,22 +105,6 @@ private fun occupancyExcluding(
         }
     }
     return matrix
-}
-
-private fun hasCollision(
-    occupancy: Array<BooleanArray>,
-    cellX: Int,
-    cellY: Int,
-    spanX: Int,
-    spanY: Int,
-): Boolean {
-    for (y in cellY until cellY + spanY) {
-        for (x in cellX until cellX + spanX) {
-            if (y !in 0 until MAX_ROWS || x !in 0 until GRID_COLUMNS) return true
-            if (occupancy[y][x]) return true
-        }
-    }
-    return false
 }
 
 private fun maxSpanXFor(
@@ -159,14 +149,57 @@ private fun clampNoCollision(
     occupancy: Array<BooleanArray>,
     cellX: Int,
     cellY: Int,
-    currentSpanX: Int,
     currentSpanY: Int,
     desiredX: Int,
     desiredY: Int,
 ): Pair<Int, Int> {
-    val nx = maxSpanXFor(occupancy, cellX, cellY, currentSpanY, desiredX)
+    val spanYForHorizontalCheck = minOf(currentSpanY, desiredY)
+    val nx = maxSpanXFor(occupancy, cellX, cellY, spanYForHorizontalCheck, desiredX)
     val ny = maxSpanYFor(occupancy, cellX, cellY, nx, desiredY)
     return nx to ny
+}
+
+private class WidgetResizeSession {
+    private lateinit var widget: GridWidgetItem
+    private lateinit var occupancy: Array<BooleanArray>
+    private var totalDelta = Offset.Zero
+
+    fun start(widget: GridWidgetItem, widgets: List<GridWidgetItem>) {
+        this.widget = widget
+        occupancy = occupancyExcluding(widgets, widget.appWidgetId)
+        totalDelta = Offset.Zero
+    }
+
+    fun resizeBy(
+        delta: Offset,
+        cellStepPx: Float,
+        horizontal: Boolean,
+        vertical: Boolean,
+    ): Pair<Int, Int> {
+        totalDelta += delta
+        val desiredX =
+            if (horizontal) {
+                (widget.spanX + (totalDelta.x / cellStepPx).roundToInt())
+                    .coerceIn(1, GRID_COLUMNS - widget.cellX)
+            } else {
+                widget.spanX
+            }
+        val desiredY =
+            if (vertical) {
+                (widget.spanY + (totalDelta.y / cellStepPx).roundToInt())
+                    .coerceIn(1, MAX_ROWS - widget.cellY)
+            } else {
+                widget.spanY
+            }
+        return clampNoCollision(
+            occupancy = occupancy,
+            cellX = widget.cellX,
+            cellY = widget.cellY,
+            currentSpanY = widget.spanY,
+            desiredX = desiredX,
+            desiredY = desiredY,
+        )
+    }
 }
 
 private val WidgetPlacementSpec =
@@ -202,78 +235,61 @@ fun WidgetGrid(
             widgets
         }
 
-    val occupied = remember(displayWidgets) { buildOccupiedGrid(displayWidgets) }
-
     val density = LocalDensity.current
     val cellSizePx = with(density) { cellSize.toPx() }
     val gapPx = with(density) { gap.toPx() }
-    var resizingId by remember { mutableStateOf(-1) }
+    var resizingId by remember { mutableIntStateOf(-1) }
     var resizingSpanX by remember { mutableIntStateOf(1) }
     var resizingSpanY by remember { mutableIntStateOf(1) }
-    var resizingCellX by remember { mutableIntStateOf(0) }
-    var resizingCellY by remember { mutableIntStateOf(0) }
     var selectedId by remember { mutableIntStateOf(-1) }
 
     Box(
         modifier =
-            Modifier.width(gridWidth)
-                .height(gridHeight)
+            Modifier.requiredSize(width = gridWidth, height = gridHeight)
+                .then(
+                    if (!isPreview) {
+                        Modifier.drawWithContent {
+                            drawContent()
+                            val strokeWidth = 1.dp.toPx()
+                            drawRoundRect(
+                                color = Color.White.copy(alpha = 0.42f),
+                                topLeft = Offset(strokeWidth / 2f, strokeWidth / 2f),
+                                size =
+                                    Size(
+                                        width = size.width - strokeWidth,
+                                        height = size.height - strokeWidth,
+                                    ),
+                                cornerRadius = CornerRadius(cornerRadius.toPx()),
+                                style = Stroke(strokeWidth),
+                            )
+                        }
+                    } else {
+                        Modifier
+                    }
+                )
                 .then(
                     if (!isPreview)
                         Modifier.clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() },
-                            onClick = { if (selectedId != -1) selectedId = -1 },
+                            onClick = onPickWidget,
                         )
                     else Modifier
                 ),
         contentAlignment = Alignment.TopStart,
     ) {
-        for (row in 0 until MAX_ROWS) {
-            for (col in 0 until GRID_COLUMNS) {
-                if (!occupied[row][col]) {
-                    val x = (cellSize + gap) * col
-                    val y = (cellSize + gap) * row
-                    Box(
-                        modifier =
-                            Modifier.offset(x = x, y = y)
-                                .size(cellSize)
-                                .clip(RoundedCornerShape(cornerRadius))
-                                .background(Color.White.copy(alpha = 0.25f))
-                                .border(
-                                    width = 1.dp * scale,
-                                    color = Color.White.copy(alpha = 0.3f),
-                                    shape = RoundedCornerShape(cornerRadius),
-                                )
-                                .then(
-                                    if (!isPreview)
-                                        Modifier.clickable(
-                                            indication = null,
-                                            interactionSource =
-                                                remember { MutableInteractionSource() },
-                                        ) {
-                                            onPickWidget()
-                                        }
-                                    else Modifier
-                                ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        if (!isPreview) {
-                            Icon(
-                                Icons.Default.Add,
-                                contentDescription = null,
-                                tint = Color.White.copy(alpha = 0.5f),
-                                modifier = Modifier.size(20.dp * scale),
-                            )
-                        }
-                    }
-                }
-            }
+        if (!isPreview && widgets.isEmpty()) {
+            Text(
+                text = stringResource(R.string.add_widgets),
+                modifier = Modifier.align(Alignment.Center),
+                color = Color.White.copy(alpha = 0.9f),
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
 
         if (dragDropState != null && dragDropState.dragInProgress) {
             val target = dragDropState.dropTarget
-            if (target != null && !target.isValid) {
+            if (target != null) {
                 val dragId = dragDropState.draggingWidgetId
                 val dragged = widgets.firstOrNull { it.appWidgetId == dragId }
                 if (dragged != null) {
@@ -281,16 +297,20 @@ fun WidgetGrid(
                     val ty = (cellSize + gap) * target.cellY
                     val tw = cellSize * dragged.spanX + gap * (dragged.spanX - 1).coerceAtLeast(0)
                     val th = cellSize * dragged.spanY + gap * (dragged.spanY - 1).coerceAtLeast(0)
+                    val highlightColor = if (target.isValid) Color.White else Color.Red
 
                     Box(
                         modifier =
                             Modifier.offset(x = tx, y = ty)
                                 .size(width = tw, height = th)
+                                .zIndex(3f)
                                 .clip(RoundedCornerShape(cornerRadius))
-                                .background(Color.Red.copy(alpha = 0.20f))
+                                .background(highlightColor.copy(alpha = 0.20f))
                                 .border(
                                     width = 1.5.dp * scale,
-                                    color = Color.Red.copy(alpha = 0.4f),
+                                    color = highlightColor.copy(
+                                        alpha = if (target.isValid) 0.72f else 0.4f,
+                                    ),
                                     shape = RoundedCornerShape(cornerRadius),
                                 )
                     )
@@ -302,10 +322,8 @@ fun WidgetGrid(
             val isResizing = resizingId == widget.appWidgetId
             val effSpanX = if (isResizing) resizingSpanX else widget.spanX
             val effSpanY = if (isResizing) resizingSpanY else widget.spanY
-            val effCellX = if (isResizing) resizingCellX else widget.cellX
-            val effCellY = if (isResizing) resizingCellY else widget.cellY
-            val targetX = effCellX * (cellSizePx + gapPx)
-            val targetY = effCellY * (cellSizePx + gapPx)
+            val targetX = widget.cellX * (cellSizePx + gapPx)
+            val targetY = widget.cellY * (cellSizePx + gapPx)
             val w = cellSize * effSpanX + gap * (effSpanX - 1).coerceAtLeast(0)
             val h = cellSize * effSpanY + gap * (effSpanY - 1).coerceAtLeast(0)
             val isBeingDragged = dragDropState?.isDragging(widget) == true
@@ -349,7 +367,8 @@ fun WidgetGrid(
                 val labelText = remember(widget.provider) { widget.label(context) }
 
                 val isSelected = selectedId == widget.appWidgetId
-                val selectionColor = MaterialTheme.colorScheme.primary
+                val resizeHandleColor = MaterialTheme.colorScheme.primary
+                val resizeFrameColor = resizeHandleColor.copy(alpha = 0.55f)
                 val interactionSrc = remember(widget.appWidgetId) { MutableInteractionSource() }
                 val currentWidgetsState by rememberUpdatedState(widgets)
                 val currentWidgetForDrag by rememberUpdatedState(widget)
@@ -392,13 +411,23 @@ fun WidgetGrid(
                             translationY = dds.draggingItemOffset.y
                         }.zIndex(4f)
                     } else Modifier
-                val borderModifier =
+                val selectionModifier =
                     if (isSelected)
-                        Modifier.border(
-                            width = 2.dp * scale,
-                            color = selectionColor,
-                            shape = RoundedCornerShape(cornerRadius),
-                        )
+                        Modifier.drawWithContent {
+                            drawContent()
+                            val strokeWidth = 2.dp.toPx() * scale
+                            drawRoundRect(
+                                color = resizeFrameColor,
+                                topLeft = Offset(strokeWidth / 2f, strokeWidth / 2f),
+                                size =
+                                    Size(
+                                        width = size.width - strokeWidth,
+                                        height = size.height - strokeWidth,
+                                    ),
+                                cornerRadius = CornerRadius(cornerRadius.toPx()),
+                                style = Stroke(strokeWidth),
+                            )
+                        }
                     else Modifier
                 val offsetX = if (isBeingDragged) targetX else animatedX
                 val offsetY = if (isBeingDragged) targetY else animatedY
@@ -411,7 +440,7 @@ fun WidgetGrid(
                             .size(width = w, height = h)
                             .then(draggingOffsetModifier)
                             .then(cellBgModifier)
-                            .then(borderModifier)
+                            .then(selectionModifier)
                             .then(selectableModifier)
                             .then(dragModifier),
                     contentAlignment = Alignment.Center,
@@ -553,413 +582,86 @@ fun WidgetGrid(
                             val cellFullPx = cellSizePx + gapPx
                             val siblings by rememberUpdatedState(widgets)
                             val currentWidget by rememberUpdatedState(widget)
+                            val resizeSession =
+                                remember(widget.appWidgetId) { WidgetResizeSession() }
                             val resizeMode =
                                 providerInfo?.resizeMode ?: AppWidgetProviderInfo.RESIZE_BOTH
-                            val occForCheck =
+                            val horizontal =
+                                (resizeMode and AppWidgetProviderInfo.RESIZE_HORIZONTAL) != 0
+                            val vertical =
+                                (resizeMode and AppWidgetProviderInfo.RESIZE_VERTICAL) != 0
+                            val occupancy =
                                 remember(widgets, widget.appWidgetId) {
                                     occupancyExcluding(widgets, widget.appWidgetId)
                                 }
-                            val maxGrowX =
-                                remember(occForCheck, widget.cellX, widget.cellY, widget.spanY) {
+                            val maxSpanX =
+                                remember(occupancy, widget.cellX, widget.cellY, widget.spanY) {
                                     maxSpanXFor(
-                                        occForCheck,
+                                        occupancy,
                                         widget.cellX,
                                         widget.cellY,
                                         widget.spanY,
                                         GRID_COLUMNS - widget.cellX,
                                     )
                                 }
-                            val maxGrowY =
-                                remember(occForCheck, widget.cellX, widget.cellY, widget.spanX) {
+                            val maxSpanY =
+                                remember(occupancy, widget.cellX, widget.cellY, widget.spanX) {
                                     maxSpanYFor(
-                                        occForCheck,
+                                        occupancy,
                                         widget.cellX,
                                         widget.cellY,
                                         widget.spanX,
                                         MAX_ROWS - widget.cellY,
                                     )
                                 }
-                            val hCapable =
-                                (resizeMode and AppWidgetProviderInfo.RESIZE_HORIZONTAL) != 0
-                            val vCapable =
-                                (resizeMode and AppWidgetProviderInfo.RESIZE_VERTICAL) != 0
-                            val canGrowLeft =
-                                remember(occForCheck, widget.cellX, widget.cellY, widget.spanY) {
-                                    widget.cellX > 0 &&
-                                        !hasCollision(
-                                            occForCheck,
-                                            widget.cellX - 1,
-                                            widget.cellY,
-                                            1,
-                                            widget.spanY,
-                                        )
-                                }
-                            val canGrowUp =
-                                remember(occForCheck, widget.cellX, widget.cellY, widget.spanX) {
-                                    widget.cellY > 0 &&
-                                        !hasCollision(
-                                            occForCheck,
-                                            widget.cellX,
-                                            widget.cellY - 1,
-                                            widget.spanX,
-                                            1,
-                                        )
-                                }
-                            val canResizeH =
-                                hCapable && (maxGrowX > widget.spanX || widget.spanX > 1)
-                            val canResizeV =
-                                vCapable && (maxGrowY > widget.spanY || widget.spanY > 1)
-                            val canResizeW = hCapable && (canGrowLeft || widget.spanX > 1)
-                            val canResizeU = vCapable && (canGrowUp || widget.spanY > 1)
-                            val pillColor = badgeBg
-                            val pillLong = 24.dp * scale
-                            val pillShort = 8.dp * scale
-                            val pillHit = 48.dp * scale
+                            val canResizeHorizontally =
+                                horizontal && (maxSpanX > widget.spanX || widget.spanX > 1)
+                            val canResizeVertically =
+                                vertical && (maxSpanY > widget.spanY || widget.spanY > 1)
 
-                            if (canResizeH) {
-                                Box(
+                            if (canResizeHorizontally || canResizeVertically) {
+                                CornerResizeHandle(
                                     modifier =
-                                        Modifier.align(Alignment.CenterEnd)
-                                            .zIndex(3f)
-                                            .offset(x = pillHit / 2)
-                                            .size(pillHit)
-                                            .pointerInput(widget.appWidgetId) {
-                                                awaitEachGesture {
-                                                    val down = awaitFirstDown(
-                                                        requireUnconsumed = false,
-                                                    )
-                                                    down.consume()
-                                                    val wItem = currentWidget
-                                                    val startX = wItem.spanX
-                                                    val startY = wItem.spanY
-                                                    val baseCellX = wItem.cellX
-                                                    val baseCellY = wItem.cellY
-                                                    var acc = 0f
-                                                    val occupancy = occupancyExcluding(
-                                                        siblings,
-                                                        wItem.appWidgetId,
-                                                    )
-                                                    resizingId = wItem.appWidgetId
-                                                    resizingSpanX = startX
-                                                    resizingSpanY = startY
-                                                    resizingCellX = baseCellX
-                                                    resizingCellY = baseCellY
-                                                    while (true) {
-                                                        val event = awaitPointerEvent()
-                                                        val change = event.changes.firstOrNull {
-                                                            it.id == down.id
-                                                        } ?: break
-                                                        if (!change.pressed) {
-                                                            val nx = resizingSpanX
-                                                            val ny = resizingSpanY
-                                                            change.consume()
-                                                            resizingId = -1
-                                                            val latest = currentWidget
-                                                            if (nx != latest.spanX ||
-                                                                    ny != latest.spanY) {
-                                                                onResizeWidget(
-                                                                    latest.copy(
-                                                                        spanX = nx,
-                                                                        spanY = ny,
-                                                                    )
-                                                                )
-                                                            }
-                                                            break
-                                                        }
-                                                        val d = change.positionChange()
-                                                        change.consume()
-                                                        acc += d.x
-                                                        val dx = (acc / cellFullPx).roundToInt()
-                                                        val desiredX = (startX + dx).coerceIn(
-                                                            1,
-                                                            GRID_COLUMNS - baseCellX,
-                                                        )
-                                                        val (cx, _) = clampNoCollision(
-                                                            occupancy,
-                                                            baseCellX,
-                                                            baseCellY,
-                                                            resizingSpanX,
-                                                            resizingSpanY,
-                                                            desiredX,
-                                                            resizingSpanY,
-                                                        )
-                                                        resizingSpanX = cx
-                                                    }
-                                                }
-                                            },
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Box(
-                                        modifier =
-                                            Modifier.size(
-                                                    width = pillShort,
-                                                    height = pillLong,
+                                        Modifier.align(Alignment.BottomEnd)
+                                            .zIndex(5f)
+                                            .size((CLOCK_EDIT_HANDLE_SIZE_DP * scale).dp),
+                                    corner = ClockResizeCorner.BottomRight,
+                                    onDragStart = {
+                                        val current = currentWidget
+                                        resizeSession.start(current, siblings)
+                                        resizingId = current.appWidgetId
+                                        resizingSpanX = current.spanX
+                                        resizingSpanY = current.spanY
+                                    },
+                                    onDragCancel = { resizingId = -1 },
+                                    onDragEnd = {
+                                        val spanX = resizingSpanX
+                                        val spanY = resizingSpanY
+                                        resizingId = -1
+                                        val current = currentWidget
+                                        if (spanX != current.spanX || spanY != current.spanY) {
+                                            onResizeWidget(
+                                                current.copy(
+                                                    spanX = spanX,
+                                                    spanY = spanY,
                                                 )
-                                                .clip(RoundedCornerShape(pillShort / 2))
-                                                .background(pillColor)
-                                    )
-                                }
-                            }
-
-                            if (canResizeV) {
-                                Box(
-                                    modifier =
-                                        Modifier.align(Alignment.BottomCenter)
-                                            .zIndex(3f)
-                                            .offset(y = pillHit / 2)
-                                            .size(pillHit)
-                                            .pointerInput(widget.appWidgetId) {
-                                                awaitEachGesture {
-                                                    val down = awaitFirstDown(
-                                                        requireUnconsumed = false,
-                                                    )
-                                                    down.consume()
-                                                    val wItem = currentWidget
-                                                    val startX = wItem.spanX
-                                                    val startY = wItem.spanY
-                                                    val baseCellX = wItem.cellX
-                                                    val baseCellY = wItem.cellY
-                                                    var acc = 0f
-                                                    val occupancy = occupancyExcluding(
-                                                        siblings,
-                                                        wItem.appWidgetId,
-                                                    )
-                                                    resizingId = wItem.appWidgetId
-                                                    resizingSpanX = startX
-                                                    resizingSpanY = startY
-                                                    resizingCellX = baseCellX
-                                                    resizingCellY = baseCellY
-                                                    while (true) {
-                                                        val event = awaitPointerEvent()
-                                                        val change = event.changes.firstOrNull {
-                                                            it.id == down.id
-                                                        } ?: break
-                                                        if (!change.pressed) {
-                                                            val nx = resizingSpanX
-                                                            val ny = resizingSpanY
-                                                            change.consume()
-                                                            resizingId = -1
-                                                            val latest = currentWidget
-                                                            if (nx != latest.spanX ||
-                                                                    ny != latest.spanY) {
-                                                                onResizeWidget(
-                                                                    latest.copy(
-                                                                        spanX = nx,
-                                                                        spanY = ny,
-                                                                    )
-                                                                )
-                                                            }
-                                                            break
-                                                        }
-                                                        val d = change.positionChange()
-                                                        change.consume()
-                                                        acc += d.y
-                                                        val dy = (acc / cellFullPx).roundToInt()
-                                                        val desiredY = (startY + dy).coerceIn(
-                                                            1,
-                                                            MAX_ROWS - baseCellY,
-                                                        )
-                                                        val (_, cy) = clampNoCollision(
-                                                            occupancy,
-                                                            baseCellX,
-                                                            baseCellY,
-                                                            resizingSpanX,
-                                                            resizingSpanY,
-                                                            resizingSpanX,
-                                                            desiredY,
-                                                        )
-                                                        resizingSpanY = cy
-                                                    }
-                                                }
-                                            },
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Box(
-                                        modifier =
-                                            Modifier.size(
-                                                    width = pillLong,
-                                                    height = pillShort,
-                                                )
-                                                .clip(RoundedCornerShape(pillShort / 2))
-                                                .background(pillColor)
-                                    )
-                                }
-                            }
-
-                            if (canResizeW) {
-                                Box(
-                                    modifier =
-                                        Modifier.align(Alignment.CenterStart)
-                                            .zIndex(3f)
-                                            .offset(x = -pillHit / 2)
-                                            .size(pillHit)
-                                            .pointerInput(widget.appWidgetId) {
-                                                awaitEachGesture {
-                                                    val down = awaitFirstDown(
-                                                        requireUnconsumed = false,
-                                                    )
-                                                    down.consume()
-                                                    val wItem = currentWidget
-                                                    val origCellX = wItem.cellX
-                                                    val origCellY = wItem.cellY
-                                                    val origSpanX = wItem.spanX
-                                                    val origSpanY = wItem.spanY
-                                                    val rightEdge = origCellX + origSpanX
-                                                    var acc = 0f
-                                                    val occupancy = occupancyExcluding(
-                                                        siblings,
-                                                        wItem.appWidgetId,
-                                                    )
-                                                    resizingId = wItem.appWidgetId
-                                                    resizingSpanX = origSpanX
-                                                    resizingSpanY = origSpanY
-                                                    resizingCellX = origCellX
-                                                    resizingCellY = origCellY
-                                                    while (true) {
-                                                        val event = awaitPointerEvent()
-                                                        val change = event.changes.firstOrNull {
-                                                            it.id == down.id
-                                                        } ?: break
-                                                        if (!change.pressed) {
-                                                            val nx = resizingCellX
-                                                            val sx = resizingSpanX
-                                                            change.consume()
-                                                            resizingId = -1
-                                                            val latest = currentWidget
-                                                            if (nx != latest.cellX ||
-                                                                    sx != latest.spanX) {
-                                                                onResizeWidget(
-                                                                    latest.copy(
-                                                                        cellX = nx,
-                                                                        spanX = sx,
-                                                                    )
-                                                                )
-                                                            }
-                                                            break
-                                                        }
-                                                        val d = change.positionChange()
-                                                        change.consume()
-                                                        acc += d.x
-                                                        val shift =
-                                                            (acc / cellFullPx).roundToInt()
-                                                        var newCellX =
-                                                            (origCellX + shift)
-                                                                .coerceIn(0, rightEdge - 1)
-                                                        while (newCellX < origCellX &&
-                                                                hasCollision(
-                                                                    occupancy,
-                                                                    newCellX,
-                                                                    origCellY,
-                                                                    rightEdge - newCellX,
-                                                                    origSpanY,
-                                                                )) {
-                                                            newCellX++
-                                                        }
-                                                        resizingCellX = newCellX
-                                                        resizingSpanX = rightEdge - newCellX
-                                                    }
-                                                }
-                                            },
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Box(
-                                        modifier =
-                                            Modifier.size(
-                                                    width = pillShort,
-                                                    height = pillLong,
-                                                )
-                                                .clip(RoundedCornerShape(pillShort / 2))
-                                                .background(pillColor)
-                                    )
-                                }
-                            }
-
-                            if (canResizeU) {
-                                Box(
-                                    modifier =
-                                        Modifier.align(Alignment.TopCenter)
-                                            .zIndex(3f)
-                                            .offset(y = -pillHit / 2)
-                                            .size(pillHit)
-                                            .pointerInput(widget.appWidgetId) {
-                                                awaitEachGesture {
-                                                    val down = awaitFirstDown(
-                                                        requireUnconsumed = false,
-                                                    )
-                                                    down.consume()
-                                                    val wItem = currentWidget
-                                                    val origCellX = wItem.cellX
-                                                    val origCellY = wItem.cellY
-                                                    val origSpanX = wItem.spanX
-                                                    val origSpanY = wItem.spanY
-                                                    val bottomEdge = origCellY + origSpanY
-                                                    var acc = 0f
-                                                    val occupancy = occupancyExcluding(
-                                                        siblings,
-                                                        wItem.appWidgetId,
-                                                    )
-                                                    resizingId = wItem.appWidgetId
-                                                    resizingSpanX = origSpanX
-                                                    resizingSpanY = origSpanY
-                                                    resizingCellX = origCellX
-                                                    resizingCellY = origCellY
-                                                    while (true) {
-                                                        val event = awaitPointerEvent()
-                                                        val change = event.changes.firstOrNull {
-                                                            it.id == down.id
-                                                        } ?: break
-                                                        if (!change.pressed) {
-                                                            val ny = resizingCellY
-                                                            val sy = resizingSpanY
-                                                            change.consume()
-                                                            resizingId = -1
-                                                            val latest = currentWidget
-                                                            if (ny != latest.cellY ||
-                                                                    sy != latest.spanY) {
-                                                                onResizeWidget(
-                                                                    latest.copy(
-                                                                        cellY = ny,
-                                                                        spanY = sy,
-                                                                    )
-                                                                )
-                                                            }
-                                                            break
-                                                        }
-                                                        val d = change.positionChange()
-                                                        change.consume()
-                                                        acc += d.y
-                                                        val shift =
-                                                            (acc / cellFullPx).roundToInt()
-                                                        var newCellY =
-                                                            (origCellY + shift)
-                                                                .coerceIn(0, bottomEdge - 1)
-                                                        while (newCellY < origCellY &&
-                                                                hasCollision(
-                                                                    occupancy,
-                                                                    origCellX,
-                                                                    newCellY,
-                                                                    origSpanX,
-                                                                    bottomEdge - newCellY,
-                                                                )) {
-                                                            newCellY++
-                                                        }
-                                                        resizingCellY = newCellY
-                                                        resizingSpanY = bottomEdge - newCellY
-                                                    }
-                                                }
-                                            },
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Box(
-                                        modifier =
-                                            Modifier.size(
-                                                    width = pillLong,
-                                                    height = pillShort,
-                                                )
-                                                .clip(RoundedCornerShape(pillShort / 2))
-                                                .background(pillColor)
-                                    )
-                                }
+                                            )
+                                        }
+                                    },
+                                    onDrag = { dx, dy ->
+                                        val (spanX, spanY) =
+                                            resizeSession.resizeBy(
+                                                delta = Offset(dx, dy),
+                                                cellStepPx = cellFullPx,
+                                                horizontal = canResizeHorizontally,
+                                                vertical = canResizeVertically,
+                                            )
+                                        resizingSpanX = spanX
+                                        resizingSpanY = spanY
+                                    },
+                                    color = resizeHandleColor,
+                                    visualScale = scale,
+                                )
                             }
                         }
                     }

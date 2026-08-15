@@ -220,7 +220,6 @@
     <string name="clock_size">Clock Size</string>
     <string name="clock_size_default">Default</string>
     <string name="clock_size_large">Large</string>
-    <string name="clock_alignment">Alignment</string>
     <string name="clock_align_left">Left</string>
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>

@@ -19,6 +19,7 @@
 package com.android.axion.themepicker.ui.wallpaperset
 
 import android.app.WallpaperColors
+import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -87,6 +88,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -106,11 +108,12 @@ import androidx.core.graphics.drawable.toBitmap
 import com.android.axion.compose.preferences.rememberSecureSettingBooleanState
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.WallpaperTargetDialog
-import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
 import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
+import com.android.axion.themepicker.utils.wallpaper.getSystemWallpaperMaxScale
 import com.android.axion.themepicker.utils.wallpaper.getWallpaperDrawable
 import com.android.axion.themepicker.utils.wallpaper.monetPrimaryColors
+import com.android.axion.util.DisplayUtils
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CancellationException
@@ -131,7 +134,8 @@ private data class LoadedWallpaper(
 fun WallpaperCropScreen(
     imageUri: Uri? = null,
     drawableRes: Int = 0,
-    onNext: ((Bitmap) -> Unit)? = null,
+    targetFlags: Int = 0,
+    onNext: ((Bitmap, Map<Point, Rect>) -> Unit)? = null,
     onApply: ((Uri, Rect, Map<Point, Rect>?, Int) -> Unit)? = null,
     onApplyBitmap: ((Bitmap, Int) -> Unit)? = null,
     onCancel: () -> Unit,
@@ -139,12 +143,16 @@ fun WallpaperCropScreen(
     val context = LocalContext.current
     val isStandaloneMode = onApply != null || onApplyBitmap != null
     val showFitModeToggle = isStandaloneMode || onNext != null
+    val isLockOnly =
+        (targetFlags and WallpaperManager.FLAG_LOCK) != 0 &&
+            (targetFlags and WallpaperManager.FLAG_SYSTEM) == 0
     val darkTheme = isSystemInDarkTheme()
     val (wallpaperZoomDisabled, setWallpaperZoomDisabled) =
         rememberSecureSettingBooleanState(WALLPAPER_ZOOM_DISABLED_SETTING)
     val maxWallpaperScale =
-        remember(context) { DisplayHelper.getSystemWallpaperMaxScale(context) }
-    val wallpaperZoomTargetScale = if (wallpaperZoomDisabled) 1f else maxWallpaperScale
+        remember(context) { getSystemWallpaperMaxScale(context) }
+    val wallpaperZoomTargetScale =
+        if (isLockOnly || wallpaperZoomDisabled) 1f else maxWallpaperScale
     val animatedWallpaperZoomScale by
         animateFloatAsState(
             targetValue = wallpaperZoomTargetScale,
@@ -156,8 +164,9 @@ fun WallpaperCropScreen(
             minOf(1f, maxWallpaperScale),
             maxOf(1f, maxWallpaperScale),
         )
+    val currentWallpaperZoomScale by rememberUpdatedState(wallpaperZoomScale)
 
-    val wallpaperDisplaySize = remember { DisplayHelper.getWallpaperDisplaySize(context) }
+    val wallpaperDisplaySize = remember { DisplayUtils.getLargestInternalDisplaySize(context) }
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     var primaryColors by remember { mutableStateOf<MonetPrimaryColors?>(null) }
@@ -182,7 +191,7 @@ fun WallpaperCropScreen(
     var showHint by remember { mutableStateOf(true) }
     var controlsVisible by rememberSaveable { mutableStateOf(true) }
 
-    LaunchedEffect(imageUri, drawableRes, darkTheme) {
+    LaunchedEffect(imageUri, drawableRes, targetFlags, darkTheme) {
         isLoading = true
         loadError = false
         primaryColors = null
@@ -201,7 +210,11 @@ fun WallpaperCropScreen(
                                 decodeFromUri(context, imageUri, wallpaperDisplaySize)
                             drawableRes != 0 ->
                                 getWallpaperDrawable(context, drawableRes)?.toBitmap()
-                            else -> getCurrentWallpaperBitmap(context, true)
+                            else ->
+                                getCurrentWallpaperBitmap(
+                                    context,
+                                    targetFlags != WallpaperManager.FLAG_LOCK,
+                                )
                         } ?: return@withContext null
 
                     LoadedWallpaper(
@@ -219,10 +232,8 @@ fun WallpaperCropScreen(
             }
 
             bitmap = loaded.bitmap
-            loaded.dimensions?.let { (width, height) ->
-                originalWidth = width
-                originalHeight = height
-            }
+            originalWidth = loaded.dimensions?.first ?: loaded.bitmap.width
+            originalHeight = loaded.dimensions?.second ?: loaded.bitmap.height
             fitBgColor = loaded.fitBackgroundColor
             primaryColors = loaded.primaryColors
             Log.d(TAG, "Decoded: ${loaded.bitmap.width}x${loaded.bitmap.height}")
@@ -235,7 +246,7 @@ fun WallpaperCropScreen(
             isLoading = false
         }
     }
-    val colors = primaryColors?.applyTo(MaterialTheme.colorScheme) ?: MaterialTheme.colorScheme
+    val colors = primaryColors ?: MaterialTheme.colorScheme
 
     LaunchedEffect(bitmap, screenW, screenH, fitMode) {
         val bmp = bitmap ?: return@LaunchedEffect
@@ -245,20 +256,8 @@ fun WallpaperCropScreen(
             minScale =
                 min(screenW / bmp.width.toFloat(), screenH / bmp.height.toFloat())
         } else {
-            val ms = calculateMinScale(screenW, screenH, bmp.width.toFloat(), bmp.height.toFloat())
             minScale =
-                if (isStandaloneMode) {
-                    val msForWallpaperDisplay =
-                        calculateMinScale(
-                            wallpaperDisplaySize.x.toFloat(),
-                            wallpaperDisplaySize.y.toFloat(),
-                            bmp.width.toFloat(),
-                            bmp.height.toFloat(),
-                        )
-                    maxOf(ms, msForWallpaperDisplay)
-                } else {
-                    ms
-                }
+                calculateMinScale(screenW, screenH, bmp.width.toFloat(), bmp.height.toFloat())
         }
         scale = minScale
         offsetX = 0f
@@ -301,7 +300,11 @@ fun WallpaperCropScreen(
 
         if (isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ContainedLoadingIndicator(modifier = Modifier.size(48.dp))
+                ContainedLoadingIndicator(
+                    modifier = Modifier.size(48.dp),
+                    containerColor = colors.primaryContainer,
+                    indicatorColor = colors.onPrimaryContainer,
+                )
             }
         } else if (loadError) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -333,29 +336,32 @@ fun WallpaperCropScreen(
                                                 )
                                             val scaleChange = newScale / scale
                                             val newOffsetX =
-                                                offsetX * scaleChange + pan.x / wallpaperZoomScale
+                                                offsetX * scaleChange +
+                                                    pan.x / currentWallpaperZoomScale
                                             val newOffsetY =
-                                                offsetY * scaleChange + pan.y / wallpaperZoomScale
+                                                offsetY * scaleChange +
+                                                    pan.y / currentWallpaperZoomScale
 
                                             scale = newScale
                                             offsetX =
                                                 clampOffset(
                                                     newOffsetX,
                                                     imgW * newScale,
-                                                    screenW / wallpaperZoomScale,
+                                                    screenW / currentWallpaperZoomScale,
                                                 )
                                             offsetY =
                                                 clampOffset(
                                                     newOffsetY,
                                                     imgH * newScale,
-                                                    screenH / wallpaperZoomScale,
+                                                    screenH / currentWallpaperZoomScale,
                                                 )
                                         }
                                     }
                             )
                             .pointerInput(bmp) {
                                 detectTapGestures(
-                                    onDoubleTap = { tapOffset ->
+                                    onDoubleTap = doubleTap@ { tapOffset ->
+                                        if (fitMode) return@doubleTap
                                         if (scale > minScale * 1.1f) {
                                             scale = minScale
                                             offsetX = 0f
@@ -366,9 +372,11 @@ fun WallpaperCropScreen(
                                                     minScale * MAX_ZOOM_FACTOR
                                                 )
                                             val focusX =
-                                                (tapOffset.x - screenW / 2f) / wallpaperZoomScale
+                                                (tapOffset.x - screenW / 2f) /
+                                                    currentWallpaperZoomScale
                                             val focusY =
-                                                (tapOffset.y - screenH / 2f) / wallpaperZoomScale
+                                                (tapOffset.y - screenH / 2f) /
+                                                    currentWallpaperZoomScale
                                             val scaleChange = targetScale / scale
 
                                             scale = targetScale
@@ -376,13 +384,13 @@ fun WallpaperCropScreen(
                                                 clampOffset(
                                                     (offsetX - focusX) * scaleChange + focusX,
                                                     imgW * targetScale,
-                                                    screenW / wallpaperZoomScale,
+                                                    screenW / currentWallpaperZoomScale,
                                                 )
                                             offsetY =
                                                 clampOffset(
                                                     (offsetY - focusY) * scaleChange + focusY,
                                                     imgH * targetScale,
-                                                    screenH / wallpaperZoomScale,
+                                                    screenH / currentWallpaperZoomScale,
                                                 )
                                         }
                                     },
@@ -501,10 +509,12 @@ fun WallpaperCropScreen(
                             )
                         }
 
-                        WallpaperZoomToggle(
-                            enabled = !wallpaperZoomDisabled,
-                            onEnabledChange = { setWallpaperZoomDisabled(!it) },
-                        )
+                        if (!isLockOnly) {
+                            WallpaperZoomToggle(
+                                enabled = !wallpaperZoomDisabled,
+                                onEnabledChange = { setWallpaperZoomDisabled(!it) },
+                            )
+                        }
 
                         val actionButtonHeight = ButtonDefaults.MediumContainerHeight
                         Button(
@@ -513,20 +523,48 @@ fun WallpaperCropScreen(
                                     showTargetDialog = true
                                 } else {
                                     bitmap?.let { bmp ->
-                                        val result =
-                                            if (fitMode) {
-                                                buildFitWp(bmp, wallpaperDisplaySize)
-                                            } else {
-                                                extractVisibleBitmap(
-                                                    bmp,
+                                        if (fitMode) {
+                                            val result = buildFitWp(bmp, wallpaperDisplaySize)
+                                            onNext?.invoke(
+                                                result,
+                                                computeDisplayCropHints(
+                                                    context,
+                                                    result.width,
+                                                    result.height,
+                                                ),
+                                            )
+                                        } else {
+                                            val cropRect =
+                                                calculateCropRect(
                                                     screenW,
                                                     screenH,
+                                                    bmp.width,
+                                                    bmp.height,
+                                                    originalWidth,
+                                                    originalHeight,
                                                     scale,
                                                     offsetX,
                                                     offsetY,
                                                 )
-                                            }
-                                        onNext?.invoke(result)
+                                            val cropHints =
+                                                buildMultiDisplayCropHints(
+                                                    context = context,
+                                                    wallpaperSize =
+                                                        Point(originalWidth, originalHeight),
+                                                    previewBitmapSize =
+                                                        Point(bmp.width, bmp.height),
+                                                    userCropRect = cropRect,
+                                                    wallpaperZoom = scale,
+                                                    hostViewSize =
+                                                        Point(screenW.toInt(), screenH.toInt()),
+                                                )
+                                            val (rebasedBitmap, rebasedCropHints) =
+                                                rebaseWallpaperToCropHints(bmp, cropHints)
+                                            onNext?.invoke(
+                                                rebasedBitmap,
+                                                rebasedCropHints,
+                                            )
+                                        }
                                     }
                                 }
                             },
@@ -607,6 +645,7 @@ fun WallpaperCropScreen(
                     buildMultiDisplayCropHints(
                         context = context,
                         wallpaperSize = Point(originalWidth, originalHeight),
+                        previewBitmapSize = Point(bmp.width, bmp.height),
                         userCropRect = cropRect,
                         wallpaperZoom = scale,
                         hostViewSize = Point(screenW.toInt(), screenH.toInt()),
@@ -615,7 +654,7 @@ fun WallpaperCropScreen(
                 Log.d(
                     TAG,
                     "Apply: flags=$flags, cropRect=$cropRect, " +
-                        "multiCrop=${multiCropHints?.size ?: 0} displays",
+                        "multiCrop=${multiCropHints.size} displays",
                 )
                 onApply?.invoke(imageUri, cropRect, multiCropHints, flags)
             },
@@ -783,30 +822,4 @@ private fun decodeFromUri(context: Context, uri: Uri, wallpaperDisplaySize: Poin
     return context.contentResolver.openInputStream(uri)?.use {
         BitmapFactory.decodeStream(it, null, decodeOptions)
     }
-}
-
-private fun extractVisibleBitmap(
-    sourceBitmap: Bitmap,
-    screenW: Float,
-    screenH: Float,
-    scale: Float,
-    offsetX: Float,
-    offsetY: Float,
-): Bitmap {
-    val imgW = sourceBitmap.width.toFloat()
-    val imgH = sourceBitmap.height.toFloat()
-
-    val visibleW = (screenW / scale).coerceAtMost(imgW)
-    val visibleH = (screenH / scale).coerceAtMost(imgH)
-
-    val centerX = imgW / 2f - offsetX / scale
-    val centerY = imgH / 2f - offsetY / scale
-
-    val left = (centerX - visibleW / 2f).coerceIn(0f, (imgW - visibleW).coerceAtLeast(0f))
-    val top = (centerY - visibleH / 2f).coerceIn(0f, (imgH - visibleH).coerceAtLeast(0f))
-
-    val w = visibleW.toInt().coerceIn(1, sourceBitmap.width - left.toInt())
-    val h = visibleH.toInt().coerceIn(1, sourceBitmap.height - top.toInt())
-
-    return Bitmap.createBitmap(sourceBitmap, left.toInt(), top.toInt(), w, h)
 }

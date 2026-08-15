@@ -82,6 +82,7 @@ private val FaceTileWidth = 200.dp
 private val FaceTileHeight = 150.dp
 private const val STYLE_PREVIEW_SCALE = 0.35f
 private const val FACE_PREVIEW_SCALE = 0.45f
+private const val CLOCK_SHEET_HEIGHT_FRACTION = 0.65f
 private const val DEPTH_SETTINGS_KEY = "ax_depth_clock_enabled"
 private const val DEPTH_ON = "on"
 private const val DEPTH_OFF = "off"
@@ -89,7 +90,6 @@ private const val DEPTH_OFF = "off"
 @Composable
 fun ClockFaceSheet(
     visible: Boolean,
-    heightFraction: Float = 0.65f,
     onPreviewAnimationRequest: () -> Unit = {},
     onDismiss: () -> Unit,
 ) {
@@ -99,7 +99,6 @@ fun ClockFaceSheet(
     val allTypes = remember { AxClockType.entries }
     val pickerTypes = remember { AxClockType.pickerEntries }
     var currentClockId by remember { mutableStateOf("DEFAULT") }
-    var currentAlignment by remember { mutableStateOf(ClockSettingsRepository.ALIGNMENT_CENTER) }
     var depthEnabled by remember { mutableStateOf(false) }
     var currentDatePosition by remember {
         mutableStateOf(ClockSettingsRepository.DATE_POSITION_ABOVE)
@@ -131,7 +130,6 @@ fun ClockFaceSheet(
         if (!visible) return@LaunchedEffect
         withContext(Dispatchers.IO) {
             val id = readCurrentClockId(context)
-            val align = readAlignment(context)
             val depth = readDepthEnabled(context)
             val datePos = readDatePosition(context)
             val infoDisplayMode = ClockSettingsRepository.readInfoDisplayMode(context)
@@ -145,7 +143,6 @@ fun ClockFaceSheet(
             val liveWp = WallpaperManager.getInstance(context).wallpaperInfo != null
             withContext(Dispatchers.Main) {
                 currentClockId = id
-                currentAlignment = align
                 depthEnabled = depth
                 currentDatePosition = datePos
                 currentInfoDisplayMode = infoDisplayMode
@@ -181,7 +178,7 @@ fun ClockFaceSheet(
     val supportsOplusBigFace = selectedType == AxClockType.OPLUS_BIG
     val supportsOplusGraffitiFace = selectedType == AxClockType.OPLUS_PLAYFUL
     val clockPreviewSettingsKey =
-        "$currentAlignment:$currentDatePosition:$currentClockColor:" +
+        "$currentDatePosition:$currentClockColor:" +
             "$currentOplusClassicFace:$currentOplusBigFace:$currentOplusBigDualTone:" +
             "$currentOplusGraffitiFace:$currentOplusGraffitiAngle"
     val digitFaceTypes = remember {
@@ -225,18 +222,6 @@ fun ClockFaceSheet(
                 context.contentResolver,
                 ClockSettingsRepository.SETTING_CLOCK_FACE,
                 json,
-            )
-        }
-    }
-
-    fun writeAlignment(value: String) {
-        onPreviewAnimationRequest()
-        currentAlignment = value
-        scope.launch(Dispatchers.IO) {
-            Settings.Secure.putString(
-                context.contentResolver,
-                ClockSettingsRepository.SETTING_ALIGNMENT,
-                value,
             )
         }
     }
@@ -369,7 +354,7 @@ fun ClockFaceSheet(
     CommonBottomSheet(
         visible = visible,
         title = stringResource(R.string.clock_face),
-        heightFraction = heightFraction,
+        heightFraction = CLOCK_SHEET_HEIGHT_FRACTION,
         surfaceColor = MaterialTheme.colorScheme.surfaceContainer,
         scrimAlpha = 0f,
         onDismiss = onDismiss,
@@ -495,35 +480,6 @@ fun ClockFaceSheet(
             }
 
             if (!isNoClock) {
-                Spacer(modifier = Modifier.height(20.dp))
-                SectionTitle(stringResource(R.string.clock_alignment))
-                Spacer(modifier = Modifier.height(8.dp))
-                OptionRow(
-                    options =
-                        listOf(
-                            OptionItem(
-                                ClockSettingsRepository.ALIGNMENT_LEFT,
-                                stringResource(R.string.clock_align_left),
-                            ) {
-                                AlignLeftIcon(it)
-                            },
-                            OptionItem(
-                                ClockSettingsRepository.ALIGNMENT_CENTER,
-                                stringResource(R.string.clock_align_center),
-                            ) {
-                                AlignCenterIcon(it)
-                            },
-                            OptionItem(
-                                ClockSettingsRepository.ALIGNMENT_RIGHT,
-                                stringResource(R.string.clock_align_right),
-                            ) {
-                                AlignRightIcon(it)
-                            },
-                        ),
-                    selected = currentAlignment,
-                    onSelect = { writeAlignment(it) },
-                )
-
                 if (hasDateSupport) {
                     Spacer(modifier = Modifier.height(20.dp))
                     SectionTitle(stringResource(R.string.clock_date_position))
@@ -1370,88 +1326,6 @@ private fun InfoWeatherIcon(tint: Color) {
 }
 
 @Composable
-private fun AlignLeftIcon(tint: Color) {
-    OptionIcon(tint = tint) { color ->
-        val sw = 2.5f.dp.toPx()
-        val x = 4.dp.toPx()
-        val gap = 4.dp.toPx()
-        val maxW = size.width - x * 2
-        val startY = (size.height - sw * 2 - gap) / 2f
-
-        drawLine(
-            color,
-            Offset(x, startY + sw / 2f),
-            Offset(x + maxW * 0.75f, startY + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-        drawLine(
-            color,
-            Offset(x, startY + sw + gap + sw / 2f),
-            Offset(x + maxW * 0.5f, startY + sw + gap + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-    }
-}
-
-@Composable
-private fun AlignRightIcon(tint: Color) {
-    OptionIcon(tint = tint) { color ->
-        val sw = 2.5f.dp.toPx()
-        val x = 4.dp.toPx()
-        val gap = 4.dp.toPx()
-        val maxW = size.width - x * 2
-        val startY = (size.height - sw * 2 - gap) / 2f
-        val endX = size.width - x
-
-        drawLine(
-            color,
-            Offset(endX - maxW * 0.75f, startY + sw / 2f),
-            Offset(endX, startY + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-        drawLine(
-            color,
-            Offset(endX - maxW * 0.5f, startY + sw + gap + sw / 2f),
-            Offset(endX, startY + sw + gap + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-    }
-}
-
-@Composable
-private fun AlignCenterIcon(tint: Color) {
-    OptionIcon(tint = tint) { color ->
-        val sw = 2.5f.dp.toPx()
-        val cx = size.width / 2f
-        val inset = 4.dp.toPx()
-        val maxW = size.width - inset * 2
-        val gap = 4.dp.toPx()
-        val startY = (size.height - sw * 2 - gap) / 2f
-
-        val w1 = maxW * 0.75f
-        drawLine(
-            color,
-            Offset(cx - w1 / 2, startY + sw / 2f),
-            Offset(cx + w1 / 2, startY + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-        val w2 = maxW * 0.5f
-        drawLine(
-            color,
-            Offset(cx - w2 / 2, startY + sw + gap + sw / 2f),
-            Offset(cx + w2 / 2, startY + sw + gap + sw / 2f),
-            sw,
-            StrokeCap.Round,
-        )
-    }
-}
-
-@Composable
 private fun GraffitiAngleLeftIcon(tint: Color) {
     GraffitiAngleIcon(tint, -1f)
 }
@@ -1679,13 +1553,6 @@ private fun normalizeClockId(context: Context, clockId: String): String {
         "OPLUS_BIG_END_HORIZONTAL" -> oplusBig
         else -> clockId
     }
-}
-
-private fun readAlignment(context: Context): String {
-    return Settings.Secure.getString(
-        context.contentResolver,
-        ClockSettingsRepository.SETTING_ALIGNMENT,
-    ) ?: ClockSettingsRepository.ALIGNMENT_CENTER
 }
 
 private fun readDatePosition(context: Context): String {

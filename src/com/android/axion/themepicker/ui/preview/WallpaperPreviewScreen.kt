@@ -18,7 +18,10 @@
 
 package com.android.axion.themepicker.ui.preview
 
+import android.app.WallpaperManager
 import android.graphics.Bitmap
+import android.graphics.Point
+import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.compose.BackHandler
@@ -28,7 +31,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -73,9 +75,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -84,8 +83,8 @@ import androidx.compose.ui.unit.dp
 import com.android.axion.themepicker.R
 import com.android.axion.themepicker.ui.components.WallpaperTargetDialog
 import com.android.axion.themepicker.ui.wallpaperset.rememberWallpaperZoomScale
-import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
 import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
+import com.android.axion.util.DisplayUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -95,6 +94,7 @@ private const val RESULT_DISPLAY_MS = 1500L
 @Composable
 fun WallpaperPreviewScreen(
     wallpaperBitmap: Bitmap?,
+    cropHints: Map<Point, Rect>,
     primaryColors: MonetPrimaryColors?,
     targetFlags: Int = 0,
     onApply: (Bitmap, Int) -> Unit,
@@ -103,14 +103,20 @@ fun WallpaperPreviewScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val wallpaperZoomScale = rememberWallpaperZoomScale()
+    val isLockOnly =
+        (targetFlags and WallpaperManager.FLAG_LOCK) != 0 &&
+            (targetFlags and WallpaperManager.FLAG_SYSTEM) == 0
+    val wallpaperZoomScale =
+        if (isLockOnly) 1f else rememberWallpaperZoomScale()
 
-    val imageBitmap = remember(wallpaperBitmap) { wallpaperBitmap?.asImageBitmap() }
-    val hasMultiDisplay = remember { DisplayHelper.hasMultiInternalDisplays(context) }
-    val unfoldedSize = remember { DisplayHelper.getWallpaperDisplaySize(context) }
+    val hasMultiDisplay = remember { DisplayUtils.hasMultipleInternalDisplays(context) }
+    val unfoldedSize = remember { DisplayUtils.getLargestInternalDisplaySize(context) }
     val foldedSize = remember {
-        if (hasMultiDisplay) DisplayHelper.getRealSize(DisplayHelper.getSmallerDisplay(context))
-        else null
+        if (hasMultiDisplay) {
+            DisplayUtils.getSmallestInternalDisplay(context)?.let { DisplayUtils.getRealSize(it) }
+        } else {
+            null
+        }
     }
 
     val hasPresetTarget = targetFlags != 0
@@ -120,7 +126,7 @@ fun WallpaperPreviewScreen(
     var isApplying by remember { mutableStateOf(false) }
     var applyResultMessage by remember { mutableStateOf<String?>(null) }
 
-    val colors = primaryColors?.applyTo(MaterialTheme.colorScheme) ?: MaterialTheme.colorScheme
+    val colors = primaryColors ?: MaterialTheme.colorScheme
 
     BackHandler(enabled = !isApplying) { onBack() }
 
@@ -162,13 +168,16 @@ fun WallpaperPreviewScreen(
                 if (wallpaperBitmap == null) {
                     LoadingIndicator(color = colors.primary)
                 } else if (hasMultiDisplay && foldedSize != null) {
-                    DualDisplayPreview(
-                        wallpaperBitmap = wallpaperBitmap,
-                        foldedDisplaySize = foldedSize,
-                        unfoldedDisplaySize = unfoldedSize,
-                        wallpaperZoomScale = wallpaperZoomScale,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                    MaterialTheme(colorScheme = colors) {
+                        DualDisplayPreview(
+                            wallpaperBitmap = wallpaperBitmap,
+                            cropHints = cropHints,
+                            foldedDisplaySize = foldedSize,
+                            unfoldedDisplaySize = unfoldedSize,
+                            wallpaperZoomScale = wallpaperZoomScale,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                 } else {
                     val aspectRatio = unfoldedSize.x.toFloat() / unfoldedSize.y
                     val shape = MaterialTheme.shapes.largeIncreased
@@ -183,18 +192,14 @@ fun WallpaperPreviewScreen(
                             ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                     ) {
-                        imageBitmap?.let { bmp ->
-                            Image(
-                                bitmap = bmp,
-                                contentDescription = stringResource(R.string.wallpaper_photo),
+                        wallpaperBitmap?.let { bitmap ->
+                            CroppedWallpaper(
+                                bitmap = bitmap,
+                                cropHint = cropHints[unfoldedSize],
+                                displaySize = unfoldedSize,
+                                wallpaperZoomScale = wallpaperZoomScale,
                                 modifier =
-                                    Modifier.fillMaxSize()
-                                        .clip(shape)
-                                        .graphicsLayer(
-                                            scaleX = wallpaperZoomScale,
-                                            scaleY = wallpaperZoomScale,
-                                        ),
-                                contentScale = ContentScale.Crop,
+                                    Modifier.fillMaxSize().clip(shape),
                             )
                         }
                     }
@@ -231,10 +236,16 @@ fun WallpaperPreviewScreen(
                     ButtonDefaults.buttonColors(
                         containerColor = colors.primary,
                         contentColor = colors.onPrimary,
+                        disabledContainerColor = colors.onSurface.copy(alpha = 0.12f),
+                        disabledContentColor = colors.onSurface.copy(alpha = 0.38f),
                     ),
             ) {
                 Text(
-                    text = stringResource(R.string.set_wallpaper),
+                    text =
+                        stringResource(
+                            if (isLockOnly) R.string.set_lockscreen_wallpaper
+                            else R.string.set_wallpaper
+                        ),
                     fontWeight = FontWeight.SemiBold,
                 )
             }

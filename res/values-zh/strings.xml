@@ -214,7 +214,6 @@
     <string name="clock_size">時鐘大小</string>
     <string name="clock_size_default">預設</string>
     <string name="clock_size_large">大</string>
-    <string name="clock_alignment">對齊方式</string>
     <string name="clock_align_left">靠左</string>
     <string name="clock_align_center">置中</string>
     <string name="clock_align_right">靠右</string>

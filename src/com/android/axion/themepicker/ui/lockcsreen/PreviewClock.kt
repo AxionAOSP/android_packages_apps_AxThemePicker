@@ -81,7 +81,6 @@ val Context.previewScale: Float
 fun Modifier.scaledLayout(
     scale: Float,
     overrideWidth: Dp = Dp.Unspecified,
-    alignment: String = ClockSettingsRepository.ALIGNMENT_CENTER,
     verticalAnchor: Float = 0.5f,
 ): Modifier =
     this.layout { measurable, constraints ->
@@ -103,18 +102,7 @@ fun Modifier.scaledLayout(
         val placeable = measurable.measure(childConstraints)
         val scaledWidth = (placeable.width * scale).roundToInt()
         val scaledHeight = (placeable.height * scale).roundToInt()
-        val horizontalOffset =
-            when (alignment) {
-                ClockSettingsRepository.ALIGNMENT_LEFT -> 0
-                ClockSettingsRepository.ALIGNMENT_RIGHT -> scaledWidth - placeable.width
-                else -> (scaledWidth - placeable.width) / 2
-            }
-        val pivotX =
-            when (alignment) {
-                ClockSettingsRepository.ALIGNMENT_LEFT -> 0f
-                ClockSettingsRepository.ALIGNMENT_RIGHT -> 1f
-                else -> 0.5f
-            }
+        val horizontalOffset = (scaledWidth - placeable.width) / 2
         val verticalOffset = ((scaledHeight - placeable.height) * verticalAnchor).roundToInt()
         layout(scaledWidth, scaledHeight) {
             placeable.placeWithLayer(
@@ -123,7 +111,7 @@ fun Modifier.scaledLayout(
             ) {
                 scaleX = scale
                 scaleY = scale
-                transformOrigin = TransformOrigin(pivotX, verticalAnchor)
+                transformOrigin = TransformOrigin(0.5f, verticalAnchor)
             }
         }
     }
@@ -133,22 +121,27 @@ fun PreviewClock(
     isPreview: Boolean,
     isRegionDark: Boolean = true,
     depthSourceBoundsProvider: (() -> RectF?)? = null,
+    depthSourceScale: Float = 1f,
     verticalPadding: Dp? = null,
     fitClockBounds: Boolean = false,
     sizeScaleOverride: Float? = null,
+    horizontalOffsetDpOverride: Float? = null,
+    freezePreviewAlignment: Boolean = false,
     depthEffectVisible: Boolean = true,
     animationTrigger: Int = 0,
+    freezeEditGeometry: Boolean = false,
     onEditGeometryChanged: ((ClockEditScaleGeometry) -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val scale = if (isPreview) context.previewScale else context.scaleRatio
-    val repositoryAlignment by ClockSettingsRepository.resolvedClockAlignment.collectAsState()
+    val effectiveDepthSourceScale = depthSourceScale * scale
     val repositorySizeScale by ClockSettingsRepository.sizeScale.collectAsState()
     val editGeometryVersion by ClockSettingsRepository.clockEditGeometryVersion.collectAsState()
     val currentOnEditGeometryChanged by rememberUpdatedState(onEditGeometryChanged)
     var clockFaceVersion by remember { mutableIntStateOf(0) }
 
-    LaunchedEffect(context) {
+    LaunchedEffect(context, configuration) {
         ClockSettingsRepository.init(context)
     }
 
@@ -267,10 +260,14 @@ fun PreviewClock(
         controller.smallClock.animations.onFidgetTap(view.width / 2f, view.height / 2f)
     }
 
-    val configuration = LocalConfiguration.current
     val clockWidth = configuration.screenWidthDp.dp
-    val availableClockWidthDp = configuration.screenWidthDp / scale
+    val availableClockWidthDp =
+        if (isPreview) configuration.screenWidthDp.toFloat()
+        else configuration.screenWidthDp / scale
+    val clockMinute = currentTime.time / 60_000L
     val clockVerticalPadding = verticalPadding ?: 12.dp * scale
+    val smallAxClockView = controller.smallClock.view as? AxClockView
+    val renderedGeometryVersion = smallAxClockView?.renderedClockEditGeometryVersion ?: 0
     val editGeometry =
         remember(
             controller,
@@ -278,9 +275,11 @@ fun PreviewClock(
             repositorySizeScale,
             sizeScaleOverride,
             editGeometryVersion,
+            clockMinute,
+            renderedGeometryVersion,
         ) {
             val requestedScale = sizeScaleOverride ?: repositorySizeScale
-            (controller.smallClock.view as? AxClockView)?.getClockEditScaleGeometry(
+            smallAxClockView?.resolveClockEditScaleGeometry(
                 availableClockWidthDp,
                 requestedScale,
             ) ?: ClockEditScaleGeometry.default(
@@ -290,8 +289,10 @@ fun PreviewClock(
             )
         }
 
-    LaunchedEffect(editGeometry) {
-        currentOnEditGeometryChanged?.invoke(editGeometry)
+    if (!freezeEditGeometry) {
+        LaunchedEffect(editGeometry) {
+            currentOnEditGeometryChanged?.invoke(editGeometry)
+        }
     }
 
     Column(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
@@ -309,12 +310,14 @@ fun PreviewClock(
                         Modifier.scaledLayout(
                             scale = scale,
                             overrideWidth = if (isPreview) clockWidth else Dp.Unspecified,
-                            alignment = repositoryAlignment,
                             verticalAnchor = 0f,
                     ),
                     depthSourceBoundsProvider = depthSourceBoundsProvider,
+                    depthSourceScale = effectiveDepthSourceScale,
                     fitClockBounds = fitClockBounds,
                     sizeScaleOverride = sizeScaleOverride,
+                    horizontalOffsetDpOverride = horizontalOffsetDpOverride,
+                    freezePreviewAlignment = freezePreviewAlignment,
                     depthEffectVisible = depthEffectVisible,
                 )
             }
@@ -327,19 +330,25 @@ fun SystemUIClockView(
     controller: ClockController,
     modifier: Modifier = Modifier,
     depthSourceBoundsProvider: (() -> RectF?)? = null,
+    depthSourceScale: Float = 1f,
     fitClockBounds: Boolean = false,
     sizeScaleOverride: Float? = null,
+    horizontalOffsetDpOverride: Float? = null,
+    freezePreviewAlignment: Boolean = false,
     depthEffectVisible: Boolean = true,
 ) {
     AndroidView(
         factory = { context ->
             val clockView = controller.smallClock.view
             (clockView.parent as? ViewGroup)?.removeView(clockView)
-            (clockView as? AxClockView)?.apply {
-                this.depthSourceBoundsProvider = depthSourceBoundsProvider
-                previewSizeScaleOverride = sizeScaleOverride
-                onDepthEffectVisibilityChanged(depthEffectVisible)
-            }
+            (clockView as? AxClockView)?.updatePreviewState(
+                depthSourceBoundsProvider = depthSourceBoundsProvider,
+                depthSourceScale = depthSourceScale,
+                sizeScaleOverride = sizeScaleOverride,
+                horizontalOffsetDpOverride = horizontalOffsetDpOverride,
+                freezeAlignment = freezePreviewAlignment,
+                depthEffectVisible = depthEffectVisible,
+            )
 
             clockView.layoutParams =
                 FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
@@ -355,14 +364,38 @@ fun SystemUIClockView(
         modifier = modifier.fillMaxWidth().wrapContentHeight(),
         update = { frame ->
             frame.fitClockBounds = fitClockBounds
-            (controller.smallClock.view as? AxClockView)?.apply {
-                this.depthSourceBoundsProvider = depthSourceBoundsProvider
-                previewSizeScaleOverride = sizeScaleOverride
-                onDepthEffectVisibilityChanged(depthEffectVisible)
-            }
+            (controller.smallClock.view as? AxClockView)?.updatePreviewState(
+                depthSourceBoundsProvider = depthSourceBoundsProvider,
+                depthSourceScale = depthSourceScale,
+                sizeScaleOverride = sizeScaleOverride,
+                horizontalOffsetDpOverride = horizontalOffsetDpOverride,
+                freezeAlignment = freezePreviewAlignment,
+                depthEffectVisible = depthEffectVisible,
+            )
             frame.requestLayout()
         },
     )
+}
+
+private fun AxClockView.updatePreviewState(
+    depthSourceBoundsProvider: (() -> RectF?)?,
+    depthSourceScale: Float,
+    sizeScaleOverride: Float?,
+    horizontalOffsetDpOverride: Float?,
+    freezeAlignment: Boolean,
+    depthEffectVisible: Boolean,
+) {
+    this.depthSourceBoundsProvider = depthSourceBoundsProvider
+    this.depthSourceScale = depthSourceScale
+    previewSizeScaleOverride = sizeScaleOverride
+    if (freezeAlignment) {
+        previewAlignmentFrozen = true
+        previewHorizontalOffsetDpOverride = horizontalOffsetDpOverride
+    } else {
+        previewHorizontalOffsetDpOverride = horizontalOffsetDpOverride
+        previewAlignmentFrozen = false
+    }
+    onDepthEffectVisibilityChanged(depthEffectVisible)
 }
 
 private class ClockPreviewFrameLayout(context: Context) : FrameLayout(context) {

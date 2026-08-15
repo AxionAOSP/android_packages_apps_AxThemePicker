@@ -18,7 +18,7 @@ package com.android.axion.themepicker.ui.preview
 
 import android.graphics.Bitmap
 import android.graphics.Point
-import androidx.compose.foundation.Image
+import android.graphics.Rect
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -30,18 +30,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun DualDisplayPreview(
     wallpaperBitmap: Bitmap?,
+    cropHints: Map<Point, Rect>,
     foldedDisplaySize: Point,
     unfoldedDisplaySize: Point,
     wallpaperZoomScale: Float,
@@ -58,6 +55,8 @@ fun DualDisplayPreview(
     ) {
         DisplayPreviewCard(
             bitmap = wallpaperBitmap,
+            cropHint = cropHints[unfoldedDisplaySize],
+            displaySize = unfoldedDisplaySize,
             aspectRatio = unfoldedAR,
             cornerRadius = cornerRadius,
             wallpaperZoomScale = wallpaperZoomScale,
@@ -66,6 +65,8 @@ fun DualDisplayPreview(
 
         DisplayPreviewCard(
             bitmap = wallpaperBitmap,
+            cropHint = cropHints[foldedDisplaySize],
+            displaySize = foldedDisplaySize,
             aspectRatio = foldedAR,
             cornerRadius = cornerRadius,
             wallpaperZoomScale = wallpaperZoomScale,
@@ -77,6 +78,8 @@ fun DualDisplayPreview(
 @Composable
 private fun DisplayPreviewCard(
     bitmap: Bitmap?,
+    cropHint: Rect?,
+    displaySize: Point,
     aspectRatio: Float,
     cornerRadius: Dp,
     wallpaperZoomScale: Float,
@@ -94,18 +97,13 @@ private fun DisplayPreviewCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         bitmap?.let { bmp ->
-            val imageBitmap = remember(bmp) { bmp.asImageBitmap() }
-            Image(
-                bitmap = imageBitmap,
-                contentDescription = null,
+            CroppedWallpaper(
+                bitmap = bmp,
+                cropHint = cropHint,
+                displaySize = displaySize,
+                wallpaperZoomScale = wallpaperZoomScale,
                 modifier =
-                    Modifier.fillMaxSize()
-                        .clip(shape)
-                        .graphicsLayer(
-                            scaleX = wallpaperZoomScale,
-                            scaleY = wallpaperZoomScale,
-                        ),
-                contentScale = ContentScale.Crop,
+                    Modifier.fillMaxSize().clip(shape),
             )
         }
     }

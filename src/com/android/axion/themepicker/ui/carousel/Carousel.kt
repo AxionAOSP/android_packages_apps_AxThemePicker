@@ -60,7 +60,7 @@ fun WallpaperCarouselCard(
     wallpapers: List<WallpaperInfo>,
     mainScreenViewModel: MainScreenViewModel = viewModel(),
 ) {
-    val onMoreClick = mainScreenViewModel::onOpenGallery
+    val onMoreClick = { mainScreenViewModel.onOpenGallery() }
 
     val context = LocalContext.current
     val colors = MaterialTheme.colorScheme

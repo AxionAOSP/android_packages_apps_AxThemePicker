@@ -41,6 +41,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -66,7 +67,6 @@ import com.android.axion.themepicker.ui.themes.FontScreen
 import com.android.axion.themepicker.ui.themes.IconShapesScreen
 
 import com.android.axion.themepicker.ui.wallpaperset.WallpaperCropScreen
-import com.android.axion.themepicker.ui.wallpaperset.computeDisplayCropHints
 import com.android.axion.themepicker.utils.wallpaper.MonetPrimaryColors
 import com.android.axion.themepicker.utils.wallpaper.applyWallpaper
 import com.android.axion.themepicker.utils.wallpaper.getCurrentWallpaperBitmap
@@ -75,6 +75,7 @@ import com.android.axion.themepicker.utils.wallpaper.monetPrimaryColors
 import com.android.axion.themepicker.viewmodel.MainScreenViewModel
 import com.android.axion.themepicker.viewmodel.WallpaperGalleryViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -200,7 +201,7 @@ private fun MainNavigationScaffold(
                                     mainScreenViewModel.onOpenWallpaperCrop(sourceUri = it)
                                 } ?: mainScreenViewModel.onOpenWallpaperCrop()
                             },
-                            onOpenGallery = mainScreenViewModel::onOpenGallery,
+                            onOpenGallery = { mainScreenViewModel.onOpenGallery() },
                             onSelectPhoto = { photoPickerLauncher.launch("image/*") },
                             onOpenEffects = mainScreenViewModel::onOpenWallpaperEffects,
                         )
@@ -246,12 +247,20 @@ private fun DetailScreenContent(
                 rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.GetContent()
                 ) { uri ->
-                    uri?.let { mainScreenViewModel.onOpenWallpaperCrop(sourceUri = it) }
+                    uri?.let {
+                        mainScreenViewModel.onOpenWallpaperCrop(
+                            sourceUri = it,
+                            targetFlags = screen.targetFlags,
+                        )
+                    }
                 }
 
             WallpaperGalleryScreen(
                 galleryViewModel = galleryViewModel,
+                mainScreenViewModel = mainScreenViewModel,
+                targetFlags = screen.targetFlags,
                 onSelectPhoto = { photoPickerLauncher.launch("image/*") },
+                onBack = { mainScreenViewModel.goBack() },
             )
         }
 
@@ -275,8 +284,13 @@ private fun DetailScreenContent(
                 WallpaperCropScreen(
                     imageUri = screen.sourceUri,
                     drawableRes = screen.drawableRes,
-                    onNext = { croppedBitmap ->
-                        mainScreenViewModel.onCropCompleted(croppedBitmap, screen.targetFlags)
+                    targetFlags = screen.targetFlags,
+                    onNext = { bitmap, cropHints ->
+                        mainScreenViewModel.onCropCompleted(
+                            bitmap,
+                            cropHints,
+                            screen.targetFlags,
+                        )
                     },
                     onCancel = { mainScreenViewModel.goBack() },
                 )
@@ -286,6 +300,7 @@ private fun DetailScreenContent(
         is Screen.WallpaperPreview -> {
             BackHandler { mainScreenViewModel.goBack() }
             val wallpaperBitmap = mainScreenViewModel.pendingPreviewBitmap
+            val cropHints = mainScreenViewModel.pendingPreviewCropHints
             val darkTheme = isSystemInDarkTheme()
             var primaryColors by
                 remember(wallpaperBitmap, darkTheme) {
@@ -299,8 +314,7 @@ private fun DetailScreenContent(
                         monetPrimaryColors(context, bitmap, darkTheme)
                     }
             }
-            val colors =
-                primaryColors?.applyTo(MaterialTheme.colorScheme) ?: MaterialTheme.colorScheme
+            val colors = primaryColors ?: MaterialTheme.colorScheme
 
             DeferredScreen(
                 backgroundColor = colors.surfaceContainer,
@@ -309,6 +323,7 @@ private fun DetailScreenContent(
             ) {
                 WallpaperPreviewScreen(
                     wallpaperBitmap = wallpaperBitmap,
+                    cropHints = cropHints,
                     primaryColors = primaryColors,
                     targetFlags = screen.targetFlags,
                     onApply = { bitmap, flags ->
@@ -320,17 +335,35 @@ private fun DetailScreenContent(
                             homescreenBitmap = bitmap,
                             lockscreenSelected = lockSelected,
                             homescreenSelected = homeSelected,
-                            cropHints = null,
+                            cropHints = cropHints,
                         )
                     },
                     onBack = { mainScreenViewModel.goBack() },
-                    onApplySuccess = { (context as? Activity)?.restartApp() },
+                    onApplySuccess = {
+                        if (screen.targetFlags == WallpaperManager.FLAG_LOCK) {
+                            mainScreenViewModel.returnToLockscreenPreview()
+                        } else {
+                            (context as? Activity)?.restartApp()
+                        }
+                    },
                 )
             }
         }
 
         is Screen.Lockscreen -> {
             BackHandler { mainScreenViewModel.goBack() }
+            val coroutineScope = rememberCoroutineScope()
+            val lockWallpaperPicker =
+                rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.GetContent()
+                ) { uri ->
+                    uri?.let {
+                        mainScreenViewModel.onOpenWallpaperCrop(
+                            sourceUri = it,
+                            targetFlags = WallpaperManager.FLAG_LOCK,
+                        )
+                    }
+                }
             DeferredScreen {
                 LockscreenPreview(
                     isPreview = false,
@@ -338,11 +371,19 @@ private fun DetailScreenContent(
                     modifier = Modifier.fillMaxSize(),
                     entryPoint = screen.entryPoint,
                     onEditWallpaper = {
-                        val uri = getOriginalWallpaperUri(context, isHome = false)
-                        mainScreenViewModel.onOpenWallpaperCrop(
-                            sourceUri = uri,
-                            targetFlags = WallpaperManager.FLAG_LOCK,
-                        )
+                        coroutineScope.launch {
+                            val sourceUri =
+                                withContext(Dispatchers.IO) {
+                                    getOriginalWallpaperUri(context, isHome = false)
+                                }
+                            mainScreenViewModel.onOpenWallpaperCrop(
+                                sourceUri = sourceUri,
+                                targetFlags = WallpaperManager.FLAG_LOCK,
+                            )
+                        }
+                    },
+                    onChangeWallpaper = {
+                        lockWallpaperPicker.launch("image/*")
                     },
                 )
             }

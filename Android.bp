@@ -30,6 +30,7 @@ android_app {
     static_libs: [
         "ax_compose",
         "ax_kt",
+        "ax_utils",
         "ax.androidx.compose.material3_material3",
         "com.composables_icons-material-symbols-rounded-filled-android",
         "androidx.activity_activity-compose",

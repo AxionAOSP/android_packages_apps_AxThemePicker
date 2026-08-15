@@ -18,35 +18,22 @@ package com.android.axion.themepicker.ui.lockscreen
 
 import android.content.Context
 import android.graphics.RectF
-import android.provider.Settings
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -54,7 +41,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -63,21 +49,15 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.android.axion.themepicker.R
-import com.android.axion.themepicker.ui.lockscreen.widgets.MAX_ROWS
 import com.android.axion.themepicker.ui.lockscreen.widgets.observeTaps
 import com.android.axion.themepicker.utils.math.scaleRatio
 import com.android.systemui.shared.clocks.ClockEditScaleGeometry
@@ -87,9 +67,7 @@ import com.android.systemui.shared.clocks.ClockWidgetGridMetrics
 import com.android.systemui.shared.clocks.ClockWidgetLayoutState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
-private const val CLOCK_EDIT_EDUCATION_PREFS = "clock_edit_education"
-private const val CLOCK_EDIT_EDUCATION_SHOWN = "clock_edit_education_shown"
+import kotlinx.coroutines.withContext
 
 @Composable
 fun EditablePreviewClock(
@@ -98,53 +76,63 @@ fun EditablePreviewClock(
     editable: Boolean,
     modifier: Modifier = Modifier,
     depthSourceBoundsProvider: (() -> RectF?)? = null,
+    depthSourceScale: Float = 1f,
     onClick: (() -> Unit)? = null,
     applyFluidSize: Boolean = true,
     applyFluidTopPadding: Boolean = true,
     depthEffectEnabled: Boolean = true,
     clockAnimationTrigger: Int = 0,
     lockscreenWidgetLayoutState: ClockWidgetLayoutState = ClockWidgetLayoutState.Empty,
+    resetTrigger: Int = 0,
+    minimumTopPaddingDp: Float = CLOCK_EDIT_TOP_PADDING_MIN_DP,
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
-    val hapticFeedback = LocalHapticFeedback.current
     val scope = rememberCoroutineScope()
     val previewScale = if (isPreview) context.previewScale else context.scaleRatio
 
-    LaunchedEffect(context) {
+    LaunchedEffect(context, configuration) {
         ClockSettingsRepository.init(context)
     }
 
     val repositorySizeScale by ClockSettingsRepository.sizeScale.collectAsState()
+    val repositoryHorizontalOffset by ClockSettingsRepository.horizontalOffsetDp.collectAsState()
     val repositoryTopPadding by ClockSettingsRepository.topPaddingDp.collectAsState()
-    val repositoryAlignment by ClockSettingsRepository.resolvedClockAlignment.collectAsState()
     val storedSizeScale = if (applyFluidSize) repositorySizeScale else 1f
+    val storedHorizontalOffset = if (applyFluidTopPadding) repositoryHorizontalOffset else 0f
     val storedTopPadding = if (applyFluidTopPadding) repositoryTopPadding else 0f
-    val availableClockWidthDp = configuration.screenWidthDp / previewScale
-    val fallbackScaleGeometry = remember(availableClockWidthDp, storedSizeScale) {
+    val availableClockWidthDp =
+        if (isPreview) configuration.screenWidthDp.toFloat()
+        else configuration.screenWidthDp / previewScale
+    val fallbackScaleGeometry = remember(availableClockWidthDp) {
         ClockEditScaleGeometry.default(
             availableWidthDp = availableClockWidthDp,
             requestedScale = storedSizeScale,
             scaleRange = ClockSettingsRepository.sizeScaleRange,
         )
     }
-    var scaleGeometry by remember { mutableStateOf(fallbackScaleGeometry) }
+    var scaleGeometry by remember(availableClockWidthDp) {
+        mutableStateOf(fallbackScaleGeometry)
+    }
     var overlaySize by remember { mutableStateOf(IntSize.Zero) }
 
-    LaunchedEffect(fallbackScaleGeometry) {
-        scaleGeometry = fallbackScaleGeometry
-    }
+    val horizontalOffsetRange =
+        remember(scaleGeometry, availableClockWidthDp) {
+            ClockHorizontalOffsetRange.from(
+                geometry = scaleGeometry,
+                availableWidthDp = availableClockWidthDp,
+            )
+        }
 
-    val topPaddingRange = remember(lockscreenWidgetLayoutState) {
+    val topPaddingRange = remember(lockscreenWidgetLayoutState, minimumTopPaddingDp) {
         val reservedHeight =
             ClockWidgetGridMetrics(
                 cellSizeDp = Dimens.WidgetCellSize.value,
                 cellGapDp = Dimens.WidgetCellGap.value,
-                minimumRows = if (lockscreenWidgetLayoutState.hasWidgets) MAX_ROWS else 0,
             ).reservedHeightDp(lockscreenWidgetLayoutState)
         ClockTopPaddingRange(
-            min = CLOCK_EDIT_TOP_PADDING_MIN_DP,
+            min = minimumTopPaddingDp.coerceAtLeast(CLOCK_EDIT_TOP_PADDING_MIN_DP),
             baseMax = ClockSettingsRepository.TOP_PADDING_MAX_DP,
             reservedHeightDp = reservedHeight,
         )
@@ -153,28 +141,41 @@ fun EditablePreviewClock(
         mutableStateOf(
             ClockEditModel.from(
                 storedSizeScale = storedSizeScale,
+                storedHorizontalOffsetDp = storedHorizontalOffset,
                 storedTopPaddingDp = storedTopPadding,
-                alignmentValue = repositoryAlignment,
                 scaleGeometry = scaleGeometry,
+                horizontalOffsetRange = horizontalOffsetRange,
                 topPaddingRange = topPaddingRange,
             )
         )
     }
+    var handledResetTrigger by remember { mutableIntStateOf(resetTrigger) }
 
     LaunchedEffect(
         storedSizeScale,
+        storedHorizontalOffset,
         storedTopPadding,
-        repositoryAlignment,
         scaleGeometry,
+        horizontalOffsetRange,
         topPaddingRange,
     ) {
         editModel = editModel.sync(
             storedSizeScale = storedSizeScale,
+            storedHorizontalOffsetDp = storedHorizontalOffset,
             storedTopPaddingDp = storedTopPadding,
-            alignmentValue = repositoryAlignment,
             scaleGeometry = scaleGeometry,
+            horizontalOffsetRange = horizontalOffsetRange,
             topPaddingRange = topPaddingRange,
         )
+    }
+
+    LaunchedEffect(resetTrigger) {
+        if (resetTrigger == handledResetTrigger) return@LaunchedEffect
+        handledResetTrigger = resetTrigger
+        editModel = editModel.resetSize().resetPosition()
+        withContext(Dispatchers.IO) {
+            ClockSettingsRepository.writeSizeAndPosition(context, 1f, 0f, 0f)
+        }
     }
 
     val topPadding = when {
@@ -185,22 +186,38 @@ fun EditablePreviewClock(
     val topPaddingDp = (topPadding.coerceAtLeast(0f) * previewScale).dp
     val topOffsetDp = (topPadding.coerceAtMost(0f) * previewScale).dp
     val handlesVisible = editable && !isPreview
-    var educationVisible by remember(context) {
-        mutableStateOf(!isClockEditEducationShown(context))
-    }
     val previewSizeScaleOverride = when {
         !applyFluidSize -> 1f
         handlesVisible -> editModel.sizeScaleOverride
         else -> null
     }
+    val previewHorizontalOffsetOverride = when {
+        !applyFluidTopPadding -> 0f
+        handlesVisible -> editModel.horizontalOffsetDp
+        else -> null
+    }
     val depthEffectVisible =
         depthEffectEnabled &&
             (!handlesVisible || editModel.dragTarget == ClockEditDragTarget.None)
-    val highlightColor = Color.White
+    val freezePreviewAlignment =
+        handlesVisible && editModel.dragTarget != ClockEditDragTarget.None
+    val freezeEditGeometry =
+        handlesVisible && editModel.dragTarget == ClockEditDragTarget.Size
+    val guideColor = Color.White.copy(alpha = 0.4f)
+    val handleColor = Color.White.copy(alpha = 0.58f)
 
     fun endSizeDrag() {
-        val value = editModel.sizeScaleOverride
-        scope.launch(Dispatchers.IO) { writeSizeScale(context, value) }
+        val sizeScale = editModel.sizeScaleOverride
+        val horizontalOffset = editModel.horizontalOffsetDp
+        val topPadding = editModel.topPaddingDp
+        scope.launch(Dispatchers.IO) {
+            ClockSettingsRepository.writeSizeAndPosition(
+                context,
+                sizeScale,
+                horizontalOffset,
+                topPadding,
+            )
+        }
         editModel = editModel.commitDrag()
     }
 
@@ -208,41 +225,54 @@ fun EditablePreviewClock(
         editModel = editModel.cancelDrag()
     }
 
-    fun cancelTopPaddingDrag() {
+    fun cancelPositionDrag() {
         editModel = editModel.cancelDrag()
     }
 
-    fun endTopPaddingDrag() {
-        val value = editModel.topPaddingDp
-        scope.launch(Dispatchers.IO) { writeTopPadding(context, value) }
-        editModel = editModel.commitDrag()
+    fun endPositionDrag() {
+        val snappedModel = editModel.snapHorizontalPosition()
+        val horizontalOffset = snappedModel.horizontalOffsetDp
+        val topPadding = snappedModel.topPaddingDp
+        scope.launch(Dispatchers.IO) {
+            ClockSettingsRepository.writePosition(context, horizontalOffset, topPadding)
+        }
+        editModel = snappedModel.commitDrag()
     }
 
     val latestEditModel by rememberUpdatedState(editModel)
     val latestOnClick by rememberUpdatedState(onClick)
 
-    LaunchedEffect(context, handlesVisible, educationVisible) {
-        if (handlesVisible && educationVisible) {
-            setClockEditEducationShown(context)
-        }
-    }
-
-    fun isResizeHandleHit(offset: Offset, widthPx: Float, heightPx: Float): Boolean {
+    fun resizeCornerAt(
+        offset: Offset,
+        widthPx: Float,
+        heightPx: Float,
+    ): ClockResizeCorner? {
         val model = latestEditModel
         val handleSizePx = CLOCK_EDIT_HANDLE_SIZE_DP * density
+        val handleOverflowPx = CLOCK_EDIT_HANDLE_OVERFLOW_DP * density
         val unscaledWidthDp = widthPx / density / previewScale
         val unscaledHeightDp = heightPx / density / previewScale
         val frameBounds = ClockEditFrameBounds.from(model.scaleGeometry, unscaledWidthDp)
-        val handleStartPx =
-            frameBounds.handleStartOffsetDp(
+        val frameStartPx =
+            frameBounds.startOffsetDp(
                 unscaledWidthDp,
-                model.alignment,
+                model.horizontalOffsetDp,
             ) * previewScale * density
-        val handleEndPx = handleStartPx + handleSizePx
-        val handleTopPx =
-            frameBounds.handleTopOffsetDp(unscaledHeightDp) * previewScale * density
-        val handleBottomPx = handleTopPx + handleSizePx
-        return offset.x in handleStartPx..handleEndPx && offset.y in handleTopPx..handleBottomPx
+        val frameEndPx =
+            frameBounds.endOffsetDp(
+                unscaledWidthDp,
+                model.horizontalOffsetDp,
+            ) * previewScale * density
+        val frameTopPx = frameBounds.topOffsetDp(unscaledHeightDp) * previewScale * density
+        val frameBottomPx = frameBounds.bottomOffsetDp(unscaledHeightDp) * previewScale * density
+        return ClockResizeCorner.entries.firstOrNull { corner ->
+            val handleStartPx =
+                corner.handleX(frameStartPx, frameEndPx, handleSizePx, handleOverflowPx)
+            val handleTopPx =
+                corner.handleY(frameTopPx, frameBottomPx, handleSizePx, handleOverflowPx)
+            offset.x in handleStartPx..(handleStartPx + handleSizePx) &&
+                offset.y in handleTopPx..(handleTopPx + handleSizePx)
+        }
     }
 
     Box(
@@ -263,12 +293,13 @@ fun EditablePreviewClock(
                             handlesVisible && onClick != null ->
                                 Modifier.pointerInput(previewScale, density) {
                                     observeTaps(pass = PointerEventPass.Final) { offset ->
-                                        if (!isResizeHandleHit(
+                                        val resizeCorner =
+                                            resizeCornerAt(
                                                 offset,
                                                 size.width.toFloat(),
                                                 size.height.toFloat(),
                                             )
-                                        ) {
+                                        if (resizeCorner == null) {
                                             latestOnClick?.invoke()
                                         }
                                     }
@@ -281,30 +312,39 @@ fun EditablePreviewClock(
                         if (handlesVisible) {
                             Modifier.pointerInput(previewScale, density) {
                                 var positionDragActive = false
-                                var positionDragMoved = false
-                                detectDragGesturesAfterLongPress(
+                                var resizeCorner: ClockResizeCorner? = null
+                                detectDragGestures(
                                     onDragStart = { offset ->
-                                        positionDragActive =
-                                            !isResizeHandleHit(
+                                        resizeCorner =
+                                            resizeCornerAt(
                                                 offset,
                                                 size.width.toFloat(),
                                                 size.height.toFloat(),
                                             )
-                                        positionDragMoved = false
-                                        if (positionDragActive) {
-                                            hapticFeedback.performHapticFeedback(
-                                                HapticFeedbackType.LongPress,
-                                            )
+                                        positionDragActive = resizeCorner == null
+                                        if (resizeCorner != null) {
+                                            editModel = editModel.beginSizeDrag()
+                                        } else {
                                             editModel = editModel.beginPositionDrag()
                                         }
                                     },
                                     onDrag = { change, dragAmount ->
-                                        if (positionDragActive) {
-                                            change.consume()
-                                            if (dragAmount.y != 0f) {
-                                                positionDragMoved = true
+                                        change.consume()
+                                        if (dragAmount.x != 0f || dragAmount.y != 0f) {
+                                            val corner = resizeCorner
+                                            if (corner != null) {
                                                 editModel =
-                                                    editModel.moveTopPaddingBy(
+                                                    editModel.resizeBy(
+                                                        dragAmount.x,
+                                                        dragAmount.y,
+                                                        density,
+                                                        previewScale,
+                                                        corner,
+                                                    )
+                                            } else if (positionDragActive) {
+                                                editModel =
+                                                    editModel.movePositionBy(
+                                                        dragAmount.x,
                                                         dragAmount.y,
                                                         density,
                                                         previewScale,
@@ -313,20 +353,22 @@ fun EditablePreviewClock(
                                         }
                                     },
                                     onDragEnd = {
-                                        if (positionDragActive) {
-                                            if (positionDragMoved) {
-                                                endTopPaddingDrag()
-                                            } else {
-                                                editModel = editModel.finishDrag()
-                                            }
+                                        if (resizeCorner != null) {
+                                            endSizeDrag()
+                                        } else if (positionDragActive) {
+                                            endPositionDrag()
                                         }
+                                        resizeCorner = null
                                         positionDragActive = false
-                                        positionDragMoved = false
                                     },
                                     onDragCancel = {
-                                        if (positionDragActive) cancelTopPaddingDrag()
+                                        if (resizeCorner != null) {
+                                            cancelSizeDrag()
+                                        } else if (positionDragActive) {
+                                            cancelPositionDrag()
+                                        }
+                                        resizeCorner = null
                                         positionDragActive = false
-                                        positionDragMoved = false
                                     },
                                 )
                             }
@@ -349,7 +391,7 @@ fun EditablePreviewClock(
                                 val frameStartPx =
                                     frameBounds.startOffsetDp(
                                         unscaledWidthDp,
-                                        editModel.alignment,
+                                        editModel.horizontalOffsetDp,
                                     ) * previewScale * density
                                 val frameTopPx =
                                     frameBounds.topOffsetDp(unscaledHeightDp) *
@@ -360,7 +402,7 @@ fun EditablePreviewClock(
                                 val frameHeightPx =
                                     frameBounds.heightIn(unscaledHeightDp) * previewScale * density
                                 drawRoundRect(
-                                    color = highlightColor,
+                                    color = guideColor,
                                     topLeft = Offset(
                                         frameStartPx + strokeInset,
                                         frameTopPx + strokeInset,
@@ -383,200 +425,124 @@ fun EditablePreviewClock(
             val unscaledWidthDp = maxWidth.value / previewScale
             val unscaledHeightDp = overlaySize.height.toFloat() / density / previewScale
             val frameBounds = ClockEditFrameBounds.from(editModel.scaleGeometry, unscaledWidthDp)
-            val frameWidthDp = (frameBounds.widthIn(unscaledWidthDp) * previewScale).dp
             val frameStartDp =
-                frameBounds.startOffsetDp(unscaledWidthDp, editModel.alignment).let {
-                    (it * previewScale).dp
-                }
+                (frameBounds.startOffsetDp(
+                    unscaledWidthDp,
+                    editModel.horizontalOffsetDp,
+                ) * previewScale).dp
             val frameTopDp = (frameBounds.topOffsetDp(unscaledHeightDp) * previewScale).dp
-            val handleStartDp =
-                frameBounds.handleStartOffsetDp(unscaledWidthDp, editModel.alignment).let {
-                    (it * previewScale).dp
-                }
-            val handleTopDp =
-                (frameBounds.handleTopOffsetDp(unscaledHeightDp) * previewScale).dp
+            val frameEndDp =
+                frameBounds.endOffsetDp(
+                    unscaledWidthDp,
+                    editModel.horizontalOffsetDp,
+                ) * previewScale
+            val frameBottomDp = frameBounds.bottomOffsetDp(unscaledHeightDp) * previewScale
 
             PreviewClock(
                 isPreview = isPreview,
                 isRegionDark = isRegionDark,
                 depthSourceBoundsProvider = depthSourceBoundsProvider,
+                depthSourceScale = depthSourceScale,
                 verticalPadding = if (handlesVisible) 4.dp else null,
                 fitClockBounds = handlesVisible,
                 sizeScaleOverride = previewSizeScaleOverride,
+                horizontalOffsetDpOverride = previewHorizontalOffsetOverride,
+                freezePreviewAlignment = freezePreviewAlignment,
                 depthEffectVisible = depthEffectVisible,
                 animationTrigger = clockAnimationTrigger,
+                freezeEditGeometry = freezeEditGeometry,
                 onEditGeometryChanged = { scaleGeometry = it },
             )
 
             if (handlesVisible) {
-                ClockResetButton(
-                    modifier =
-                        Modifier.align(Alignment.TopStart)
-                            .offset(x = frameStartDp, y = frameTopDp)
-                            .width(frameWidthDp)
-                            .padding(top = 8.dp, end = 8.dp)
-                            .zIndex(3f),
-                    onClick = {
-                        editModel = editModel.resetSize().resetPosition()
-                        scope.launch(Dispatchers.IO) {
-                            writeSizeScale(context, 1f)
-                            writeTopPadding(context, 0f)
-                        }
-                    },
-                )
-                CornerResizeHandle(
-                    modifier =
-                        Modifier.align(Alignment.TopStart)
-                            .offset(x = handleStartDp, y = handleTopDp)
-                            .zIndex(2f)
-                            .size(CLOCK_EDIT_HANDLE_SIZE_DP.dp),
-                    onDragStart = { editModel = editModel.beginSizeDrag() },
-                    onDragCancel = { cancelSizeDrag() },
-                    onDragEnd = { endSizeDrag() },
-                    onDrag = { dx, dy ->
-                        editModel = editModel.resizeBy(dx, dy, density, previewScale)
-                    },
-                    color = highlightColor,
-                )
-            }
-        }
-        if (handlesVisible && educationVisible) {
-            ClockEditEducationPill(
-                modifier =
-                    Modifier.align(Alignment.BottomCenter)
-                        .fillMaxWidth()
-                        .offset(y = 8.dp)
-                        .padding(horizontal = 24.dp)
-                        .zIndex(4f),
-                onDismiss = {
-                    educationVisible = false
-                    setClockEditEducationShown(context)
-                },
-            )
-        }
-    }
-}
-
-@Composable
-private fun ClockEditEducationPill(
-    modifier: Modifier,
-    onDismiss: () -> Unit,
-) {
-    Box(modifier = modifier, contentAlignment = Alignment.TopCenter) {
-        Row(
-            modifier =
-                Modifier.fillMaxWidth()
-                    .clip(MaterialTheme.shapes.extraLarge)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                    .padding(start = 16.dp, top = 4.dp, end = 4.dp, bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(R.string.clock_edit_education),
-                modifier = Modifier.weight(1f),
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.labelMedium,
-                textAlign = TextAlign.Start,
-                maxLines = 3,
-            )
-            IconButton(
-                modifier = Modifier.size(48.dp),
-                onClick = onDismiss,
-            ) {
-                Icon(
-                    Icons.Default.Close,
-                    contentDescription = stringResource(R.string.close),
-                    tint = MaterialTheme.colorScheme.onSurface,
-                )
+                ClockResizeCorner.entries.forEach { corner ->
+                    ResizeCornerHandle(
+                        modifier =
+                            Modifier.align(Alignment.TopStart)
+                                .offset(
+                                    x = corner.handleX(
+                                        frameStartDp.value,
+                                        frameEndDp,
+                                        CLOCK_EDIT_HANDLE_SIZE_DP.toFloat(),
+                                        CLOCK_EDIT_HANDLE_OVERFLOW_DP.toFloat(),
+                                    ).dp,
+                                    y = corner.handleY(
+                                        frameTopDp.value,
+                                        frameBottomDp,
+                                        CLOCK_EDIT_HANDLE_SIZE_DP.toFloat(),
+                                        CLOCK_EDIT_HANDLE_OVERFLOW_DP.toFloat(),
+                                    ).dp,
+                                )
+                                .zIndex(2f)
+                                .size(CLOCK_EDIT_HANDLE_SIZE_DP.dp),
+                        corner = corner,
+                        color = handleColor,
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun ClockResetButton(
+internal fun CornerResizeHandle(
     modifier: Modifier,
-    onClick: () -> Unit,
-) {
-    Box(modifier = modifier, contentAlignment = Alignment.TopEnd) {
-        FilledIconButton(
-            modifier = Modifier.size(48.dp),
-            shape = CircleShape,
-            onClick = onClick,
-        ) {
-            Icon(
-                Icons.Default.Refresh,
-                contentDescription = stringResource(R.string.reset_clock),
-            )
-        }
-    }
-}
-
-@Composable
-private fun CornerResizeHandle(
-    modifier: Modifier,
+    corner: ClockResizeCorner,
     onDragStart: () -> Unit,
     onDragCancel: () -> Unit,
     onDragEnd: () -> Unit,
     onDrag: (Float, Float) -> Unit,
     color: Color,
+    visualScale: Float = 1f,
+) {
+    val currentOnDragStart by rememberUpdatedState(onDragStart)
+    val currentOnDragCancel by rememberUpdatedState(onDragCancel)
+    val currentOnDragEnd by rememberUpdatedState(onDragEnd)
+    val currentOnDrag by rememberUpdatedState(onDrag)
+    ResizeCornerHandle(
+        modifier =
+            modifier.pointerInput(Unit) {
+                detectDragGestures(
+                    onDragStart = { currentOnDragStart() },
+                    onDragCancel = { currentOnDragCancel() },
+                    onDragEnd = { currentOnDragEnd() },
+                    onDrag = { change, dragAmount ->
+                        change.consume()
+                        currentOnDrag(dragAmount.x, dragAmount.y)
+                    },
+                )
+            },
+        corner = corner,
+        color = color,
+        visualScale = visualScale,
+    )
+}
+
+@Composable
+private fun ResizeCornerHandle(
+    modifier: Modifier,
+    corner: ClockResizeCorner,
+    color: Color,
+    visualScale: Float = 1f,
 ) {
     Canvas(
-        modifier =
-            modifier
-                .systemGestureExclusion {
-                    Rect(0f, 0f, it.size.width.toFloat(), it.size.height.toFloat())
-                }
-                .pointerInput(Unit) {
-                    detectDragGestures(
-                        onDragStart = { onDragStart() },
-                        onDragCancel = onDragCancel,
-                        onDragEnd = onDragEnd,
-                        onDrag = { change, dragAmount ->
-                            change.consume()
-                            onDrag(dragAmount.x, dragAmount.y)
-                        },
-                    )
-                }
+        modifier = modifier.systemGestureExclusion {
+            Rect(0f, 0f, it.size.width.toFloat(), it.size.height.toFloat())
+        }
     ) {
-        val strokeWidth = CLOCK_EDIT_HANDLE_STROKE_DP.dp.toPx()
-        val inset = CLOCK_EDIT_HANDLE_INSET_DP.dp.toPx()
-        val arcSize = CLOCK_EDIT_HANDLE_ARC_SIZE_DP.dp.toPx()
+        val strokeWidth = (CLOCK_EDIT_HANDLE_STROKE_DP * visualScale).dp.toPx()
+        val inset = (CLOCK_EDIT_HANDLE_INSET_DP * visualScale).dp.toPx()
+        val arcSize = (CLOCK_EDIT_HANDLE_ARC_SIZE_DP * visualScale).dp.toPx()
+        val arcLeft = if (corner.isLeft) inset else size.width - arcSize - inset
+        val arcTop = if (corner.isTop) inset else size.height - arcSize - inset
         drawArc(
             color = color,
-            startAngle = 0f,
+            startAngle = corner.arcStartAngle,
             sweepAngle = 90f,
             useCenter = false,
-            topLeft = Offset(size.width - arcSize - inset, size.height - arcSize - inset),
+            topLeft = Offset(arcLeft, arcTop),
             size = Size(arcSize, arcSize),
             style = Stroke(strokeWidth, cap = StrokeCap.Round),
         )
     }
-}
-
-private fun writeSizeScale(context: Context, value: Float) {
-    Settings.Secure.putString(
-        context.contentResolver,
-        ClockSettingsRepository.SETTING_SIZE_SCALE,
-        value.toString(),
-    )
-}
-
-private fun writeTopPadding(context: Context, value: Float) {
-    Settings.Secure.putString(
-        context.contentResolver,
-        ClockSettingsRepository.SETTING_TOP_PADDING,
-        value.toString(),
-    )
-}
-
-private fun isClockEditEducationShown(context: Context): Boolean =
-    context.getSharedPreferences(CLOCK_EDIT_EDUCATION_PREFS, Context.MODE_PRIVATE)
-        .getBoolean(CLOCK_EDIT_EDUCATION_SHOWN, false)
-
-private fun setClockEditEducationShown(context: Context) {
-    context.getSharedPreferences(CLOCK_EDIT_EDUCATION_PREFS, Context.MODE_PRIVATE)
-        .edit()
-        .putBoolean(CLOCK_EDIT_EDUCATION_SHOWN, true)
-        .apply()
 }

@@ -26,7 +26,7 @@ sealed class Screen : Parcelable {
 
     @Parcelize object ColorsSettings : Screen()
 
-    @Parcelize object WallpaperGallery : Screen()
+    @Parcelize data class WallpaperGallery(val targetFlags: Int = 0) : Screen()
 
     @Parcelize object WallpaperEffects : Screen()
 

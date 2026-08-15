@@ -21,8 +21,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -37,54 +37,49 @@ internal fun WallpaperTargetDialog(
     onDismiss: () -> Unit,
     onSelect: (Int) -> Unit,
 ) {
-    val buttonColors = ButtonDefaults.textButtonColors(contentColor = colors.primary)
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.set_wallpaper_on)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                TextButton(
-                    onClick = { onSelect(WallpaperManager.FLAG_SYSTEM) },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = buttonColors,
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_screen),
+    MaterialTheme(colorScheme = colors) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(stringResource(R.string.set_wallpaper_on)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    TextButton(
+                        onClick = { onSelect(WallpaperManager.FLAG_SYSTEM) },
                         modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                TextButton(
-                    onClick = { onSelect(WallpaperManager.FLAG_LOCK) },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = buttonColors,
-                ) {
-                    Text(
-                        text = stringResource(R.string.lock_screen_label),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.home_screen),
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+                    TextButton(
+                        onClick = { onSelect(WallpaperManager.FLAG_LOCK) },
                         modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                TextButton(
-                    onClick = {
-                        onSelect(WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = buttonColors,
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_lock_both),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.lock_screen_label),
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+                    TextButton(
+                        onClick = {
+                            onSelect(WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
+                        },
                         modifier = Modifier.fillMaxWidth(),
-                    )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.home_lock_both),
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                 }
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = onDismiss, colors = buttonColors) {
-                Text(stringResource(android.R.string.cancel))
-            }
-        },
-        containerColor = colors.surfaceContainerHigh,
-        titleContentColor = colors.onSurface,
-        textContentColor = colors.onSurfaceVariant,
-    )
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = onDismiss) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            },
+        )
+    }
 }

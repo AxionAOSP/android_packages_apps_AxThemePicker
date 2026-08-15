@@ -22,6 +22,8 @@ import android.content.theming.ThemeStyle as SystemThemeStyle
 import android.graphics.Bitmap
 import android.graphics.Color as GraphicsColor
 import androidx.compose.material3.ColorScheme as MaterialColorScheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import com.android.axion.themepicker.utils.settings.loadCurrentSettings
 import com.android.internal.graphics.ColorUtils
@@ -30,30 +32,7 @@ import com.android.systemui.monet.ColorScheme as MonetColorScheme
 import com.google.ux.material.libmonet.dynamiccolor.DynamicColor
 import com.google.ux.material.libmonet.dynamiccolor.MaterialDynamicColors
 
-data class MonetPrimaryColors(
-    val primary: Color,
-    val onPrimary: Color,
-    val primaryContainer: Color,
-    val onPrimaryContainer: Color,
-    val surfaceBright: Color,
-    val surfaceContainer: Color,
-    val surfaceContainerHigh: Color,
-    val onSurface: Color,
-    val onSurfaceVariant: Color,
-) {
-    fun applyTo(colors: MaterialColorScheme): MaterialColorScheme =
-        colors.copy(
-            primary = primary,
-            onPrimary = onPrimary,
-            primaryContainer = primaryContainer,
-            onPrimaryContainer = onPrimaryContainer,
-            surfaceBright = surfaceBright,
-            surfaceContainer = surfaceContainer,
-            surfaceContainerHigh = surfaceContainerHigh,
-            onSurface = onSurface,
-            onSurfaceVariant = onSurfaceVariant,
-        )
-}
+typealias MonetPrimaryColors = MaterialColorScheme
 
 fun monetPrimaryColors(context: Context, bitmap: Bitmap, darkTheme: Boolean): MonetPrimaryColors {
     val wallpaperColors = WallpaperColors.fromBitmap(bitmap)
@@ -71,16 +50,56 @@ fun monetPrimaryColors(context: Context, bitmap: Bitmap, darkTheme: Boolean): Mo
     val color = { dynamicColor: DynamicColor ->
         boostedColor(dynamicColor.getArgb(scheme), settings.chromaBoost)
     }
-    return MonetPrimaryColors(
+    val baseColors = if (darkTheme) darkColorScheme() else lightColorScheme()
+    return baseColors.copy(
         primary = color(dynamicColors.primary()),
         onPrimary = color(dynamicColors.onPrimary()),
         primaryContainer = color(dynamicColors.primaryContainer()),
         onPrimaryContainer = color(dynamicColors.onPrimaryContainer()),
+        inversePrimary = color(dynamicColors.inversePrimary()),
+        secondary = color(dynamicColors.secondary()),
+        onSecondary = color(dynamicColors.onSecondary()),
+        secondaryContainer = color(dynamicColors.secondaryContainer()),
+        onSecondaryContainer = color(dynamicColors.onSecondaryContainer()),
+        tertiary = color(dynamicColors.tertiary()),
+        onTertiary = color(dynamicColors.onTertiary()),
+        tertiaryContainer = color(dynamicColors.tertiaryContainer()),
+        onTertiaryContainer = color(dynamicColors.onTertiaryContainer()),
+        background = color(dynamicColors.background()),
+        onBackground = color(dynamicColors.onBackground()),
+        surface = color(dynamicColors.surface()),
+        onSurface = color(dynamicColors.onSurface()),
+        surfaceVariant = color(dynamicColors.surfaceVariant()),
+        onSurfaceVariant = color(dynamicColors.onSurfaceVariant()),
+        surfaceTint = color(dynamicColors.surfaceTint()),
+        inverseSurface = color(dynamicColors.inverseSurface()),
+        inverseOnSurface = color(dynamicColors.inverseOnSurface()),
+        error = color(dynamicColors.error()),
+        onError = color(dynamicColors.onError()),
+        errorContainer = color(dynamicColors.errorContainer()),
+        onErrorContainer = color(dynamicColors.onErrorContainer()),
+        outline = color(dynamicColors.outline()),
+        outlineVariant = color(dynamicColors.outlineVariant()),
+        scrim = color(dynamicColors.scrim()),
         surfaceBright = color(dynamicColors.surfaceBright()),
+        surfaceDim = color(dynamicColors.surfaceDim()),
         surfaceContainer = color(dynamicColors.surfaceContainer()),
         surfaceContainerHigh = color(dynamicColors.surfaceContainerHigh()),
-        onSurface = color(dynamicColors.onSurface()),
-        onSurfaceVariant = color(dynamicColors.onSurfaceVariant()),
+        surfaceContainerHighest = color(dynamicColors.surfaceContainerHighest()),
+        surfaceContainerLow = color(dynamicColors.surfaceContainerLow()),
+        surfaceContainerLowest = color(dynamicColors.surfaceContainerLowest()),
+        primaryFixed = color(dynamicColors.primaryFixed()),
+        primaryFixedDim = color(dynamicColors.primaryFixedDim()),
+        onPrimaryFixed = color(dynamicColors.onPrimaryFixed()),
+        onPrimaryFixedVariant = color(dynamicColors.onPrimaryFixedVariant()),
+        secondaryFixed = color(dynamicColors.secondaryFixed()),
+        secondaryFixedDim = color(dynamicColors.secondaryFixedDim()),
+        onSecondaryFixed = color(dynamicColors.onSecondaryFixed()),
+        onSecondaryFixedVariant = color(dynamicColors.onSecondaryFixedVariant()),
+        tertiaryFixed = color(dynamicColors.tertiaryFixed()),
+        tertiaryFixedDim = color(dynamicColors.tertiaryFixedDim()),
+        onTertiaryFixed = color(dynamicColors.onTertiaryFixed()),
+        onTertiaryFixedVariant = color(dynamicColors.onTertiaryFixedVariant()),
     )
 }
 

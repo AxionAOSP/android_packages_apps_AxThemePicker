@@ -18,6 +18,8 @@ package com.android.axion.themepicker.viewmodel
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Point
+import android.graphics.Rect
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -100,8 +102,8 @@ class MainScreenViewModel : ViewModel() {
         navigateTo(Screen.Fonts)
     }
 
-    fun onOpenGallery() {
-        navigateTo(Screen.WallpaperGallery)
+    fun onOpenGallery(targetFlags: Int = 0) {
+        navigateTo(Screen.WallpaperGallery(targetFlags))
     }
 
     fun onOpenWallpaperEffects() {
@@ -109,6 +111,9 @@ class MainScreenViewModel : ViewModel() {
     }
 
     var pendingPreviewBitmap: Bitmap? = null
+        private set
+
+    var pendingPreviewCropHints: Map<Point, Rect> = emptyMap()
         private set
 
     fun onOpenWallpaperCrop(sourceUri: Uri? = null, drawableRes: Int = 0, targetFlags: Int = 0) {
@@ -121,9 +126,27 @@ class MainScreenViewModel : ViewModel() {
         )
     }
 
-    fun onCropCompleted(croppedBitmap: Bitmap, targetFlags: Int = 0) {
-        pendingPreviewBitmap = croppedBitmap
+    fun onCropCompleted(
+        bitmap: Bitmap,
+        cropHints: Map<Point, Rect>,
+        targetFlags: Int = 0,
+    ) {
+        pendingPreviewBitmap = bitmap
+        pendingPreviewCropHints = cropHints
         navigateTo(Screen.WallpaperPreview(targetFlags = targetFlags))
+    }
+
+    fun returnToLockscreenPreview() {
+        val lockscreenIndex = _screenStack.indexOfLast { it is Screen.Lockscreen }
+        if (lockscreenIndex < 0) {
+            resetToMain()
+            return
+        }
+        _isNavigatingBack.value = true
+        _currentScreen.value = _screenStack[lockscreenIndex]
+        _screenStack.subList(lockscreenIndex, _screenStack.size).clear()
+        pendingPreviewBitmap = null
+        pendingPreviewCropHints = emptyMap()
     }
 
     fun onOpenLockscreenPreview(

@@ -20,6 +20,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -59,6 +60,7 @@ import com.android.axion.themepicker.data.model.WallpaperInfo
 import com.android.axion.themepicker.data.model.ZoomProperties
 import com.android.axion.themepicker.utils.effects.applyAtmosphereEffect
 import com.android.axion.themepicker.utils.effects.applyGlassEffect
+import com.android.axion.util.DisplayUtils
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -76,6 +78,16 @@ private val bitmapCache =
     LruCache<Int, Bitmap>((Runtime.getRuntime().maxMemory() / 1024 / 8).toInt())
 
 private val MAIN_HANDLER by lazy(LazyThreadSafetyMode.NONE) { Handler(Looper.getMainLooper()) }
+
+fun getSystemWallpaperMaxScale(context: Context): Float {
+    val id = Resources.getSystem().getIdentifier("config_wallpaperMaxScale", "dimen", "android")
+    if (id == 0) return 1.1f
+    return try {
+        context.resources.getFloat(id)
+    } catch (_: Resources.NotFoundException) {
+        1.1f
+    }
+}
 
 class DrawablePainter(val drawable: Drawable) : Painter(), RememberObserver {
     private var drawInvalidateTick by mutableStateOf(0)
@@ -272,7 +284,7 @@ fun applyWallpaper(
 
     val primaryCropHint =
         cropHints?.let { hints ->
-            val primarySize = DisplayHelper.getWallpaperDisplaySize(context)
+            val primarySize = DisplayUtils.getLargestInternalDisplaySize(context)
             hints[primarySize] ?: hints.values.firstOrNull()
         }
 
@@ -390,7 +402,7 @@ fun getWallpaperDrawable(context: Context, resId: Int): Drawable? {
 
 fun decodeSampledBitmapFromUri(context: Context, uri: Uri, targetSize: Point? = null): Bitmap? {
     return try {
-        val target = targetSize ?: DisplayHelper.getWallpaperDisplaySize(context)
+        val target = targetSize ?: DisplayUtils.getLargestInternalDisplaySize(context)
         val reqWidth = target.x
         val reqHeight = target.y
 
@@ -669,7 +681,7 @@ fun loadAllCategories(context: Context): List<WallpaperCategory> {
 fun centerCrop(context: Context, bmp: Bitmap?, targetSize: Point? = null): Bitmap? {
     if (bmp == null) return null
 
-    val target = targetSize ?: DisplayHelper.getWallpaperDisplaySize(context)
+    val target = targetSize ?: DisplayUtils.getLargestInternalDisplaySize(context)
     val targetWidth = target.x
     val targetHeight = target.y
 

@@ -25,7 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.android.axion.compose.preferences.rememberSecureSettingBoolean
-import com.android.axion.themepicker.utils.wallpaper.DisplayHelper
+import com.android.axion.themepicker.utils.wallpaper.getSystemWallpaperMaxScale
 
 internal const val WALLPAPER_ZOOM_DISABLED_SETTING = "pref_disable_wallpaper_zoom"
 
@@ -33,7 +33,7 @@ internal const val WALLPAPER_ZOOM_DISABLED_SETTING = "pref_disable_wallpaper_zoo
 internal fun rememberWallpaperZoomScale(): Float {
     val context = LocalContext.current
     val zoomDisabled = rememberSecureSettingBoolean(WALLPAPER_ZOOM_DISABLED_SETTING)
-    val maxScale = remember(context) { DisplayHelper.getSystemWallpaperMaxScale(context) }
+    val maxScale = remember(context) { getSystemWallpaperMaxScale(context) }
     val targetScale = if (zoomDisabled) 1f else maxScale
     val scale by
         animateFloatAsState(

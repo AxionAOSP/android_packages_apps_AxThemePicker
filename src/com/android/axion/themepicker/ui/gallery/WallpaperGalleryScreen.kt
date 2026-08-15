@@ -16,6 +16,7 @@
 
 package com.android.axion.themepicker.ui.gallery
 
+import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -64,12 +65,18 @@ import com.android.axion.themepicker.viewmodel.WallpaperGalleryViewModel
 fun WallpaperGalleryScreen(
     galleryViewModel: WallpaperGalleryViewModel = viewModel(),
     mainScreenViewModel: MainScreenViewModel = viewModel(),
+    targetFlags: Int,
     onSelectPhoto: () -> Unit,
+    onBack: () -> Unit,
 ) {
     val context = LocalContext.current
+    val isLockscreenTarget = targetFlags == WallpaperManager.FLAG_LOCK
 
     val onWallpaperSelected: (WallpaperInfo) -> Unit = { wallpaper ->
-        mainScreenViewModel.onOpenWallpaperCrop(drawableRes = wallpaper.drawableRes)
+        mainScreenViewModel.onOpenWallpaperCrop(
+            drawableRes = wallpaper.drawableRes,
+            targetFlags = targetFlags,
+        )
     }
     val colors = MaterialTheme.colorScheme
 
@@ -100,11 +107,11 @@ fun WallpaperGalleryScreen(
         latestWallpapers = loadedCategories.flatMap { it.wallpapers }.asReversed().take(12)
     }
 
-    BackHandler(enabled = true) { galleryViewModel.goBack { mainScreenViewModel.resetToMain() } }
+    BackHandler(enabled = true) { galleryViewModel.goBack(onBack) }
 
     AxionScaffold(
         title = headerTitle,
-        onBackClick = { galleryViewModel.goBack { mainScreenViewModel.resetToMain() } },
+        onBackClick = { galleryViewModel.goBack(onBack) },
         modifier = Modifier.background(colors.surfaceContainer),
     ) { paddingValues ->
         val back = isNavigatingBack || galleryState is GalleryState.Overview
@@ -119,12 +126,23 @@ fun WallpaperGalleryScreen(
                     OverviewContent(
                         latestWallpapers = latestWallpapers,
                         onEditCurrent = {
-                            getOriginalWallpaperUri(context)?.let {
-                                mainScreenViewModel.onOpenWallpaperCrop(sourceUri = it)
-                            } ?: mainScreenViewModel.onOpenWallpaperCrop()
+                            val uri =
+                                getOriginalWallpaperUri(
+                                    context,
+                                    isHome = !isLockscreenTarget,
+                                )
+                            mainScreenViewModel.onOpenWallpaperCrop(
+                                sourceUri = uri,
+                                targetFlags = targetFlags,
+                            )
                         },
                         onSelectPhoto = onSelectPhoto,
-                        onOpenLiveWallpapers = { launchLiveWallpaperPicker(context) },
+                        onOpenLiveWallpapers =
+                            if (isLockscreenTarget) {
+                                null
+                            } else {
+                                { launchLiveWallpaperPicker(context) }
+                            },
                         onMoreClick = {
                             galleryViewModel.navigateTo(GalleryState.CategoryList(categories))
                         },
@@ -174,7 +192,7 @@ private fun OverviewContent(
     latestWallpapers: List<WallpaperInfo>,
     onEditCurrent: () -> Unit,
     onSelectPhoto: () -> Unit,
-    onOpenLiveWallpapers: () -> Unit,
+    onOpenLiveWallpapers: (() -> Unit)?,
     onMoreClick: () -> Unit,
     onWallpaperSelected: (WallpaperInfo) -> Unit,
 ) {
@@ -209,12 +227,14 @@ private fun OverviewContent(
                             onClick = onSelectPhoto,
                         )
                     }
-                    Box(modifier = Modifier.weight(1f)) {
-                        ExpressiveActionCard(
-                            text = stringResource(R.string.live_wallpapers),
-                            icon = Icons.Default.ViewInAr,
-                            onClick = onOpenLiveWallpapers,
-                        )
+                    if (onOpenLiveWallpapers != null) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            ExpressiveActionCard(
+                                text = stringResource(R.string.live_wallpapers),
+                                icon = Icons.Default.ViewInAr,
+                                onClick = onOpenLiveWallpapers,
+                            )
+                        }
                     }
                 }
             }

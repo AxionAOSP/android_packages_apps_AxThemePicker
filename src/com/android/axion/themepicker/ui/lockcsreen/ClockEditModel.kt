@@ -21,24 +21,29 @@ import com.android.systemui.shared.clocks.ClockSettingsRepository
 import com.android.systemui.shared.clocks.ClockTopPaddingRange
 import kotlin.math.abs
 
-internal const val CLOCK_EDIT_HANDLE_SIZE_DP = 96
-internal const val CLOCK_EDIT_GUIDE_CORNER_RADIUS_DP = 24
-internal const val CLOCK_EDIT_GUIDE_STROKE_DP = 4
-internal const val CLOCK_EDIT_HANDLE_STROKE_DP = 8
+internal const val CLOCK_EDIT_HANDLE_SIZE_DP = 56
+internal const val CLOCK_EDIT_GUIDE_CORNER_RADIUS_DP = 16
+internal const val CLOCK_EDIT_GUIDE_STROKE_DP = 2
+internal const val CLOCK_EDIT_HANDLE_STROKE_DP = 4
 internal const val CLOCK_EDIT_HANDLE_ARC_SIZE_DP = CLOCK_EDIT_GUIDE_CORNER_RADIUS_DP * 2
 internal const val CLOCK_EDIT_HANDLE_INSET_DP = CLOCK_EDIT_HANDLE_STROKE_DP / 2
-internal const val CLOCK_EDIT_TOP_PADDING_MIN_DP = 0f
+internal const val CLOCK_EDIT_HANDLE_OVERFLOW_DP =
+    (CLOCK_EDIT_HANDLE_STROKE_DP - CLOCK_EDIT_GUIDE_STROKE_DP) / 2
+internal const val CLOCK_EDIT_TOP_PADDING_MIN_DP = ClockSettingsRepository.TOP_PADDING_MIN_DP
 
 internal data class ClockEditModel(
     val storedSizeScale: Float,
     val editedSizeScale: Float,
+    val storedHorizontalOffsetDp: Float,
+    val editedHorizontalOffsetDp: Float,
     val storedTopPaddingDp: Float,
     val editedTopPaddingDp: Float,
-    val alignment: ClockEditAlignment,
     val scaleGeometry: ClockEditScaleGeometry,
+    val horizontalOffsetRange: ClockHorizontalOffsetRange,
     val topPaddingRange: ClockTopPaddingRange,
     val dragTarget: ClockEditDragTarget = ClockEditDragTarget.None,
     val pendingSizeScale: Float? = null,
+    val pendingHorizontalOffsetDp: Float? = null,
     val pendingTopPaddingDp: Float? = null,
 ) {
     val sizeScaleOverride: Float
@@ -47,19 +52,28 @@ internal data class ClockEditModel(
     val topPaddingDp: Float
         get() = topPaddingRange.clamp(editedTopPaddingDp)
 
+    val horizontalOffsetDp: Float
+        get() = horizontalOffsetRange.clamp(editedHorizontalOffsetDp)
+
     fun sync(
         storedSizeScale: Float,
+        storedHorizontalOffsetDp: Float,
         storedTopPaddingDp: Float,
-        alignmentValue: String,
         scaleGeometry: ClockEditScaleGeometry,
+        horizontalOffsetRange: ClockHorizontalOffsetRange,
         topPaddingRange: ClockTopPaddingRange,
     ): ClockEditModel {
-        val nextAlignment = ClockEditAlignment.fromSetting(alignmentValue)
         val nextPendingSizeScale =
             pendingSizeScale?.takeUnless { storedSizeScale.approximatelyEquals(it) }
+        val nextPendingHorizontalOffset =
+            pendingHorizontalOffsetDp?.takeUnless {
+                storedHorizontalOffsetDp.approximatelyEquals(it)
+            }
         val nextPendingTopPadding =
             pendingTopPaddingDp?.takeUnless { storedTopPaddingDp.approximatelyEquals(it) }
         val nextStoredSizeScale = nextPendingSizeScale ?: storedSizeScale
+        val nextStoredHorizontalOffset =
+            nextPendingHorizontalOffset ?: storedHorizontalOffsetDp
         val nextStoredTopPadding = nextPendingTopPadding ?: storedTopPaddingDp
         val nextScaleGeometry =
             if (
@@ -76,24 +90,30 @@ internal data class ClockEditModel(
             return copy(
                 storedSizeScale = nextStoredSizeScale,
                 editedSizeScale = nextScaleGeometry.clampScale(editedSizeScale),
+                storedHorizontalOffsetDp = nextStoredHorizontalOffset,
+                editedHorizontalOffsetDp = horizontalOffsetRange.clamp(editedHorizontalOffsetDp),
                 storedTopPaddingDp = nextStoredTopPadding,
                 editedTopPaddingDp = topPaddingRange.clamp(editedTopPaddingDp),
-                alignment = nextAlignment,
                 scaleGeometry = nextScaleGeometry,
+                horizontalOffsetRange = horizontalOffsetRange,
                 topPaddingRange = topPaddingRange,
                 pendingSizeScale = nextPendingSizeScale,
+                pendingHorizontalOffsetDp = nextPendingHorizontalOffset,
                 pendingTopPaddingDp = nextPendingTopPadding,
             )
         }
         return copy(
             storedSizeScale = nextStoredSizeScale,
             editedSizeScale = scaleGeometry.clampScale(nextStoredSizeScale),
+            storedHorizontalOffsetDp = nextStoredHorizontalOffset,
+            editedHorizontalOffsetDp = horizontalOffsetRange.clamp(nextStoredHorizontalOffset),
             storedTopPaddingDp = nextStoredTopPadding,
             editedTopPaddingDp = topPaddingRange.clamp(nextStoredTopPadding),
-            alignment = nextAlignment,
             scaleGeometry = scaleGeometry,
+            horizontalOffsetRange = horizontalOffsetRange,
             topPaddingRange = topPaddingRange,
             pendingSizeScale = nextPendingSizeScale,
+            pendingHorizontalOffsetDp = nextPendingHorizontalOffset,
             pendingTopPaddingDp = nextPendingTopPadding,
         )
     }
@@ -104,11 +124,9 @@ internal data class ClockEditModel(
 
     fun cancelDrag(): ClockEditModel {
         return when (dragTarget) {
-            ClockEditDragTarget.Size -> copy(
-                editedSizeScale = scaleGeometry.clampScale(storedSizeScale),
-                dragTarget = ClockEditDragTarget.None,
-            )
+            ClockEditDragTarget.Size -> restoreSizeDrag()
             ClockEditDragTarget.Position -> copy(
+                editedHorizontalOffsetDp = horizontalOffsetRange.clamp(storedHorizontalOffsetDp),
                 editedTopPaddingDp = topPaddingRange.clamp(storedTopPaddingDp),
                 dragTarget = ClockEditDragTarget.None,
             )
@@ -116,59 +134,112 @@ internal data class ClockEditModel(
         }
     }
 
-    fun finishDrag(): ClockEditModel = copy(dragTarget = ClockEditDragTarget.None)
-
     fun commitDrag(): ClockEditModel {
         return when (dragTarget) {
             ClockEditDragTarget.Size -> copy(
                 storedSizeScale = sizeScaleOverride,
                 editedSizeScale = sizeScaleOverride,
-                dragTarget = ClockEditDragTarget.None,
-                pendingSizeScale = sizeScaleOverride,
-            )
-            ClockEditDragTarget.Position -> copy(
+                storedHorizontalOffsetDp = horizontalOffsetDp,
+                editedHorizontalOffsetDp = horizontalOffsetDp,
                 storedTopPaddingDp = topPaddingDp,
                 editedTopPaddingDp = topPaddingDp,
                 dragTarget = ClockEditDragTarget.None,
+                pendingSizeScale = sizeScaleOverride,
+                pendingHorizontalOffsetDp = horizontalOffsetDp,
+                pendingTopPaddingDp = topPaddingDp,
+            )
+            ClockEditDragTarget.Position -> copy(
+                storedHorizontalOffsetDp = horizontalOffsetDp,
+                editedHorizontalOffsetDp = horizontalOffsetDp,
+                storedTopPaddingDp = topPaddingDp,
+                editedTopPaddingDp = topPaddingDp,
+                dragTarget = ClockEditDragTarget.None,
+                pendingHorizontalOffsetDp = horizontalOffsetDp,
                 pendingTopPaddingDp = topPaddingDp,
             )
             ClockEditDragTarget.None -> this
         }
     }
 
-    fun resizeBy(deltaX: Float, deltaY: Float, density: Float, previewScale: Float): ClockEditModel {
-        val x =
-            when (alignment) {
-                ClockEditAlignment.Right -> -deltaX
-                ClockEditAlignment.Center -> deltaX * 2f
-                ClockEditAlignment.Left -> deltaX
-            }
-        val dragDelta = if (abs(x) >= abs(deltaY)) x else deltaY
-        val deltaDp = dragDelta / density / previewScale
+    fun resizeBy(
+        deltaX: Float,
+        deltaY: Float,
+        density: Float,
+        previewScale: Float,
+        corner: ClockResizeCorner,
+    ): ClockEditModel {
         val currentScale = scaleGeometry.clampScale(editedSizeScale)
-        val nextScale = scaleGeometry.resizeScale(currentScale, deltaDp)
-        val frameWidthDelta = (nextScale - currentScale) * scaleGeometry.resizeDpPerScale
+        val widthRate = scaleGeometry.resizeDpPerScale.coerceAtLeast(1f)
+        val heightRate = scaleGeometry.resizeHeightDpPerScale
+        val horizontalScaleDelta =
+            corner.horizontalDirection * deltaX / density / previewScale / widthRate
+        val verticalScaleDelta =
+            heightRate?.let {
+                corner.verticalDirection * deltaY / density / previewScale / it.coerceAtLeast(1f)
+            }
+        val requestedScaleDelta =
+            if (verticalScaleDelta != null && abs(verticalScaleDelta) > abs(horizontalScaleDelta)) {
+                verticalScaleDelta
+            } else {
+                horizontalScaleDelta
+            }
+        val nextScale = scaleGeometry.clampScale(currentScale + requestedScaleDelta)
+        val scaleDelta = nextScale - currentScale
+        val frameWidthDelta = scaleDelta * scaleGeometry.resizeDpPerScale
         val nextFrameWidth = scaleGeometry.frameWidthDp + frameWidthDelta
         val nextFrameHeight =
-            scaleGeometry.frameHeightDp?.let {
-                it * (nextFrameWidth / scaleGeometry.frameWidthDp.coerceAtLeast(1f))
+            scaleGeometry.frameHeightDp?.let { frameHeight ->
+                if (heightRate != null) {
+                    frameHeight + scaleDelta * heightRate
+                } else {
+                    frameHeight *
+                        (nextFrameWidth / scaleGeometry.frameWidthDp.coerceAtLeast(1f))
+                }
             }
+        val frameHeightDelta =
+            scaleGeometry.frameHeightDp?.let { (nextFrameHeight ?: it) - it } ?: 0f
+        val nextHorizontalOffsetRange =
+            horizontalOffsetRange.resizedBy(frameWidthDelta)
+        val draggedStartEdge = if (corner.isLeft) 1f else 0f
+        val horizontalOffsetDelta = (0.5f - draggedStartEdge) * frameWidthDelta
+        val topPaddingDelta = (if (corner.isTop) -0.5f else 0.5f) * frameHeightDelta
         return copy(
             editedSizeScale = nextScale,
+            editedHorizontalOffsetDp = nextHorizontalOffsetRange.clamp(
+                editedHorizontalOffsetDp + horizontalOffsetDelta,
+            ),
+            editedTopPaddingDp = topPaddingRange.clamp(
+                editedTopPaddingDp + topPaddingDelta,
+            ),
             scaleGeometry = scaleGeometry.copy(
                 requestedScale = nextScale,
                 frameWidthDp = nextFrameWidth,
                 frameHeightDp = nextFrameHeight,
             ),
+            horizontalOffsetRange = nextHorizontalOffsetRange,
         )
     }
 
-    fun moveTopPaddingBy(deltaY: Float, density: Float, previewScale: Float): ClockEditModel {
+    fun movePositionBy(
+        deltaX: Float,
+        deltaY: Float,
+        density: Float,
+        previewScale: Float,
+    ): ClockEditModel {
         return copy(
+            editedHorizontalOffsetDp = horizontalOffsetRange.clamp(
+                editedHorizontalOffsetDp + deltaX / density / previewScale,
+            ),
             editedTopPaddingDp = topPaddingRange.clamp(
                 editedTopPaddingDp + deltaY / density / previewScale,
             ),
         )
+    }
+
+    fun snapHorizontalPosition(): ClockEditModel {
+        val offset = horizontalOffsetDp
+        if (abs(offset) > ClockSettingsRepository.HORIZONTAL_CENTER_SNAP_THRESHOLD_DP) return this
+        return copy(editedHorizontalOffsetDp = horizontalOffsetRange.clamp(0f))
     }
 
     fun resetSize(): ClockEditModel = copy(
@@ -179,23 +250,54 @@ internal data class ClockEditModel(
     )
 
     fun resetPosition(): ClockEditModel = copy(
+        storedHorizontalOffsetDp = horizontalOffsetRange.clamp(0f),
+        editedHorizontalOffsetDp = horizontalOffsetRange.clamp(0f),
         storedTopPaddingDp = topPaddingRange.clamp(0f),
         editedTopPaddingDp = topPaddingRange.clamp(0f),
         dragTarget = ClockEditDragTarget.None,
+        pendingHorizontalOffsetDp = horizontalOffsetRange.clamp(0f),
         pendingTopPaddingDp = topPaddingRange.clamp(0f),
     )
+
+    private fun restoreSizeDrag(): ClockEditModel {
+        val currentScale = scaleGeometry.clampScale(editedSizeScale)
+        val restoredScale = scaleGeometry.clampScale(storedSizeScale)
+        val scaleDelta = restoredScale - currentScale
+        val frameWidthDelta = scaleDelta * scaleGeometry.resizeDpPerScale
+        val restoredFrameHeight =
+            scaleGeometry.frameHeightDp?.let { frameHeight ->
+                scaleGeometry.resizeHeightDpPerScale?.let { frameHeight + scaleDelta * it }
+                    ?: frameHeight *
+                        ((scaleGeometry.frameWidthDp + frameWidthDelta) /
+                            scaleGeometry.frameWidthDp.coerceAtLeast(1f))
+            }
+        val restoredOffsetRange = horizontalOffsetRange.resizedBy(frameWidthDelta)
+        return copy(
+            editedSizeScale = restoredScale,
+            editedHorizontalOffsetDp = restoredOffsetRange.clamp(storedHorizontalOffsetDp),
+            editedTopPaddingDp = topPaddingRange.clamp(storedTopPaddingDp),
+            scaleGeometry = scaleGeometry.copy(
+                requestedScale = restoredScale,
+                frameWidthDp = scaleGeometry.frameWidthDp + frameWidthDelta,
+                frameHeightDp = restoredFrameHeight,
+            ),
+            horizontalOffsetRange = restoredOffsetRange,
+            dragTarget = ClockEditDragTarget.None,
+        )
+    }
 
     companion object {
         fun from(
             storedSizeScale: Float,
+            storedHorizontalOffsetDp: Float,
             storedTopPaddingDp: Float,
-            alignmentValue: String,
             scaleGeometry: ClockEditScaleGeometry =
                 ClockEditScaleGeometry.default(
                     availableWidthDp = 0f,
                     requestedScale = storedSizeScale,
                     scaleRange = ClockSettingsRepository.sizeScaleRange,
                 ),
+            horizontalOffsetRange: ClockHorizontalOffsetRange = ClockHorizontalOffsetRange.Zero,
             topPaddingRange: ClockTopPaddingRange =
                 ClockTopPaddingRange(
                     CLOCK_EDIT_TOP_PADDING_MIN_DP,
@@ -205,10 +307,12 @@ internal data class ClockEditModel(
             return ClockEditModel(
                 storedSizeScale = storedSizeScale,
                 editedSizeScale = scaleGeometry.clampScale(storedSizeScale),
+                storedHorizontalOffsetDp = storedHorizontalOffsetDp,
+                editedHorizontalOffsetDp = horizontalOffsetRange.clamp(storedHorizontalOffsetDp),
                 storedTopPaddingDp = storedTopPaddingDp,
                 editedTopPaddingDp = topPaddingRange.clamp(storedTopPaddingDp),
-                alignment = ClockEditAlignment.fromSetting(alignmentValue),
                 scaleGeometry = scaleGeometry,
+                horizontalOffsetRange = horizontalOffsetRange,
                 topPaddingRange = topPaddingRange,
             )
         }
@@ -218,6 +322,7 @@ internal data class ClockEditModel(
 internal data class ClockEditFrameBounds(
     val widthDp: Float,
     val heightDp: Float?,
+    val centerYFraction: Float,
 ) {
     fun widthIn(availableWidthDp: Float): Float {
         if (availableWidthDp <= 0f) return widthDp
@@ -226,70 +331,116 @@ internal data class ClockEditFrameBounds(
 
     fun heightIn(availableHeightDp: Float): Float {
         if (availableHeightDp <= 0f) return heightDp?.coerceAtLeast(0f) ?: 0f
-        return availableHeightDp
+        return heightDp?.coerceIn(0f, availableHeightDp) ?: availableHeightDp
     }
 
     fun startOffsetDp(
         availableWidthDp: Float,
-        alignment: ClockEditAlignment,
+        horizontalOffsetDp: Float,
     ): Float {
         val width = widthIn(availableWidthDp)
-        return when (alignment) {
-            ClockEditAlignment.Left -> 0f
-            ClockEditAlignment.Right -> availableWidthDp - width
-            ClockEditAlignment.Center -> (availableWidthDp - width) / 2f
-        }.coerceAtLeast(0f)
+        val centeredStart = (availableWidthDp - width) / 2f
+        return (centeredStart + horizontalOffsetDp)
+            .coerceIn(0f, (availableWidthDp - width).coerceAtLeast(0f))
     }
 
-    fun handleStartOffsetDp(
+    fun endOffsetDp(
         availableWidthDp: Float,
-        alignment: ClockEditAlignment,
-    ): Float {
-        val start = startOffsetDp(availableWidthDp, alignment)
-        val width = widthIn(availableWidthDp)
-        val offset = start + (width - CLOCK_EDIT_HANDLE_SIZE_DP).coerceAtLeast(0f)
-        return offset.coerceIn(
-            0f,
-            (availableWidthDp - CLOCK_EDIT_HANDLE_SIZE_DP).coerceAtLeast(0f),
-        )
-    }
+        horizontalOffsetDp: Float,
+    ): Float =
+        startOffsetDp(availableWidthDp, horizontalOffsetDp) +
+            widthIn(availableWidthDp)
 
     fun topOffsetDp(availableHeightDp: Float): Float {
         val height = heightIn(availableHeightDp)
         if (availableHeightDp <= 0f) return 0f
-        return ((availableHeightDp - height) / 2f)
+        return (availableHeightDp * centerYFraction - height / 2f)
             .coerceIn(0f, (availableHeightDp - height).coerceAtLeast(0f))
     }
 
-    fun handleTopOffsetDp(availableHeightDp: Float): Float {
-        val maxTop = (availableHeightDp - CLOCK_EDIT_HANDLE_SIZE_DP).coerceAtLeast(0f)
-        val guideBottom = topOffsetDp(availableHeightDp) + heightIn(availableHeightDp)
-        return (guideBottom - CLOCK_EDIT_HANDLE_SIZE_DP).coerceIn(0f, maxTop)
-    }
+    fun bottomOffsetDp(availableHeightDp: Float): Float =
+        topOffsetDp(availableHeightDp) + heightIn(availableHeightDp)
 
     companion object {
         fun from(geometry: ClockEditScaleGeometry, availableWidthDp: Float): ClockEditFrameBounds =
             ClockEditFrameBounds(
                 widthDp = geometry.frameWidthIn(availableWidthDp),
                 heightDp = geometry.frameHeightDp,
+                centerYFraction = geometry.frameCenterYFraction,
             )
     }
 }
 
-internal enum class ClockEditAlignment {
-    Left,
-    Center,
-    Right;
+internal data class ClockHorizontalOffsetRange(
+    val min: Float,
+    val max: Float,
+) {
+    fun clamp(value: Float): Float = value.coerceIn(min, max)
+
+    fun resizedBy(widthDeltaDp: Float): ClockHorizontalOffsetRange {
+        val limit = (max - widthDeltaDp / 2f).coerceAtLeast(0f)
+        return ClockHorizontalOffsetRange(-limit, limit)
+    }
 
     companion object {
-        fun fromSetting(value: String): ClockEditAlignment {
-            return when (value) {
-                ClockSettingsRepository.ALIGNMENT_LEFT -> Left
-                ClockSettingsRepository.ALIGNMENT_RIGHT -> Right
-                else -> Center
-            }
+        val Zero = ClockHorizontalOffsetRange(0f, 0f)
+
+        fun from(
+            geometry: ClockEditScaleGeometry,
+            availableWidthDp: Float,
+        ): ClockHorizontalOffsetRange {
+            val frameWidth = geometry.frameWidthIn(availableWidthDp)
+            val freeWidth = (availableWidthDp - frameWidth).coerceAtLeast(0f)
+            val centeredStart = freeWidth / 2f
+            return ClockHorizontalOffsetRange(
+                -centeredStart,
+                centeredStart,
+            )
         }
     }
+}
+
+internal enum class ClockResizeCorner(val arcStartAngle: Float) {
+    TopLeft(180f),
+    TopRight(270f),
+    BottomLeft(90f),
+    BottomRight(0f);
+
+    val isLeft: Boolean
+        get() = this == TopLeft || this == BottomLeft
+
+    val isTop: Boolean
+        get() = this == TopLeft || this == TopRight
+
+    val horizontalDirection: Float
+        get() = if (isLeft) -1f else 1f
+
+    val verticalDirection: Float
+        get() = if (isTop) -1f else 1f
+
+    fun handleX(
+        frameStart: Float,
+        frameEnd: Float,
+        handleSize: Float,
+        handleOverflow: Float,
+    ): Float =
+        if (isLeft) {
+            frameStart - handleOverflow
+        } else {
+            frameEnd - handleSize + handleOverflow
+        }
+
+    fun handleY(
+        frameTop: Float,
+        frameBottom: Float,
+        handleSize: Float,
+        handleOverflow: Float,
+    ): Float =
+        if (isTop) {
+            frameTop - handleOverflow
+        } else {
+            frameBottom - handleSize + handleOverflow
+        }
 }
 
 internal enum class ClockEditDragTarget {
