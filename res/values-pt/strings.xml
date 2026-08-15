@@ -30,6 +30,7 @@
     <string name="fonts">Fontes</string>
     <string name="shortcuts">Atalhos</string>
     <string name="widgets">Widgets</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Plano de fundo atual</string>
     <string name="customize_to_match_your_style">Personalize para combinar com seu estilo</string>
@@ -69,6 +70,7 @@
     <string name="lock_screen_label">Tela de bloqueio</string>
     <string name="pinch_to_crop">Pince para cortar</string>
     <string name="select_at_least_one">Selecione pelo menos um</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Definir papel de parede</string>
     <string name="set_wallpaper_on">Definir plano de fundo em</string>
     <string name="home_lock_both">Ambos</string>
@@ -96,7 +98,7 @@
     <string name="effect_home_screen_only">Tela inicial somente</string>
     <string name="effect_lock_screen_only">Somente tela de bloqueio</string>
     <string name="effect_home_and_lock">Home &amp; tela de bloqueio</string>
-    <string name="effect_weather">Clima</string>
+    <string name="effect_weather">Tempo</string>
     <string name="effect_weather_description">Sobreposição animada com tempo reativo</string>
     <string name="effect_magic_portrait">Retrato Mágico</string>
     <string name="effect_magic_portrait_description">Moldura do quadro com fundo em torno do assunto</string>
@@ -120,7 +122,7 @@
     <string name="portrait_brightness_label">Brilho</string>
     <!-- Effect Tabs -->
     <string name="tab_shape">Forma</string>
-    <string name="tab_weather">Clima</string>
+    <string name="tab_weather">Tempo</string>
     <string name="tab_atmosphere">Atmosphere</string>
     <string name="tab_cinematic">Cinemática</string>
     <string name="tab_glass">Glass</string>
@@ -222,9 +224,7 @@
     <string name="reset_clock">Resetar Relógio</string>
     <string name="reset_clock_size">Redefinir tamanho</string>
     <string name="reset_clock_position">Reconfigurar posição</string>
-    <string name="clock_edit_education">Pressione e segure o relógio, em seguida, arraste para cima ou para baixo para ajustar sua posição. Arraste o canto para redimensionar.</string>
     <string name="clock_dual_tone">Tom duplo</string>
-    <string name="clock_alignment">Alinhamento</string>
     <string name="clock_align_left">Esquerda</string>
     <string name="clock_align_center">Centralizar</string>
     <string name="clock_align_right">Direita</string>
@@ -239,7 +239,7 @@
     <string name="clock_info_smartspace">Smartspace</string>
     <string name="clock_info_alarm">Alarme</string>
     <string name="clock_info_calendar">Calendário</string>
-    <string name="clock_info_weather">Clima</string>
+    <string name="clock_info_weather">Tempo</string>
     <string name="clock_color">Cor do relógio</string>
     <string name="clock_graffiti_angle">Ângulo de Grafite</string>
     <string name="device_controls">Controles do dispositivo</string>
