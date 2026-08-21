@@ -79,8 +79,8 @@
     <string name="set_wallpaper_on">Встановити шпалери на</string>
     <string name="home_lock_both">Обидва</string>
     <string name="wallpaper_info">Відомості про шпалери</string>
-    <string name="wallpaper_fill_mode">На весь екран</string>
-    <string name="wallpaper_fit_mode">За розміром</string>
+    <string name="wallpaper_fill_mode">Заповнити</string>
+    <string name="wallpaper_fit_mode">Вписати</string>
     <string name="wallpaper_zoom_title">Масштабування шпалер</string>
     <string name="wallpaper_zoom_description">Масштабувати шпалери під час переходів</string>
     <!-- Effects -->
@@ -103,7 +103,7 @@
     <string name="effect_lock_screen_only">Тільки на екрані блокування</string>
     <string name="effect_home_and_lock">Головний екран та екран блокування</string>
     <string name="effect_weather">Погода</string>
-    <string name="effect_weather_description">Анімований оверлей з урахуванням погоди</string>
+    <string name="effect_weather_description">Анімований оверлей, що реагує на погоду</string>
     <string name="effect_magic_portrait">Магічний портрет</string>
     <string name="effect_magic_portrait_description">Фігурні рамки з кольоровим тлом навколо головного об\'єкта</string>
     <!-- Weather Config -->
@@ -143,7 +143,7 @@
     <string name="next_button">Далі</string>
     <string name="applying_wallpaper">Застосування\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">Форма значка</string>
+    <string name="icon_shape_title">Форма іконки</string>
     <string name="icon_shape_description">Вигляд значків додатків</string>
     <string name="make_your_device_uniquely_yours">Зробіть свій пристрій унікальним</string>
     <string name="personalize">Персоналізувати</string>
@@ -153,9 +153,9 @@
     <string name="wallpaper_colors_and_themes">Кольори шпалер та теми</string>
     <!-- Colors Screen -->
     <string name="about_color_customization_title">Про персоналізацію кольорів</string>
-    <string name="about_color_customization_desc">    Color changes apply system-wide to all apps that support Material You theming.
-    \nAdjusting these colors may affect the appearance of apps across your device.
-    </string>
+    <string name="about_color_customization_desc">
+Кольори застосовуються до всіх додатків, що підтримують Material You, на рівні всієї системи.
+\nЦе може змінити вигляд інших застосунків на вашому пристрої.    </string>
     <string name="automatic">Автоматично</string>
     <string name="brightness">Яскравість</string>
     <string name="chroma_boost_title">Підсилення насиченості</string>
@@ -169,7 +169,8 @@
     <string name="custom">Користувацький</string>
     <string name="custom_seed_color_title">Власний базовий колір</string>
     <string name="customize_palette_title">Налаштуйте свою палітру</string>
-    <string name="customize_palette_description">        Personalize your device with colors that match your style
+    <string name="customize_palette_description">
+Персоналізуйте свій пристрій кольорами, що відповідають вашому стилю
     </string>
     <string name="fidelity_title">Точність</string>
     <string name="fidelity_desc">Увімкнути функцію точності для колірних тонів</string>
@@ -184,7 +185,7 @@
     <string name="theme_style_desc">Визначає, як генеруються кольори з базового кольору</string>
     <string name="theme_style_disabled_by_fidelity">Недоступно, доки активний Fidelity</string>
     <string name="use_wallpaper_colors_title">Використовувати кольори шпалер</string>
-    <string name="use_wallpaper_colors_desc">Видобувати кольори з ваших шпалер</string>
+    <string name="use_wallpaper_colors_desc">Отримати кольори з ваших шпалер</string>
     <string name="using_custom_color">Використання власного кольору</string>
     <string name="choose_custom_color_method">Виберіть спосіб підбору власного кольору:</string>
     <!-- Fonts Screen -->
@@ -204,9 +205,9 @@
     <string name="reboot_device">Перезавантажити пристрій</string>
     <string name="reboot_now">Перезавантажити зараз</string>
     <string name="reboot_required_title">Необхідне перезавантаження</string>
-    <string name="reboot_required_message">Для застосування змін шрифту потрібне перезавантаження.\nБажаєте перезавантажити зараз?</string>
-    <string name="reboot_required_custom_font_title">Потрібне перезавантаження для зміни шрифту</string>
-    <string name="reboot_required_custom_font_desc">Пропуск перезавантаження після зміни власного шрифту може призвести до помилок відображення інтерфейсу в додатках.</string>
+    <string name="reboot_required_message">Щоб застосувати новий шрифт, потрібно перезавантажити пристрій.\nПерезавантажити зараз?</string>
+    <string name="reboot_required_custom_font_title">Для зміни власного шрифту потрібне перезавантаження</string>
+    <string name="reboot_required_custom_font_desc">Пропуск перезавантаження після зміни шрифту може спричинити візуальні неполадки інтерфейсу в додатках.</string>
     <string name="reset_custom_font_content_desc">Скинути користувацький шрифт</string>
     <string name="reset_default_title">Скинути до заводських налаштувань</string>
     <string name="reset_default_message">Це скине ваш шрифт до системного шрифту за замовчуванням. Ви впевнені?</string>
@@ -219,7 +220,7 @@
     <string name="camera">Камера</string>
     <string name="choose_your_time_format">Виберіть свій формат часу</string>
     <string name="clock">Годинник</string>
-    <string name="clock_face">Стиль годинника</string>
+    <string name="clock_face">Циферблат</string>
     <string name="clock_style">Стиль годинника</string>
     <string name="clock_face_style">Стиль циферблата</string>
     <string name="clock_size">Розмір годинника</string>
@@ -227,7 +228,7 @@
     <string name="clock_size_large">Великий</string>
     <string name="reset_clock">Скинути годинник</string>
     <string name="reset_clock_size">Скинути розмір</string>
-    <string name="reset_clock_position">Скинути положення</string>
+    <string name="reset_clock_position">Скинути розташування</string>
     <string name="clock_dual_tone">Двоколірний</string>
     <string name="clock_align_left">Ліворуч</string>
     <string name="clock_align_center">По центру</string>
@@ -249,7 +250,7 @@
     <string name="device_controls">Елементи керування пристроєм</string>
     <string name="do_not_disturb">Режим \"Не турбувати\"</string>
     <string name="flashlight">Ліхтарик</string>
-    <string name="left_affordance">Ліва доступність</string>
+    <string name="left_affordance">Лівий елемент керування</string>
     <string name="lockscreen_customize_title">Зовнішній вигляд екрана блокування</string>
     <string name="lockscreen_customize_summary">Налаштування зовнішнього вигляду екрана блокування</string>
     <string name="lockscreen_title">Екран блокування</string>
@@ -264,7 +265,7 @@
     <string name="pick_widgets">Вибрати віджети</string>
     <string name="qr_code_scanner">Сканер QR-кодів</string>
     <string name="quick_access_to_your_favorites">Швидкий доступ до ваших улюблених</string>
-    <string name="right_affordance">Права доступність</string>
+    <string name="right_affordance">Правий елемент керування</string>
     <string name="selected_widgets">Обрані віджети</string>
     <string name="selected_widgets_empty">Жодного віджету не вибрано</string>
     <string name="selected_widgets_guide">Торкніться клітинки, аби додати віджет, або торкніться віджета, щоби видалити його.</string>
@@ -288,7 +289,7 @@
     <string name="value_percentage">Значення: %d%%</string>
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">Не вдалося завантажити зображення</string>
-    <string name="no_image_provided">Зображення не надано</string>
+    <string name="no_image_provided">Зображення відсутнє</string>
     <string name="setting_wallpaper">Встановлення шпалер\u2026</string>
     <string name="shared_image">Спільне зображення</string>
     <string name="unable_to_load_image">Не вдалося завантажити зображення</string>
