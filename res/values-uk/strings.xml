@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Axion ThemePicker</string>
+    <string name="app_name">Вибір тем Axion</string>
     <!-- Common Actions -->
     <string name="apply">Застосувати</string>
     <string name="applied">Застосовано</string>
@@ -23,30 +23,31 @@
     <string name="unknown">Невідомо</string>
     <!-- Navigation Sections -->
     <!-- Navigation Tabs -->
-    <string name="nav_wallpaper">Фоновий малюнок</string>
+    <string name="nav_wallpaper">Шпалери</string>
     <string name="nav_style">Стиль</string>
     <string name="nav_lockscreen">Екран блокування</string>
     <string name="colors">Кольори</string>
     <string name="fonts">Шрифти</string>
     <string name="shortcuts">Ярлики</string>
     <string name="widgets">Віджети</string>
+    <string name="add_widgets">Додати віджети</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Поточні шпалери</string>
-    <string name="customize_to_match_your_style">Налаштуйте відповідно до ваших стилів</string>
-    <string name="discover_new_wallpapers">Відкрийте для себе нові фонові зображення</string>
+    <string name="customize_to_match_your_style">Налаштуйте під свій стиль</string>
+    <string name="discover_new_wallpapers">Пошук нових шпалер</string>
     <string name="explore">Переглянути</string>
     <string name="featured">Рекомендовані</string>
     <string name="curated_wallpapers_for_you">Рекомендовані шпалери для вас</string>
     <string name="make_it_yours">Зробіть це своїм</string>
     <string name="photos">Фотографії</string>
     <string name="walls">Стіни</string>
-    <string name="wallpaper">Фоновий малюнок</string>
+    <string name="wallpaper">Шпалери</string>
     <string name="wallpaper_photo">Фото шпалери</string>
     <string name="your_wallpaper">Ваші шпалери</string>
     <!-- Wallpaper Gallery -->
     <string name="customize_active_wallpaper">Налаштування ваших активних шпалер</string>
-    <string name="edit_current_wallpaper">Редагувати Поточні Шпалери</string>
-    <string name="header_collections">Збірки</string>
+    <string name="edit_current_wallpaper">Редагувати поточні шпалери</string>
+    <string name="header_collections">Колекції</string>
     <string name="header_wallpaper_gallery">Галерея шпалер</string>
     <string name="latest_wallpapers">Останні шпалери</string>
     <string name="live_wallpapers">Живі шпалери</string>
@@ -55,13 +56,13 @@
     <string name="recently_added_designs">Нещодавно додані дизайни</string>
     <string name="view_all">Переглянути все</string>
     <plurals name="curated_categories">
-        <item quantity="one">%d кураторстка категорія</item>
-        <item quantity="few">%d кураторських категорій</item>
-        <item quantity="many">%d кураторських категорій</item>
-        <item quantity="other">%d кураторські категорії</item>
+        <item quantity="one">%d рекомендована категорія</item>
+        <item quantity="few">%d рекомендованих категорій</item>
+        <item quantity="many">%d рекомендованих категорій</item>
+        <item quantity="other">%d рекомендовані категорії</item>
     </plurals>
     <plurals name="wallpaper_count">
-        <item quantity="one">%d шпалери</item>
+        <item quantity="one">%d шпалера</item>
         <item quantity="few">%d шпалер</item>
         <item quantity="many">%d шпалер</item>
         <item quantity="other">%d шпалери</item>
@@ -71,76 +72,79 @@
     <string name="glass">Скло</string>
     <string name="home_screen">Головний екран</string>
     <string name="lock_screen_label">Екран блокування</string>
-    <string name="pinch_to_crop">Зведення/розведення пальців для того щоб обрізати</string>
+    <string name="pinch_to_crop">Зведіть пальці, щоб обрізати</string>
     <string name="select_at_least_one">Виберіть принаймні один</string>
+    <string name="set_lockscreen_wallpaper">Встановити шпалери екрану блокування</string>
     <string name="set_wallpaper">Встановити шпалери</string>
     <string name="set_wallpaper_on">Встановити шпалери на</string>
-    <string name="home_lock_both">Both</string>
+    <string name="home_lock_both">Обидва</string>
     <string name="wallpaper_info">Відомості про шпалери</string>
-    <string name="wallpaper_fill_mode">Fill</string>
-    <string name="wallpaper_fit_mode">Fit</string>
+    <string name="wallpaper_fill_mode">Заповнити</string>
+    <string name="wallpaper_fit_mode">Вписати</string>
+    <string name="wallpaper_zoom_title">Масштабування шпалер</string>
+    <string name="wallpaper_zoom_description">Масштабувати шпалери під час переходів</string>
     <!-- Effects -->
-    <string name="wallpaper_effects_title">Effects</string>
-    <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
+    <string name="wallpaper_effects_title">Ефекти</string>
+    <string name="wallpaper_effects_description">Додати візуальні ефекти до шпалер</string>
     <string name="effect_none">Нічого</string>
-    <string name="effect_none_description">No effect applied</string>
+    <string name="effect_none_description">Ефект не застосовано</string>
     <string name="effect_atmosphere">Атмосфера</string>
-    <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
+    <string name="effect_atmosphere_description">М\'яке розмиття з плаваючими плямами</string>
     <string name="effect_glass">Скло</string>
-    <string name="effect_glass_description">Ribbed glass distortion effect</string>
-    <string name="effect_preview">Effect Preview</string>
-    <string name="effect_apply">Apply Effect</string>
-    <string name="effect_applying">Applying effect\u2026</string>
-    <string name="effect_applied">Effect applied</string>
-    <string name="effect_removed">Effect removed</string>
-    <string name="effect_service_not_found">Effect service not installed</string>
-    <string name="effect_apply_to">Apply to</string>
-    <string name="effect_home_screen_only">Home screen only</string>
-    <string name="effect_lock_screen_only">Lock screen only</string>
-    <string name="effect_home_and_lock">Home &amp; Lock screen</string>
-    <string name="effect_weather">Weather</string>
-    <string name="effect_weather_description">Weather-reactive animated overlay</string>
-    <string name="effect_magic_portrait">Magic Portrait</string>
-    <string name="effect_magic_portrait_description">Shaped frame with color background around your subject</string>
+    <string name="effect_glass_description">Ефект ребристого скла</string>
+    <string name="effect_preview">Перегляд ефекту</string>
+    <string name="effect_apply">Застосувати ефект</string>
+    <string name="effect_applying">Застосування ефекту\u2026</string>
+    <string name="effect_applied">Ефект застосовано</string>
+    <string name="effect_removed">Ефект видалено</string>
+    <string name="effect_service_not_found">Службу ефектів не встановлено</string>
+    <string name="effect_apply_to">Застосувати до</string>
+    <string name="effect_home_screen_only">Тільки на головному екрані</string>
+    <string name="effect_lock_screen_only">Тільки на екрані блокування</string>
+    <string name="effect_home_and_lock">Головний екран та екран блокування</string>
+    <string name="effect_weather">Погода</string>
+    <string name="effect_weather_description">Анімований оверлей, що реагує на погоду</string>
+    <string name="effect_magic_portrait">Магічний портрет</string>
+    <string name="effect_magic_portrait_description">Фігурні рамки з кольоровим тлом навколо головного об\'єкта</string>
     <!-- Weather Config -->
-    <string name="weather_type_label">Weather Type</string>
+    <string name="weather_type_label">Тип погоди</string>
     <string name="weather_type_auto">Авто</string>
-    <string name="weather_type_rain">Rain</string>
-    <string name="weather_type_snow">Snow</string>
-    <string name="weather_type_fog">Fog</string>
-    <string name="weather_type_clouds">Clouds</string>
-    <string name="weather_type_sun">Sun</string>
-    <string name="weather_intensity_label">Intensity</string>
+    <string name="weather_type_rain">Дощ</string>
+    <string name="weather_type_snow">Сніг</string>
+    <string name="weather_type_fog">Туман</string>
+    <string name="weather_type_clouds">Хмари</string>
+    <string name="weather_type_sun">Сонце</string>
+    <string name="weather_intensity_label">Інтенсивність</string>
     <!-- Portrait Config -->
-    <string name="portrait_shape_label">Shape</string>
-    <string name="portrait_color_label">Background Color</string>
-    <string name="portrait_shape_oval">Oval</string>
+    <string name="portrait_shape_label">Форма</string>
+    <string name="portrait_color_label">Колір фону</string>
+    <string name="portrait_shape_oval">Овал</string>
     <string name="portrait_shape_square">Квадрат</string>
     <string name="portrait_shape_arch">Дуга</string>
-    <string name="portrait_shape_clover">Clover</string>
-    <string name="portrait_shape_flower">Flower</string>
+    <string name="portrait_shape_clover">Конюшина</string>
+    <string name="portrait_shape_flower">Квітка</string>
     <string name="portrait_brightness_label">Яскравість</string>
     <!-- Effect Tabs -->
-    <string name="tab_shape">Shape</string>
-    <string name="tab_weather">Weather</string>
+    <string name="tab_shape">Форма</string>
+    <string name="tab_weather">Погода</string>
     <string name="tab_atmosphere">Атмосфера</string>
-    <string name="tab_cinematic">Cinematic</string>
+    <string name="tab_cinematic">Кінематографічний</string>
     <string name="tab_glass">Скло</string>
-    <string name="effect_cinematic">Cinematic</string>
-    <string name="effect_cinematic_description">Depth-based 3D parallax with gyroscope tracking</string>
-    <string name="effect_remove">Remove effect</string>
-    <string name="effect_preparing">Preparing photo\u2026</string>
-    <string name="effect_connecting">Connecting to effect\u2026</string>
-    <string name="effect_processing">Processing effect\u2026</string>
+    <string name="effect_cinematic">Кінематографічний</string>
+    <string name="effect_cinematic_description">3D-паралакс на основі глибини з відстеженням гіроскопа</string>
+    <string name="effect_remove">Видалити ефект</string>
+    <string name="effect_preparing">Підготовка фотографії\u2026</string>
+    <string name="effect_connecting">Підключення до ефекту\u2026</string>
+    <string name="effect_processing">Обробка ефекту\u2026</string>
     <!-- Display preview labels -->
-    <string name="folded_display">Folded</string>
-    <string name="unfolded_display">Unfolded</string>
-    <string name="preview_title">Preview</string>
-    <string name="next_button">Next</string>
-    <string name="applying_wallpaper">Applying\u2026</string>
+    <string name="folded_display">Згорнуто</string>
+    <string name="unfolded_display">Розгорнуто</string>
+    <string name="preview_title">Попередній перегляд</string>
+    <string name="next_button">Далі</string>
+    <string name="applying_wallpaper">Застосування\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">Форма значка</string>
-    <string name="icon_shape_description">App icon appearance</string>
+    <string name="icon_shape_title">Форма іконки</string>
+    <string name="icon_shape_description">Вигляд значків додатків</string>
     <string name="make_your_device_uniquely_yours">Зробіть свій пристрій унікальним</string>
     <string name="personalize">Персоналізувати</string>
     <string name="pro_tip">Порада професіонала</string>
@@ -149,9 +153,9 @@
     <string name="wallpaper_colors_and_themes">Кольори шпалер та теми</string>
     <!-- Colors Screen -->
     <string name="about_color_customization_title">Про персоналізацію кольорів</string>
-    <string name="about_color_customization_desc">    Color changes apply system-wide to all apps that support Material You theming.
-    \nAdjusting these colors may affect the appearance of apps across your device.
-    </string>
+    <string name="about_color_customization_desc">
+Кольори застосовуються до всіх додатків, що підтримують Material You, на рівні всієї системи.
+\nЦе може змінити вигляд інших застосунків на вашому пристрої.    </string>
     <string name="automatic">Автоматично</string>
     <string name="brightness">Яскравість</string>
     <string name="chroma_boost_title">Підсилення насиченості</string>
@@ -165,7 +169,8 @@
     <string name="custom">Користувацький</string>
     <string name="custom_seed_color_title">Власний базовий колір</string>
     <string name="customize_palette_title">Налаштуйте свою палітру</string>
-    <string name="customize_palette_description">        Personalize your device with colors that match your style
+    <string name="customize_palette_description">
+Персоналізуйте свій пристрій кольорами, що відповідають вашому стилю
     </string>
     <string name="fidelity_title">Точність</string>
     <string name="fidelity_desc">Увімкнути функцію точності для колірних тонів</string>
@@ -178,9 +183,9 @@
     <string name="theme_colors">Кольори теми</string>
     <string name="theme_style_title">Стиль теми</string>
     <string name="theme_style_desc">Визначає, як генеруються кольори з базового кольору</string>
-    <string name="theme_style_disabled_by_fidelity">Disabled while Fidelity is on</string>
+    <string name="theme_style_disabled_by_fidelity">Недоступно, доки активний Fidelity</string>
     <string name="use_wallpaper_colors_title">Використовувати кольори шпалер</string>
-    <string name="use_wallpaper_colors_desc">Видобувати кольори з ваших шпалер</string>
+    <string name="use_wallpaper_colors_desc">Отримати кольори з ваших шпалер</string>
     <string name="using_custom_color">Використання власного кольору</string>
     <string name="choose_custom_color_method">Виберіть спосіб підбору власного кольору:</string>
     <!-- Fonts Screen -->
@@ -190,6 +195,7 @@
     <string name="change_custom_font">Змінити власний шрифт</string>
     <string name="custom_font">Власний шрифт</string>
     <string name="font_preview_aa">Аа</string>
+    <string name="font_preview_axion_phrase">A — це Axion :)</string>
     <string name="font_preview_dialog_title">Попередній перегляд шрифту</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">Страх — ворог інновацій.</string>
@@ -199,9 +205,9 @@
     <string name="reboot_device">Перезавантажити пристрій</string>
     <string name="reboot_now">Перезавантажити зараз</string>
     <string name="reboot_required_title">Необхідне перезавантаження</string>
-    <string name="reboot_required_message">Для застосування змін шрифту потрібне перезавантаження.\nБажаєте перезавантажити зараз?</string>
-    <string name="reboot_required_custom_font_title">Потрібне перезавантаження для зміни шрифту</string>
-    <string name="reboot_required_custom_font_desc">Пропуск перезавантаження після зміни власного шрифту може призвести до помилок відображення інтерфейсу в додатках.</string>
+    <string name="reboot_required_message">Щоб застосувати новий шрифт, потрібно перезавантажити пристрій.\nПерезавантажити зараз?</string>
+    <string name="reboot_required_custom_font_title">Для зміни власного шрифту потрібне перезавантаження</string>
+    <string name="reboot_required_custom_font_desc">Пропуск перезавантаження після зміни шрифту може спричинити візуальні неполадки інтерфейсу в додатках.</string>
     <string name="reset_custom_font_content_desc">Скинути користувацький шрифт</string>
     <string name="reset_default_title">Скинути до заводських налаштувань</string>
     <string name="reset_default_message">Це скине ваш шрифт до системного шрифту за замовчуванням. Ви впевнені?</string>
@@ -214,23 +220,37 @@
     <string name="camera">Камера</string>
     <string name="choose_your_time_format">Виберіть свій формат часу</string>
     <string name="clock">Годинник</string>
-    <string name="clock_face">Clock face</string>
+    <string name="clock_face">Циферблат</string>
     <string name="clock_style">Стиль годинника</string>
-    <string name="clock_face_style">Face Style</string>
-    <string name="clock_size">Clock Size</string>
+    <string name="clock_face_style">Стиль циферблата</string>
+    <string name="clock_size">Розмір годинника</string>
     <string name="clock_size_default">За замовчуванням</string>
-    <string name="clock_size_large">Large</string>
-    <string name="clock_align_left">Left</string>
-    <string name="clock_align_center">Center</string>
-    <string name="clock_align_right">Right</string>
-    <string name="clock_date_position">Date Position</string>
-    <string name="clock_date_above">Above</string>
-    <string name="clock_date_below">Below</string>
-    <string name="clock_color">Clock Color</string>
+    <string name="clock_size_large">Великий</string>
+    <string name="reset_clock">Скинути годинник</string>
+    <string name="reset_clock_size">Скинути розмір</string>
+    <string name="reset_clock_position">Скинути розташування</string>
+    <string name="clock_dual_tone">Двоколірний</string>
+    <string name="clock_align_left">Ліворуч</string>
+    <string name="clock_align_center">По центру</string>
+    <string name="clock_align_right">Праворуч</string>
+    <string name="clock_date_position">Позиція дати</string>
+    <string name="clock_date_above">Вище</string>
+    <string name="clock_date_below">Нижче</string>
+    <string name="clock_info_display">Показ інформації</string>
+    <string name="clock_info_sources">Показувати в авторежимі</string>
+    <string name="clock_info_auto">Авто</string>
+    <string name="clock_info_date">Дата</string>
+    <string name="clock_info_media">Медіа</string>
+    <string name="clock_info_smartspace">Розумний простір</string>
+    <string name="clock_info_alarm">Будильник</string>
+    <string name="clock_info_calendar">Календар</string>
+    <string name="clock_info_weather">Погода</string>
+    <string name="clock_color">Колір годинника</string>
+    <string name="clock_graffiti_angle">Ракурс графіті</string>
     <string name="device_controls">Елементи керування пристроєм</string>
     <string name="do_not_disturb">Режим \"Не турбувати\"</string>
     <string name="flashlight">Ліхтарик</string>
-    <string name="left_affordance">Ліва доступність</string>
+    <string name="left_affordance">Лівий елемент керування</string>
     <string name="lockscreen_customize_title">Зовнішній вигляд екрана блокування</string>
     <string name="lockscreen_customize_summary">Налаштування зовнішнього вигляду екрана блокування</string>
     <string name="lockscreen_title">Екран блокування</string>
@@ -239,25 +259,25 @@
     <string name="lockscreen_widgets_enabled_summary">Дозволити віджети на екрані блокування</string>
     <string name="mute">Вимкнути звук</string>
     <string name="no_space_available">Немає місця для додаткових віджетів</string>
-    <string name="resize_widget">Resize Widget</string>
-    <string name="no_space_for_size">No space available for this size</string>
+    <string name="resize_widget">Змінити розмір віджета</string>
+    <string name="no_space_for_size">Бракує місця для цього розміру</string>
     <string name="personalize_your_experience">Персоналізуйте свій досвід</string>
     <string name="pick_widgets">Вибрати віджети</string>
     <string name="qr_code_scanner">Сканер QR-кодів</string>
     <string name="quick_access_to_your_favorites">Швидкий доступ до ваших улюблених</string>
-    <string name="right_affordance">Права доступність</string>
+    <string name="right_affordance">Правий елемент керування</string>
     <string name="selected_widgets">Обрані віджети</string>
     <string name="selected_widgets_empty">Жодного віджету не вибрано</string>
-    <string name="selected_widgets_guide">Tap a cell to add a widget, tap a widget to remove it.</string>
-    <string name="no_widgets_available">No widgets available</string>
-    <string name="search_widgets">Search widgets</string>
-    <string name="no_results">No results</string>
-    <string name="widget_bind_failed">Failed to add widget</string>
+    <string name="selected_widgets_guide">Торкніться клітинки, аби додати віджет, або торкніться віджета, щоби видалити його.</string>
+    <string name="no_widgets_available">Немає доступних віджетів</string>
+    <string name="search_widgets">Знайти віджети</string>
+    <string name="no_results">Нічого не знайдено</string>
+    <string name="widget_bind_failed">Не вдалося додати віджет</string>
     <string name="tap_the_preview_to_see_all_customization_options">Натисніть на попередній перегляд, щоб побачити всі параметри налаштування</string>
-    <string name="depth_effect">Depth effect</string>
-    <string name="at_a_glance">At a glance</string>
-    <string name="quick_access">Quick access</string>
-    <string name="time_style">Time style</string>
+    <string name="depth_effect">Ефект глибини</string>
+    <string name="at_a_glance">З першого погляду</string>
+    <string name="quick_access">Швидкий доступ</string>
+    <string name="time_style">Стиль часу</string>
     <string name="tap_to_customize">Торкніться, щоб налаштувати</string>
     <string name="temperature_prev">27°</string>
     <string name="video_camera">Відеокамера</string>
@@ -269,13 +289,13 @@
     <string name="value_percentage">Значення: %d%%</string>
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">Не вдалося завантажити зображення</string>
-    <string name="no_image_provided">Зображення не надано</string>
-    <string name="setting_wallpaper">Setting wallpaper\u2026</string>
+    <string name="no_image_provided">Зображення відсутнє</string>
+    <string name="setting_wallpaper">Встановлення шпалер\u2026</string>
     <string name="shared_image">Спільне зображення</string>
     <string name="unable_to_load_image">Не вдалося завантажити зображення</string>
-    <string name="wallpaper_set_success">Wallpaper set</string>
+    <string name="wallpaper_set_success">Шпалери встановлено</string>
     <!-- Content Descriptions (Accessibility) -->
     <string name="home_screen_preview">Попередній перегляд головного екрана</string>
     <string name="wallpaper_background">Фон шпалер</string>
-    <string name="loading">Loading\u2026</string>
+    <string name="loading">Завантаження\u2026</string>
 </resources>
