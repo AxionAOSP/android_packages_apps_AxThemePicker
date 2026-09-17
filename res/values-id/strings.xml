@@ -30,6 +30,7 @@
     <string name="fonts">Font</string>
     <string name="shortcuts">Pintasan</string>
     <string name="widgets">Widget</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Wallpaper saat ini</string>
     <string name="customize_to_match_your_style">Sesuaikan agar sesuai dengan gaya Anda</string>
@@ -67,12 +68,15 @@
     <string name="lock_screen_label">Layar kunci</string>
     <string name="pinch_to_crop">Cubit untuk memangkas</string>
     <string name="select_at_least_one">Pilih setidaknya satu</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Atur wallpaper</string>
     <string name="set_wallpaper_on">Atur wallpaper pada</string>
     <string name="home_lock_both">Both</string>
     <string name="wallpaper_info">Info wallpaper</string>
     <string name="wallpaper_fill_mode">Fill</string>
     <string name="wallpaper_fit_mode">Fit</string>
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
     <!-- Effects -->
     <string name="wallpaper_effects_title">Effects</string>
     <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
@@ -133,8 +137,6 @@
     <string name="next_button">Next</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">Icon Shape</string>
-    <string name="icon_shape_description">App icon appearance</string>
     <string name="make_your_device_uniquely_yours">Jadikan perangkatmu benar-benar unik</string>
     <string name="personalize">Personalisasi</string>
     <string name="pro_tip">Tips Pro</string>
@@ -184,6 +186,7 @@
     <string name="change_custom_font">Ubah font kustom</string>
     <string name="custom_font">Font kustom</string>
     <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_axion_phrase">A untuk Axion :)</string>
     <string name="font_preview_dialog_title">Pratinjau Font</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">Ketakutan adalah musuh inovasi.</string>
@@ -214,13 +217,27 @@
     <string name="clock_size">Clock Size</string>
     <string name="clock_size_default">Bawaan</string>
     <string name="clock_size_large">Large</string>
+    <string name="reset_clock">Reset clock</string>
+    <string name="reset_clock_size">Reset size</string>
+    <string name="reset_clock_position">Reset position</string>
+    <string name="clock_dual_tone">Dual tone</string>
     <string name="clock_align_left">Left</string>
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>
     <string name="clock_date_position">Date Position</string>
     <string name="clock_date_above">Above</string>
     <string name="clock_date_below">Below</string>
+    <string name="clock_info_display">Info Display</string>
+    <string name="clock_info_sources">Shown in Auto</string>
+    <string name="clock_info_auto">Otomatis</string>
+    <string name="clock_info_date">Tanggal</string>
+    <string name="clock_info_media">Media</string>
+    <string name="clock_info_smartspace">Smartspace</string>
+    <string name="clock_info_alarm">Alarm</string>
+    <string name="clock_info_calendar">Calendar</string>
+    <string name="clock_info_weather">Weather</string>
     <string name="clock_color">Clock Color</string>
+    <string name="clock_graffiti_angle">Graffiti Angle</string>
     <string name="device_controls">Kontrol perangkat</string>
     <string name="do_not_disturb">Jangan Ganggu</string>
     <string name="flashlight">Senter</string>
