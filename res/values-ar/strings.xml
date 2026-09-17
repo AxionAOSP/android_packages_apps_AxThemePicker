@@ -30,6 +30,7 @@
     <string name="fonts">الخطوط</string>
     <string name="shortcuts">الاختصارات</string>
     <string name="widgets">التطبيقات المصغّرة</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">الخلفية الحالية</string>
     <string name="customize_to_match_your_style">التخصيص ليناسب أسلوبك</string>
@@ -77,12 +78,15 @@
     <string name="lock_screen_label">شاشة القفل</string>
     <string name="pinch_to_crop">اضغط للقص</string>
     <string name="select_at_least_one">حدد واحدا على الأقل</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">تعيين الخلفية</string>
     <string name="set_wallpaper_on">تشغيل تعيين الخلفية</string>
     <string name="home_lock_both">Both</string>
     <string name="wallpaper_info">معلومات الخلفية</string>
     <string name="wallpaper_fill_mode">Fill</string>
     <string name="wallpaper_fit_mode">Fit</string>
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
     <!-- Effects -->
     <string name="wallpaper_effects_title">Effects</string>
     <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
@@ -143,8 +147,6 @@
     <string name="next_button">Next</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">Icon Shape</string>
-    <string name="icon_shape_description">App icon appearance</string>
     <string name="make_your_device_uniquely_yours">اجعل جهازك فريدا</string>
     <string name="personalize">تخصيص</string>
     <string name="pro_tip">نصيحة</string>
@@ -194,6 +196,7 @@
     <string name="change_custom_font">Change custom font</string>
     <string name="custom_font">Custom font</string>
     <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_axion_phrase">A is for Axion :)</string>
     <string name="font_preview_dialog_title">Font Preview</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">Fear is the enemy of innovation.</string>
@@ -224,13 +227,27 @@
     <string name="clock_size">Clock Size</string>
     <string name="clock_size_default">Default</string>
     <string name="clock_size_large">Large</string>
+    <string name="reset_clock">Reset clock</string>
+    <string name="reset_clock_size">Reset size</string>
+    <string name="reset_clock_position">Reset position</string>
+    <string name="clock_dual_tone">Dual tone</string>
     <string name="clock_align_left">Left</string>
     <string name="clock_align_center">Center</string>
     <string name="clock_align_right">Right</string>
     <string name="clock_date_position">Date Position</string>
     <string name="clock_date_above">Above</string>
     <string name="clock_date_below">Below</string>
+    <string name="clock_info_display">Info Display</string>
+    <string name="clock_info_sources">Shown in Auto</string>
+    <string name="clock_info_auto">تلقائي</string>
+    <string name="clock_info_date">التاريخ</string>
+    <string name="clock_info_media">Media</string>
+    <string name="clock_info_smartspace">Smartspace</string>
+    <string name="clock_info_alarm">Alarm</string>
+    <string name="clock_info_calendar">Calendar</string>
+    <string name="clock_info_weather">Weather</string>
     <string name="clock_color">Clock Color</string>
+    <string name="clock_graffiti_angle">Graffiti Angle</string>
     <string name="device_controls">Device controls</string>
     <string name="do_not_disturb">Do Not Disturb</string>
     <string name="flashlight">المصباح</string>
