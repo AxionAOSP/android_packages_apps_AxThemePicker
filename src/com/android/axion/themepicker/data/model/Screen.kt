@@ -30,8 +30,6 @@ sealed class Screen : Parcelable {
 
     @Parcelize object WallpaperEffects : Screen()
 
-    @Parcelize object IconShapes : Screen()
-
     @Parcelize object Fonts : Screen()
 
     @Parcelize

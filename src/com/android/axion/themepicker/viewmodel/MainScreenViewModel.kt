@@ -94,10 +94,6 @@ class MainScreenViewModel : ViewModel() {
         navigateTo(Screen.ColorsSettings)
     }
 
-    fun onOpenIconShapes() {
-        navigateTo(Screen.IconShapes)
-    }
-
     fun onOpenFonts() {
         navigateTo(Screen.Fonts)
     }

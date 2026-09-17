@@ -39,7 +39,6 @@ import com.android.axion.themepicker.ui.theme.*
 @Composable
 fun StyleSection(
     onOpenColors: () -> Unit,
-    onOpenIconShapes: () -> Unit,
     onOpenFonts: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,8 +65,6 @@ fun StyleSection(
             ) {
                 ColorsCardContent(onClick = onOpenColors)
 
-                IconShapesCardContent(onClick = onOpenIconShapes)
-
                 FontsCard(
                     title = stringResource(R.string.fonts),
                     description = stringResource(R.string.system_typography),
@@ -87,8 +84,6 @@ fun StyleSection(
             StyleHeader()
 
             ColorsCardContent(onClick = onOpenColors)
-
-            IconShapesCardContent(onClick = onOpenIconShapes)
 
             FontsCard(
                 title = stringResource(R.string.fonts),
@@ -177,36 +172,6 @@ private fun ColorsCardContent(onClick: () -> Unit, modifier: Modifier = Modifier
                     .clip(CircleShape)
                     .background(colors.secondary.copy(alpha = 0.6f))
         )
-    }
-}
-
-@Composable
-private fun IconShapesCardContent(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val colors = MaterialTheme.colorScheme
-
-    SettingsCard(
-        title = stringResource(R.string.icon_shape_title),
-        description = stringResource(R.string.icon_shape_description),
-        onClick = onClick,
-        modifier = modifier,
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier =
-                    Modifier.size(16.dp)
-                        .clip(CircleShape)
-                        .background(colors.primary.copy(alpha = 0.8f))
-            )
-            Box(
-                modifier =
-                    Modifier.size(16.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(colors.tertiary.copy(alpha = 0.7f))
-            )
-        }
     }
 }
 

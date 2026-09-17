@@ -133,8 +133,6 @@
     <string name="next_button">下一步</string>
     <string name="applying_wallpaper">套用中\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">圖示形狀</string>
-    <string name="icon_shape_description">應用程式圖示外觀</string>
     <string name="make_your_device_uniquely_yours">打造專屬於你的獨特裝置</string>
     <string name="personalize">個人化設定</string>
     <string name="pro_tip">溫馨提示</string>

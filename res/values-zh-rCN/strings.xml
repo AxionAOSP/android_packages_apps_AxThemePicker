@@ -79,8 +79,6 @@
     <string name="effects_beta_notice_desc">效果是临时的，不会保留。应用新壁纸以删除它们。</string>
 
     <!-- Style Section -->
-    <string name="icon_shape_title">图标形状</string>
-    <string name="icon_shape_description">应用图标外观</string>
     <string name="make_your_device_uniquely_yours">让您的设备独一无二</string>
     <string name="personalize">个性化</string>
     <string name="pro_tip">专业提示</string>
