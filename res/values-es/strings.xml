@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Axion ThemePicker</string>
+    <string name="app_name">Selector de tema Axion</string>
     <!-- Common Actions -->
     <string name="apply">Aplicar</string>
     <string name="applied">Aplicado</string>
@@ -30,6 +30,7 @@
     <string name="fonts">Fuentes</string>
     <string name="shortcuts">Accesos directos</string>
     <string name="widgets">Widgets</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">Fondo de pantalla actual</string>
     <string name="customize_to_match_your_style">Personalizar para que coincida con tu estilo</string>
@@ -69,26 +70,29 @@
     <string name="lock_screen_label">Pantalla de bloqueo</string>
     <string name="pinch_to_crop">Pellizca para recortar</string>
     <string name="select_at_least_one">Seleccione al menos uno.</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">Establecer fondo</string>
     <string name="set_wallpaper_on">Establecer fondo de pantalla</string>
-    <string name="home_lock_both">Both</string>
+    <string name="home_lock_both">Ambos</string>
     <string name="wallpaper_info">Información de fondo de pantalla</string>
-    <string name="wallpaper_fill_mode">Fill</string>
-    <string name="wallpaper_fit_mode">Fit</string>
+    <string name="wallpaper_fill_mode">Rellenar</string>
+    <string name="wallpaper_fit_mode">Ajustar</string>
+    <string name="wallpaper_zoom_title">Zoom de fondo de pantalla</string>
+    <string name="wallpaper_zoom_description">Acerca el fondo de pantalla durante las transiciones</string>
     <!-- Effects -->
-    <string name="wallpaper_effects_title">Effects</string>
-    <string name="wallpaper_effects_description">Add visual effects to your wallpaper</string>
+    <string name="wallpaper_effects_title">Efectos</string>
+    <string name="wallpaper_effects_description">Añade efectos visuales a tu fondo de pantalla</string>
     <string name="effect_none">Ninguno</string>
-    <string name="effect_none_description">No effect applied</string>
+    <string name="effect_none_description">Ningún efecto aplicado</string>
     <string name="effect_atmosphere">Ambiente</string>
-    <string name="effect_atmosphere_description">Dreamy blur with dynamic color blobs</string>
+    <string name="effect_atmosphere_description">Desenfoque sonoro con blobs de color dinámico</string>
     <string name="effect_glass">Cristal</string>
-    <string name="effect_glass_description">Ribbed glass distortion effect</string>
-    <string name="effect_preview">Effect Preview</string>
-    <string name="effect_apply">Apply Effect</string>
-    <string name="effect_applying">Applying effect\u2026</string>
-    <string name="effect_applied">Effect applied</string>
-    <string name="effect_removed">Effect removed</string>
+    <string name="effect_glass_description">Efecto de distorsión de cristal agitado</string>
+    <string name="effect_preview">Vista previa del efecto</string>
+    <string name="effect_apply">Aplicar efecto</string>
+    <string name="effect_applying">Aplicando efecto\u2026</string>
+    <string name="effect_applied">Efecto aplicado</string>
+    <string name="effect_removed">Efecto removido</string>
     <string name="effect_service_not_found">Effect service not installed</string>
     <string name="effect_apply_to">Apply to</string>
     <string name="effect_home_screen_only">Home screen only</string>
@@ -135,8 +139,6 @@
     <string name="next_button">Next</string>
     <string name="applying_wallpaper">Applying\u2026</string>
     <!-- Style Section -->
-    <string name="icon_shape_title">Icon Shape</string>
-    <string name="icon_shape_description">App icon appearance</string>
     <string name="make_your_device_uniquely_yours">Haz que tu dispositivo sea único</string>
     <string name="personalize">Personalizar</string>
     <string name="pro_tip">Consejo pro</string>
@@ -186,6 +188,7 @@
     <string name="change_custom_font">Cambiar fuente personalizada</string>
     <string name="custom_font">Fuente personalizada</string>
     <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_axion_phrase">A es para Axion :)</string>
     <string name="font_preview_dialog_title">Vista previa de fuente</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">El miedo es el enemigo de la innovación.</string>
@@ -210,19 +213,33 @@
     <string name="camera">Cámara</string>
     <string name="choose_your_time_format">Elige el formato de hora</string>
     <string name="clock">Reloj</string>
-    <string name="clock_face">Clock face</string>
+    <string name="clock_face">Cara del reloj</string>
     <string name="clock_style">Estilo de reloj</string>
-    <string name="clock_face_style">Face Style</string>
-    <string name="clock_size">Clock Size</string>
+    <string name="clock_face_style">Estilo de cara</string>
+    <string name="clock_size">Tamaño del reloj</string>
     <string name="clock_size_default">Predeterminado</string>
-    <string name="clock_size_large">Large</string>
-    <string name="clock_align_left">Left</string>
-    <string name="clock_align_center">Center</string>
-    <string name="clock_align_right">Right</string>
-    <string name="clock_date_position">Date Position</string>
+    <string name="clock_size_large">Grande</string>
+    <string name="reset_clock">Restablecer reloj</string>
+    <string name="reset_clock_size">Restablecer tamaño</string>
+    <string name="reset_clock_position">Restablecer posición</string>
+    <string name="clock_dual_tone">Doble tono</string>
+    <string name="clock_align_left">Izquierda</string>
+    <string name="clock_align_center">Centro</string>
+    <string name="clock_align_right">Derecha</string>
+    <string name="clock_date_position">Posición de la fecha</string>
     <string name="clock_date_above">Above</string>
     <string name="clock_date_below">Below</string>
-    <string name="clock_color">Clock Color</string>
+    <string name="clock_info_display">Mostrar información</string>
+    <string name="clock_info_sources">Mostrar en Auto</string>
+    <string name="clock_info_auto">Automático</string>
+    <string name="clock_info_date">Fecha</string>
+    <string name="clock_info_media">Media</string>
+    <string name="clock_info_smartspace">Espacio inteligente</string>
+    <string name="clock_info_alarm">Alarm</string>
+    <string name="clock_info_calendar">Calendar</string>
+    <string name="clock_info_weather">Weather</string>
+    <string name="clock_color">Color del reloj</string>
+    <string name="clock_graffiti_angle">Ángulo de Graffiti</string>
     <string name="device_controls">Controles del dispositivo</string>
     <string name="do_not_disturb">No molestar</string>
     <string name="flashlight">Linterna</string>
@@ -235,8 +252,8 @@
     <string name="lockscreen_widgets_enabled_summary">Permitir widgets en pantalla de bloqueo</string>
     <string name="mute">Silenciar</string>
     <string name="no_space_available">No hay espacio disponible para más widgets</string>
-    <string name="resize_widget">Resize Widget</string>
-    <string name="no_space_for_size">No space available for this size</string>
+    <string name="resize_widget">Cambiar tamaño de widget</string>
+    <string name="no_space_for_size">No hay espacio disponible para este tamaño</string>
     <string name="personalize_your_experience">Personaliza tu experiencia</string>
     <string name="pick_widgets">Escoger Widgets</string>
     <string name="qr_code_scanner">Lector de códigos QR</string>
@@ -244,16 +261,16 @@
     <string name="right_affordance">Acceso rápido derecho</string>
     <string name="selected_widgets">Widgets seleccionados</string>
     <string name="selected_widgets_empty">No hay widgets seleccionados</string>
-    <string name="selected_widgets_guide">Tap a cell to add a widget, tap a widget to remove it.</string>
-    <string name="no_widgets_available">No widgets available</string>
-    <string name="search_widgets">Search widgets</string>
-    <string name="no_results">No results</string>
-    <string name="widget_bind_failed">Failed to add widget</string>
+    <string name="selected_widgets_guide">Toca una celda para añadir un widget, toca un widget para eliminarlo.</string>
+    <string name="no_widgets_available">No hay widgets disponibles</string>
+    <string name="search_widgets">Buscar widget</string>
+    <string name="no_results">No hay resultados</string>
+    <string name="widget_bind_failed">Error al añadir el widget</string>
     <string name="tap_the_preview_to_see_all_customization_options">Toque la vista previa para ver todas las opciones de personalización</string>
-    <string name="depth_effect">Depth effect</string>
-    <string name="at_a_glance">At a glance</string>
-    <string name="quick_access">Quick access</string>
-    <string name="time_style">Time style</string>
+    <string name="depth_effect">Efecto de profundidad</string>
+    <string name="at_a_glance">De un vistazo</string>
+    <string name="quick_access">Acceso rápido</string>
+    <string name="time_style">Estilo de hora</string>
     <string name="tap_to_customize">Toca para personalizar</string>
     <string name="temperature_prev">27°</string>
     <string name="video_camera">Cámara de vídeo</string>
@@ -266,12 +283,12 @@
     <!-- WallpaperSetActivity -->
     <string name="failed_to_load_image">Fallo al cargar la imagen</string>
     <string name="no_image_provided">Imagen no proporcionada</string>
-    <string name="setting_wallpaper">Setting wallpaper\u2026</string>
+    <string name="setting_wallpaper">Estableciendo fondo de pantalla\u2026</string>
     <string name="shared_image">Compartir Imagen</string>
     <string name="unable_to_load_image">No se puede cargar la imagen</string>
-    <string name="wallpaper_set_success">Wallpaper set</string>
+    <string name="wallpaper_set_success">Fondo de pantalla establecido</string>
     <!-- Content Descriptions (Accessibility) -->
     <string name="home_screen_preview">Previsualización de la pantalla de inicio</string>
     <string name="wallpaper_background">Fondo de escritorio</string>
-    <string name="loading">Loading\u2026</string>
+    <string name="loading">Cargando\u2026</string>
 </resources>
