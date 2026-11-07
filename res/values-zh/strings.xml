@@ -30,6 +30,7 @@
     <string name="fonts">字型</string>
     <string name="shortcuts">捷徑</string>
     <string name="widgets">小工具</string>
+    <string name="add_widgets">Add widgets</string>
     <!-- Wallpaper Section -->
     <string name="current_wallpaper">目前桌布</string>
     <string name="customize_to_match_your_style">自訂以符合你的風格</string>
@@ -67,12 +68,15 @@
     <string name="lock_screen_label">螢幕鎖定</string>
     <string name="pinch_to_crop">雙指縮放裁剪</string>
     <string name="select_at_least_one">至少選取一項</string>
+    <string name="set_lockscreen_wallpaper">Set lockscreen wallpaper</string>
     <string name="set_wallpaper">設定桌布</string>
     <string name="set_wallpaper_on">設定桌布為</string>
     <string name="home_lock_both">兩者</string>
     <string name="wallpaper_info">桌布資訊</string>
     <string name="wallpaper_fill_mode">填滿</string>
     <string name="wallpaper_fit_mode">符合</string>
+    <string name="wallpaper_zoom_title">Wallpaper zoom</string>
+    <string name="wallpaper_zoom_description">Zoom the wallpaper during transitions</string>
     <!-- Effects -->
     <string name="wallpaper_effects_title">效果</string>
     <string name="wallpaper_effects_description">添加視覺效果到桌布</string>
@@ -141,7 +145,8 @@
     <string name="wallpaper_colors_and_themes">桌布顏色及主題</string>
     <!-- Colors Screen -->
     <string name="about_color_customization_title">關於顏色自訂</string>
-    <string name="about_color_customization_desc">    顏色更改將在系統範圍內套用於所有支援 Material You 主題的應用程式。
+    <string name="about_color_customization_desc">
+    顏色更改將在系統範圍內套用於所有支援 Material You 主題的應用程式。
     \n調整這些顏色可能會影響裝置上所有應用程式的顯示效果
     </string>
     <string name="automatic">自動</string>
@@ -157,7 +162,8 @@
     <string name="custom">自訂</string>
     <string name="custom_seed_color_title">自訂主題色</string>
     <string name="customize_palette_title">自訂調色盤</string>
-    <string name="customize_palette_description">        使用符合你風格的色彩，個人化你的裝置
+    <string name="customize_palette_description">
+        使用符合你風格的色彩，個人化你的裝置
     </string>
     <string name="fidelity_title">色彩保真</string>
     <string name="fidelity_desc">啟用色彩保真功能以保留色調</string>
@@ -182,6 +188,7 @@
     <string name="change_custom_font">更換自訂字型</string>
     <string name="custom_font">自定义字体</string>
     <string name="font_preview_aa">Aa</string>
+    <string name="font_preview_axion_phrase">A 代表 Axion :)</string>
     <string name="font_preview_dialog_title">字型預覽</string>
     <string name="font_preview_numbers">1234567890!@#%&amp;*()_+-=</string>
     <string name="font_preview_quote">恐懼乃創新之敵。</string>
@@ -212,13 +219,27 @@
     <string name="clock_size">時鐘大小</string>
     <string name="clock_size_default">預設</string>
     <string name="clock_size_large">大</string>
+    <string name="reset_clock">Reset clock</string>
+    <string name="reset_clock_size">Reset size</string>
+    <string name="reset_clock_position">Reset position</string>
+    <string name="clock_dual_tone">Dual tone</string>
     <string name="clock_align_left">靠左</string>
     <string name="clock_align_center">置中</string>
     <string name="clock_align_right">靠右</string>
     <string name="clock_date_position">日期位置</string>
-    <string name="clock_date_above">高於</string>
-    <string name="clock_date_below">低於</string>
+    <string name="clock_date_above">以上</string>
+    <string name="clock_date_below">以下</string>
+    <string name="clock_info_display">Info Display</string>
+    <string name="clock_info_sources">Shown in Auto</string>
+    <string name="clock_info_auto">自動</string>
+    <string name="clock_info_date">日期</string>
+    <string name="clock_info_media">媒体</string>
+    <string name="clock_info_smartspace">Smartspace</string>
+    <string name="clock_info_alarm">闹钟</string>
+    <string name="clock_info_calendar">日曆</string>
+    <string name="clock_info_weather">天氣</string>
     <string name="clock_color">時鐘顏色</string>
+    <string name="clock_graffiti_angle">Graffiti Angle</string>
     <string name="device_controls">裝置控制項</string>
     <string name="do_not_disturb">請勿打擾</string>
     <string name="flashlight">手電筒</string>
