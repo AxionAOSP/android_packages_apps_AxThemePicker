@@ -228,7 +228,10 @@ class WallpaperSetActivity : ComponentActivity() {
         }
     }
 
-    private fun goHome() = restartApp()
+    private fun goHome() {
+        setResult(RESULT_OK)
+        finish()
+    }
 
     private fun isReadMediaPermissionGranted(): Boolean {
         return packageManager.checkPermission(Manifest.permission.READ_MEDIA_IMAGES, packageName) ==
